@@ -12,6 +12,7 @@ import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
+import 'package:mobile_pos/Screens/Report/Screens/sales_Edit_invoice_add_products.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:mobile_pos/model/transition_model.dart';
@@ -134,8 +135,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             labelText: 'Date',
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
-                              onPressed: () async {
-                              },
+                              onPressed: () async {},
                               icon: const Icon(FeatherIcons.calendar),
                             ),
                           ),
@@ -287,9 +287,11 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                   ///_______Add_Button__________________________________________________
                   GestureDetector(
                     onTap: () {
-                      SaleProducts(
+                      EditSaleInvoiceSaleProducts(
                         catName: null,
-                        customerModel: widget.customerModel,
+                        customerModel: CustomerModel(widget.transitionModel.customerName, widget.transitionModel.customerPhone,
+                            widget.transitionModel.customerType, '', '', 'customerAddress', ''),
+                        transitionModel: widget.transitionModel,
                       ).launch(context);
                     },
                     child: Container(
