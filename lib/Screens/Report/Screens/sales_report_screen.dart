@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
+import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
+import 'package:mobile_pos/Screens/Report/Screens/sales_report_edit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,6 +30,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
     super.initState();
     InternetPopup().initialize(context: context);
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -43,6 +46,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
               fontSize: 20.0,
             ),
           ),
+          actions: [],
           iconTheme: const IconThemeData(color: Colors.black),
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -100,10 +104,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                               borderRadius: const BorderRadius.all(Radius.circular(10))),
                                           child: Text(
                                             reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
-                                            style: TextStyle(
-                                                color: reTransaction[index].dueAmount! <= 0
-                                                    ? const Color(0xff0dbf7d)
-                                                    : const Color(0xFFED1A3B)),
+                                            style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                           ),
                                         ),
                                         Text(
@@ -130,9 +131,8 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                               IconButton(
                                                   onPressed: () async {
                                                     await printerData.getBluetooth();
-                                                    PrintTransactionModel model = PrintTransactionModel(
-                                                        transitionModel: reTransaction[index],
-                                                        personalInformationModel: data);
+                                                    PrintTransactionModel model =
+                                                        PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
                                                     connected
                                                         ? printerData.printTicket(
                                                             printTransactionModel: model,
@@ -150,38 +150,30 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                       children: [
                                                                         ListView.builder(
                                                                           shrinkWrap: true,
-                                                                          itemCount: printerData
-                                                                                  .availableBluetoothDevices.isNotEmpty
-                                                                              ? printerData
-                                                                                  .availableBluetoothDevices.length
+                                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                              ? printerData.availableBluetoothDevices.length
                                                                               : 0,
                                                                           itemBuilder: (context, index) {
                                                                             return ListTile(
                                                                               onTap: () async {
-                                                                                String select = printerData
-                                                                                    .availableBluetoothDevices[index];
+                                                                                String select = printerData.availableBluetoothDevices[index];
                                                                                 List list = select.split("#");
                                                                                 // String name = list[0];
                                                                                 String mac = list[1];
-                                                                                bool isConnect =
-                                                                                    await printerData.setConnect(mac);
+                                                                                bool isConnect = await printerData.setConnect(mac);
                                                                                 // ignore: use_build_context_synchronously
                                                                                 isConnect
                                                                                     // ignore: use_build_context_synchronously
                                                                                     ? finish(context)
                                                                                     : toast('Try Again');
                                                                               },
-                                                                              title: Text(
-                                                                                  '${printerData.availableBluetoothDevices[index]}'),
+                                                                              title: Text('${printerData.availableBluetoothDevices[index]}'),
                                                                               subtitle: const Text("Click to connect"),
                                                                             );
                                                                           },
                                                                         ),
                                                                         const SizedBox(height: 10),
-                                                                        Container(
-                                                                            height: 1,
-                                                                            width: double.infinity,
-                                                                            color: Colors.grey),
+                                                                        Container(height: 1, width: double.infinity, color: Colors.grey),
                                                                         const SizedBox(height: 15),
                                                                         GestureDetector(
                                                                           onTap: () {
@@ -212,12 +204,27 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                     FeatherIcons.share,
                                                     color: Colors.grey,
                                                   )),
-                                              IconButton(
-                                                  onPressed: () => toast('Coming Soon'),
-                                                  icon: const Icon(
-                                                    FeatherIcons.moreVertical,
-                                                    color: Colors.grey,
-                                                  )),
+                                              PopupMenuButton(
+                                                onSelected: (value) {
+                                                  if (value == 'Edit') {
+                                                    SalesReportEditScreen(
+                                                      transitionModel: reTransaction[index],
+                                                    ).launch(context);
+                                                  }
+                                                },
+                                                itemBuilder: (BuildContext bc) {
+                                                  return const [
+                                                    PopupMenuItem(
+                                                      value: 'Edit',
+                                                      child: Text("Edit"),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      value: 'Delete',
+                                                      child: Text("Delete"),
+                                                    ),
+                                                  ];
+                                                },
+                                              ),
                                             ],
                                           );
                                         }, error: (e, stack) {
