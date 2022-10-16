@@ -22,6 +22,7 @@ import '../../../Provider/printer_provider.dart';
 import '../../../Provider/product_provider.dart';
 import '../../../Provider/seles_report_provider.dart';
 import '../../../constant.dart';
+import '../../../model/add_to_cart_model.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Customers/Model/customer_model.dart';
 import '../../Home/home.dart';
@@ -41,11 +42,21 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     // TODO: implement initState
     super.initState();
     InternetPopup().initialize(context: context);
-    dropdownValue = widget.transitionModel.paymentType;
+    // setState(() {
+    //   dropdownValue = widget.transitionModel.paymentType;
+    //   returnAmount = widget.transitionModel.returnAmount!;
+    //   discountAmount = widget.transitionModel.discountAmount!;
+    // });
+    paidAmount = double.parse(widget.transitionModel.totalAmount.toString())-double.parse(widget.transitionModel.dueAmount.toString());
+    discountAmount = widget.transitionModel.discountAmount!;
+    discountText.text = discountAmount.toString();
+    paidText.text = paidAmount.toString();
     returnAmount = widget.transitionModel.returnAmount!;
-  }
 
+  }
+  TextEditingController discountText = TextEditingController();
   TextEditingController paidText = TextEditingController();
+
   int invoice = 0;
   double paidAmount = 0;
   double discountAmount = 0;
@@ -83,6 +94,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     purchaseDate: DateTime.now().toString(),
   );
   DateTime selectedDate = DateTime.now();
+  bool doNotCheckProducts = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +102,42 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
       final providerData = consumerRef.watch(cartNotifier);
       final printerData = consumerRef.watch(printerProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
+      final productList = consumerRef.watch(productProvider);
+
+      !doNotCheckProducts
+          ? productList.value?.forEach((products) {
+              String sentProductPrice = '';
+              widget.transitionModel.productList?.forEach((element) {
+                if (element.productName == products.productName) {
+                  if (widget.transitionModel.customerType.contains('Retailer')) {
+                    sentProductPrice = products.productSalePrice;
+                  } else if (widget.transitionModel.customerType.contains('Dealer')) {
+                    sentProductPrice = products.productDealerPrice;
+                  } else if (widget.transitionModel.customerType.contains('Wholesaler')) {
+                    sentProductPrice = products.productWholeSalePrice;
+                  } else if (widget.transitionModel.customerType.contains('Supplier')) {
+                    sentProductPrice = products.productPurchasePrice;
+                  } else if (widget.transitionModel.customerType.contains('Guest')) {
+                    sentProductPrice = products.productSalePrice;
+                  }
+
+                  AddToCartModel cartItem = AddToCartModel(
+                    productName: products.productName,
+                    subTotal: sentProductPrice,
+                    productId: products.productCode,
+                    productBrandName: products.brandName,
+                    stock: int.parse(products.productStock),
+                  );
+                  providerData.addToCartRiverPod(cartItem);
+                  providerData.addProductsInSales(products);
+                }
+              });
+
+              if (widget.transitionModel.productList?.length == providerData.cartItemList.length) {
+                doNotCheckProducts = true;
+              }
+            })
+          : null;
       return personalData.when(data: (data) {
         invoice = data.invoiceCounter!.toInt();
         return Scaffold(
@@ -343,7 +391,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                               SizedBox(
                                 width: context.width() / 4,
                                 child: TextField(
-                                  controller: paidText,
+                                  controller: discountText,
+
+
                                   onChanged: (value) {
                                     if (value == '') {
                                       setState(() {
@@ -355,7 +405,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                           discountAmount = double.parse(value);
                                         });
                                       } else {
-                                        paidText.clear();
+                                        discountText.clear();
                                         setState(() {
                                           discountAmount = 0;
                                         });
@@ -364,6 +414,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     }
                                   },
                                   textAlign: TextAlign.right,
+
                                   decoration: const InputDecoration(
                                     hintText: '0',
                                   ),
@@ -401,6 +452,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                               SizedBox(
                                 width: context.width() / 4,
                                 child: TextField(
+                                  controller: paidText,
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     if (value == '') {

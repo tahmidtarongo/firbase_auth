@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
@@ -57,6 +58,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
           final profile = ref.watch(profileDetailsProvider);
           final printerData = ref.watch(printerProviderNotifier);
           final personalData = ref.watch(profileDetailsProvider);
+          final cart = ref.watch(cartNotifier);
           return SingleChildScrollView(
             child: providerData.when(data: (transaction) {
               final reTransaction = transaction.reversed.toList();
@@ -207,6 +209,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                               PopupMenuButton(
                                                 onSelected: (value) {
                                                   if (value == 'Edit') {
+                                                    cart.clearCart();
                                                     SalesReportEditScreen(
                                                       transitionModel: reTransaction[index],
                                                     ).launch(context);
