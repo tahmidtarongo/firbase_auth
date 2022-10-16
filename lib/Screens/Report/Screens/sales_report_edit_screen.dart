@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/model/cart_model.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_Edit_invoice_add_products.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
+import 'package:mobile_pos/model/personal_information_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -26,6 +28,7 @@ import '../../../model/add_to_cart_model.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Customers/Model/customer_model.dart';
 import '../../Home/home.dart';
+import '../../invoice_details/sales_invoice_details_screen.dart';
 
 // ignore: must_be_immutable
 class SalesReportEditScreen extends StatefulWidget {
@@ -42,16 +45,16 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     // TODO: implement initState
     super.initState();
     InternetPopup().initialize(context: context);
-    // setState(() {
-    //   dropdownValue = widget.transitionModel.paymentType;
-    //   returnAmount = widget.transitionModel.returnAmount!;
-    //   discountAmount = widget.transitionModel.discountAmount!;
-    // });
-    paidAmount = double.parse(widget.transitionModel.totalAmount.toString()) - double.parse(widget.transitionModel.dueAmount.toString());
+    transitionModel = widget.transitionModel;
+    paidAmount = double.parse(widget.transitionModel.totalAmount.toString()) -
+        double.parse(widget.transitionModel.dueAmount.toString()) +
+        double.parse(widget.transitionModel.returnAmount.toString());
     discountAmount = widget.transitionModel.discountAmount!;
+    dropdownValue = widget.transitionModel.paymentType;
     discountText.text = discountAmount.toString();
     paidText.text = paidAmount.toString();
     returnAmount = widget.transitionModel.returnAmount!;
+    invoice = widget.transitionModel.invoiceNumber.toInt();
   }
 
   TextEditingController discountText = TextEditingController();
@@ -96,8 +99,11 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   DateTime selectedDate = DateTime.now();
   bool doNotCheckProducts = false;
 
+
+
   @override
   Widget build(BuildContext context) {
+    print(invoice);
     return Consumer(builder: (context, consumerRef, __) {
       final providerData = consumerRef.watch(cartNotifier);
       final printerData = consumerRef.watch(printerProviderNotifier);
@@ -108,7 +114,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
           ? productList.value?.forEach((products) {
               String sentProductPrice = '';
               widget.transitionModel.productList?.forEach((element) {
-                if (element.productName == products.productName) {
+                if (element.productId == products.productCode) {
                   if (widget.transitionModel.customerType.contains('Retailer')) {
                     sentProductPrice = products.productSalePrice;
                   } else if (widget.transitionModel.customerType.contains('Dealer')) {
@@ -124,6 +130,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                   AddToCartModel cartItem = AddToCartModel(
                     productName: products.productName,
                     subTotal: sentProductPrice,
+                    quantity: element.quantity,
                     productId: products.productCode,
                     productBrandName: products.brandName,
                     stock: int.parse(products.productStock),
@@ -139,7 +146,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
             })
           : null;
       return personalData.when(data: (data) {
-        invoice = data.invoiceCounter!.toInt();
+        // invoice = data.invoiceCounter!.toInt();
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -616,157 +623,94 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                         child: GestureDetector(
                           onTap: () async {
                             if (providerData.cartItemList.isNotEmpty) {
-                              if (widget.transitionModel.customerName == 'Guest' && dueAmount > 0) {
-                                EasyLoading.showError('Due is not available for guest');
-                              } else {
-                                try {
-                                  EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                              try {
+                                EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
-                                  final userId = FirebaseAuth.instance.currentUser!.uid;
-                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
+                                final userId = FirebaseAuth.instance.currentUser!.uid;
 
-                                  dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
-                                  dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
-                                  returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
-                                  transitionModel.discountAmount = discountAmount;
-                                  transitionModel.totalAmount = subTotal;
-                                  transitionModel.productList = providerData.cartItemList;
-                                  transitionModel.paymentType = dropdownValue;
-                                  transitionModel.invoiceNumber = invoice.toString();
+                                dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
+                                dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
+                                returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
+                                transitionModel.discountAmount = discountAmount;
+                                transitionModel.totalAmount = subTotal;
+                                transitionModel.productList = providerData.cartItemList;
+                                transitionModel.paymentType = dropdownValue;
+                                transitionModel.invoiceNumber = invoice.toString();
 
-                                  await ref.push().set(transitionModel.toJson());
+                                ///________updateInvoice__________________
+                                // String? key;
+                                // await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+                                //   for (var element in value.children) {
+                                //     final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
+                                //     if (transitionModel.invoiceNumber == t.invoiceNumber) {
+                                //       key = element.key;
+                                //     }
+                                //   }
+                                // });
+                                // await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
 
-                                  ///__________StockMange_________________________________________________-
+                                ///__________StockMange_________________________________________________
+                                List<CartItem> increaseStock = [];
+                                List<CartItem> decreaseStock = [];
 
-                                  for (var element in providerData.cartItemList) {
-                                    decreaseStock(element.productId, element.quantity);
-                                  }
-
-                                  ///_______invoice_Update_____________________________________________
-                                  final DatabaseReference personalInformationRef =
-                                      // ignore: deprecated_member_use
-                                      FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-
-                                  await personalInformationRef.update({'invoiceCounter': invoice + 1});
-
-                                  ///________Subscription_____________________________________________________
-                                  decreaseSubscriptionSale();
-
-                                  ///_________DueUpdate______________________________________________________
-                                  // getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
-
-                                  ///________Print_______________________________________________________
-
-                                  PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
-                                  if (isPrintEnable) {
-                                    await printerData.getBluetooth();
-                                    if (connected) {
-                                      await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemList);
-                                      providerData.clearCart();
-                                      consumerRef.refresh(customerProvider);
-                                      consumerRef.refresh(productProvider);
-                                      consumerRef.refresh(salesReportProvider);
-                                      consumerRef.refresh(transitionProvider);
-                                      consumerRef.refresh(profileDetailsProvider);
-
-                                      EasyLoading.showSuccess('Added Successfully');
-                                      Future.delayed(const Duration(milliseconds: 500), () {
-                                        const SalesReportScreen().launch(context);
-                                      });
+                                widget.transitionModel.productList?.forEach((pastElement) {
+                                  transitionModel.productList?.forEach((futureElement) {
+                                    if (pastElement.productId == futureElement.productId) {
+                                      if (pastElement.quantity < futureElement.quantity) {
+                                        decreaseStock.add(
+                                          CartItem(
+                                            productId: pastElement.productId,
+                                            quantity: futureElement.quantity - pastElement.quantity,
+                                          ),
+                                        );
+                                      }
+                                      if (pastElement.quantity > futureElement.quantity) {
+                                        increaseStock.add(
+                                          CartItem(
+                                            productId: pastElement.productId,
+                                            quantity: pastElement.quantity - futureElement.quantity,
+                                          ),
+                                        );
+                                      }
                                     } else {
-                                      EasyLoading.showSuccess('Added Successfully');
-                                      // ignore: use_build_context_synchronously
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please Connect The Printer First')));
-
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return WillPopScope(
-                                              onWillPop: () async => false,
-                                              child: Dialog(
-                                                child: SizedBox(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      ListView.builder(
-                                                        shrinkWrap: true,
-                                                        itemCount:
-                                                            printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
-                                                        itemBuilder: (context, index) {
-                                                          return ListTile(
-                                                            onTap: () async {
-                                                              String select = printerData.availableBluetoothDevices[index];
-                                                              List list = select.split("#");
-                                                              // String name = list[0];
-                                                              String mac = list[1];
-                                                              bool isConnect = await printerData.setConnect(mac);
-                                                              if (isConnect) {
-                                                                await printerData.printTicket(
-                                                                    printTransactionModel: model, productList: transitionModel.productList);
-                                                                providerData.clearCart();
-                                                                consumerRef.refresh(customerProvider);
-                                                                consumerRef.refresh(productProvider);
-                                                                consumerRef.refresh(salesReportProvider);
-                                                                consumerRef.refresh(transitionProvider);
-                                                                consumerRef.refresh(profileDetailsProvider);
-                                                                EasyLoading.showSuccess('Added Successfully');
-                                                                Future.delayed(const Duration(milliseconds: 500), () {
-                                                                  const SalesReportScreen().launch(context);
-                                                                });
-                                                              }
-                                                            },
-                                                            title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                            subtitle: const Text("Click to connect"),
-                                                          );
-                                                        },
-                                                      ),
-                                                      const SizedBox(height: 10),
-                                                      Container(
-                                                        height: 1,
-                                                        width: double.infinity,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      const SizedBox(height: 15),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          consumerRef.refresh(customerProvider);
-                                                          consumerRef.refresh(productProvider);
-                                                          consumerRef.refresh(salesReportProvider);
-                                                          consumerRef.refresh(transitionProvider);
-                                                          consumerRef.refresh(profileDetailsProvider);
-                                                          const SalesReportScreen().launch(context);
-                                                        },
-                                                        child: const Center(
-                                                          child: Text(
-                                                            'Cancel',
-                                                            style: TextStyle(color: kMainColor),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(height: 15),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          });
+                                      increaseStock.add(CartItem(productId: pastElement.productId, quantity: pastElement.quantity));
                                     }
-                                  } else {
-                                    providerData.clearCart();
-                                    consumerRef.refresh(customerProvider);
-                                    consumerRef.refresh(productProvider);
-                                    consumerRef.refresh(salesReportProvider);
-                                    consumerRef.refresh(transitionProvider);
-                                    consumerRef.refresh(profileDetailsProvider);
-                                    EasyLoading.showSuccess('Added Successfully');
-                                    Future.delayed(const Duration(milliseconds: 500), () {
-                                      const SalesReportScreen().launch(context);
-                                    });
-                                  }
-                                } catch (e) {
-                                  EasyLoading.dismiss();
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                  });
+                                });
+                                transitionModel.productList?.forEach((futureElement) {
+                                  widget.transitionModel.productList?.forEach((pastElement) {
+                                    decreaseStock.add(CartItem(productId: pastElement.productId, quantity: pastElement.quantity));
+                                  });
+                                });
+
+
+                                print('increaseStock');
+                                for (var element in increaseStock) {
+                                  print(element.productId);
+                                  print(element.quantity);
                                 }
+                                print('decreaseStock');
+                                for (var element in decreaseStock) {
+                                  print(element.productId);
+                                  print(element.quantity);
+                                }
+
+                                // for (var element in providerData.cartItemList) {
+                                //   decreaseStock(element.productId, element.quantity);
+                                // }
+
+                                ///_________DueUpdate______________________________________________________
+                                // getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
+
+                                EasyLoading.dismiss();
+                                // ignore: use_build_context_synchronously
+                                SalesInvoiceDetails(
+                                  transitionModel: transitionModel,
+                                  personalInformationModel: PersonalInformationModel(),
+                                ).launch(context);
+                              } catch (e) {
+                                EasyLoading.dismiss();
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
                               }
                             } else {
                               EasyLoading.showError('Add product first');

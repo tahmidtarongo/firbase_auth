@@ -249,6 +249,7 @@ class _SaleProductsState extends State<SaleProducts> {
                                 productId: products[i].productCode,
                                 productBrandName: products[i].brandName,
                                 stock: int.parse(products[i].productStock),
+                                uuid: products[i].productCode,
                               );
                               providerData.addToCartRiverPod(cartItem);
                               providerData.addProductsInSales(products[i]);

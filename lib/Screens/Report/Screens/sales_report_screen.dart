@@ -47,7 +47,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
               fontSize: 20.0,
             ),
           ),
-          actions: [],
           iconTheme: const IconThemeData(color: Colors.black),
           centerTitle: true,
           backgroundColor: Colors.white,

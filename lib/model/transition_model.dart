@@ -48,7 +48,7 @@ class TransitionModel {
     }
   }
 
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'customerName': customerName,
         'customerPhone': customerPhone,
         'customerType': customerType,
