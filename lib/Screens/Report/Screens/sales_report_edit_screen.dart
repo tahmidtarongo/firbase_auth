@@ -47,13 +47,13 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     //   returnAmount = widget.transitionModel.returnAmount!;
     //   discountAmount = widget.transitionModel.discountAmount!;
     // });
-    paidAmount = double.parse(widget.transitionModel.totalAmount.toString())-double.parse(widget.transitionModel.dueAmount.toString());
+    paidAmount = double.parse(widget.transitionModel.totalAmount.toString()) - double.parse(widget.transitionModel.dueAmount.toString());
     discountAmount = widget.transitionModel.discountAmount!;
     discountText.text = discountAmount.toString();
     paidText.text = paidAmount.toString();
     returnAmount = widget.transitionModel.returnAmount!;
-
   }
+
   TextEditingController discountText = TextEditingController();
   TextEditingController paidText = TextEditingController();
 
@@ -392,8 +392,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 width: context.width() / 4,
                                 child: TextField(
                                   controller: discountText,
-
-
                                   onChanged: (value) {
                                     if (value == '') {
                                       setState(() {
@@ -414,7 +412,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     }
                                   },
                                   textAlign: TextAlign.right,
-
                                   decoration: const InputDecoration(
                                     hintText: '0',
                                   ),
