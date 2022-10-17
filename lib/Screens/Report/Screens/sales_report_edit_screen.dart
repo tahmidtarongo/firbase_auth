@@ -10,24 +10,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
-import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
-import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_Edit_invoice_add_products.dart';
-import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
-import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:mobile_pos/model/personal_information_model.dart';
+import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Provider/printer_provider.dart';
 import '../../../Provider/product_provider.dart';
-import '../../../Provider/seles_report_provider.dart';
 import '../../../constant.dart';
 import '../../../model/add_to_cart_model.dart';
-import '../../../model/print_transaction_model.dart';
 import '../../Customers/Model/customer_model.dart';
-import '../../Home/home.dart';
 import '../../invoice_details/sales_invoice_details_screen.dart';
 
 // ignore: must_be_immutable
@@ -42,6 +36,7 @@ class SalesReportEditScreen extends StatefulWidget {
 class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   @override
   void initState() {
+    pastProducts = widget.transitionModel.productList!;
     // TODO: implement initState
     super.initState();
     InternetPopup().initialize(context: context);
@@ -66,6 +61,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   double returnAmount = 0;
   double dueAmount = 0;
   double subTotal = 0;
+
+  List<AddToCartModel> pastProducts = [];
 
   String? dropdownValue = 'Cash';
   String? selectedPaymentType;
@@ -98,8 +95,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   );
   DateTime selectedDate = DateTime.now();
   bool doNotCheckProducts = false;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -653,45 +648,58 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 List<CartItem> increaseStock = [];
                                 List<CartItem> decreaseStock = [];
 
-                                widget.transitionModel.productList?.forEach((pastElement) {
+                                for (var pastElement in pastProducts) {
                                   transitionModel.productList?.forEach((futureElement) {
                                     if (pastElement.productId == futureElement.productId) {
                                       if (pastElement.quantity < futureElement.quantity) {
                                         decreaseStock.add(
                                           CartItem(
+                                            productName: pastElement.productName,
                                             productId: pastElement.productId,
                                             quantity: futureElement.quantity - pastElement.quantity,
                                           ),
                                         );
+                                        return;
                                       }
                                       if (pastElement.quantity > futureElement.quantity) {
                                         increaseStock.add(
                                           CartItem(
+                                            productName: pastElement.productName,
                                             productId: pastElement.productId,
                                             quantity: pastElement.quantity - futureElement.quantity,
                                           ),
                                         );
+                                        return;
                                       }
                                     } else {
-                                      increaseStock.add(CartItem(productId: pastElement.productId, quantity: pastElement.quantity));
+                                      increaseStock.add(CartItem(
+                                        productName: pastElement.productName,
+                                        productId: pastElement.productId,
+                                        quantity: pastElement.quantity,
+                                      ));
+                                      return;
                                     }
                                   });
-                                });
+                                }
                                 transitionModel.productList?.forEach((futureElement) {
                                   widget.transitionModel.productList?.forEach((pastElement) {
-                                    decreaseStock.add(CartItem(productId: pastElement.productId, quantity: pastElement.quantity));
+                                    decreaseStock.add(CartItem(
+                                      productName: pastElement.productName,
+                                      productId: pastElement.productId,
+                                      quantity: pastElement.quantity,
+                                    ));
+                                    return;
                                   });
                                 });
 
-
-                                print('increaseStock');
-                                for (var element in increaseStock) {
-                                  print(element.productId);
-                                  print(element.quantity);
-                                }
                                 print('decreaseStock');
                                 for (var element in decreaseStock) {
-                                  print(element.productId);
+                                  print(element.productName);
+                                  print(element.quantity);
+                                }
+                                print('increaseStock');
+                                for (var element in increaseStock) {
+                                  print(element.productName);
                                   print(element.quantity);
                                 }
 
