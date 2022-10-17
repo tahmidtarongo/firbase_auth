@@ -63,6 +63,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   double subTotal = 0;
 
   List<AddToCartModel> pastProducts = [];
+  List<AddToCartModel> presentProducts = [];
+  List<AddToCartModel> increaseStockList = [];
+  List<AddToCartModel> decreaseStockList = [];
 
   String? dropdownValue = 'Cash';
   String? selectedPaymentType;
@@ -245,6 +248,18 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: providerData.cartItemList.length,
                             itemBuilder: (context, index) {
+                              int i =0;
+                              for (var element in pastProducts) {
+
+                                if (element.productId != providerData.cartItemList[index].productId) {
+                                  i++;
+
+                                }
+                                if(i == pastProducts.length){
+                                   decreaseStockList.contains(providerData.cartItemList[index].productId)?null :decreaseStockList.add(providerData.cartItemList[index]);
+                                }
+                              }
+
                               return Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10),
                                 child: ListTile(
@@ -619,7 +634,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                           onTap: () async {
                             if (providerData.cartItemList.isNotEmpty) {
                               try {
-                                EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                                // EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
                                 final userId = FirebaseAuth.instance.currentUser!.uid;
 
@@ -645,60 +660,98 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 // await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
 
                                 ///__________StockMange_________________________________________________
-                                List<CartItem> increaseStock = [];
-                                List<CartItem> decreaseStock = [];
+
+                                presentProducts = transitionModel.productList!;
 
                                 for (var pastElement in pastProducts) {
-                                  transitionModel.productList?.forEach((futureElement) {
+                                  int i = 0;
+                                  for (var futureElement in presentProducts) {
                                     if (pastElement.productId == futureElement.productId) {
-                                      if (pastElement.quantity < futureElement.quantity) {
-                                        decreaseStock.add(
-                                          CartItem(
-                                            productName: pastElement.productName,
-                                            productId: pastElement.productId,
-                                            quantity: futureElement.quantity - pastElement.quantity,
-                                          ),
-                                        );
-                                        return;
+                                      if (pastElement.quantity < futureElement.quantity && pastElement.quantity != futureElement.quantity) {
+                                        decreaseStockList.contains(pastElement.productId)
+                                            ? null
+                                            : decreaseStockList.add(
+                                                AddToCartModel(
+                                                  productName: pastElement.productName,
+                                                  productId: pastElement.productId,
+                                                  quantity: futureElement.quantity.toInt() - pastElement.quantity.toInt(),
+                                                ),
+                                              );
+                                      } else if (pastElement.quantity > futureElement.quantity && pastElement.quantity != futureElement.quantity) {
+                                        increaseStockList.contains(pastElement.productId)
+                                            ? null
+                                            : increaseStockList.add(
+                                                AddToCartModel(
+                                                  productName: pastElement.productName,
+                                                  productId: pastElement.productId,
+                                                  quantity: pastElement.quantity - futureElement.quantity,
+                                                ),
+                                              );
                                       }
-                                      if (pastElement.quantity > futureElement.quantity) {
-                                        increaseStock.add(
-                                          CartItem(
-                                            productName: pastElement.productName,
-                                            productId: pastElement.productId,
-                                            quantity: pastElement.quantity - futureElement.quantity,
-                                          ),
-                                        );
-                                        return;
-                                      }
+                                      break;
                                     } else {
-                                      increaseStock.add(CartItem(
-                                        productName: pastElement.productName,
-                                        productId: pastElement.productId,
-                                        quantity: pastElement.quantity,
-                                      ));
-                                      return;
+                                      i++;
+                                      if (i == presentProducts.length) {
+                                        increaseStockList.add(
+                                          AddToCartModel(
+                                            productName: pastElement.productName,
+                                            productId: pastElement.productId,
+                                            quantity: pastElement.quantity,
+                                          ),
+                                        );
+                                      }
                                     }
-                                  });
+                                  }
                                 }
-                                transitionModel.productList?.forEach((futureElement) {
-                                  widget.transitionModel.productList?.forEach((pastElement) {
-                                    decreaseStock.add(CartItem(
-                                      productName: pastElement.productName,
-                                      productId: pastElement.productId,
-                                      quantity: pastElement.quantity,
-                                    ));
-                                    return;
-                                  });
-                                });
+                                // for (var futureElement in presentProducts) {
+                                //   int i = 0;
+                                //   for (var pastElement in pastProducts) {
+                                //     if (futureElement.productId != pastElement.productId) {
+                                //       i++;
+                                //     }
+                                //     if (i == pastProducts.length) {
+                                //       decreaseStockList.add(
+                                //         AddToCartModel(
+                                //           productName: pastElement.productName,
+                                //           productId: pastElement.productId,
+                                //           quantity: pastElement.quantity,
+                                //         ),
+                                //       );
+                                //     }
+                                //   }
+                                // }
+                                // for (var futureElement in presentProducts) {
+                                //   for (var pastElement in pastProducts) {
+                                //     if (futureElement.productId != pastElement.productId) {
+                                //       decreaseStock.add(
+                                //         CartItem(
+                                //           productName: pastElement.productName,
+                                //           productId: pastElement.productId,
+                                //           quantity: pastElement.quantity,
+                                //         ),
+                                //       );
+                                //     }
+                                //     break;
+                                //   }
+                                // }
+                                // transitionModel.productList?.forEach((futureElement) {
+                                //   widget.transitionModel.productList?.forEach((pastElement) {
+                                //     decreaseStock.add(CartItem(
+                                //       productName: pastElement.productName,
+                                //       productId: pastElement.productId,
+                                //       quantity: pastElement.quantity,
+                                //     ));
+                                //     return;
+                                //   });
+                                // });
 
                                 print('decreaseStock');
-                                for (var element in decreaseStock) {
+                                for (var element in decreaseStockList) {
                                   print(element.productName);
                                   print(element.quantity);
                                 }
                                 print('increaseStock');
-                                for (var element in increaseStock) {
+                                for (var element in increaseStockList) {
                                   print(element.productName);
                                   print(element.quantity);
                                 }
@@ -712,10 +765,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
 
                                 EasyLoading.dismiss();
                                 // ignore: use_build_context_synchronously
-                                SalesInvoiceDetails(
-                                  transitionModel: transitionModel,
-                                  personalInformationModel: PersonalInformationModel(),
-                                ).launch(context);
+                                // SalesInvoiceDetails(
+                                //   transitionModel: transitionModel,
+                                //   personalInformationModel: PersonalInformationModel(),
+                                // ).launch(context);
                               } catch (e) {
                                 EasyLoading.dismiss();
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
