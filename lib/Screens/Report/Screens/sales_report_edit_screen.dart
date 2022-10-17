@@ -248,15 +248,22 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: providerData.cartItemList.length,
                             itemBuilder: (context, index) {
-                              int i =0;
+                              int i = 0;
                               for (var element in pastProducts) {
-
                                 if (element.productId != providerData.cartItemList[index].productId) {
                                   i++;
-
                                 }
-                                if(i == pastProducts.length){
-                                   decreaseStockList.contains(providerData.cartItemList[index].productId)?null :decreaseStockList.add(providerData.cartItemList[index]);
+                                if (i == pastProducts.length) {
+                                  bool isInTheList = false;
+                                  for (var element in decreaseStockList) {
+                                    if (element.productId == providerData.cartItemList[index].productId) {
+                                      element.quantity = providerData.cartItemList[index].quantity;
+                                      isInTheList = true;
+                                      break;
+                                    }
+                                  }
+
+                                  isInTheList ? null : decreaseStockList.add(providerData.cartItemList[index]);
                                 }
                               }
 
@@ -327,6 +334,16 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                       const SizedBox(width: 10),
                                       GestureDetector(
                                         onTap: () {
+                                          int i = 0;
+                                          for (var element in pastProducts) {
+                                            if (element.productId != providerData.cartItemList[index].productId) {
+                                              i++;
+                                            }
+                                            if (i == pastProducts.length) {
+                                              decreaseStockList.removeWhere((element) => element.productId == providerData.cartItemList[index].productId);
+                                            }
+                                          }
+
                                           providerData.deleteToCart(index);
                                         },
                                         child: Container(
@@ -460,22 +477,43 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
+                                'Previous Pay Amount',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                (double.parse(widget.transitionModel.totalAmount.toString()) -
+                                    double.parse(widget.transitionModel.dueAmount.toString()) +
+                                    double.parse(widget.transitionModel.returnAmount.toString())).toString(),
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
                                 'Paid Amount',
                                 style: TextStyle(fontSize: 16),
                               ),
                               SizedBox(
                                 width: context.width() / 4,
                                 child: TextField(
-                                  controller: paidText,
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     if (value == '') {
                                       setState(() {
-                                        paidAmount = 0;
+                                        paidAmount = (double.parse(widget.transitionModel.totalAmount.toString()) -
+                                            double.parse(widget.transitionModel.dueAmount.toString()) +
+                                            double.parse(widget.transitionModel.returnAmount.toString()));
                                       });
                                     } else {
                                       setState(() {
-                                        paidAmount = double.parse(value);
+                                        paidAmount = double.parse(value)+(double.parse(widget.transitionModel.totalAmount.toString()) -
+                                            double.parse(widget.transitionModel.dueAmount.toString()) +
+                                            double.parse(widget.transitionModel.returnAmount.toString()));
                                       });
                                     }
                                   },
@@ -634,7 +672,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                           onTap: () async {
                             if (providerData.cartItemList.isNotEmpty) {
                               try {
-                                // EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                                EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
                                 final userId = FirebaseAuth.instance.currentUser!.uid;
 
@@ -647,17 +685,17 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 transitionModel.paymentType = dropdownValue;
                                 transitionModel.invoiceNumber = invoice.toString();
 
-                                ///________updateInvoice__________________
-                                // String? key;
-                                // await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
-                                //   for (var element in value.children) {
-                                //     final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
-                                //     if (transitionModel.invoiceNumber == t.invoiceNumber) {
-                                //       key = element.key;
-                                //     }
-                                //   }
-                                // });
-                                // await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
+                                ///________________updateInvoice___________________________________________________________
+                                String? key;
+                                await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+                                  for (var element in value.children) {
+                                    final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
+                                    if (transitionModel.invoiceNumber == t.invoiceNumber) {
+                                      key = element.key;
+                                    }
+                                  }
+                                });
+                                await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
 
                                 ///__________StockMange_________________________________________________
 
@@ -756,19 +794,25 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                   print(element.quantity);
                                 }
 
-                                // for (var element in providerData.cartItemList) {
-                                //   decreaseStock(element.productId, element.quantity);
-                                // }
+                                ///_____________StockUpdate_______________________________________________________
+
+                                for (var element in decreaseStockList) {
+                                  decreaseStock(element.productId, element.quantity);
+                                }
+
+                                for (var element in increaseStockList) {
+                                  increaseStock(element.productId, element.quantity);
+                                }
 
                                 ///_________DueUpdate______________________________________________________
-                                // getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
+                                getSpecificCustomers(phoneNumber: widget.transitionModel.customerPhone, due: transitionModel.dueAmount!.toInt());
 
                                 EasyLoading.dismiss();
                                 // ignore: use_build_context_synchronously
-                                // SalesInvoiceDetails(
-                                //   transitionModel: transitionModel,
-                                //   personalInformationModel: PersonalInformationModel(),
-                                // ).launch(context);
+                                SalesInvoiceDetails(
+                                  transitionModel: transitionModel,
+                                  personalInformationModel: PersonalInformationModel(),
+                                ).launch(context);
                               } catch (e) {
                                 EasyLoading.dismiss();
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -819,6 +863,20 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     var data1 = await ref.child('$productPath/productStock').once();
     int stock = int.parse(data1.snapshot.value.toString());
     int remainStock = stock - quantity;
+
+    ref.child(productPath).update({'productStock': '$remainStock'});
+  }
+
+  void increaseStock(String productCode, int quantity) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final ref = FirebaseDatabase.instance.ref('$userId/Products/');
+
+    var data = await ref.orderByChild('productCode').equalTo(productCode).once();
+    String productPath = data.snapshot.value.toString().substring(1, 21);
+
+    var data1 = await ref.child('$productPath/productStock').once();
+    int stock = int.parse(data1.snapshot.value.toString());
+    int remainStock = stock + quantity;
 
     ref.child(productPath).update({'productStock': '$remainStock'});
   }
