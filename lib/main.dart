@@ -31,7 +31,9 @@ import 'package:mobile_pos/Screens/SplashScreen/splash_screen.dart';
 import 'Screens/Authentication/profile_setup.dart';
 import 'Screens/Due Calculation/due_calculation_contact_screen.dart';
 import 'Screens/Products/update_product.dart';
+import 'Screens/Purchase List/purchase_list_screen.dart';
 import 'Screens/Purchase/choose_supplier_screen.dart';
+import 'Screens/Sales List/sales_list_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -93,6 +95,8 @@ class MyApp extends StatelessWidget {
         '/Reports': (context) => const Reports(),
         '/Due List': (context) => const DueCalculationContactScreen(),
         '/PaymentOptions': (context) => const PaymentOptions(),
+        '/Sales List': (context) => const SalesListScreen(),
+        '/Purchase List': (context) => const PurchaseListScreen(),
       },
     );
   }

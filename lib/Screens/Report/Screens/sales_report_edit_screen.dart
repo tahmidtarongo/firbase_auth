@@ -501,19 +501,16 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                               SizedBox(
                                 width: context.width() / 4,
                                 child: TextField(
+                                  controller: paidText,
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     if (value == '') {
                                       setState(() {
-                                        paidAmount = (double.parse(widget.transitionModel.totalAmount.toString()) -
-                                            double.parse(widget.transitionModel.dueAmount.toString()) +
-                                            double.parse(widget.transitionModel.returnAmount.toString()));
+                                        paidAmount = 0;
                                       });
                                     } else {
                                       setState(() {
-                                        paidAmount = double.parse(value)+(double.parse(widget.transitionModel.totalAmount.toString()) -
-                                            double.parse(widget.transitionModel.dueAmount.toString()) +
-                                            double.parse(widget.transitionModel.returnAmount.toString()));
+                                        paidAmount = double.parse(value);
                                       });
                                     }
                                   },
@@ -741,58 +738,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     }
                                   }
                                 }
-                                // for (var futureElement in presentProducts) {
-                                //   int i = 0;
-                                //   for (var pastElement in pastProducts) {
-                                //     if (futureElement.productId != pastElement.productId) {
-                                //       i++;
-                                //     }
-                                //     if (i == pastProducts.length) {
-                                //       decreaseStockList.add(
-                                //         AddToCartModel(
-                                //           productName: pastElement.productName,
-                                //           productId: pastElement.productId,
-                                //           quantity: pastElement.quantity,
-                                //         ),
-                                //       );
-                                //     }
-                                //   }
-                                // }
-                                // for (var futureElement in presentProducts) {
-                                //   for (var pastElement in pastProducts) {
-                                //     if (futureElement.productId != pastElement.productId) {
-                                //       decreaseStock.add(
-                                //         CartItem(
-                                //           productName: pastElement.productName,
-                                //           productId: pastElement.productId,
-                                //           quantity: pastElement.quantity,
-                                //         ),
-                                //       );
-                                //     }
-                                //     break;
-                                //   }
-                                // }
-                                // transitionModel.productList?.forEach((futureElement) {
-                                //   widget.transitionModel.productList?.forEach((pastElement) {
-                                //     decreaseStock.add(CartItem(
-                                //       productName: pastElement.productName,
-                                //       productId: pastElement.productId,
-                                //       quantity: pastElement.quantity,
-                                //     ));
-                                //     return;
-                                //   });
-                                // });
-
-                                print('decreaseStock');
-                                for (var element in decreaseStockList) {
-                                  print(element.productName);
-                                  print(element.quantity);
-                                }
-                                print('increaseStock');
-                                for (var element in increaseStockList) {
-                                  print(element.productName);
-                                  print(element.quantity);
-                                }
 
                                 ///_____________StockUpdate_______________________________________________________
 
@@ -805,7 +750,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 }
 
                                 ///_________DueUpdate______________________________________________________
-                                getSpecificCustomers(phoneNumber: widget.transitionModel.customerPhone, due: transitionModel.dueAmount!.toInt());
+                                  getSpecificCustomers(phoneNumber: widget.transitionModel.customerPhone, due: (widget.transitionModel.dueAmount! -dueAmount).toInt());
+
 
                                 EasyLoading.dismiss();
                                 // ignore: use_build_context_synchronously

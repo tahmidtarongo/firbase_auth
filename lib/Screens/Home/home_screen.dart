@@ -293,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 20
                 ),
                 Container(
                   height: 1,
@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.grey.shade300,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 10
                 ),
 
                 // Padding(
