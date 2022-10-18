@@ -7,7 +7,7 @@ import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
-import 'package:mobile_pos/Screens/Report/Screens/sales_report_edit_screen.dart';
+import 'package:mobile_pos/Screens/Sales%20List/sales_report_edit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -205,28 +205,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                     FeatherIcons.share,
                                                     color: Colors.grey,
                                                   )),
-                                              PopupMenuButton(
-                                                onSelected: (value) {
-                                                  if (value == 'Edit') {
-                                                    cart.clearCart();
-                                                    SalesReportEditScreen(
-                                                      transitionModel: reTransaction[index],
-                                                    ).launch(context);
-                                                  }
-                                                },
-                                                itemBuilder: (BuildContext bc) {
-                                                  return const [
-                                                    PopupMenuItem(
-                                                      value: 'Edit',
-                                                      child: Text("Edit"),
-                                                    ),
-                                                    PopupMenuItem(
-                                                      value: 'Delete',
-                                                      child: Text("Delete"),
-                                                    ),
-                                                  ];
-                                                },
-                                              ),
                                             ],
                                           );
                                         }, error: (e, stack) {

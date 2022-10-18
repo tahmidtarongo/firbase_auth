@@ -35,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const Color(0xffEDFAFF),
     const Color(0xffFFF6ED),
     const Color(0xffFFF6ED),
+    const Color(0xffEAFFEA),
+    const Color(0xffEDFAFF),
   ];
 
   String customerPackage = '';
@@ -292,17 +294,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20
-                ),
+                const SizedBox(height: 20),
                 Container(
                   height: 1,
                   width: double.infinity,
                   color: Colors.grey.shade300,
                 ),
-                const SizedBox(
-                  height: 10
-                ),
+                const SizedBox(height: 10),
 
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),

@@ -215,12 +215,6 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                     FeatherIcons.share,
                                                     color: Colors.grey,
                                                   )),
-                                              IconButton(
-                                                  onPressed: () => toast('Coming Soon'),
-                                                  icon: const Icon(
-                                                    FeatherIcons.moreVertical,
-                                                    color: Colors.grey,
-                                                  )),
                                             ],
                                           );
                                         }, error: (e, stack) {

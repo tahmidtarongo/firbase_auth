@@ -11,9 +11,9 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../Provider/add_to_cart.dart';
-import '../../../model/add_to_cart_model.dart';
-import '../../../model/transition_model.dart';
+import '../../Provider/add_to_cart.dart';
+import '../../model/add_to_cart_model.dart';
+import '../../model/transition_model.dart';
 
 // ignore: must_be_immutable
 class EditSaleInvoiceSaleProducts extends StatefulWidget {

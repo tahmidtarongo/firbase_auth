@@ -213,12 +213,6 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                     FeatherIcons.share,
                                                     color: Colors.grey,
                                                   )),
-                                              IconButton(
-                                                  onPressed: () => toast('Coming Soon'),
-                                                  icon: const Icon(
-                                                    FeatherIcons.moreVertical,
-                                                    color: Colors.grey,
-                                                  )),
                                             ],
                                           );
                                         }, error: (e, stack) {
