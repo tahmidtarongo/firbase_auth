@@ -8,7 +8,7 @@ import '../model/add_to_cart_model.dart';
 final cartNotifier = ChangeNotifierProvider((ref) => CartNotifier());
 
 class CartNotifier extends ChangeNotifier {
-  final List<AddToCartModel> cartItemList = [];
+  List<AddToCartModel> cartItemList = [];
   double discount = 0;
   String discountType = 'USD';
 
@@ -66,6 +66,10 @@ class CartNotifier extends ChangeNotifier {
       cartItemList.add(cartItem);
     }
     notifyListeners();
+  }
+
+  addToCartRiverPodForEdit(List<AddToCartModel> cartItem) {
+    cartItemList = cartItem;
   }
 
   deleteToCart(int index) {

@@ -5,7 +5,7 @@ import 'package:mobile_pos/model/product_model.dart';
 final cartNotifierPurchase = ChangeNotifierProvider((ref) => CartNotifier());
 
 class CartNotifier extends ChangeNotifier {
-  final List<ProductModel> cartItemPurchaseList = [];
+  List<ProductModel> cartItemPurchaseList = [];
   double discount = 0;
   String discountType = 'USD';
 
@@ -19,8 +19,7 @@ class CartNotifier extends ChangeNotifier {
   double getTotalAmount() {
     double totalAmountOfCart = 0;
     for (var element in cartItemPurchaseList) {
-      totalAmountOfCart = totalAmountOfCart +
-          (double.parse(element.productPurchasePrice.toString()) * double.parse(element.productStock.toString()));
+      totalAmountOfCart = totalAmountOfCart + (double.parse(element.productPurchasePrice.toString()) * double.parse(element.productStock.toString()));
     }
     return totalAmountOfCart;
   }
@@ -42,11 +41,16 @@ class CartNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  addToCartRiverPodForEdit(List<ProductModel> cartItem) {
+    cartItemPurchaseList = cartItem;
+  }
+
   clearCart() {
     cartItemPurchaseList.clear();
     clearDiscount();
     notifyListeners();
   }
+
   deleteToCart(int index) {
     cartItemPurchaseList.removeAt(index);
     notifyListeners();

@@ -111,42 +111,46 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
       final personalData = consumerRef.watch(profileDetailsProvider);
       final productList = consumerRef.watch(productProvider);
 
-      !doNotCheckProducts
-          ? productList.value?.forEach((products) {
-              String sentProductPrice = '';
-              widget.transitionModel.productList?.forEach((element) {
-                if (element.productId == products.productCode) {
-                  if (widget.transitionModel.customerType.contains('Retailer')) {
-                    sentProductPrice = products.productSalePrice;
-                  } else if (widget.transitionModel.customerType.contains('Dealer')) {
-                    sentProductPrice = products.productDealerPrice;
-                  } else if (widget.transitionModel.customerType.contains('Wholesaler')) {
-                    sentProductPrice = products.productWholeSalePrice;
-                  } else if (widget.transitionModel.customerType.contains('Supplier')) {
-                    sentProductPrice = products.productPurchasePrice;
-                  } else if (widget.transitionModel.customerType.contains('Guest')) {
-                    sentProductPrice = products.productSalePrice;
-                    isGuestCustomer = true;
-                  }
+      if (!doNotCheckProducts) {
+        List<AddToCartModel> list = [];
+        productList.value?.forEach((products) {
+          String sentProductPrice = '';
 
-                  AddToCartModel cartItem = AddToCartModel(
-                    productName: products.productName,
-                    subTotal: sentProductPrice,
-                    quantity: element.quantity,
-                    productId: products.productCode,
-                    productBrandName: products.brandName,
-                    stock: int.parse(products.productStock),
-                  );
-                  providerData.addToCartRiverPod(cartItem);
-                  providerData.addProductsInSales(products);
-                }
-              });
-
-              if (widget.transitionModel.productList?.length == providerData.cartItemList.length) {
-                doNotCheckProducts = true;
+          widget.transitionModel.productList?.forEach((element) {
+            if (element.productId == products.productCode) {
+              if (widget.transitionModel.customerType.contains('Retailer')) {
+                sentProductPrice = products.productSalePrice;
+              } else if (widget.transitionModel.customerType.contains('Dealer')) {
+                sentProductPrice = products.productDealerPrice;
+              } else if (widget.transitionModel.customerType.contains('Wholesaler')) {
+                sentProductPrice = products.productWholeSalePrice;
+              } else if (widget.transitionModel.customerType.contains('Supplier')) {
+                sentProductPrice = products.productPurchasePrice;
+              } else if (widget.transitionModel.customerType.contains('Guest')) {
+                sentProductPrice = products.productSalePrice;
+                isGuestCustomer = true;
               }
-            })
-          : null;
+
+              AddToCartModel cartItem = AddToCartModel(
+                productName: products.productName,
+                subTotal: sentProductPrice,
+                quantity: element.quantity,
+                productId: products.productCode,
+                productBrandName: products.brandName,
+                stock: int.parse(products.productStock),
+              );
+              list.add(cartItem);
+
+              // providerData.addProductsInSales(products);
+            }
+          });
+
+          if (widget.transitionModel.productList?.length == list.length) {
+            providerData.addToCartRiverPodForEdit(list);
+            doNotCheckProducts = true;
+          }
+        });
+      }
       return personalData.when(data: (data) {
         // invoice = data.invoiceCounter!.toInt();
         return Scaffold(
@@ -780,11 +784,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                   consumerRef.refresh(profileDetailsProvider);
 
                                   EasyLoading.dismiss();
+
                                   // ignore: use_build_context_synchronously
-                                  SalesInvoiceDetails(
-                                    transitionModel: transitionModel,
-                                    personalInformationModel: PersonalInformationModel(),
-                                  ).launch(context);
+                                  Navigator.pop(context);
                                 } catch (e) {
                                   EasyLoading.dismiss();
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

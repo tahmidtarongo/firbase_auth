@@ -58,7 +58,7 @@ class ProductModel {
         productManufacturer = json['productManufacturer'].toString(),
         productPicture = json['productPicture'].toString();
 
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'productName': productName,
         'productCategory': productCategory,
         'size': size,
