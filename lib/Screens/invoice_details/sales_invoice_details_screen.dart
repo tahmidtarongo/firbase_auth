@@ -213,7 +213,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalAmount}',
+                          '\$ ${widget.transitionModel.totalAmount!.toDouble()+widget.transitionModel.discountAmount!.toDouble()}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -247,7 +247,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Total Discount',
+                        'Discount',
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),

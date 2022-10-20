@@ -9,17 +9,16 @@ const kPremiumPlanColor = Color(0xFF8752EE);
 const kPremiumPlanColor2 = Color(0xFFFF5F00);
 bool connected = false;
 bool isPrintEnable = true;
-List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay'];
+List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay', 'Due'];
 
 bool isExpiringInFiveDays = false;
 bool isExpiringInOneDays = false;
 
-const String paypalClientId =
-    'ASWARYNRARFIbKf8U4u5Bq9-8tYVszzpkfRhohErQil3izlffjVQE-L0K2M0_bobdPhj2Qyf7uHoGctI';
-const String paypalClientSecret =
-    'EDNYPyTGpziJzfVhqsf75iodgFGSCOZAKXTHuD9YR5PWt5ruwc1HIzgT6STEznFfGro5E8h466i0sPtb';
-const bool sandbox = true;
+const String appVersion = '1.0.0';
 
+const String paypalClientId = 'ASWARYNRARFIbKf8U4u5Bq9-8tYVszzpkfRhohErQil3izlffjVQE-L0K2M0_bobdPhj2Qyf7uHoGctI';
+const String paypalClientSecret = 'EDNYPyTGpziJzfVhqsf75iodgFGSCOZAKXTHuD9YR5PWt5ruwc1HIzgT6STEznFfGro5E8h466i0sPtb';
+const bool sandbox = true;
 
 const kButtonDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(
@@ -55,14 +54,7 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
 );
 
-List<String> businessCategory = [
-  'Fashion Store',
-  'Electronics Store',
-  'Computer Store',
-  'Vegetable Store',
-  'Sweet Store',
-  'Meat Store'
-];
+List<String> businessCategory = ['Fashion Store', 'Electronics Store', 'Computer Store', 'Vegetable Store', 'Sweet Store', 'Meat Store'];
 List<String> language = ['English'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];

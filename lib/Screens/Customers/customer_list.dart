@@ -33,7 +33,7 @@ class _CustomerListState extends State<CustomerList> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Customer List',
+          'Parties List',
           style: GoogleFonts.poppins(
             color: Colors.black,
           ),

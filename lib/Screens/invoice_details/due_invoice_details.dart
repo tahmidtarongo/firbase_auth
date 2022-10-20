@@ -196,7 +196,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                   const SizedBox(height: 10.0),
                   Center(
                     child: Text(
-                      'Thank you for your purchase',
+                      'Thank you for your Due payment',
                       maxLines: 1,
                       style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,

@@ -174,7 +174,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         initialValue: widget.customerModel.customerName,
                         decoration: const InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Customer Name',
+                          labelText: 'Supplier Name',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -197,11 +197,23 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                               color: Color(0xffEAEFFA),
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Item Added',
-                                style: TextStyle(fontSize: 16),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: SizedBox(
+                                width: context.width() / 1.35,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text(
+                                      'Item Added',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Text(
+                                      'Quantity',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
                               ),
                             )),
                         ListView.builder(
@@ -219,7 +231,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text('Quantity : ${providerData.cartItemPurchaseList[index].productStock}'),
+                                      Text(
+                                        providerData.cartItemPurchaseList[index].productStock,
+                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                      ),
                                       const SizedBox(width: 10),
                                       GestureDetector(
                                         onTap: () {

@@ -575,7 +575,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'SalesPro Pos V-1.0.0',
+                        'MaanPro V-$appVersion',
                         style: GoogleFonts.poppins(
                           color: kGreyTextColor,
                           fontSize: 16.0,

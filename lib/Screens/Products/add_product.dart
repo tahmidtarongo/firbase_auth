@@ -61,7 +61,9 @@ class _AddProductState extends State<AddProduct> {
   final ImagePicker _picker = ImagePicker();
   XFile? pickedImage;
   List<String> codeList = [];
+  List<String> productNameList = [];
   String promoCodeHint = 'Enter Product Code';
+  TextEditingController productCodeController = TextEditingController();
 
   int loop = 0;
   File imageFile = File('No File');
@@ -147,7 +149,8 @@ class _AddProductState extends State<AddProduct> {
                   itemBuilder: (context, snapshot, animation, index) {
                     final json = snapshot.value as Map<dynamic, dynamic>;
                     final product = ProductModel.fromJson(json);
-                    codeList.add(product.productCode);
+                    codeList.add(product.productCode.toLowerCase());
+                    productNameList.add(product.productName.toLowerCase());
                     return Container();
                   },
                 ).visible(loop <= 1),
@@ -350,12 +353,24 @@ class _AddProductState extends State<AddProduct> {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: AppTextField(
+                          controller: productCodeController,
                           textFieldType: TextFieldType.NAME,
                           onChanged: (value) {
                             setState(() {
                               productCode = value;
                               promoCodeHint = value;
                             });
+                          },
+                          onFieldSubmitted: (value) {
+                            if (codeList.contains(value)) {
+                              EasyLoading.showError('This Product Already added!');
+                              productCodeController.clear();
+                            } else {
+                              setState(() {
+                                productCode = value;
+                                promoCodeHint = value;
+                              });
+                            }
                           },
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -721,46 +736,50 @@ class _AddProductState extends State<AddProduct> {
                   buttontext: 'Save and Publish',
                   buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                   onPressed: () async {
-                    try {
-                      EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                    if (!codeList.contains(productCode.toLowerCase()) && !productNameList.contains(productName.toLowerCase())) {
+                      try {
+                        EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
-                      imagePath == 'No Data' ? null : await uploadFile(imagePath);
-                      // ignore: no_leading_underscores_for_local_identifiers
-                      final DatabaseReference _productInformationRef = FirebaseDatabase.instance
-                          // ignore: deprecated_member_use
-                          .reference()
-                          .child(FirebaseAuth.instance.currentUser!.uid)
-                          .child('Products');
-                      ProductModel productModel = ProductModel(
-                        productName,
-                        productCategory,
-                        size,
-                        color,
-                        weight,
-                        capacity,
-                        type,
-                        brandName,
-                        productCode,
-                        productStock,
-                        productUnit,
-                        productSalePrice,
-                        productPurchasePrice,
-                        productDiscount,
-                        productWholeSalePrice,
-                        productDealerPrice,
-                        productManufacturer,
-                        productPicture,
-                      );
-                      await _productInformationRef.push().set(productModel.toJson());
-                      decreaseSubscriptionSale();
-                      EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
-                      ref.refresh(productProvider);
-                      Future.delayed(const Duration(milliseconds: 100), () {
-                        const Home().launch(context, isNewTask: true);
-                      });
-                    } catch (e) {
-                      EasyLoading.dismiss();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                        imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                        // ignore: no_leading_underscores_for_local_identifiers
+                        final DatabaseReference _productInformationRef = FirebaseDatabase.instance
+                            // ignore: deprecated_member_use
+                            .reference()
+                            .child(FirebaseAuth.instance.currentUser!.uid)
+                            .child('Products');
+                        ProductModel productModel = ProductModel(
+                          productName,
+                          productCategory,
+                          size,
+                          color,
+                          weight,
+                          capacity,
+                          type,
+                          brandName,
+                          productCode,
+                          productStock,
+                          productUnit,
+                          productSalePrice,
+                          productPurchasePrice,
+                          productDiscount,
+                          productWholeSalePrice,
+                          productDealerPrice,
+                          productManufacturer,
+                          productPicture,
+                        );
+                        await _productInformationRef.push().set(productModel.toJson());
+                        decreaseSubscriptionSale();
+                        EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                        ref.refresh(productProvider);
+                        Future.delayed(const Duration(milliseconds: 100), () {
+                          const Home().launch(context, isNewTask: true);
+                        });
+                      } catch (e) {
+                        EasyLoading.dismiss();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                      }
+                    } else {
+                      EasyLoading.showError('Product Code or Name are already added!');
                     }
                   },
                   buttonTextColor: Colors.white,

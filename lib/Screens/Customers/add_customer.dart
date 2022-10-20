@@ -50,6 +50,7 @@ class _AddCustomerState extends State<AddCustomer> {
   double progress = 0.0;
   bool isPhoneAlready = false;
   XFile? pickedImage;
+  TextEditingController phoneText = TextEditingController();
   File imageFile = File('No File');
   String imagePath = 'No Data';
   Future<void> uploadFile(String filePath) async {
@@ -97,6 +98,7 @@ class _AddCustomerState extends State<AddCustomer> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: AppTextField(
+                    controller: phoneText,
                     textFieldType: TextFieldType.PHONE,
                     onChanged: (value) {
                       setState(() {
@@ -234,7 +236,6 @@ class _AddCustomerState extends State<AddCustomer> {
                   animationDuration: const Duration(milliseconds: 500),
                   elevation: 0,
                   dividerColor: Colors.white,
-
                   children: [
                     ExpansionPanel(
                       headerBuilder: (BuildContext context, bool isExpanded) {
@@ -355,13 +356,13 @@ class _AddCustomerState extends State<AddCustomer> {
                                     borderRadius: const BorderRadius.all(Radius.circular(120)),
                                     image: imagePath == 'No Data'
                                         ? DecorationImage(
-                                      image: NetworkImage(profilePicture),
-                                      fit: BoxFit.cover,
-                                    )
+                                            image: NetworkImage(profilePicture),
+                                            fit: BoxFit.cover,
+                                          )
                                         : DecorationImage(
-                                      image: FileImage(imageFile),
-                                      fit: BoxFit.cover,
-                                    ),
+                                            image: FileImage(imageFile),
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
                                 ),
                                 Positioned(
@@ -451,7 +452,7 @@ class _AddCustomerState extends State<AddCustomer> {
                         if (element.phoneNumber == phoneNumber) {
                           EasyLoading.showError('Phone number already exist');
                           isPhoneAlready = true;
-                          Navigator.pop(context);
+                          phoneText.clear();
                         }
                       }
                       Future.delayed(const Duration(milliseconds: 500), () async {

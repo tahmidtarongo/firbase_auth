@@ -253,7 +253,6 @@ class _SaleProductsState extends State<SaleProducts> {
                               );
                               providerData.addToCartRiverPod(cartItem);
                               providerData.addProductsInSales(products[i]);
-                              EasyLoading.showSuccess('Added To Cart');
                               Navigator.pop(context);
                             }
                           },

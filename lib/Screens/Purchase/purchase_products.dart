@@ -68,7 +68,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Sales Details',
+            'Products List',
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -160,19 +160,25 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Text(
-                                                'Add Items',
-                                                style: TextStyle(fontSize: 16),
-                                              ),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  icon: const Icon(Icons.cancel))
-                                            ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(bottom: 10),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  'Add Items',
+                                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.cancel,
+                                                      color: kMainColor,
+                                                    )),
+                                              ],
+                                            ),
                                           ),
                                           Container(
                                             height: 1,

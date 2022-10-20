@@ -205,16 +205,17 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Center(
                   child: Text(
-                    'Powered By MaanTheme',
+                    'Powered By Maan Technology',
                     style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 20.0),
                   ),
                 ),
                 Center(
                   child: Text(
-                    'V 2.0.0',
+                    'V $appVersion',
                     style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 15.0),
                   ),
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ],
