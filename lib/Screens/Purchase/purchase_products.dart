@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_cart/flutter_cart.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
@@ -102,8 +103,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Product Code',
-                            hintText:
-                                productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
+                            hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
                             border: const OutlineInputBorder(),
                           ),
                         ),
@@ -153,6 +153,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                 context: context,
                                 builder: (_) {
                                   ProductModel tempProductModel = products[i];
+                                  tempProductModel.productStock = '0';
                                   return AlertDialog(
                                       content: SizedBox(
                                     child: SingleChildScrollView(
@@ -315,18 +316,22 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                           const SizedBox(height: 20),
                                           GestureDetector(
                                             onTap: () {
-                                              providerData.addToCartRiverPod(tempProductModel);
-                                              providerData.addProductsInSales(products[i]);
-                                              ref.refresh(productProvider);
-                                              Navigator.pop(context);
-                                              AddPurchaseScreen(customerModel: widget.customerModel!).launch(context);
+                                              if (tempProductModel.productStock != '0') {
+                                                providerData.addToCartRiverPod(tempProductModel);
+                                                providerData.addProductsInSales(products[i]);
+                                                ref.refresh(productProvider);
+                                                int count = 0;
+                                                Navigator.popUntil(context, (route) {
+                                                  return count++ == 2;
+                                                });
+                                              } else {
+                                                EasyLoading.showError('Please add quantity');
+                                              }
                                             },
                                             child: Container(
                                               height: 60,
                                               width: context.width(),
-                                              decoration: const BoxDecoration(
-                                                  color: kMainColor,
-                                                  borderRadius: BorderRadius.all(Radius.circular(15))),
+                                              decoration: const BoxDecoration(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(15))),
                                               child: const Center(
                                                 child: Text(
                                                   'Save',
@@ -371,10 +376,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                             productDescription: products[i].brandName,
                             stock: products[i].productStock,
                             productImage: products[i].productPicture,
-                          ).visible((products[i].productCode == productCode ||
-                                  productCode == '0000' ||
-                                  productCode == '-1') &&
-                              productPrice != '0'),
+                          ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
                         );
                       });
                 }, error: (e, stack) {
@@ -393,13 +395,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
 
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  ProductCard(
-      {Key? key,
-      required this.productTitle,
-      required this.productDescription,
-      required this.stock,
-      required this.productImage})
-      : super(key: key);
+  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.stock, required this.productImage}) : super(key: key);
 
   // final Product product;
   String productImage, productTitle, productDescription, stock;

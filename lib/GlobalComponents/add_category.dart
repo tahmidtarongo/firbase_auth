@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/Model/category_model.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
-import 'package:mobile_pos/Provider/category_provide.dart';
+import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -160,9 +160,9 @@ class _AddCategoryState extends State<AddCategory> {
                   onPressed: () async {
                     bool isAlreadyAdded = false;
                     allCategory.value?.forEach((element) {
-                      if (element.categoryName.contains(
-                        categoryName,
-                      )) {
+                      if (element.categoryName.toLowerCase().contains(
+                            categoryName.toLowerCase(),
+                          )) {
                         isAlreadyAdded = true;
                       }
                     });

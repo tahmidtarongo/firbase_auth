@@ -63,7 +63,7 @@ List<String> businessCategory = [
   'Sweet Store',
   'Meat Store'
 ];
-List<String> language = ['English', 'Bengali', 'Hindi', 'Urdu', 'French', 'Spanish'];
+List<String> language = ['English'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];
 

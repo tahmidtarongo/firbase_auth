@@ -6,7 +6,6 @@ import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
-import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Sales%20List/sales_report_edit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -119,13 +118,18 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                       'Total : \$ ${reTransaction[index].totalAmount.toString()}',
                                       style: const TextStyle(color: Colors.grey),
                                     ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                      style: const TextStyle(color: Colors.grey),
+                                    ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'Due: \$ ${reTransaction[index].dueAmount.toString()}',
                                           style: const TextStyle(fontSize: 16),
-                                        ),
+                                        ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                         personalData.when(data: (data) {
                                           return Row(
                                             children: [

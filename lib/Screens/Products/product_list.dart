@@ -57,20 +57,20 @@ class _ProductListState extends State<ProductList> {
                         leading: Container(
                           height: 50,
                           width: 50,
-                          // decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.all(Radius.circular(90)),
-                          //     image: DecorationImage(
-                          //       image: NetworkImage(
-                          //          products[i].productPicture,
-                          //       ),
-                          //       fit: BoxFit.cover,
-                          //     )),
-                          child: CachedNetworkImage(
-                            imageUrl: products[i].productPicture,
-                            placeholder: (context, url) => const SizedBox(height: 50, width: 50, ),
-                            errorWidget: (context, url, error) => const Icon(Icons.error),
-                            fit: BoxFit.cover,
-                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(90)),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                   products[i].productPicture,
+                                ),
+                                fit: BoxFit.cover,
+                              )),
+                          // child: CachedNetworkImage(
+                          //   imageUrl: products[i].productPicture,
+                          //   placeholder: (context, url) => const SizedBox(height: 50, width: 50, ),
+                          //   errorWidget: (context, url, error) => const Icon(Icons.error),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         title: Text(products[i].productName),
                         subtitle: Text("Stock : ${products[i].productStock}"),

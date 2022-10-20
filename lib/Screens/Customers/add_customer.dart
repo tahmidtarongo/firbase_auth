@@ -226,10 +226,15 @@ class _AddCustomerState extends State<AddCustomer> {
                   ),
                 ),
                 ExpansionPanelList(
-                  expansionCallback: (int index, bool isExpanded) {},
-                  animationDuration: const Duration(seconds: 1),
+                  expansionCallback: (int index, bool isExpanded) {
+                    setState(() {
+                      expanded == false ? expanded = true : expanded = false;
+                    });
+                  },
+                  animationDuration: const Duration(milliseconds: 500),
                   elevation: 0,
                   dividerColor: Colors.white,
+
                   children: [
                     ExpansionPanel(
                       headerBuilder: (BuildContext context, bool isExpanded) {

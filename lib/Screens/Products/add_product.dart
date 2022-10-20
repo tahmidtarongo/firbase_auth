@@ -61,7 +61,7 @@ class _AddProductState extends State<AddProduct> {
   final ImagePicker _picker = ImagePicker();
   XFile? pickedImage;
   List<String> codeList = [];
-  String promoCodeHint = 'Promo Code';
+  String promoCodeHint = 'Enter Product Code';
 
   int loop = 0;
   File imageFile = File('No File');
@@ -479,7 +479,7 @@ class _AddProductState extends State<AddProduct> {
                           },
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Sale Price',
+                            labelText: 'MRP',
                             hintText: '\$234.09',
                             border: OutlineInputBorder(),
                           ),
@@ -549,7 +549,7 @@ class _AddProductState extends State<AddProduct> {
                           border: OutlineInputBorder(),
                         ),
                       ),
-                    )),
+                    )).visible(false),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),

@@ -37,8 +37,7 @@ class _EditProfileState extends State<EditProfile> {
   // ignore: prefer_typing_uninitialized_variables
   var dialogContext;
   final ImagePicker _picker = ImagePicker();
-  late final XFile? pickedImage;
-  late final XFile? pickedCameraImage;
+  XFile? pickedImage;
   File imageFile = File('No File');
   String imagePath = 'No Data';
 
@@ -170,10 +169,12 @@ class _EditProfileState extends State<EditProfile> {
                                     GestureDetector(
                                       onTap: () async {
                                         pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+
                                         setState(() {
                                           imageFile = File(pickedImage!.path);
                                           imagePath = pickedImage!.path;
                                         });
+
                                         Future.delayed(const Duration(milliseconds: 100), () {
                                           Navigator.pop(context);
                                         });
@@ -234,6 +235,88 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           );
                         });
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return Dialog(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(12.0),
+                    //         ),
+                    //         // ignore: sized_box_for_whitespace
+                    //         child: Container(
+                    //           height: 200.0,
+                    //           width: MediaQuery.of(context).size.width - 80,
+                    //           child: Center(
+                    //             child: Row(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: [
+                    //                 GestureDetector(
+                    //                   onTap: () async {
+                    //                     pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                    //                     setState(() {
+                    //                       imageFile = File(pickedImage!.path);
+                    //                       imagePath = pickedImage!.path;
+                    //                     });
+                    //                     Future.delayed(const Duration(milliseconds: 100), () {
+                    //                       Navigator.pop(context);
+                    //                     });
+                    //                   },
+                    //                   child: Column(
+                    //                     mainAxisAlignment: MainAxisAlignment.center,
+                    //                     children: [
+                    //                       const Icon(
+                    //                         Icons.photo_library_rounded,
+                    //                         size: 60.0,
+                    //                         color: kMainColor,
+                    //                       ),
+                    //                       Text(
+                    //                         'Gallery',
+                    //                         style: GoogleFonts.poppins(
+                    //                           fontSize: 20.0,
+                    //                           color: kMainColor,
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //                 const SizedBox(
+                    //                   width: 40.0,
+                    //                 ),
+                    //                 GestureDetector(
+                    //                   onTap: () async {
+                    //                     pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                    //                     setState(() {
+                    //                       imageFile = File(pickedImage!.path);
+                    //                       imagePath = pickedImage!.path;
+                    //                     });
+                    //                     Future.delayed(const Duration(milliseconds: 100), () {
+                    //                       Navigator.pop(context);
+                    //                     });
+                    //                   },
+                    //                   child: Column(
+                    //                     mainAxisAlignment: MainAxisAlignment.center,
+                    //                     children: [
+                    //                       const Icon(
+                    //                         Icons.camera,
+                    //                         size: 60.0,
+                    //                         color: kGreyTextColor,
+                    //                       ),
+                    //                       Text(
+                    //                         'Camera',
+                    //                         style: GoogleFonts.poppins(
+                    //                           fontSize: 20.0,
+                    //                           color: kGreyTextColor,
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     });
                   },
                   child: Stack(
                     children: [
@@ -245,13 +328,13 @@ class _EditProfileState extends State<EditProfile> {
                           borderRadius: const BorderRadius.all(Radius.circular(120)),
                           image: imagePath == 'No Data'
                               ? DecorationImage(
-                            image: NetworkImage(profilePicture),
-                            fit: BoxFit.cover,
-                          )
+                                  image: NetworkImage(profilePicture),
+                                  fit: BoxFit.cover,
+                                )
                               : DecorationImage(
-                            image: FileImage(imageFile),
-                            fit: BoxFit.cover,
-                          ),
+                                  image: FileImage(imageFile),
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                       Positioned(

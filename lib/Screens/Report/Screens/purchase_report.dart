@@ -28,6 +28,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
     super.initState();
     InternetPopup().initialize(context: context);
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -101,10 +102,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                               borderRadius: const BorderRadius.all(Radius.circular(10))),
                                           child: Text(
                                             reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
-                                            style: TextStyle(
-                                                color: reTransaction[index].dueAmount! <= 0
-                                                    ? const Color(0xff0dbf7d)
-                                                    : const Color(0xFFED1A3B)),
+                                            style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                           ),
                                         ),
                                         Text(
@@ -118,13 +116,18 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                       'Total : \$ ${reTransaction[index].totalAmount.toString()}',
                                       style: const TextStyle(color: Colors.grey),
                                     ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                      style: const TextStyle(color: Colors.grey),
+                                    ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'Due: \$ ${reTransaction[index].dueAmount.toString()}',
                                           style: const TextStyle(fontSize: 16),
-                                        ),
+                                        ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                         personalData.when(data: (data) {
                                           return Row(
                                             children: [
@@ -133,8 +136,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                     ///________Print_______________________________________________________
                                                     await printerData.getBluetooth();
                                                     PrintPurchaseTransactionModel model = PrintPurchaseTransactionModel(
-                                                        purchaseTransitionModel: reTransaction[index],
-                                                        personalInformationModel: data);
+                                                        purchaseTransitionModel: reTransaction[index], personalInformationModel: data);
                                                     if (connected) {
                                                       await printerData.printTicket(
                                                         printTransactionModel: model,
@@ -153,37 +155,29 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                                     children: [
                                                                       ListView.builder(
                                                                         shrinkWrap: true,
-                                                                        itemCount: printerData
-                                                                                .availableBluetoothDevices.isNotEmpty
-                                                                            ? printerData
-                                                                                .availableBluetoothDevices.length
+                                                                        itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                            ? printerData.availableBluetoothDevices.length
                                                                             : 0,
                                                                         itemBuilder: (context, index) {
                                                                           return ListTile(
                                                                             onTap: () async {
-                                                                              String select = printerData
-                                                                                  .availableBluetoothDevices[index];
+                                                                              String select = printerData.availableBluetoothDevices[index];
                                                                               List list = select.split("#");
                                                                               // String name = list[0];
                                                                               String mac = list[1];
-                                                                              bool isConnect =
-                                                                                  await printerData.setConnect(mac);
+                                                                              bool isConnect = await printerData.setConnect(mac);
                                                                               isConnect
                                                                                   // ignore: use_build_context_synchronously
                                                                                   ? finish(context)
                                                                                   : toast('Try Again');
                                                                             },
-                                                                            title: Text(
-                                                                                '${printerData.availableBluetoothDevices[index]}'),
+                                                                            title: Text('${printerData.availableBluetoothDevices[index]}'),
                                                                             subtitle: const Text("Click to connect"),
                                                                           );
                                                                         },
                                                                       ),
                                                                       const SizedBox(height: 10),
-                                                                      Container(
-                                                                          height: 1,
-                                                                          width: double.infinity,
-                                                                          color: Colors.grey),
+                                                                      Container(height: 1, width: double.infinity, color: Colors.grey),
                                                                       const SizedBox(height: 15),
                                                                       GestureDetector(
                                                                         onTap: () {

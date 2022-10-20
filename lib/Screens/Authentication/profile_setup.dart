@@ -45,8 +45,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
   // ignore: prefer_typing_uninitialized_variables
   var dialogContext;
   final ImagePicker _picker = ImagePicker();
-  late final XFile? pickedImage;
-  late final XFile? pickedCameraImage;
+  XFile? pickedImage;
   File imageFile = File('No File');
   String imagePath = 'No Data';
   TextEditingController controller = TextEditingController();
@@ -236,13 +235,13 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         borderRadius: const BorderRadius.all(Radius.circular(120)),
                         image: imagePath == 'No Data'
                             ? DecorationImage(
-                          image: NetworkImage(profilePicture),
-                          fit: BoxFit.cover,
-                        )
+                                image: NetworkImage(profilePicture),
+                                fit: BoxFit.cover,
+                              )
                             : DecorationImage(
-                          image: FileImage(imageFile),
-                          fit: BoxFit.cover,
-                        ),
+                                image: FileImage(imageFile),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     Positioned(
