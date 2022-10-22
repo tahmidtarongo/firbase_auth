@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/printer_provider.dart';
@@ -103,7 +104,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       ),
                       const Spacer(),
                       Text(
-                        widget.transitionModel.purchaseDate.substring(0, 10),
+                        DateFormat.yMMMd().format(DateTime.parse(widget.transitionModel.purchaseDate)),
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
                     ],

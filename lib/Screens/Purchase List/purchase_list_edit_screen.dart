@@ -8,6 +8,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase%20List/purchase_edit_invoice_add_productes.dart';
@@ -135,7 +136,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text(
-              'Add Purchase',
+              'Edit Purchase Invoice',
               style: GoogleFonts.poppins(
                 color: Colors.black,
               ),
@@ -168,7 +169,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                         child: AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: widget.transitionModel.purchaseDate,
+                          initialValue: DateFormat.yMMMd().format(DateTime.parse(widget.transitionModel.purchaseDate,)),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Date',

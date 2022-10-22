@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -72,6 +73,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     purchaseDate: DateTime.now().toString(),
   );
   DateTime selectedDate = DateTime.now();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -231,9 +233,59 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
-                                        providerData.cartItemPurchaseList[index].productStock,
-                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                      SizedBox(
+                                        width: 80,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                providerData.quantityDecrease(index);
+                                              },
+                                              child: Container(
+                                                height: 20,
+                                                width: 20,
+                                                decoration: const BoxDecoration(
+                                                  color: kMainColor,
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                ),
+                                                child: const Center(
+                                                  child: Text(
+                                                    '-',
+                                                    style: TextStyle(fontSize: 14, color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              providerData.cartItemPurchaseList[index].productStock,
+                                              style: GoogleFonts.poppins(
+                                                color: kGreyTextColor,
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            GestureDetector(
+                                              onTap: () {
+                                                providerData.quantityIncrease(index);
+                                              },
+                                              child: Container(
+                                                height: 20,
+                                                width: 20,
+                                                decoration: const BoxDecoration(
+                                                  color: kMainColor,
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                ),
+                                                child: const Center(
+                                                    child: Text(
+                                                  '+',
+                                                  style: TextStyle(fontSize: 14, color: Colors.white),
+                                                )),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       const SizedBox(width: 10),
                                       GestureDetector(

@@ -143,7 +143,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 if (picked != null && picked != selectedDate) {
                                   setState(() {
                                     selectedDate = picked;
-                                    transitionModel.purchaseDate = selectedDate.toString();
+                                    transitionModel.purchaseDate = picked.toString();
                                   });
                                 }
                               },
@@ -288,7 +288,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                       GestureDetector(
                                         onTap: () {
                                           providerData.deleteToCart(index);

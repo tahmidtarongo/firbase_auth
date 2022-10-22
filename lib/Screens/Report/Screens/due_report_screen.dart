@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Provider/due_transaction_provider.dart';
@@ -106,7 +107,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                           ),
                                         ),
                                         Text(
-                                          reTransaction[index].purchaseDate.substring(0, 10),
+                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                           style: const TextStyle(color: Colors.grey),
                                         ),
                                       ],

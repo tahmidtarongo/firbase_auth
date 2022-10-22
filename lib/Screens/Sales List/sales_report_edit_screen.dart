@@ -8,6 +8,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Screens/Sales%20List/sales_Edit_invoice_add_products.dart';
@@ -157,7 +158,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text(
-              'Add Sales',
+              'Edit Sales Invoice',
               style: GoogleFonts.poppins(
                 color: Colors.black,
               ),
@@ -190,7 +191,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                         child: AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: widget.transitionModel.purchaseDate,
+                          initialValue: DateFormat.yMMMd().format(DateTime.parse(widget.transitionModel.purchaseDate,)),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Date',

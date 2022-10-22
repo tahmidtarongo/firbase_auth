@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/print_purchase_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase%20List/purchase_list_edit_screen.dart';
@@ -112,7 +113,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                     ),
                                   ),
                                   Text(
-                                    reTransaction[index].purchaseDate.substring(0, 10),
+                                    DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                 ],

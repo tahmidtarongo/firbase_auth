@@ -45,6 +45,22 @@ class CartNotifier extends ChangeNotifier {
     cartItemPurchaseList = cartItem;
   }
 
+  quantityDecrease(int index) {
+    if (int.parse(cartItemPurchaseList[index].productStock) > 1) {
+      int quantity = int.parse(cartItemPurchaseList[index].productStock);
+      quantity--;
+      cartItemPurchaseList[index].productStock = quantity.toString();
+    }
+    notifyListeners();
+  }
+
+  quantityIncrease(int index) {
+    int quantity = int.parse(cartItemPurchaseList[index].productStock);
+    quantity++;
+    cartItemPurchaseList[index].productStock = quantity.toString();
+    notifyListeners();
+  }
+
   clearCart() {
     cartItemPurchaseList.clear();
     clearDiscount();
