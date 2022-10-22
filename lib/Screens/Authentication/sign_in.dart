@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/login_form.dart';
+import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:mobile_pos/Screens/Authentication/register_form.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -70,7 +71,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     color: const Color(0xFF19AAF8),
                   ),
                   onPressed: () {
-                    const RegisterScreen().launch(context);
+                    const PhoneAuth().launch(context);
+                    // const RegisterScreen().launch(context);
                     // Navigator.pushNamed(context, '/signup');
                   },
                 ),
