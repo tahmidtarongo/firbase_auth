@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Screens/Products/Model/brands_model.dart';
@@ -22,12 +21,6 @@ class AddBrands extends StatefulWidget {
 class _AddBrandsState extends State<AddBrands> {
   bool showProgress = false;
   late String brandName;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
 
   @override
   Widget build(BuildContext context) {

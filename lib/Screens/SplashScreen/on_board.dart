@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
+import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
-import '../Authentication/sign_in.dart';
 
 class OnBoard extends StatefulWidget {
   const OnBoard({Key? key}) : super(key: key);
@@ -41,12 +40,6 @@ class _OnBoardState extends State<OnBoard> {
     },
   ];
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +56,8 @@ class _OnBoardState extends State<OnBoard> {
             padding: const EdgeInsets.only(top: 8.0),
             child: TextButton(
               onPressed: () {
-                const SignInScreen().launch(context);
+                const PhoneAuth().launch(context);
+                // const SignInScreen().launch(context);
                 // Navigator.pushNamed(context, '/signIn');
               },
               child: Text(
@@ -151,7 +145,8 @@ class _OnBoardState extends State<OnBoard> {
                 () {
                   currentIndexPage < 2
                       ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut)
-                      : const SignInScreen().launch(context);
+                      : const PhoneAuth().launch(context);
+                  // : const SignInScreen().launch(context);
                 },
               );
             },

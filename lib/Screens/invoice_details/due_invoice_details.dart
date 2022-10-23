@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,12 +23,7 @@ class DueInvoiceDetails extends StatefulWidget {
 }
 
 class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {

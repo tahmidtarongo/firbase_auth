@@ -12,7 +12,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/GlobalComponents/category_list.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
@@ -114,7 +113,6 @@ class _AddProductState extends State<AddProduct> {
     widget.unitsName == null ? productUnit = 'Select Units' : productUnit = widget.unitsName;
     widget.brandName == null ? brandName = 'Select Brands' : brandName = widget.brandName;
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   @override

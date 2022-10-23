@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
@@ -35,7 +34,6 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    InternetPopup().initialize(context: context);
     printerIsEnable();
   }
 

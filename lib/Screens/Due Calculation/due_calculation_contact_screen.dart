@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Due%20Calculation/due_collection_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -16,12 +15,6 @@ class DueCalculationContactScreen extends StatefulWidget {
 }
 
 class _DueCalculationContactScreenState extends State<DueCalculationContactScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   late Color color;
   @override
   Widget build(BuildContext context) {

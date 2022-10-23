@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/delivery_address_provider.dart';
 import 'package:mobile_pos/constant.dart';
@@ -18,12 +17,6 @@ class DeliveryAddress extends StatefulWidget {
 }
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   bool selected = false;
   @override
   Widget build(BuildContext context) {

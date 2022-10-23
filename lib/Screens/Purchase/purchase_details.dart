@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Payment/payment_options.dart';
 import 'package:mobile_pos/Screens/Purchase/Model/purchase_report.dart';
@@ -32,7 +31,6 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         ? customer = 'Unknown'
         : customer = widget.customerName;
     super.initState();
-    InternetPopup().initialize(context: context);
   }
   @override
   Widget build(BuildContext context) {

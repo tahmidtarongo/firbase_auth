@@ -8,7 +8,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_products.dart';
@@ -73,14 +72,6 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     purchaseDate: DateTime.now().toString(),
   );
   DateTime selectedDate = DateTime.now();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {

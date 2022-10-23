@@ -7,12 +7,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Screens/Sales%20List/sales_Edit_invoice_add_products.dart';
-import 'package:mobile_pos/model/personal_information_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -23,7 +21,6 @@ import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
 import '../../model/add_to_cart_model.dart';
 import '../Customers/Model/customer_model.dart';
-import '../invoice_details/sales_invoice_details_screen.dart';
 
 // ignore: must_be_immutable
 class SalesReportEditScreen extends StatefulWidget {
@@ -40,7 +37,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     pastProducts = widget.transitionModel.productList!;
     // TODO: implement initState
     super.initState();
-    InternetPopup().initialize(context: context);
     transitionModel = widget.transitionModel;
     paidAmount = double.parse(widget.transitionModel.totalAmount.toString()) -
         double.parse(widget.transitionModel.dueAmount.toString()) +

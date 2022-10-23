@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Products/Model/brands_model.dart';
 import 'package:mobile_pos/Screens/Products/add_brans.dart';
 import 'package:mobile_pos/constant.dart';
@@ -21,12 +20,6 @@ class BrandsList extends StatefulWidget {
 }
 
 class _BrandsListState extends State<BrandsList> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   String search = '';
   @override
   Widget build(BuildContext context) {

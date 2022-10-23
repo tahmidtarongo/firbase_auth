@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Marketing/edit_social_media.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -16,12 +15,7 @@ class MarketingScreen extends StatefulWidget {
 }
 
 class _MarketingScreenState extends State<MarketingScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 
 import '../../constant.dart';
 
@@ -13,12 +12,7 @@ class EditSocialmedia extends StatefulWidget {
 }
 
 class _EditSocialmediaState extends State<EditSocialmedia> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

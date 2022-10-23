@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
-import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
-import 'package:mobile_pos/Screens/Sales%20List/sales_report_edit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -26,13 +22,6 @@ class SalesReportScreen extends StatefulWidget {
 }
 
 class _SalesReportScreenState extends State<SalesReportScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -58,7 +47,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
           final profile = ref.watch(profileDetailsProvider);
           final printerData = ref.watch(printerProviderNotifier);
           final personalData = ref.watch(profileDetailsProvider);
-          final cart = ref.watch(cartNotifier);
           return SingleChildScrollView(
             child: providerData.when(data: (transaction) {
               final reTransaction = transaction.reversed.toList();
@@ -110,7 +98,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                           ),
                                         ),
                                         Text(
-                                        DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                           style: const TextStyle(color: Colors.grey),
                                         ),
                                       ],

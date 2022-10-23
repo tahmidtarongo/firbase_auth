@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -102,12 +100,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -403,6 +395,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: SizedBox(
                           height: 60.0,
                           child: AppTextField(
+                            readOnly: true,
                             textFieldType: TextFieldType.PHONE,
                             initialValue: details.phoneNumber,
                             onChanged: (value) {
@@ -410,17 +403,17 @@ class _EditProfileState extends State<EditProfile> {
                                 phoneNumber = value;
                               });
                             },
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Phone Number',
-                              border: const OutlineInputBorder(),
-                              prefix: CountryCodePicker(
-                                padding: EdgeInsets.zero,
-                                onChanged: print,
-                                initialSelection: 'BD',
-                                showFlag: false,
-                                showDropDownButton: true,
-                                alignLeft: false,
-                              ),
+                              border: OutlineInputBorder(),
+                              // prefix: CountryCodePicker(
+                              //   padding: EdgeInsets.zero,
+                              //   onChanged: print,
+                              //   initialSelection: 'BD',
+                              //   showFlag: false,
+                              //   showDropDownButton: true,
+                              //   alignLeft: false,
+                              // ),
                             ),
                           ),
                         ),

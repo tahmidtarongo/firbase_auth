@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
@@ -28,7 +27,6 @@ class _StockListState extends State<StockList> {
     getAllTotal();
 
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   @override

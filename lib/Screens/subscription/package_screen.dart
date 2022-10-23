@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/subscription/purchase_premium_plan_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -82,7 +81,6 @@ class _PackageScreenState extends State<PackageScreen> {
   void initState() {
     checkSubscriptionData();
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   @override

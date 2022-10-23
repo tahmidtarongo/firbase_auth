@@ -5,7 +5,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_pos/Screens/Authentication/forgot_password.dart';
 import 'package:mobile_pos/Screens/Authentication/login_form.dart';
-import 'package:mobile_pos/Screens/Authentication/otp_page.dart';
 import 'package:mobile_pos/Screens/Authentication/register_form.dart';
 import 'package:mobile_pos/Screens/Authentication/sign_in.dart';
 import 'package:mobile_pos/Screens/Authentication/success_screen.dart';
@@ -66,7 +65,6 @@ class MyApp extends StatelessWidget {
         '/signIn': (context) => const SignInScreen(),
         '/loginForm': (context) => const LoginForm(),
         '/signup': (context) => const RegisterScreen(),
-        '/otp': (context) => const OtpPage(),
         '/purchaseCustomer': (context) => const PurchaseContact(),
         '/forgotPassword': (context) => const ForgotPassword(),
         '/success': (context) => const SuccessScreen(),

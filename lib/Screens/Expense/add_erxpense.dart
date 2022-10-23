@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Expense/expense_category_list.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -26,7 +25,6 @@ class _AddExpenseState extends State<AddExpense> {
   void initState(){
     widget.catName == null ? dropdownValue = 'Fashion' : dropdownValue = widget.catName;
     super.initState();
-    InternetPopup().initialize(context: context);
   }
   @override
   Widget build(BuildContext context) {

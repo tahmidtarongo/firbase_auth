@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_details.dart';
 import 'package:mobile_pos/constant.dart';
@@ -19,12 +18,6 @@ class PurchaseContact extends StatefulWidget {
 }
 
 class _PurchaseContactState extends State<PurchaseContact> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
 
   @override
   Widget build(BuildContext context) {

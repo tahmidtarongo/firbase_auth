@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/tab_buttons.dart';
 import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:mobile_pos/constant.dart';
@@ -15,12 +14,6 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

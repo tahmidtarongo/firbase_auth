@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/purchase_report_provider.dart';
 import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -17,12 +16,6 @@ class PurchaseReportScreen extends StatefulWidget {
 }
 
 class _PurchaseReportScreenState extends State<PurchaseReportScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

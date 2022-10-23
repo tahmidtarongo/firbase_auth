@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/GlobalComponents/add_category.dart';
 import 'package:mobile_pos/GlobalComponents/category_card.dart';
 import 'package:mobile_pos/Screens/Expense/add_erxpense.dart';
@@ -18,12 +17,7 @@ class ExpenseCategoryList extends StatefulWidget {
 }
 
 class _ExpenseCategoryListState extends State<ExpenseCategoryList> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

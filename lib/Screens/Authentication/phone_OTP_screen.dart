@@ -1,16 +1,13 @@
+// ignore: file_names
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:mobile_pos/Screens/Authentication/profile_setup.dart';
 import 'package:mobile_pos/Screens/Authentication/success_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
-
-import '../../Provider/profile_provider.dart';
 
 class OTPVerify extends StatefulWidget {
   const OTPVerify({Key? key}) : super(key: key);
@@ -25,27 +22,6 @@ class _OTPVerifyState extends State<OTPVerify> {
   String code = '';
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 56,
-      textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(8),
-    );
-
-    final submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -94,19 +70,21 @@ class _OTPVerifyState extends State<OTPVerify> {
                 width: double.infinity,
                 height: 45,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: kMainColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                    style: ElevatedButton.styleFrom(backgroundColor: kMainColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
+                      EasyLoading.show(status: 'Loading');
                       try {
                         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
                         await auth.signInWithCredential(credential).then((value) {
                           if (value.additionalUserInfo!.isNewUser) {
+                            EasyLoading.dismiss();
                             const ProfileSetup().launch(context);
                           } else {
+                            EasyLoading.dismiss();
                             const SuccessScreen().launch(context);
                           }
                         });
                       } catch (e) {
-                        print(e);
                         EasyLoading.showError('Wrong OTP');
                       }
                     },
@@ -118,7 +96,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       'phone',
-                          (route) => false,
+                      (route) => false,
                     );
                   },
                   child: const Text(

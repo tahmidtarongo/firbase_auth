@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Purchase/add_purchase.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -20,12 +19,6 @@ class PurchaseContacts extends StatefulWidget {
 class _PurchaseContactsState extends State<PurchaseContacts> {
   Color color = Colors.black26;
   String searchCustomer = '';
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {

@@ -5,7 +5,6 @@ import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/constant.dart';
@@ -39,7 +38,6 @@ class _SaleProductsState extends State<SaleProducts> {
   void initState() {
     widget.catName == null ? dropdownValue = 'Fashion' : dropdownValue = widget.catName;
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   Future<void> scanBarcodeNormal() async {

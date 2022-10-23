@@ -10,6 +10,7 @@ import '../../GlobalComponents/button_global.dart';
 class PhoneAuth extends StatefulWidget {
   const PhoneAuth({Key? key}) : super(key: key);
   static String verify = '';
+  static String phoneNumber = '';
   @override
   State<PhoneAuth> createState() => _PhoneAuthState();
 }
@@ -75,6 +76,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         child: TextField(
                       onChanged: (value) {
                         phoneNumber = value;
+                        PhoneAuth.phoneNumber = value;
                       },
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(

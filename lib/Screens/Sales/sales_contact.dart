@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
@@ -20,12 +19,6 @@ class SalesContact extends StatefulWidget {
 }
 
 class _SalesContactState extends State<SalesContact> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   Color color = Colors.black26;
   String searchCustomer = '';
   @override

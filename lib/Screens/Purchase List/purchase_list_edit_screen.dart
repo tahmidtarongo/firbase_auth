@@ -7,28 +7,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase%20List/purchase_edit_invoice_add_productes.dart';
-import 'package:mobile_pos/Screens/Purchase/purchase_products.dart';
-import 'package:mobile_pos/Screens/Report/Screens/purchase_report.dart';
-import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart_purchase.dart';
-import '../../Provider/print_purchase_provider.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/purchase_report_provider.dart';
 import '../../constant.dart';
-import '../../model/add_to_cart_model.dart';
 import '../Customers/Model/customer_model.dart';
-import '../Home/home.dart';
-import '../invoice_details/sales_invoice_details_screen.dart';
 
 class PurchaseListEditScreen extends StatefulWidget {
   const PurchaseListEditScreen({Key? key, required this.transitionModel}) : super(key: key);
@@ -56,7 +48,6 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
     invoice = widget.transitionModel.invoiceNumber.toInt();
     // TODO: implement initState
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   int pastDue = 0;
@@ -109,7 +100,6 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {
       final providerData = consumerRef.watch(cartNotifierPurchase);
-      final printerData = consumerRef.watch(printerPurchaseProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       final productList = consumerRef.watch(productProvider);
 
@@ -169,7 +159,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                         child: AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: DateFormat.yMMMd().format(DateTime.parse(widget.transitionModel.purchaseDate,)),
+                          initialValue: DateFormat.yMMMd().format(DateTime.parse(
+                            widget.transitionModel.purchaseDate,
+                          )),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Date',
@@ -569,7 +561,6 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
                                 final userId = FirebaseAuth.instance.currentUser!.uid;
-                                DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Purchase Transition");
 
                                 dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                 dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
@@ -604,11 +595,13 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                           pastElement.productStock != futureElement.productStock) {
                                         ProductModel m = pastElement;
                                         m.productStock = (futureElement.productStock.toInt() - pastElement.productStock.toInt()).toString();
+                                        // ignore: iterable_contains_unrelated_type
                                         increaseStockList.contains(pastElement.productCode) ? null : increaseStockList.add(m);
                                       } else if (pastElement.productStock.toInt() > futureElement.productStock.toInt() &&
                                           pastElement.productStock.toInt() != futureElement.productStock.toInt()) {
                                         ProductModel n = pastElement;
                                         n.productStock = (pastElement.productStock.toInt() - futureElement.productStock.toInt()).toString();
+                                        // ignore: iterable_contains_unrelated_type
                                         decreaseStockList2.contains(pastElement.productCode) ? null : decreaseStockList2.add(n);
                                       }
                                       break;

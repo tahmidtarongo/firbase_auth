@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Screens/Products/Model/unit_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -23,12 +22,6 @@ class UnitList extends StatefulWidget {
 }
 
 class _UnitListState extends State<UnitList> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    InternetPopup().initialize(context: context);
-  }
   String search = '';
   Future<List<UnitModel>> getUnits() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref();

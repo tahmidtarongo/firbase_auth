@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/print_purchase_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
@@ -53,7 +52,6 @@ class _CustomerDetailsState extends State<CustomerDetails> {
   void initState() {
     getCustomerKey(widget.customerModel.phoneNumber);
     super.initState();
-    InternetPopup().initialize(context: context);
   }
 
   @override

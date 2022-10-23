@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
-import 'package:internet_popup/internet_popup.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
@@ -67,7 +66,6 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
     // TODO: implement initState
     super.initState();
     widget.initPackageValue == 0 ? selectedPackageValue = 2 : 0;
-    InternetPopup().initialize(context: context);
   }
 
   @override
