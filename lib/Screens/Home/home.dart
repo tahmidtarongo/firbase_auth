@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
   late StreamSubscription subscription;
   bool isDeviceConnected = false;
   bool isAlertSet = false;
+  bool isNoInternet = false;
 
   static const List<Widget> _widgetOptions = <Widget>[HomeScreen(), SalesContact(), Reports(), SettingScreen()];
 
@@ -39,6 +40,15 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     getConnectivity();
+    checkInternet();
+  }
+
+  checkInternet() async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if(!isDeviceConnected){
+      showDialogBox();
+      setState(() => isAlertSet = true);
+    }
   }
 
   getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
@@ -88,25 +98,28 @@ class _HomeState extends State<Home> {
     );
   }
 
-  showDialogBox() => showCupertinoDialog<String>(
-        context: context,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('No Connection'),
-          content: const Text('Please check your internet connectivity'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context, 'Cancel');
-                setState(() => isAlertSet = false);
-                isDeviceConnected = await InternetConnectionChecker().hasConnection;
-                if (!isDeviceConnected && isAlertSet == false) {
-                  showDialogBox();
-                  setState(() => isAlertSet = true);
-                }
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+  showDialogBox() {
+    showCupertinoDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('No Connection'),
+        content: const Text('Please check your internet connectivity'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context, 'Cancel');
+              setState(() => isAlertSet = false);
+              isDeviceConnected = await InternetConnectionChecker().hasConnection;
+              if (!isDeviceConnected && isAlertSet == false) {
+                showDialogBox();
+                setState(() => isAlertSet = true);
+              }
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 }
