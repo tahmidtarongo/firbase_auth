@@ -169,7 +169,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                   setState(() => isAlertSet = true);
                 }
               },
-              child: const Text('OK'),
+              child: const Text('Try Again'),
             ),
           ],
         ),

@@ -382,35 +382,32 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                         secretKey: paypalClientSecret,
                         returnURL: "https://samplesite.com/return",
                         cancelURL: "https://samplesite.com/cancel",
-                        transactions: [
+                        transactions:  [
                           {
                             "amount": {
-                              "total": (double.parse(Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString()) +
-                                      ((Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'])!.toDouble() *
-                                          (double.parse(Subscription.taxAmountInPercent) / 100)))
-                                  .toStringAsFixed(2),
-                              "currency": Subscription.currency,
+                              "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              "currency": Subscription.currency.toString(),
                               "details": {
-                                "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'],
-                                "tax": (double.parse(Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString()) *
-                                        (double.parse(Subscription.taxAmountInPercent) / 100))
-                                    .toStringAsFixed(2),
+                                "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                "shipping": '0',
+                                "shipping_discount": 0
                               }
                             },
-                            "description": "SelesPro Mobile App Subscription Payment",
+                            "description":
+                            "The payment transaction description.",
                             "item_list": {
                               "items": [
                                 {
-                                  "name": Subscription.selectedItem,
-                                  "sku": "1",
-                                  "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'],
-                                  "quantity": "1"
+                                  "name": "${Subscription.selectedItem} Package",
+                                  "quantity": 1,
+                                  "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                  "currency": Subscription.currency.toString(),
                                 }
                               ],
                             }
                           }
                         ],
-                        note: "Payment From Salespro app",
+                        note: "Payment From MaanPos app",
                         onSuccess: (Map params) async {
                           try {
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
@@ -443,6 +440,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                           }
                         },
                         onError: (error) {
+                          print(error);
                           EasyLoading.showError('Error');
                         },
                         onCancel: (params) {

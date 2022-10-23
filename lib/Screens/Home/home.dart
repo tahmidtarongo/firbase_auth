@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
                 setState(() => isAlertSet = true);
               }
             },
-            child: const Text('OK'),
+            child: const Text('Try Again'),
           ),
         ],
       ),
