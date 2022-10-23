@@ -382,7 +382,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                         secretKey: paypalClientSecret,
                         returnURL: "https://samplesite.com/return",
                         cancelURL: "https://samplesite.com/cancel",
-                        transactions:  [
+                        transactions: [
                           {
                             "amount": {
                               "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
@@ -393,8 +393,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 "shipping_discount": 0
                               }
                             },
-                            "description":
-                            "The payment transaction description.",
+                            "description": "The payment transaction description.",
                             "item_list": {
                               "items": [
                                 {
@@ -440,183 +439,11 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                           }
                         },
                         onError: (error) {
-                          print(error);
                           EasyLoading.showError('Error');
                         },
                         onCancel: (params) {
                           EasyLoading.showError('Cancel');
                         }).launch(context);
-                    // showModalBottomSheet(
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return StatefulBuilder(builder: (BuildContext context, setState) {
-                    //         return Container(
-                    //           decoration: const BoxDecoration(
-                    //               borderRadius: BorderRadius.only(
-                    //             topRight: Radius.circular(30),
-                    //             topLeft: Radius.circular(30),
-                    //           )),
-                    //           child: Column(
-                    //             mainAxisSize: MainAxisSize.min,
-                    //             children: [
-                    //               Padding(
-                    //                 padding: const EdgeInsets.only(top: 50, bottom: 0, right: 20, left: 20),
-                    //                 child: GestureDetector(
-                    //                   onTap: () {
-                    //                     setState(() {
-                    //                       selectedPayButton = 'Stripe';
-                    //                     });
-                    //                   },
-                    //                   child: Container(
-                    //                     padding: const EdgeInsets.all(15),
-                    //                     decoration: BoxDecoration(
-                    //                       border: Border.all(width: 1, color: Colors.grey),
-                    //                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    //                     ),
-                    //                     child: Row(
-                    //                       children: [
-                    //                         selectedPayButton == 'Stripe'
-                    //                             ? const Icon(
-                    //                                 Icons.radio_button_checked,
-                    //                                 color: kMainColor,
-                    //                               )
-                    //                             : const Icon(Icons.radio_button_off),
-                    //                         const SizedBox(width: 8),
-                    //                         const Text('Stripe'),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               Padding(
-                    //                 padding: const EdgeInsets.all(20.0),
-                    //                 child: GestureDetector(
-                    //                   onTap: () {
-                    //                     setState(() {
-                    //                       selectedPayButton = 'Paypal';
-                    //                     });
-                    //                   },
-                    //                   child: Container(
-                    //                     padding: const EdgeInsets.all(15),
-                    //                     decoration: BoxDecoration(
-                    //                       border: Border.all(width: 1, color: Colors.grey),
-                    //                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    //                     ),
-                    //                     child: Row(
-                    //                       children: [
-                    //                         selectedPayButton == 'Paypal'
-                    //                             ? const Icon(
-                    //                                 Icons.radio_button_checked,
-                    //                                 color: kMainColor,
-                    //                               )
-                    //                             : const Icon(Icons.radio_button_off),
-                    //                         const SizedBox(width: 8),
-                    //                         const Text('Paypal'),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               GestureDetector(
-                    //                 onTap: () {
-                    //                   selectedPayButton == 'Paypal'
-                    //                       ? UsePaypal(
-                    //                           sandboxMode: sandbox,
-                    //                           clientId: paypalClientId,
-                    //                           secretKey: paypalClientSecret,
-                    //                           returnURL: "https://samplesite.com/return",
-                    //                           cancelURL: "https://samplesite.com/cancel",
-                    //                           transactions: [
-                    //                             {
-                    //                               "amount": {
-                    //                                 "total": Subscription
-                    //                                     .subscriptionAmounts[Subscription.selectedItem]!['Amount'],
-                    //                                 "currency": currency,
-                    //                                 // "details": {
-                    //                                 //   "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'],
-                    //                                 // }
-                    //                               },
-                    //                               "description": "Payment From Salespro app",
-                    //                             }
-                    //                           ],
-                    //                           note: "Payment From Salespro app",
-                    //                           onSuccess: (Map params) async {
-                    //                             try {
-                    //                               EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                    //
-                    //                               final DatabaseReference subscriptionRef = FirebaseDatabase.instance
-                    //                                   .ref()
-                    //                                   .child(FirebaseAuth.instance.currentUser!.uid)
-                    //                                   .child('Subscription');
-                    //
-                    //                               SubscriptionModel subscriptionModel = SubscriptionModel(
-                    //                                 subscriptionName: Subscription.selectedItem,
-                    //                                 subscriptionDate: DateTime.now().toString(),
-                    //                                 saleNumber: Subscription
-                    //                                     .subscriptionPlansService[Subscription.selectedItem]!['Sales']
-                    //                                     .toInt(),
-                    //                                 purchaseNumber: Subscription.subscriptionPlansService[
-                    //                                         Subscription.selectedItem]!['Purchase']
-                    //                                     .toInt(),
-                    //                                 partiesNumber: Subscription
-                    //                                     .subscriptionPlansService[Subscription.selectedItem]!['Parties']
-                    //                                     .toInt(),
-                    //                                 dueNumber: Subscription.subscriptionPlansService[
-                    //                                         Subscription.selectedItem]!['Due Collection']
-                    //                                     .toInt(),
-                    //                                 duration: Subscription.subscriptionPlansService[
-                    //                                         Subscription.selectedItem]!['Duration']
-                    //                                     .toInt(),
-                    //                                 products: Subscription.subscriptionPlansService[
-                    //                                         Subscription.selectedItem]!['Products']
-                    //                                     .toInt(),
-                    //                               );
-                    //
-                    //                               await subscriptionRef.set(subscriptionModel.toJson());
-                    //                               EasyLoading.showSuccess('Added Successfully',
-                    //                                   duration: const Duration());
-                    //                             } catch (e) {
-                    //                               EasyLoading.dismiss();
-                    //                               ScaffoldMessenger.of(context)
-                    //                                   .showSnackBar(SnackBar(content: Text(e.toString())));
-                    //                             }
-                    //                             if (mounted) {
-                    //                               await const Home().launch(context);
-                    //                             }
-                    //                           },
-                    //                           onError: (error) {
-                    //                             EasyLoading.showError('Error');
-                    //                           },
-                    //                           onCancel: (params) {
-                    //                             EasyLoading.showError('Cancel');
-                    //                           }).launch(context)
-                    //                       : Container();
-                    //                 },
-                    //                 child: Padding(
-                    //                   padding: const EdgeInsets.all(10.0),
-                    //                   child: Container(
-                    //                     height: 55,
-                    //                     width: double.infinity,
-                    //                     decoration: const BoxDecoration(
-                    //                       color: kMainColor,
-                    //                       borderRadius: BorderRadius.all(
-                    //                         Radius.circular(10),
-                    //                       ),
-                    //                     ),
-                    //                     child: const Center(
-                    //                       child: Text(
-                    //                         'Pay Now',
-                    //                         style: TextStyle(color: Colors.white, fontSize: 20),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         );
-                    //       });
-                    //     });
                   },
                   child: Container(
                     height: 60,
