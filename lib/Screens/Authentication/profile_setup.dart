@@ -40,7 +40,8 @@ class _ProfileSetupState extends State<ProfileSetup> {
   late String companyName, phoneNumber;
   double progress = 0.0;
   bool showProgress = false;
-  String profilePicture = 'https://i.imgur.com/jlyGd1j.jpg';
+  String profilePicture = 'https://firebasestorage.googleapis.com/v0/b/salespro-82021.appspot.com/o/Customer%20Picture%2Fdefault%20profile%20pic.webp?alt=media&token=a518fbc1-daea-4bb6-9036-562f0e616ab2';
+  // String profilePicture = 'https://i.imgur.com/jlyGd1j.jpg';
   // ignore: prefer_typing_uninitialized_variables
   var dialogContext;
   final ImagePicker _picker = ImagePicker();

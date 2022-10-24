@@ -160,8 +160,8 @@ class _AddCategoryState extends State<AddCategory> {
                   onPressed: () async {
                     bool isAlreadyAdded = false;
                     allCategory.value?.forEach((element) {
-                      if (element.categoryName.toLowerCase().contains(
-                            categoryName.toLowerCase(),
+                      if (element.categoryName.toLowerCase().removeAllWhiteSpace().contains(
+                            categoryName.toLowerCase().removeAllWhiteSpace(),
                           )) {
                         isAlreadyAdded = true;
                       }

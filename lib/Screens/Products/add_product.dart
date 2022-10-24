@@ -46,7 +46,7 @@ class _AddProductState extends State<AddProduct> {
   late String productName, productStock, productSalePrice, productPurchasePrice, productCode;
   String productWholeSalePrice = '0';
   String productDealerPrice = '0';
-  String productPicture = 'https://tasteofasia.com.au/uploads/2/products/undefine.jpg';
+  String productPicture = 'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Customer%20Picture%2FNo_Image_Available.jpeg?alt=media&token=3de0d45e-0e4a-4a7b-b115-9d6722d5031f';
   String productDiscount = 'Not Provided';
   String productManufacturer = 'Not Provided';
   String size = 'Not Provided';

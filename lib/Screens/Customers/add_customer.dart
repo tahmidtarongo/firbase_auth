@@ -37,7 +37,7 @@ class _AddCustomerState extends State<AddCustomer> {
   String customerAddress = 'Not Provided';
   String emailAddress = 'Not Provided';
   String dueAmount = '0';
-  String profilePicture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
+  String profilePicture = 'https://firebasestorage.googleapis.com/v0/b/salespro-82021.appspot.com/o/Customer%20Picture%2Fnoprofile%20pic.jpeg?alt=media&token=08c02444-083f-4986-8d56-43f4c7e1160d';
   final ImagePicker _picker = ImagePicker();
   bool showProgress = false;
   double progress = 0.0;

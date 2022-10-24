@@ -93,7 +93,7 @@ class _CategoryListState extends State<CategoryList> {
               ),
               SingleChildScrollView(
                 child: FirebaseAnimatedList(
-
+                  controller: ScrollController(keepScrollOffset: false),
                   defaultChild: Padding(
                     padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
                     child: Loader(
@@ -119,8 +119,7 @@ class _CategoryListState extends State<CategoryList> {
                     title.type ? variations.add('Type') : null;
                     title.weight ? variations.add('Weight') : null;
 
-                    GetCategoryAndVariationModel get =
-                        GetCategoryAndVariationModel(categoryName: title.categoryName, variations: variations);
+                    GetCategoryAndVariationModel get = GetCategoryAndVariationModel(categoryName: title.categoryName, variations: variations);
 
                     return title.categoryName.contains(search)
                         ? Padding(

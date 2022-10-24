@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
 
   checkInternet() async {
     isDeviceConnected = await InternetConnectionChecker().hasConnection;
-    if(!isDeviceConnected){
+    if (!isDeviceConnected) {
       showDialogBox();
       setState(() => isAlertSet = true);
     }

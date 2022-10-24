@@ -108,6 +108,7 @@ class _UnitListState extends State<UnitList> {
               ),
               SingleChildScrollView(
                 child: FirebaseAnimatedList(
+                  controller: ScrollController(keepScrollOffset: false),
                   defaultChild: Padding(
                     padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
                     child: Loader(

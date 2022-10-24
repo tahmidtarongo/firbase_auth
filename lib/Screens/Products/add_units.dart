@@ -78,9 +78,7 @@ class _AddUnitsState extends State<AddUnits> {
                 onPressed: () async {
                   bool isAlreadyAdded = false;
                   allUnits.value?.forEach((element) {
-                    if (element.unitName.toLowerCase().contains(
-                          unitsName.toLowerCase(),
-                        )) {
+                    if (element.unitName.toLowerCase().removeAllWhiteSpace() == unitsName.toLowerCase().removeAllWhiteSpace()) {
                       isAlreadyAdded = true;
                     }
                   });

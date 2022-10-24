@@ -47,61 +47,61 @@ class _AddBrandsState extends State<AddBrands> {
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Visibility(
-                visible: showProgress,
-                child: const CircularProgressIndicator(
-                  color: kMainColor,
-                  strokeWidth: 5.0,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Visibility(
+                  visible: showProgress,
+                  child: const CircularProgressIndicator(
+                    color: kMainColor,
+                    strokeWidth: 5.0,
+                  ),
                 ),
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                onChanged: (value) {
-                  setState(() {
-                    brandName = value;
-                  });
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Apple',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelText: 'Brand name',
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  onChanged: (value) {
+                    setState(() {
+                      brandName = value;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Apple',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelText: 'Brand name',
+                  ),
                 ),
-              ),
-              ButtonGlobalWithoutIcon(
-                buttontext: 'Save',
-                buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                onPressed: () async {
-                  bool isAlreadyAdded = false;
-                  allBrands.value?.forEach((element) {
-                    if (element.brandName.toLowerCase().contains(
-                          brandName.toLowerCase(),
-                        )) {
-                      isAlreadyAdded = true;
-                    }
-                  });
-                  setState(() {
-                    showProgress = true;
-                  });
-                  final DatabaseReference categoryInformationRef =
-                      FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Brands');
-                  BrandsModel brandModel = BrandsModel(brandName);
-                  isAlreadyAdded ? EasyLoading.showError('Already Added') : await categoryInformationRef.push().set(brandModel.toJson());
-                  setState(() {
-                    showProgress = false;
-                    isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));
-                  });
+                ButtonGlobalWithoutIcon(
+                  buttontext: 'Save',
+                  buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
+                  onPressed: () async {
+                    bool isAlreadyAdded = false;
+                    allBrands.value?.forEach((element) {
+                      if (element.brandName.toLowerCase().removeAllWhiteSpace() == brandName.toLowerCase().removeAllWhiteSpace()) {
+                        isAlreadyAdded = true;
+                      }
+                    });
+                    setState(() {
+                      showProgress = true;
+                    });
+                    final DatabaseReference categoryInformationRef =
+                        FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Brands');
+                    BrandsModel brandModel = BrandsModel(brandName);
+                    isAlreadyAdded ? EasyLoading.showError('Already Added') : await categoryInformationRef.push().set(brandModel.toJson());
+                    setState(() {
+                      showProgress = false;
+                      isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));
+                    });
 
-                  // ignore: use_build_context_synchronously
-                  isAlreadyAdded ? null : Navigator.pop(context);
-                },
-                buttonTextColor: Colors.white,
-              ),
-            ],
+                    // ignore: use_build_context_synchronously
+                    isAlreadyAdded ? null : Navigator.pop(context);
+                  },
+                  buttonTextColor: Colors.white,
+                ),
+              ],
+            ),
           ),
         ),
       );
