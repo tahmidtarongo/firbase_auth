@@ -43,6 +43,14 @@ List<GridItems> freeIcons = [
     title: 'Purchase List',
     icon: 'images/purchaselist.png',
   ),
+  GridItems(
+    title: 'Loss/Profit',
+    icon: 'images/lossprofit.png',
+  ),
+  GridItems(
+    title: 'Ledger',
+    icon: 'images/ledger.png',
+  ),
   // GridItems(
   //   title: 'Delivery',
   //   icon: 'images/delivery.png',

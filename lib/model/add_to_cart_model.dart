@@ -13,12 +13,14 @@ class AddToCartModel {
     this.uniqueCheck,
     this.productBrandName,
     this.stock,
+    this.productPurchasePrice,
   });
 
   dynamic uuid;
   dynamic productId;
   String? productName;
   dynamic unitPrice;
+  dynamic productPurchasePrice;
   dynamic subTotal;
   dynamic uniqueCheck;
   int quantity = 1;
@@ -44,6 +46,7 @@ class AddToCartModel {
         productDetails: json["product_details"],
         itemCartIndex: json["item_cart_index"],
         stock: json["stock"],
+        productPurchasePrice: json["productPurchasePrice"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -57,6 +60,7 @@ class AddToCartModel {
         "quantity": quantity == 0 ? null : quantity,
         "item_cart_index": itemCartIndex,
         "stock": stock,
+        "productPurchasePrice": productPurchasePrice,
         // ignore: prefer_null_aware_operators
         "product_details": productDetails == null ? null : productDetails.toJson(),
       };

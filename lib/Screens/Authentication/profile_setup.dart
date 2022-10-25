@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
 import '../../model/personal_information_model.dart';
+import '../../model/seller_info_model.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 import '../subscription/purchase_premium_plan_screen.dart';
@@ -408,6 +409,21 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         invoiceCounter: 1,
                       );
                       await _personalInformationRef.set(personalInformation.toJson());
+
+                      SellerInfoModel sellerInfoModel =SellerInfoModel(
+                        businessCategory: dropdownValue,
+                        companyName: companyName,
+                        phoneNumber: PhoneAuth.phoneNumber,
+                        countryName: controller.text,
+                        language: dropdownLangValue,
+                        pictureUrl: profilePicture,
+                        userID: FirebaseAuth.instance.currentUser!.uid,
+                        email: FirebaseAuth.instance.currentUser!.email,
+                        subscriptionDate: DateTime.now().toString(),
+                        subscriptionName: 'Free',
+                        subscriptionMethod: 'Not Provided',
+                      );
+                      await FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').push().set(sellerInfoModel.toJson());
 
                       EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 1000));
 

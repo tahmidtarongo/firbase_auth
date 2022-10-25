@@ -244,6 +244,7 @@ class _SaleProductsState extends State<SaleProducts> {
                               AddToCartModel cartItem = AddToCartModel(
                                 productName: products[i].productName,
                                 subTotal: sentProductPrice,
+                                productPurchasePrice: products[i].productPurchasePrice,
                                 productId: products[i].productCode,
                                 productBrandName: products[i].brandName,
                                 stock: int.parse(products[i].productStock),
