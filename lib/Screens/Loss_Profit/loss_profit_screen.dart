@@ -43,228 +43,236 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        body: Consumer(builder: (context, ref, __) {
-          final providerData = ref.watch(transitionProvider);
-          final profile = ref.watch(profileDetailsProvider);
-          final printerData = ref.watch(printerProviderNotifier);
-          final personalData = ref.watch(profileDetailsProvider);
-          final allProducts = ref.watch(productProvider);
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Consumer(builder: (context, ref, __) {
+                final providerData = ref.watch(transitionProvider);
+                final profile = ref.watch(profileDetailsProvider);
+                final printerData = ref.watch(printerProviderNotifier);
+                final personalData = ref.watch(profileDetailsProvider);
+                final allProducts = ref.watch(productProvider);
 
-          return SingleChildScrollView(
-            child: providerData.when(data: (transaction) {
-              final reTransaction = transaction.reversed.toList();
-              return reTransaction.isNotEmpty
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: reTransaction.length,
-                      itemBuilder: (context, index) {
-                        int totalQuantity = 0;
-                        double lossProfit = 0;
-                        double totalPurchasePrice = 0;
-                        double totalSalePrice = 0;
-                        for (var element in reTransaction[index].productList!) {
-                          totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice.toString()) * element.quantity);
-                          totalSalePrice = totalSalePrice + (double.parse(element.subTotal.toString()) * element.quantity);
+                return SingleChildScrollView(
+                  child: providerData.when(data: (transaction) {
+                    final reTransaction = transaction.reversed.toList();
+                    return reTransaction.isNotEmpty
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: reTransaction.length,
+                            itemBuilder: (context, index) {
+                              int totalQuantity = 0;
+                              double lossProfit = 0;
+                              double totalPurchasePrice = 0;
+                              double totalSalePrice = 0;
+                              double tempLossProfit = 0;
+                              for (var element in reTransaction[index].productList!) {
+                                totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice.toString()) * element.quantity);
+                                totalSalePrice = totalSalePrice + (double.parse(element.subTotal.toString()) * element.quantity);
 
-                          totalQuantity = totalQuantity + element.quantity;
-                        }
-                        lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) -
-                            double.parse(reTransaction[index].discountAmount.toString()));
+                                tempLossProfit = double.parse(element.subTotal.toString()) - double.parse(element.productPurchasePrice.toString());
 
+                                totalQuantity = totalQuantity + element.quantity;
+                              }
+                              lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(reTransaction[index].discountAmount.toString()));
 
-                        return GestureDetector(
-                          onTap: () {
-                            SingleLossProfitScreen(
-                              transactionModel: reTransaction[index],
-                              profit: lossProfit,
-                              totalQuantity: totalQuantity,
-                            ).launch(context);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(20),
-                                width: context.width(),
+                              return GestureDetector(
+                                onTap: () {
+                                  SingleLossProfitScreen(
+                                    transactionModel: reTransaction[index],
+                                    profit: lossProfit,
+                                    totalQuantity: totalQuantity,
+                                  ).launch(context);
+                                },
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          reTransaction[index].customerName,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        Text('#${reTransaction[index].invoiceNumber}'),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                              color: reTransaction[index].dueAmount! <= 0
-                                                  ? const Color(0xff0dbf7d).withOpacity(0.1)
-                                                  : const Color(0xFFED1A3B).withOpacity(0.1),
-                                              borderRadius: const BorderRadius.all(Radius.circular(10))),
-                                          child: Text(
-                                            reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
-                                            style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
+                                    Container(
+                                      padding: const EdgeInsets.all(20),
+                                      width: context.width(),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                reTransaction[index].customerName,
+                                                style: const TextStyle(fontSize: 16),
+                                              ),
+                                              Text('#${reTransaction[index].invoiceNumber}'),
+                                            ],
                                           ),
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                              style: const TextStyle(color: Colors.grey),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                              style: const TextStyle(color: Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                          Text(
-                                            'Total : \$ ${reTransaction[index].totalAmount.toString()}',
-                                            style: const TextStyle(color: Colors.grey),
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    color: reTransaction[index].dueAmount! <= 0
+                                                        ? const Color(0xff0dbf7d).withOpacity(0.1)
+                                                        : const Color(0xFFED1A3B).withOpacity(0.1),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                                child: Text(
+                                                  reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
+                                                  style:
+                                                      TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
+                                                ),
+                                              ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                    style: const TextStyle(color: Colors.grey),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                    style: const TextStyle(color: Colors.grey),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                           const SizedBox(height: 5),
-                                          Text(
-                                            'Profit : \$ $lossProfit',
-                                            style: const TextStyle(color: Colors.green),
-                                          ).visible(!lossProfit.isNegative),
-                                          Text(
-                                            'Loss: \$ ${lossProfit.abs()}',
-                                            style: const TextStyle(color: Colors.redAccent),
-                                          ).visible(lossProfit.isNegative),
-                                        ]),
-                                        personalData.when(data: (data) {
-                                          return Row(
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    await printerData.getBluetooth();
-                                                    PrintTransactionModel model =
-                                                        PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
-                                                    connected
-                                                        ? printerData.printTicket(
-                                                            printTransactionModel: model,
-                                                            productList: model.transitionModel!.productList,
-                                                          )
-                                                        : showDialog(
-                                                            context: context,
-                                                            builder: (_) {
-                                                              return WillPopScope(
-                                                                onWillPop: () async => false,
-                                                                child: Dialog(
-                                                                  child: SizedBox(
-                                                                    child: Column(
-                                                                      mainAxisSize: MainAxisSize.min,
-                                                                      children: [
-                                                                        ListView.builder(
-                                                                          shrinkWrap: true,
-                                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty
-                                                                              ? printerData.availableBluetoothDevices.length
-                                                                              : 0,
-                                                                          itemBuilder: (context, index) {
-                                                                            return ListTile(
-                                                                              onTap: () async {
-                                                                                String select = printerData.availableBluetoothDevices[index];
-                                                                                List list = select.split("#");
-                                                                                // String name = list[0];
-                                                                                String mac = list[1];
-                                                                                bool isConnect = await printerData.setConnect(mac);
-                                                                                // ignore: use_build_context_synchronously
-                                                                                isConnect
-                                                                                    // ignore: use_build_context_synchronously
-                                                                                    ? finish(context)
-                                                                                    : toast('Try Again');
-                                                                              },
-                                                                              title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                              subtitle: const Text("Click to connect"),
-                                                                            );
-                                                                          },
-                                                                        ),
-                                                                        const SizedBox(height: 10),
-                                                                        Container(height: 1, width: double.infinity, color: Colors.grey),
-                                                                        const SizedBox(height: 15),
-                                                                        GestureDetector(
-                                                                          onTap: () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child: const Center(
-                                                                            child: Text(
-                                                                              'Cancel',
-                                                                              style: TextStyle(color: kMainColor),
-                                                                            ),
+                                              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                                Text(
+                                                  'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'Profit : \$ $lossProfit',
+                                                  style: const TextStyle(color: Colors.green),
+                                                ).visible(!lossProfit.isNegative),
+                                                Text(
+                                                  'Loss: \$ ${lossProfit.abs()}',
+                                                  style: const TextStyle(color: Colors.redAccent),
+                                                ).visible(lossProfit.isNegative),
+                                              ]),
+                                              personalData.when(data: (data) {
+                                                return Row(
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () async {
+                                                          await printerData.getBluetooth();
+                                                          PrintTransactionModel model =
+                                                              PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
+                                                          connected
+                                                              ? printerData.printTicket(
+                                                                  printTransactionModel: model,
+                                                                  productList: model.transitionModel!.productList,
+                                                                )
+                                                              : showDialog(
+                                                                  context: context,
+                                                                  builder: (_) {
+                                                                    return WillPopScope(
+                                                                      onWillPop: () async => false,
+                                                                      child: Dialog(
+                                                                        child: SizedBox(
+                                                                          child: Column(
+                                                                            mainAxisSize: MainAxisSize.min,
+                                                                            children: [
+                                                                              ListView.builder(
+                                                                                shrinkWrap: true,
+                                                                                itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                                    ? printerData.availableBluetoothDevices.length
+                                                                                    : 0,
+                                                                                itemBuilder: (context, index) {
+                                                                                  return ListTile(
+                                                                                    onTap: () async {
+                                                                                      String select = printerData.availableBluetoothDevices[index];
+                                                                                      List list = select.split("#");
+                                                                                      // String name = list[0];
+                                                                                      String mac = list[1];
+                                                                                      bool isConnect = await printerData.setConnect(mac);
+                                                                                      // ignore: use_build_context_synchronously
+                                                                                      isConnect
+                                                                                          // ignore: use_build_context_synchronously
+                                                                                          ? finish(context)
+                                                                                          : toast('Try Again');
+                                                                                    },
+                                                                                    title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                                    subtitle: const Text("Click to connect"),
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                              const SizedBox(height: 10),
+                                                                              Container(height: 1, width: double.infinity, color: Colors.grey),
+                                                                              const SizedBox(height: 15),
+                                                                              GestureDetector(
+                                                                                onTap: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                child: const Center(
+                                                                                  child: Text(
+                                                                                    'Cancel',
+                                                                                    style: TextStyle(color: kMainColor),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              const SizedBox(height: 15),
+                                                                            ],
                                                                           ),
                                                                         ),
-                                                                        const SizedBox(height: 15),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            });
-                                                  },
-                                                  icon: const Icon(
-                                                    FeatherIcons.printer,
-                                                    color: Colors.grey,
-                                                  )),
-                                              IconButton(
-                                                  onPressed: () => toast('Coming Soon'),
-                                                  icon: const Icon(
-                                                    FeatherIcons.share,
-                                                    color: Colors.grey,
-                                                  )),
+                                                                      ),
+                                                                    );
+                                                                  });
+                                                        },
+                                                        icon: const Icon(
+                                                          FeatherIcons.printer,
+                                                          color: Colors.grey,
+                                                        )),
+                                                    IconButton(
+                                                        onPressed: () => toast('Coming Soon'),
+                                                        icon: const Icon(
+                                                          FeatherIcons.share,
+                                                          color: Colors.grey,
+                                                        )),
+                                                  ],
+                                                );
+                                              }, error: (e, stack) {
+                                                return Text(e.toString());
+                                              }, loading: () {
+                                                return const Text('Loading');
+                                              }),
                                             ],
-                                          );
-                                        }, error: (e, stack) {
-                                          return Text(e.toString());
-                                        }, loading: () {
-                                          return const Text('Loading');
-                                        }),
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    Container(
+                                      height: 0.5,
+                                      width: context.width(),
+                                      color: Colors.grey,
+                                    )
                                   ],
                                 ),
-                              ),
-                              Container(
-                                height: 0.5,
-                                width: context.width(),
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  : const Center(
-                      child: Text(
-                        'Please Add A Sale',
-                        maxLines: 2,
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
-                    );
-            }, error: (e, stack) {
-              return Text(e.toString());
-            }, loading: () {
-              return const Center(child: CircularProgressIndicator());
-            }),
-          );
-        }),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: Text(
+                              'Please Add A Sale',
+                              maxLines: 2,
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
+                            ),
+                          );
+                  }, error: (e, stack) {
+                    return Text(e.toString());
+                  }, loading: () {
+                    return const Center(child: CircularProgressIndicator());
+                  }),
+                );
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -6,7 +6,9 @@ import '../../constant.dart';
 import '../../model/transition_model.dart';
 
 class SingleLossProfitScreen extends StatefulWidget {
-  const SingleLossProfitScreen({Key? key, required this.transactionModel, required this.profit, required this.totalQuantity}) : super(key: key);
+  const SingleLossProfitScreen(
+      {Key? key, required this.transactionModel, required this.profit, required this.totalQuantity,})
+      : super(key: key);
 
   final TransitionModel transactionModel;
   final double profit;
@@ -17,6 +19,38 @@ class SingleLossProfitScreen extends StatefulWidget {
 }
 
 class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
+  double getTotalProfit() {
+    double totalProfit = 0;
+    for (var element in widget.transactionModel.productList!) {
+      double purchasePrice = double.parse(element.productPurchasePrice.toString()) * double.parse(element.quantity.toString());
+      double salePrice = double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString());
+
+      double profit = salePrice - purchasePrice;
+
+      if (!profit.isNegative) {
+        totalProfit = totalProfit + profit;
+      }
+    }
+
+    return totalProfit;
+  }
+
+  double getTotalLoss() {
+    double totalLoss = 0;
+    for (var element in widget.transactionModel.productList!) {
+      double purchasePrice = double.parse(element.productPurchasePrice.toString()) * double.parse(element.quantity.toString());
+      double salePrice = double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString());
+
+      double profit = salePrice - purchasePrice;
+
+      if (profit.isNegative) {
+        totalLoss = totalLoss + profit.abs();
+      }
+    }
+
+    return totalLoss;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +141,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         double.parse(widget.transactionModel.productList![index].quantity.toString());
                     double salePrice = double.parse(widget.transactionModel.productList![index].subTotal.toString()) *
                         double.parse(widget.transactionModel.productList![index].quantity.toString());
+
                     double profit = salePrice - purchasePrice;
 
                     return Padding(
@@ -133,14 +168,14 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                               flex: 2,
                               child: Center(
                                 child: Text(
-                                  !profit.isNegative ? "\$${profit.abs().toString()}" : '0',
+                                  !profit.isNegative ? "\$${profit.abs().toInt().toString()}" : '0',
                                   style: GoogleFonts.poppins(),
                                 ),
                               )),
                           Expanded(
                             child: Center(
                               child: Text(
-                                profit.isNegative ? "\$${profit.abs().toString()}" : '0',
+                                profit.isNegative ? "\$${profit.abs().toInt().toString()}" : '0',
                                 style: GoogleFonts.poppins(),
                               ),
                             ),
@@ -156,38 +191,6 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            color: Colors.grey.shade200,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.profit.isNegative
-                              ? 'Discount    \$${(widget.transactionModel.discountAmount! + widget.profit).abs()} + \$${widget.transactionModel.discountAmount} = \$${widget.profit.abs()}'
-                              : 'Discount    \$${widget.transactionModel.discountAmount! + widget.profit} - \$${widget.transactionModel.discountAmount} = \$${widget.profit}',
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      Text(
-                        "",
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
           Container(
             padding: const EdgeInsets.all(10),
             color: kMainColor.withOpacity(0.2),
@@ -217,13 +220,73 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                       Expanded(
                           flex: 2,
                           child: Text(
-                            "\$${!widget.profit.isNegative ? widget.profit.toString() : '0'}",
+                            "\$${getTotalProfit().toInt()}",
                             style: GoogleFonts.poppins(
                               color: Colors.black,
                             ),
                           )),
                       Text(
-                        "\$${widget.profit.isNegative ? widget.profit.abs().toString() : '0'}",
+                        "\$${getTotalLoss().toInt()}",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            color: kMainColor.withOpacity(0.2),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          'Discount',
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Text(
+                        "\$${widget.transactionModel.discountAmount!.toInt().toString()}",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            color: kMainColor.withOpacity(0.2),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          widget.profit.isNegative ? 'Total Loss' : 'Total Profit',
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Text(
+                        widget.profit.isNegative ? "\$${widget.profit.toInt().abs()}" : "\$${widget.profit.toInt()}",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           color: Colors.black,

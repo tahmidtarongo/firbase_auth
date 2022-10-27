@@ -83,8 +83,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
             ),
             IconButton(
               onPressed: () async {
-                DatabaseReference ref =
-                    FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
+                DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
                 await ref.remove();
                 cRef.refresh(customerProvider);
                 // ignore: use_build_context_synchronously
@@ -302,9 +301,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                   child: Text(
                                                     reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
                                                     style: TextStyle(
-                                                        color: reTransaction[index].dueAmount! <= 0
-                                                            ? const Color(0xff0dbf7d)
-                                                            : const Color(0xFFED1A3B)),
+                                                        color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                   ),
                                                 ),
                                                 Text(
@@ -331,9 +328,8 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                       IconButton(
                                                           onPressed: () async {
                                                             await printerData.getBluetooth();
-                                                            PrintTransactionModel model = PrintTransactionModel(
-                                                                transitionModel: reTransaction[index],
-                                                                personalInformationModel: data);
+                                                            PrintTransactionModel model =
+                                                                PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
                                                             connected
                                                                 ? printerData.printTicket(
                                                                     printTransactionModel: model,
@@ -346,32 +342,25 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                         child: SizedBox(
                                                                           height: 200,
                                                                           child: ListView.builder(
-                                                                            itemCount: printerData
-                                                                                    .availableBluetoothDevices
-                                                                                    .isNotEmpty
-                                                                                ? printerData
-                                                                                    .availableBluetoothDevices.length
+                                                                            itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                                ? printerData.availableBluetoothDevices.length
                                                                                 : 0,
                                                                             itemBuilder: (context, index) {
                                                                               return ListTile(
                                                                                 onTap: () async {
-                                                                                  String select = printerData
-                                                                                      .availableBluetoothDevices[index];
+                                                                                  String select = printerData.availableBluetoothDevices[index];
                                                                                   List list = select.split("#");
                                                                                   // String name = list[0];
                                                                                   String mac = list[1];
-                                                                                  bool isConnect =
-                                                                                      await printerData.setConnect(mac);
+                                                                                  bool isConnect = await printerData.setConnect(mac);
                                                                                   // ignore: use_build_context_synchronously
                                                                                   isConnect
                                                                                       // ignore: use_build_context_synchronously
                                                                                       ? finish(context)
                                                                                       : toast('Try Again');
                                                                                 },
-                                                                                title: Text(
-                                                                                    '${printerData.availableBluetoothDevices[index]}'),
-                                                                                subtitle:
-                                                                                    const Text("Click to connect"),
+                                                                                title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                                subtitle: const Text("Click to connect"),
                                                                               );
                                                                             },
                                                                           ),
@@ -470,9 +459,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                   child: Text(
                                                     reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
                                                     style: TextStyle(
-                                                        color: reTransaction[index].dueAmount! <= 0
-                                                            ? const Color(0xff0dbf7d)
-                                                            : const Color(0xFFED1A3B)),
+                                                        color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                   ),
                                                 ),
                                                 Text(
@@ -499,16 +486,14 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                       IconButton(
                                                           onPressed: () async {
                                                             await printerData.getBluetooth();
-                                                            PrintPurchaseTransactionModel model =
-                                                                PrintPurchaseTransactionModel(
+                                                            PrintPurchaseTransactionModel model = PrintPurchaseTransactionModel(
                                                               personalInformationModel: data,
                                                               purchaseTransitionModel: reTransaction[index],
                                                             );
                                                             connected
                                                                 ? printerDataPurchase.printTicket(
                                                                     printTransactionModel: model,
-                                                                    productList:
-                                                                        model.purchaseTransitionModel!.productList,
+                                                                    productList: model.purchaseTransitionModel!.productList,
                                                                   )
                                                                 : showDialog(
                                                                     context: context,
@@ -517,32 +502,25 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                         child: SizedBox(
                                                                           height: 200,
                                                                           child: ListView.builder(
-                                                                            itemCount: printerData
-                                                                                    .availableBluetoothDevices
-                                                                                    .isNotEmpty
-                                                                                ? printerData
-                                                                                    .availableBluetoothDevices.length
+                                                                            itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                                ? printerData.availableBluetoothDevices.length
                                                                                 : 0,
                                                                             itemBuilder: (context, index) {
                                                                               return ListTile(
                                                                                 onTap: () async {
-                                                                                  String select = printerData
-                                                                                      .availableBluetoothDevices[index];
+                                                                                  String select = printerData.availableBluetoothDevices[index];
                                                                                   List list = select.split("#");
                                                                                   // String name = list[0];
                                                                                   String mac = list[1];
-                                                                                  bool isConnect =
-                                                                                      await printerData.setConnect(mac);
+                                                                                  bool isConnect = await printerData.setConnect(mac);
                                                                                   // ignore: use_build_context_synchronously
                                                                                   isConnect
                                                                                       // ignore: use_build_context_synchronously
                                                                                       ? finish(context)
                                                                                       : toast('Try Again');
                                                                                 },
-                                                                                title: Text(
-                                                                                    '${printerData.availableBluetoothDevices[index]}'),
-                                                                                subtitle:
-                                                                                    const Text("Click to connect"),
+                                                                                title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                                subtitle: const Text("Click to connect"),
                                                                               );
                                                                             },
                                                                           ),
