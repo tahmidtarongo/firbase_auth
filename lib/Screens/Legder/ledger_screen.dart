@@ -1,13 +1,14 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_pos/Screens/Legder/retailer_ledger_customers_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
-import '../../Provider/profile_provider.dart';
-import '../../Provider/transactions_provider.dart';
 import '../Customers/Model/customer_model.dart';
 import 'ledger_customer_details_screen.dart';
 
@@ -25,16 +26,45 @@ class _LedgerScreenState extends State<LedgerScreen> {
   List<CustomerModel> dealerList = [];
   List<CustomerModel> supplierList = [];
   double totalSale = 0;
-  int i = 0;
+
+  Future<void> customerData() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    List<CustomerModel> customerList = [];
+    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+      for (var element in value.children) {
+        customerList.add(CustomerModel.fromJson(jsonDecode(jsonEncode(element.value))));
+      }
+    });
+
+    for (var element in customerList) {
+      if (element.type.contains('Retailer')) {
+        retailersList.add(element);
+      }
+      if (element.type.contains('Wholesaler')) {
+        wholesalerList.add(element);
+      }
+      if (element.type.contains('Dealer')) {
+        dealerList.add(element);
+      }
+      if (element.type.contains('Supplier')) {
+        supplierList.add(element);
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    customerData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    i++;
     return Consumer(builder: (context, ref, __) {
       final customerData = ref.watch(customerProvider);
-      final providerData = ref.watch(transitionProvider);
-      final personalData = ref.watch(profileDetailsProvider);
       return DefaultTabController(
-        initialIndex: 1,
+        initialIndex: 0,
         length: 4,
         child: Scaffold(
           appBar: AppBar(
@@ -51,22 +81,6 @@ class _LedgerScreenState extends State<LedgerScreen> {
             elevation: 0.0,
           ),
           body: customerData.when(data: (customer) {
-            if (i < 2) {
-              for (var element in customer) {
-                if (element.type.contains('Retailer')) {
-                  retailersList.add(element);
-                }
-                if (element.type.contains('Wholesaler')) {
-                  wholesalerList.add(element);
-                }
-                if (element.type.contains('Dealer')) {
-                  dealerList.add(element);
-                }
-                if (element.type.contains('Supplier')) {
-                  supplierList.add(element);
-                }
-              }
-            }
             return SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -182,33 +196,6 @@ class _LedgerScreenState extends State<LedgerScreen> {
                       ),
                     ]),
                   ),
-                  // ReportCard(
-                  //     pressed: () {
-                  //       RetailerLedgerScreen(
-                  //         retailers: retailersList,
-                  //         type: 'Retailers',
-                  //       ).launch(context);
-                  //     },
-                  //     iconPath: 'images/sustomerpic.jpeg',
-                  //     title: 'Retailers'),
-                  // ReportCard(
-                  //     pressed: () {
-                  //       RetailerLedgerScreen(
-                  //         retailers: wholesalerList,
-                  //         type: 'Wholesalers',
-                  //       ).launch(context);
-                  //     },
-                  //     iconPath: 'images/sustomerpic.jpeg',
-                  //     title: 'Wholesaler'),
-                  // ReportCard(
-                  //     pressed: () {
-                  //       RetailerLedgerScreen(
-                  //         retailers: dealerList,
-                  //         type: 'Dealers',
-                  //       ).launch(context);
-                  //     },
-                  //     iconPath: 'images/sustomerpic.jpeg',
-                  //     title: 'Dealer'),
                 ],
               ),
             );

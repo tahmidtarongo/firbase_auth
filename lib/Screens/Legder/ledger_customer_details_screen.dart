@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +12,9 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
+import '../../model/transition_model.dart';
+import '../invoice_details/purchase_invoice_details.dart';
+import '../invoice_details/sales_invoice_details_screen.dart';
 
 class LedgerCustomerDetailsScreen extends StatefulWidget {
   const LedgerCustomerDetailsScreen({Key? key, required this.customerModel}) : super(key: key);
@@ -20,6 +27,46 @@ class LedgerCustomerDetailsScreen extends StatefulWidget {
 
 class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScreen> {
   double totalSale = 0;
+
+  Future<void> getTotalSale() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    List<TransitionModel> transitionList = [];
+    await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+      for (var element in value.children) {
+        transitionList.add(TransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
+      }
+    });
+    for (var element in transitionList) {
+      if (element.customerPhone == widget.customerModel.phoneNumber) {
+        totalSale = totalSale + element.totalAmount!.toInt();
+      }
+    }
+  }
+
+  Future<void> getTotalPurchase() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    List<dynamic> transitionList = [];
+    await FirebaseDatabase.instance.ref(userId).child('Purchase Transition').orderByKey().get().then((value) {
+      for (var element in value.children) {
+        transitionList.add(PurchaseTransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
+      }
+    });
+
+    for (var element in transitionList) {
+      if (element.customerPhone == widget.customerModel.phoneNumber) {
+        totalSale = totalSale + element.totalAmount!.toInt();
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTotalSale();
+    getTotalPurchase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -42,11 +89,6 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
           ),
           body: widget.customerModel.type != 'Supplier'
               ? providerData.when(data: (transaction) {
-                  for (var element in transaction) {
-                    if (element.customerPhone == widget.customerModel.phoneNumber) {
-                      totalSale = totalSale + element.totalAmount!.toInt();
-                    }
-                  }
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -129,10 +171,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                             return reTransaction[index].customerPhone == widget.customerModel.phoneNumber
                                 ? GestureDetector(
                                     onTap: () {
-                                      // SalesInvoiceDetails(
-                                      //   personalInformationModel: widget.customerModel,
-                                      //   transitionModel: reTransaction[index],
-                                      // ).launch(context);
+                                      SalesInvoiceDetails(
+                                        personalInformationModel: personalData.value!,
+                                        transitionModel: reTransaction[index],
+                                      ).launch(context);
                                     },
                                     child: Column(
                                       children: [
@@ -289,11 +331,6 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                   return const Center(child: CircularProgressIndicator());
                 })
               : purchaseProviderData.when(data: (transaction) {
-                  for (var element in transaction) {
-                    if (element.customerPhone == widget.customerModel.phoneNumber) {
-                      totalSale = totalSale + element.totalAmount!.toInt();
-                    }
-                  }
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -376,10 +413,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                             return reTransaction[index].customerPhone == widget.customerModel.phoneNumber
                                 ? GestureDetector(
                                     onTap: () {
-                                      // SalesInvoiceDetails(
-                                      //   personalInformationModel: widget.customerModel,
-                                      //   transitionModel: reTransaction[index],
-                                      // ).launch(context);
+                                      PurchaseInvoiceDetails(
+                                        personalInformationModel: personalData.value!,
+                                        transitionModel: reTransaction[index],
+                                      ).launch(context);
                                     },
                                     child: Column(
                                       children: [
