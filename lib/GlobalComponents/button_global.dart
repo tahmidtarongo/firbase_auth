@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 // ignore: must_be_immutable
 class ButtonGlobal extends StatelessWidget {
@@ -38,7 +39,7 @@ class ButtonGlobal extends StatelessWidget {
             Icon(
               iconWidget,
               color: iconColor,
-            ),
+            ).visible(false),
           ],
         ),
       ),

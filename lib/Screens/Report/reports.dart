@@ -18,40 +18,46 @@ class _ReportsState extends State<Reports> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           'Reports',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 20.0,
           ),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
-      body: Column(
-        children: [
-          ReportCard(
-              pressed: () {
-                const PurchaseReportScreen().launch(context);
-              },
-              iconPath: 'images/purchase.png',
-              title: 'Purchase Report'),
-          ReportCard(
-              pressed: () {
-                const SalesReportScreen().launch(context);
-              },
-              iconPath: 'images/sales.png',
-              title: 'Sales Report'),
-          ReportCard(
-              pressed: () {
-                const DueReportScreen().launch(context);
-              },
-              iconPath: 'images/duelist.png',
-              title: 'Due Report'),
-        ],
+      body: Container(
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            ReportCard(
+                pressed: () {
+                  const PurchaseReportScreen().launch(context);
+                },
+                iconPath: 'images/purchase.png',
+                title: 'Purchase Report'),
+            ReportCard(
+                pressed: () {
+                  const SalesReportScreen().launch(context);
+                },
+                iconPath: 'images/sales.png',
+                title: 'Sales Report'),
+            ReportCard(
+                pressed: () {
+                  const DueReportScreen().launch(context);
+                },
+                iconPath: 'images/duelist.png',
+                title: 'Due Report'),
+          ],
+        ),
       ),
     );
   }

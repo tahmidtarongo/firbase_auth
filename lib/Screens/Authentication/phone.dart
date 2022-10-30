@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class PhoneAuth extends StatefulWidget {
   const PhoneAuth({Key? key}) : super(key: key);
   static String verify = '';
   static String phoneNumber = '';
+
   @override
   State<PhoneAuth> createState() => _PhoneAuthState();
 }
@@ -24,13 +26,14 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   String phoneNumber = '';
   late StreamSubscription subscription;
+  String countryFlag = '🇧🇩';
+  String countryName = 'Bangladesh';
+  String countryCode = '880';
   bool isDeviceConnected = false;
   bool isAlertSet = false;
 
   @override
   void initState() {
-    // TODO: implement initState
-    countryController.text = "+880";
     super.initState();
     getConnectivity();
     checkInternet();
@@ -57,74 +60,118 @@ class _PhoneAuthState extends State<PhoneAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
+      appBar: AppBar(
+        backgroundColor: kMainColor,
+        elevation: 0,
+        title: const Text('Sign In'),
+        centerTitle: true,
+      ),
       body: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('images/logoandname.png'),
-              const SizedBox(height: 25),
-              const Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.grey), borderRadius: BorderRadius.circular(10)),
-                child: Row(
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: Container(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 20),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: 40,
-                      child: TextField(
-                        controller: countryController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    const Text(
-                      "|",
-                      style: TextStyle(fontSize: 33, color: Colors.grey),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                        child: TextField(
-                      onChanged: (value) {
-                        phoneNumber = value;
-                        PhoneAuth.phoneNumber = value;
-                      },
-                      keyboardType: TextInputType.phone,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Phone",
-                      ),
-                    ))
+                  children: const [
+                    Text('Get control of your business with  '),
+                    Image(width: 100, image: AssetImage('images/maanpos.png')),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: kMainColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                const SizedBox(height: 30),
+                GestureDetector(
+                  onTap: () {
+                    showCountryPicker(
+                      context: context,
+                      favorite: <String>['BD'],
+                      showPhoneCode: true,
+                      onSelect: (Country country) {
+                        setState(() {
+                          countryCode = country.phoneCode;
+                          countryName = country.name;
+                          countryFlag = country.flagEmoji;
+                        });
+                      },
+                      // Optional. Sets the theme for the country list picker.
+                      countryListTheme: CountryListThemeData(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                        // Optional. Styles the search field.
+                        inputDecoration: InputDecoration(
+                          labelText: 'Search',
+                          hintText: 'Start typing to search',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: const Color(0xFF8C98A8).withOpacity(0.2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        '$countryFlag  $countryName',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const Icon(
+                        Icons.arrow_drop_down_outlined,
+                        color: kMainColor,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  height: 55,
+                  decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.grey), borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 40,
+                        child: Text('+$countryCode'),
+                      ),
+                      const Text(
+                        "|",
+                        style: TextStyle(fontSize: 33, color: Colors.grey),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: TextField(
+                        onChanged: (value) {
+                          phoneNumber = value;
+                          PhoneAuth.phoneNumber = '+$countryCode${value.toInt().toString()}';
+                        },
+                        keyboardType: TextInputType.phone,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Phone",
+                        ),
+                      ))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ButtonGlobalWithoutIcon(
+                    buttontext: 'Get OTP',
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
                       EasyLoading.show(status: 'Loading', dismissOnTap: false);
                       try {
                         await FirebaseAuth.instance.verifyPhoneNumber(
-                          phoneNumber: countryController.text + phoneNumber,
+                          phoneNumber: '+$countryCode$phoneNumber',
                           verificationCompleted: (PhoneAuthCredential credential) {},
                           verificationFailed: (FirebaseAuthException e) {},
                           codeSent: (String verificationId, int? resendToken) {
@@ -138,15 +185,11 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         EasyLoading.showError('Error');
                       }
                     },
-                    child: const Text("Send the code")),
-              ),
-              ButtonGlobalWithoutIcon(
-                      buttontext: 'Send the code',
-                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                      onPressed: () {},
-                      buttonTextColor: Colors.white)
-                  .visible(false),
-            ],
+                    buttonTextColor: Colors.white),
+                const SizedBox(height: 30),
+                Image(height: context.width() / 1.4, width: context.width() / 1.4, image: const AssetImage('images/otp_screen_image.png'))
+              ],
+            ),
           ),
         ),
       ),

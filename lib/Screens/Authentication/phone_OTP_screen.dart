@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:mobile_pos/Screens/Authentication/profile_setup.dart';
@@ -8,6 +9,8 @@ import 'package:mobile_pos/Screens/Authentication/success_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
+
+import '../../GlobalComponents/button_global.dart';
 
 class OTPVerify extends StatefulWidget {
   const OTPVerify({Key? key}) : super(key: key);
@@ -20,43 +23,42 @@ class _OTPVerifyState extends State<OTPVerify> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   String code = '';
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      backgroundColor: kMainColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
-          ),
-        ),
+        backgroundColor: kMainColor,
         elevation: 0,
+        centerTitle: true,
+        title: const Text('Verifying OTP'),
       ),
       body: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
+        padding: const EdgeInsets.only(left: 25, right: 25),
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('images/logoandname.png'),
-              const SizedBox(height: 25),
-              const Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'OTP sent to ${PhoneAuth.phoneNumber}',
+                    style: const TextStyle(fontSize: 17, color: Colors.grey),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Change?',
+                      style: TextStyle(color: Colors.redAccent, fontSize: 17),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(height: 30),
               Pinput(
@@ -66,45 +68,69 @@ class _OTPVerifyState extends State<OTPVerify> {
                     code = pin;
                   }),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: kMainColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                    onPressed: () async {
-                      EasyLoading.show(status: 'Loading');
-                      try {
-                        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
-                        await auth.signInWithCredential(credential).then((value) {
-                          if (value.additionalUserInfo!.isNewUser) {
-                            EasyLoading.dismiss();
-                            const ProfileSetup().launch(context);
-                          } else {
-                            EasyLoading.dismiss();
-                            const SuccessScreen().launch(context);
-                          }
-                        });
-                      } catch (e) {
-                        EasyLoading.showError('Wrong OTP');
-                      }
-                    },
-                    child: const Text("Verify Phone Number")),
-              ),
-              Row(children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      'phone',
-                      (route) => false,
-                    );
-                  },
-                  child: const Text(
-                    "Edit Phone Number ?",
-                    style: TextStyle(color: Colors.black),
+              Row(
+                children: [
+                  const Text(
+                    'Resend OTP : ',
+                    style: TextStyle(fontSize: 17, color: Colors.grey),
                   ),
-                )
-              ])
+                  CountdownTimer(
+                    textStyle: const TextStyle(fontSize: 17, color: Colors.black),
+                    endTime: endTime,
+                    endWidget: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Resend Code',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Grow Business',
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 50,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ButtonGlobalWithoutIcon(
+                  buttontext: 'Verify Phone Number',
+                  buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
+                  onPressed: () async {
+                    EasyLoading.show(status: 'Loading');
+                    try {
+                      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
+                      await auth.signInWithCredential(credential).then((value) {
+                        if (value.additionalUserInfo!.isNewUser) {
+                          EasyLoading.dismiss();
+                          const ProfileSetup().launch(context);
+                        } else {
+                          EasyLoading.dismiss();
+                          const SuccessScreen().launch(context);
+                        }
+                      });
+                    } catch (e) {
+                      EasyLoading.showError('Wrong OTP');
+                    }
+                  },
+                  buttonTextColor: Colors.white),
             ],
           ),
         ),

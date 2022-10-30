@@ -192,11 +192,17 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: context.height() / 3,
-            ),
-            const Image(
-              image: AssetImage('images/logoPos.png'),
+            SizedBox(height: context.height() / 3),
+            Container(
+              padding: const EdgeInsets.all(30),
+              height: context.height() / 4,
+              width: context.height() / 4,
+              decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
+              child: const Image(
+                image: AssetImage(
+                  'images/maanpos_logo.png',
+                ),
+              ),
             ),
             const Spacer(),
             Column(
@@ -204,16 +210,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 Center(
                   child: Text(
                     'Powered By Maan Technology',
-                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 20.0),
+                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 17),
                   ),
                 ),
                 Center(
                   child: Text(
                     'V $appVersion',
-                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 15.0),
+                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 30),
               ],
             ),
           ],

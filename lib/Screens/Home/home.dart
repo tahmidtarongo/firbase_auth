@@ -69,6 +69,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

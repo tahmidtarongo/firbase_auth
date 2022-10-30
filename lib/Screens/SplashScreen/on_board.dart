@@ -23,63 +23,46 @@ class _OnBoardState extends State<OnBoard> {
     {
       "icon": 'images/onboard1.png',
       "title": 'Easy to use mobile pos',
-      "description":
-          'Lorem ipsum dolor sit amet, consectetuer adipisci elit, sed diam nonummy nibh euismod tincidunt u laoreet dolore magna aliquam erat volutpat. Ut wi',
+      "description": 'Maan POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
     },
     {
       "icon": 'images/onboard2.png',
       "title": 'Choose your features',
-      "description":
-          'Lorem ipsum dolor sit amet, consectetuer adipisci elit, sed diam nonummy nibh euismod tincidunt u laoreet dolore magna aliquam erat volutpat. Ut wi',
+      "description": 'Features are the important part which makes Maan  POS different from traditional solutions.',
     },
     {
       "icon": 'images/onboard3.png',
       "title": 'All business solutions',
-      "description":
-          'Lorem ipsum dolor sit amet, consectetuer adipisci elit, sed diam nonummy nibh euismod tincidunt u laoreet dolore magna aliquam erat volutpat. Ut wi',
+      "description": 'Maan POS is a complete business solution with stock, account, sales, expense & loss/profit.',
     },
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        actions: [
-          const SizedBox(
-            width: 20.0,
-          ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(height: 30),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(right: 20),
             child: TextButton(
               onPressed: () {
                 const PhoneAuth().launch(context);
-                // const SignInScreen().launch(context);
-                // Navigator.pushNamed(context, '/signIn');
               },
               child: Text(
                 'Skip',
                 style: GoogleFonts.jost(
                   fontSize: 20.0,
-                  color: kMainColor,
+                  color: Colors.grey,
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            width: 30.0,
-          )
-        ],
-      ),
-      body: Column(
-        children: [
           Container(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
             height: 550,
-            width: 340,
+            width: context.width(),
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -90,7 +73,9 @@ class _OnBoardState extends State<OnBoard> {
                   itemBuilder: (_, index) {
                     return Column(
                       children: [
-                        Image.asset(sliderList[index]['icon'], fit: BoxFit.fill, width: context.width(), height: 340),
+                        const SizedBox(height: 30),
+                        Image.asset(sliderList[index]['icon'], fit: BoxFit.fill, width: context.width() - 100, height: context.width() - 100),
+                        const SizedBox(height: 30),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
@@ -128,29 +113,33 @@ class _OnBoardState extends State<OnBoard> {
             ),
           ),
           DotIndicator(
-            currentDotSize: 15,
+            currentDotSize: 25,
             dotSize: 6,
             pageController: pageController,
             pages: sliderList,
             indicatorColor: kMainColor,
             unselectedIndicatorColor: Colors.grey,
           ),
-          ButtonGlobal(
-            iconWidget: Icons.arrow_forward,
-            buttontext: buttonText,
-            iconColor: Colors.white,
-            buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-            onPressed: () {
-              setState(
-                () {
-                  currentIndexPage < 2
-                      ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut)
-                      : const PhoneAuth().launch(context);
-                  // : const SignInScreen().launch(context);
-                },
-              );
-            },
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0, left: 10),
+            child: ButtonGlobal(
+              iconWidget: null,
+              buttontext: currentIndexPage == 2 ? "Use Maan POS" : buttonText,
+              iconColor: Colors.white,
+              buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+              onPressed: () {
+                setState(
+                  () {
+                    currentIndexPage < 2
+                        ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut)
+                        : const PhoneAuth().launch(context);
+                  },
+                );
+              },
+            ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -50,11 +50,14 @@ class _SettingScreenState extends State<SettingScreen> {
         AsyncValue<PersonalInformationModel> userProfileDetails = ref.watch(profileDetailsProvider);
 
         return Scaffold(
+          backgroundColor: kMainColor,
           body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 Card(
                   elevation: 0.0,
+                  color: kMainColor,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: userProfileDetails.when(data: (details) {
@@ -74,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                           ),
                           const SizedBox(
-                            width: 10.0,
+                            width: 10.0
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -85,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               ),
                               Text(
@@ -93,7 +96,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.normal,
-                                  color: kGreyTextColor,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -107,480 +110,488 @@ class _SettingScreenState extends State<SettingScreen> {
                     }),
                   ),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                ListTile(
-                  title: Text(
-                    'Profile',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  onTap: () {
-                    const ProfileDetails().launch(context);
-                  },
-                  leading: const Icon(
-                    Icons.person_outline_rounded,
-                    color: kMainColor,
-                  ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: kGreyTextColor,
-                  ),
-                ),
-                // ListTile(
-                //   onTap: () => EasyLoading.showError('Coming Soon'),
-                //   title: Text(
-                //     'Create Online Store',
-                //     style: GoogleFonts.poppins(
-                //       color: Colors.black,
-                //       fontSize: 18.0,
-                //     ),
-                //   ),
-                //   leading: const Icon(
-                //     Icons.shopping_bag_outlined,
-                //     color: kMainColor,
-                //   ),
-                //   trailing: const Icon(
-                //     Icons.arrow_forward_ios,
-                //     color: kGreyTextColor,
-                //   ),
-                // ),
-                // ExpansionPanelList(
-                //   expandedHeaderPadding: EdgeInsets.zero,
-                //   expansionCallback: (int index, bool isExpanded) {},
-                //   animationDuration: const Duration(seconds: 1),
-                //   elevation: 0,
-                //   dividerColor: Colors.white,
-                //   children: [
-                //     ExpansionPanel(
-                //       headerBuilder: (BuildContext context, bool isExpanded) {
-                //         return Row(
-                //           children: [
-                //             const Padding(
-                //               padding: EdgeInsets.only(left: 16.0),
-                //               child: Icon(
-                //                 Icons.handyman_outlined,
-                //                 color: kMainColor,
-                //               ),
-                //             ),
-                //             TextButton(
-                //               child: Padding(
-                //                 padding: const EdgeInsets.only(left: 24.0),
-                //                 child: Text(
-                //                   'Settings',
-                //                   style: GoogleFonts.poppins(
-                //                     fontSize: 18.0,
-                //                     color: expanded == false ? Colors.black : kMainColor,
-                //                   ),
-                //                 ),
-                //               ),
-                //               onPressed: () {
-                //                 EasyLoading.showError('Coming Soon');
-                //                 // setState(() {
-                //                 //   expanded == false ? expanded = true : expanded = false;
-                //                 // });
-                //               },
-                //             ),
-                //           ],
-                //         );
-                //       },
-                //       body: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'Notification Setting',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //               onTap: () => showDialog(
-                //                 context: context,
-                //                 builder: (BuildContext context) => Dialog(
-                //                   shape: RoundedRectangleBorder(
-                //                     borderRadius: BorderRadius.circular(12.0),
-                //                   ),
-                //                   child: const NoticationSettings(),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'Language Setting',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               onTap: () => showDialog(
-                //                 context: context,
-                //                 builder: (BuildContext context) => Dialog(
-                //                   shape: RoundedRectangleBorder(
-                //                     borderRadius: BorderRadius.circular(12.0),
-                //                   ),
-                //                   // ignore: sized_box_for_whitespace
-                //                   child: Container(
-                //                     height: 400.0,
-                //                     width: MediaQuery.of(context).size.width - 80,
-                //                     child: Column(
-                //                       children: [
-                //                         const SizedBox(
-                //                           height: 20.0,
-                //                         ),
-                //                         Text(
-                //                           'Select Language',
-                //                           style: GoogleFonts.poppins(
-                //                             color: Colors.black,
-                //                             fontSize: 20.0,
-                //                             fontWeight: FontWeight.bold,
-                //                           ),
-                //                         ),
-                //                         ...List.generate(
-                //                           language.length,
-                //                           (index) => ListTile(
-                //                             title: Text(language[index]),
-                //                             trailing: const Icon(
-                //                               Icons.check_circle_outline,
-                //                               color: kGreyTextColor,
-                //                             ),
-                //                             onTap: () {
-                //                               setState(() {
-                //                                 selected == false ? selected = true : selected = false;
-                //                               });
-                //                               Navigator.pop(context);
-                //                             },
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'Online Store Setting',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'App Update',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       isExpanded: expanded,
-                //     ),
-                //   ],
-                // ),
-                // ExpansionPanelList(
-                //   expandedHeaderPadding: EdgeInsets.zero,
-                //   expansionCallback: (int index, bool isExpanded) {},
-                //   animationDuration: const Duration(seconds: 1),
-                //   elevation: 0,
-                //   dividerColor: Colors.white,
-                //   children: [
-                //     ExpansionPanel(
-                //       headerBuilder: (BuildContext context, bool isExpanded) {
-                //         return Row(
-                //           children: [
-                //             const Padding(
-                //               padding: EdgeInsets.only(left: 16.0),
-                //               child: Icon(
-                //                 Icons.help_outline_rounded,
-                //                 color: kMainColor,
-                //               ),
-                //             ),
-                //             TextButton(
-                //               child: Padding(
-                //                 padding: const EdgeInsets.only(left: 24.0),
-                //                 child: Text(
-                //                   'Help & Support',
-                //                   style: GoogleFonts.poppins(
-                //                     fontSize: 18.0,
-                //                     color: expandedHelp == false ? Colors.black : kMainColor,
-                //                   ),
-                //                 ),
-                //               ),
-                //               onPressed: () {
-                //                 EasyLoading.showError('Coming Soon');
-                //                 // setState(() {
-                //                 //   expandedHelp == false ? expandedHelp = true : expandedHelp = false;
-                //                 // });
-                //               },
-                //             ),
-                //           ],
-                //         );
-                //       },
-                //       body: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'FAQs',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               onTap: () {
-                //                 const ContactUs().launch(context);
-                //               },
-                //               title: Text(
-                //                 'Contact Us',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       isExpanded: expandedHelp,
-                //     ),
-                //   ],
-                // ),
-                // ExpansionPanelList(
-                //   expandedHeaderPadding: EdgeInsets.zero,
-                //   expansionCallback: (int index, bool isExpanded) {},
-                //   animationDuration: const Duration(seconds: 1),
-                //   elevation: 0,
-                //   dividerColor: Colors.white,
-                //   children: [
-                //     ExpansionPanel(
-                //       headerBuilder: (BuildContext context, bool isExpanded) {
-                //         return Row(
-                //           children: [
-                //             const Padding(
-                //               padding: EdgeInsets.only(left: 16.0),
-                //               child: Icon(
-                //                 Icons.text_snippet_outlined,
-                //                 color: kMainColor,
-                //               ),
-                //             ),
-                //             TextButton(
-                //               child: Padding(
-                //                 padding: const EdgeInsets.only(left: 24.0),
-                //                 child: Text(
-                //                   'About Us',
-                //                   style: GoogleFonts.poppins(
-                //                     fontSize: 18.0,
-                //                     color: expandedAbout == false ? Colors.black : kMainColor,
-                //                   ),
-                //                 ),
-                //               ),
-                //               onPressed: () {
-                //                 EasyLoading.showError('Coming Soon');
-                //                 // setState(() {
-                //                 //   expandedAbout == false ? expandedAbout = true : expandedAbout = false;
-                //                 // });
-                //               },
-                //             ),
-                //           ],
-                //         );
-                //       },
-                //       body: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'About Sales Pro',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'Privacy Policy',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(left: 55.0),
-                //             child: ListTile(
-                //               title: Text(
-                //                 'Terms & Conditions',
-                //                 style: GoogleFonts.poppins(
-                //                   color: Colors.black,
-                //                   fontSize: 16.0,
-                //                 ),
-                //               ),
-                //               trailing: const Icon(
-                //                 Icons.arrow_forward_ios,
-                //                 color: kGreyTextColor,
-                //                 size: 16.0,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       isExpanded: expandedAbout,
-                //     ),
-                //   ],
-                // ),
-                ListTile(
-                  title: Text(
-                    'Printing Option',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  leading: const Icon(
-                    Icons.print,
-                    color: kMainColor,
-                  ),
-                  trailing: Switch.adaptive(
-                    value: isPrintEnable,
-                    onChanged: (bool value) async {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('isPrintEnable', value);
-                      setState(() {
-                        isPrintEnable = value;
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Subscription',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  onTap: () {
-                    // const SubscriptionScreen().launch(context);
-                    const PackageScreen().launch(context);
-                  },
-                  leading: const Icon(
-                    Icons.account_balance_wallet_outlined,
-                    color: kMainColor,
-                  ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: kGreyTextColor,
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Log Out',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  onTap: () async {
-                    EasyLoading.show(status: 'Log out');
-                    await _signOut();
-                    Future.delayed(const Duration(milliseconds: 1000), () {
-                      Restart.restartApp();
-                      // const SignInScreen().launch(context);
-                    });
-                    // Phoenix.rebirth(context);
-                  },
-                  leading: const Icon(
-                    Icons.logout,
-                    color: kMainColor,
-                  ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: kGreyTextColor,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'MaanPro V-$appVersion',
-                        style: GoogleFonts.poppins(
+                Container(
+                  alignment: Alignment.center,
+                  height: context.height(),
+                  decoration:
+                      const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Profile',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          const ProfileDetails().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.person_outline_rounded,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
                           color: kGreyTextColor,
-                          fontSize: 16.0,
                         ),
                       ),
-                    ),
-                  ],
+                      // ListTile(
+                      //   onTap: () => EasyLoading.showError('Coming Soon'),
+                      //   title: Text(
+                      //     'Create Online Store',
+                      //     style: GoogleFonts.poppins(
+                      //       color: Colors.black,
+                      //       fontSize: 18.0,
+                      //     ),
+                      //   ),
+                      //   leading: const Icon(
+                      //     Icons.shopping_bag_outlined,
+                      //     color: kMainColor,
+                      //   ),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios,
+                      //     color: kGreyTextColor,
+                      //   ),
+                      // ),
+                      // ExpansionPanelList(
+                      //   expandedHeaderPadding: EdgeInsets.zero,
+                      //   expansionCallback: (int index, bool isExpanded) {},
+                      //   animationDuration: const Duration(seconds: 1),
+                      //   elevation: 0,
+                      //   dividerColor: Colors.white,
+                      //   children: [
+                      //     ExpansionPanel(
+                      //       headerBuilder: (BuildContext context, bool isExpanded) {
+                      //         return Row(
+                      //           children: [
+                      //             const Padding(
+                      //               padding: EdgeInsets.only(left: 16.0),
+                      //               child: Icon(
+                      //                 Icons.handyman_outlined,
+                      //                 color: kMainColor,
+                      //               ),
+                      //             ),
+                      //             TextButton(
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.only(left: 24.0),
+                      //                 child: Text(
+                      //                   'Settings',
+                      //                   style: GoogleFonts.poppins(
+                      //                     fontSize: 18.0,
+                      //                     color: expanded == false ? Colors.black : kMainColor,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onPressed: () {
+                      //                 EasyLoading.showError('Coming Soon');
+                      //                 // setState(() {
+                      //                 //   expanded == false ? expanded = true : expanded = false;
+                      //                 // });
+                      //               },
+                      //             ),
+                      //           ],
+                      //         );
+                      //       },
+                      //       body: Column(
+                      //         children: [
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'Notification Setting',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //               onTap: () => showDialog(
+                      //                 context: context,
+                      //                 builder: (BuildContext context) => Dialog(
+                      //                   shape: RoundedRectangleBorder(
+                      //                     borderRadius: BorderRadius.circular(12.0),
+                      //                   ),
+                      //                   child: const NoticationSettings(),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'Language Setting',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               onTap: () => showDialog(
+                      //                 context: context,
+                      //                 builder: (BuildContext context) => Dialog(
+                      //                   shape: RoundedRectangleBorder(
+                      //                     borderRadius: BorderRadius.circular(12.0),
+                      //                   ),
+                      //                   // ignore: sized_box_for_whitespace
+                      //                   child: Container(
+                      //                     height: 400.0,
+                      //                     width: MediaQuery.of(context).size.width - 80,
+                      //                     child: Column(
+                      //                       children: [
+                      //                         const SizedBox(
+                      //                           height: 20.0,
+                      //                         ),
+                      //                         Text(
+                      //                           'Select Language',
+                      //                           style: GoogleFonts.poppins(
+                      //                             color: Colors.black,
+                      //                             fontSize: 20.0,
+                      //                             fontWeight: FontWeight.bold,
+                      //                           ),
+                      //                         ),
+                      //                         ...List.generate(
+                      //                           language.length,
+                      //                           (index) => ListTile(
+                      //                             title: Text(language[index]),
+                      //                             trailing: const Icon(
+                      //                               Icons.check_circle_outline,
+                      //                               color: kGreyTextColor,
+                      //                             ),
+                      //                             onTap: () {
+                      //                               setState(() {
+                      //                                 selected == false ? selected = true : selected = false;
+                      //                               });
+                      //                               Navigator.pop(context);
+                      //                             },
+                      //                           ),
+                      //                         ),
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'Online Store Setting',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'App Update',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       isExpanded: expanded,
+                      //     ),
+                      //   ],
+                      // ),
+                      // ExpansionPanelList(
+                      //   expandedHeaderPadding: EdgeInsets.zero,
+                      //   expansionCallback: (int index, bool isExpanded) {},
+                      //   animationDuration: const Duration(seconds: 1),
+                      //   elevation: 0,
+                      //   dividerColor: Colors.white,
+                      //   children: [
+                      //     ExpansionPanel(
+                      //       headerBuilder: (BuildContext context, bool isExpanded) {
+                      //         return Row(
+                      //           children: [
+                      //             const Padding(
+                      //               padding: EdgeInsets.only(left: 16.0),
+                      //               child: Icon(
+                      //                 Icons.help_outline_rounded,
+                      //                 color: kMainColor,
+                      //               ),
+                      //             ),
+                      //             TextButton(
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.only(left: 24.0),
+                      //                 child: Text(
+                      //                   'Help & Support',
+                      //                   style: GoogleFonts.poppins(
+                      //                     fontSize: 18.0,
+                      //                     color: expandedHelp == false ? Colors.black : kMainColor,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onPressed: () {
+                      //                 EasyLoading.showError('Coming Soon');
+                      //                 // setState(() {
+                      //                 //   expandedHelp == false ? expandedHelp = true : expandedHelp = false;
+                      //                 // });
+                      //               },
+                      //             ),
+                      //           ],
+                      //         );
+                      //       },
+                      //       body: Column(
+                      //         children: [
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'FAQs',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               onTap: () {
+                      //                 const ContactUs().launch(context);
+                      //               },
+                      //               title: Text(
+                      //                 'Contact Us',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       isExpanded: expandedHelp,
+                      //     ),
+                      //   ],
+                      // ),
+                      // ExpansionPanelList(
+                      //   expandedHeaderPadding: EdgeInsets.zero,
+                      //   expansionCallback: (int index, bool isExpanded) {},
+                      //   animationDuration: const Duration(seconds: 1),
+                      //   elevation: 0,
+                      //   dividerColor: Colors.white,
+                      //   children: [
+                      //     ExpansionPanel(
+                      //       headerBuilder: (BuildContext context, bool isExpanded) {
+                      //         return Row(
+                      //           children: [
+                      //             const Padding(
+                      //               padding: EdgeInsets.only(left: 16.0),
+                      //               child: Icon(
+                      //                 Icons.text_snippet_outlined,
+                      //                 color: kMainColor,
+                      //               ),
+                      //             ),
+                      //             TextButton(
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.only(left: 24.0),
+                      //                 child: Text(
+                      //                   'About Us',
+                      //                   style: GoogleFonts.poppins(
+                      //                     fontSize: 18.0,
+                      //                     color: expandedAbout == false ? Colors.black : kMainColor,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onPressed: () {
+                      //                 EasyLoading.showError('Coming Soon');
+                      //                 // setState(() {
+                      //                 //   expandedAbout == false ? expandedAbout = true : expandedAbout = false;
+                      //                 // });
+                      //               },
+                      //             ),
+                      //           ],
+                      //         );
+                      //       },
+                      //       body: Column(
+                      //         children: [
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'About Sales Pro',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'Privacy Policy',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           Padding(
+                      //             padding: const EdgeInsets.only(left: 55.0),
+                      //             child: ListTile(
+                      //               title: Text(
+                      //                 'Terms & Conditions',
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Colors.black,
+                      //                   fontSize: 16.0,
+                      //                 ),
+                      //               ),
+                      //               trailing: const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 color: kGreyTextColor,
+                      //                 size: 16.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       isExpanded: expandedAbout,
+                      //     ),
+                      //   ],
+                      // ),
+                      ListTile(
+                        title: Text(
+                          'Printing Option',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        leading: const Icon(
+                          Icons.print,
+                          color: kMainColor,
+                        ),
+                        trailing: Switch.adaptive(
+                          value: isPrintEnable,
+                          onChanged: (bool value) async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('isPrintEnable', value);
+                            setState(() {
+                              isPrintEnable = value;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Subscription',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          // const SubscriptionScreen().launch(context);
+                          const PackageScreen().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Log Out',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () async {
+                          EasyLoading.show(status: 'Log out');
+                          await _signOut();
+                          Future.delayed(const Duration(milliseconds: 1000), () {
+                            Restart.restartApp();
+                            // const SignInScreen().launch(context);
+                          });
+                          // Phoenix.rebirth(context);
+                        },
+                        leading: const Icon(
+                          Icons.logout,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'MaanPro V-$appVersion',
+                              style: GoogleFonts.poppins(
+                                color: kGreyTextColor,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

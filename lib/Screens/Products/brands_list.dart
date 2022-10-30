@@ -24,130 +24,136 @@ class _BrandsListState extends State<BrandsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           'Brands',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 20.0,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: AppTextField(
-                      textFieldType: TextFieldType.NAME,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        hintText: 'Search',
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: kGreyTextColor.withOpacity(0.5),
+      body: Container(
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: AppTextField(
+                        textFieldType: TextFieldType.NAME,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Search',
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: kGreyTextColor.withOpacity(0.5),
+                          ),
                         ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          search = value;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        const AddBrands().launch(context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                        height: 60.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          border: Border.all(color: kGreyTextColor),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: kGreyTextColor,
-                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            search = value;
+                          });
+                        },
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: FirebaseAnimatedList(
-                  controller: ScrollController(keepScrollOffset: false),
-                  defaultChild: Padding(
-                    padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
-                    child: Loader(
-                      color: Colors.white.withOpacity(0.2),
-                      size: 60,
+                    const SizedBox(
+                      width: 10.0
                     ),
-                  ),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  query: FirebaseDatabase.instance
-                      // ignore: deprecated_member_use
-                      .reference()
-                      .child(FirebaseAuth.instance.currentUser!.uid)
-                      .child('Brands'),
-                  itemBuilder: (context, snapshot, animation, index) {
-                    final json = snapshot.value as Map<dynamic, dynamic>;
-                    final title = BrandsModel.fromJson(json);
-                    return title.brandName.contains(search)
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    title.brandName,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18.0,
-                                      color: Colors.black,
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          const AddBrands().launch(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                          height: 60.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(color: kGreyTextColor),
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: kGreyTextColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20.0
+                    ),
+                  ],
+                ),
+                SingleChildScrollView(
+                  child: FirebaseAnimatedList(
+                    controller: ScrollController(keepScrollOffset: false),
+                    defaultChild: Padding(
+                      padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
+                      child: Loader(
+                        color: Colors.white.withOpacity(0.2),
+                        size: 60,
+                      ),
+                    ),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    query: FirebaseDatabase.instance
+                        // ignore: deprecated_member_use
+                        .reference()
+                        .child(FirebaseAuth.instance.currentUser!.uid)
+                        .child('Brands'),
+                    itemBuilder: (context, snapshot, animation, index) {
+                      final json = snapshot.value as Map<dynamic, dynamic>;
+                      final title = BrandsModel.fromJson(json);
+                      return title.brandName.contains(search)
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(
+                                      title.brandName,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18.0,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: ButtonGlobalWithoutIcon(
-                                    buttontext: 'Select',
-                                    buttonDecoration: kButtonDecoration.copyWith(color: kDarkWhite),
-                                    onPressed: () {
-                                      Navigator.pop(context, title.brandName);
-                                      // AddProduct(
-                                      //   catName: title.categoryName,
-                                      // ).launch(context);
-                                    },
-                                    buttonTextColor: Colors.black,
+                                  Expanded(
+                                    flex: 1,
+                                    child: ButtonGlobalWithoutIcon(
+                                      buttontext: 'Select',
+                                      buttonDecoration: kButtonDecoration.copyWith(color: kDarkWhite),
+                                      onPressed: () {
+                                        Navigator.pop(context, title.brandName);
+                                        // AddProduct(
+                                        //   catName: title.categoryName,
+                                        // ).launch(context);
+                                      },
+                                      buttonTextColor: Colors.black,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container();
-                  },
+                                ],
+                              ),
+                            )
+                          : Container();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

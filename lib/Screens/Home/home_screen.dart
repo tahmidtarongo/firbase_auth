@@ -180,6 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final userProfileDetails = ref.watch(profileDetailsProvider);
 
         return Scaffold(
+          backgroundColor: kMainColor,
           resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
             child: Column(
@@ -204,9 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 15.0,
-                          ),
+                          const SizedBox(width: 15.0),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,13 +215,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               ),
                               Text(
                                 '$customerPackage Plan',
                                 style: GoogleFonts.poppins(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -253,7 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 40.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: kDarkWhite,
                             ),
                             child: Center(
                               child: GestureDetector(
@@ -261,8 +259,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   EasyLoading.showInfo('Coming Soon');
                                 },
                                 child: const Icon(
-                                  Icons.notifications_active,
-                                  color: kMainColor,
+                                  Icons.notifications_none_rounded,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -277,142 +275,154 @@ class _HomeScreenState extends State<HomeScreen> {
                   }),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(10.0),
-                  child: GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    childAspectRatio: 0.9,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    children: List.generate(
-                      freeIcons.length,
-                      (index) => HomeGridCards(
-                        gridItems: freeIcons[index],
-                        color: color[index],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: Colors.grey.shade300,
-                ),
-                const SizedBox(height: 10),
-
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Row(
-                //     children: [
-                //       SizedBox(
-                //         width: 10.0,
-                //       ),
-                //       Text(
-                //         'Business',
-                //         style: GoogleFonts.poppins(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 20.0,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Container(
-                //   padding: EdgeInsets.all(10.0),
-                //   child: GridView.count(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     shrinkWrap: true,
-                //     childAspectRatio: 1,
-                //     crossAxisCount: 4,
-                //     children: List.generate(
-                //       businessIcons.length,
-                //       (index) => HomeGridCards(
-                //         gridItems: businessIcons[index],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+                  alignment: Alignment.topCenter,
+                  decoration:
+                      const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                  child: Column(
                     children: [
                       const SizedBox(
-                        width: 10.0,
+                        height: 10,
                       ),
-                      Text(
-                        'What\'s New',
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: GridView.count(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          childAspectRatio: 0.9,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          children: List.generate(
+                            freeIcons.length,
+                            (index) => HomeGridCards(
+                              gridItems: freeIcons[index],
+                              color: color[index],
+                            ),
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                // ignore: sized_box_for_whitespace
-                Container(
-                  height: 150,
-                  width: 320,
-                  child: PageView.builder(
-                    pageSnapping: true,
-                    itemCount: sliderList.length,
-                    controller: pageController,
-                    onPageChanged: (int index) {},
-                    itemBuilder: (_, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          const PackageScreen().launch(context);
-                        },
+                      const SizedBox(height: 20),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: Colors.grey.shade300,
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Row(
+                      //     children: [
+                      //       SizedBox(
+                      //         width: 10.0,
+                      //       ),
+                      //       Text(
+                      //         'Business',
+                      //         style: GoogleFonts.poppins(
+                      //           color: Colors.black,
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 20.0,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Container(
+                      //   padding: EdgeInsets.all(10.0),
+                      //   child: GridView.count(
+                      //     physics: NeverScrollableScrollPhysics(),
+                      //     shrinkWrap: true,
+                      //     childAspectRatio: 1,
+                      //     crossAxisCount: 4,
+                      //     children: List.generate(
+                      //       businessIcons.length,
+                      //       (index) => HomeGridCards(
+                      //         gridItems: businessIcons[index],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image.asset(
-                              sliderList[index]['icon'],
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Text(
+                              'What\'s New',
+                              style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
                             ),
                           ],
                         ),
-                      );
-                    },
+                      ),
+                      // ignore: sized_box_for_whitespace
+                      Container(
+                        height: 150,
+                        width: 320,
+                        child: PageView.builder(
+                          pageSnapping: true,
+                          itemCount: sliderList.length,
+                          controller: pageController,
+                          onPageChanged: (int index) {},
+                          itemBuilder: (_, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                const PackageScreen().launch(context);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    sliderList[index]['icon'],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Row(
+                      //     children: [
+                      //       SizedBox(
+                      //         width: 10.0,
+                      //       ),
+                      //       Text(
+                      //         'Enterprise',
+                      //         style: GoogleFonts.poppins(
+                      //           color: Colors.black,
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 20.0,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Container(
+                      //   padding: EdgeInsets.all(10.0),
+                      //   child: GridView.count(
+                      //     physics: NeverScrollableScrollPhysics(),
+                      //     shrinkWrap: true,
+                      //     childAspectRatio: 1,
+                      //     crossAxisCount: 4,
+                      //     children: List.generate(
+                      //       enterpriseIcons.length,
+                      //       (index) => HomeGridCards(
+                      //         gridItems: enterpriseIcons[index],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Row(
-                //     children: [
-                //       SizedBox(
-                //         width: 10.0,
-                //       ),
-                //       Text(
-                //         'Enterprise',
-                //         style: GoogleFonts.poppins(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 20.0,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Container(
-                //   padding: EdgeInsets.all(10.0),
-                //   child: GridView.count(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     shrinkWrap: true,
-                //     childAspectRatio: 1,
-                //     crossAxisCount: 4,
-                //     children: List.generate(
-                //       enterpriseIcons.length,
-                //       (index) => HomeGridCards(
-                //         gridItems: enterpriseIcons[index],
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

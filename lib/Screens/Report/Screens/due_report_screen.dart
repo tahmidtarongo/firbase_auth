@@ -22,7 +22,6 @@ class DueReportScreen extends StatefulWidget {
 }
 
 class _DueReportScreenState extends State<DueReportScreen> {
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

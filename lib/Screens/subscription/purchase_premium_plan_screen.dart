@@ -71,396 +71,414 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
                       'Purchase Premium Plan',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
                         widget.isCameBack ? Navigator.pop(context) : const Home().launch(context);
                       },
-                      child: const Icon(Icons.cancel_outlined),
+                      child: const Icon(
+                        Icons.cancel_outlined,
+                        color: Colors.white,
+                      ),
                     )
                   ],
                 ),
-                const SizedBox(height: 20),
-                ListView.builder(
-                    itemCount: imageList.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, i) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Dialog(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(height: 20),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.end,
+              ),
+              Container(
+                alignment: Alignment.topCenter,
+                decoration:
+                    const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ListView.builder(
+                        itemCount: imageList.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (_, i) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          GestureDetector(
-                                            child: const Icon(Icons.cancel),
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
+                                          const SizedBox(height: 20),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              GestureDetector(
+                                                child: const Icon(Icons.cancel),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              const SizedBox(width: 20),
+                                            ],
                                           ),
-                                          const SizedBox(width: 20),
+                                          const SizedBox(height: 20),
+                                          Image(
+                                            height: 200,
+                                            width: 200,
+                                            image: AssetImage(planDetailsImages[i]),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Text(
+                                            planDetailsText[i],
+                                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 15),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Natoque aliquet et, cur eget. Tellus sapien odio aliq.',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 16)),
+                                          ),
+                                          const SizedBox(height: 20),
                                         ],
                                       ),
-                                      const SizedBox(height: 20),
-                                      Image(
-                                        height: 200,
-                                        width: 200,
-                                        image: AssetImage(planDetailsImages[i]),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Text(
-                                        planDetailsText[i],
-                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                      const SizedBox(height: 15),
-                                      const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Natoque aliquet et, cur eget. Tellus sapien odio aliq.',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16)),
-                                      ),
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 );
                               },
-                            );
+                              child: Card(
+                                elevation: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: ListTile(
+                                    leading: SizedBox(
+                                      height: 40,
+                                      width: 40,
+                                      child: Image(
+                                        image: AssetImage(imageList[i]),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      titleListData[i],
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                    ),
+                                    trailing: const Icon(FeatherIcons.alertCircle),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Buy premium Plan',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              Subscription.selectedItem = 'Month';
+                              selectedPackageValue = 1;
+                            });
                           },
-                          child: Card(
-                            elevation: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: ListTile(
-                                leading: SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: Image(
-                                    image: AssetImage(imageList[i]),
+                          child: Container(
+                            height: (context.width() / 3) - 20,
+                            width: (context.width() / 3) - 20,
+                            decoration: BoxDecoration(
+                              color: Subscription.selectedItem == 'Month' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              border: Border.all(width: 1, color: Subscription.selectedItem == 'Month' ? kPremiumPlanColor2 : kPremiumPlanColor),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Monthly',
+                                  style: TextStyle(
+                                    fontSize: 16,
                                   ),
                                 ),
-                                title: Text(
-                                  titleListData[i],
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                ),
-                                trailing: const Icon(FeatherIcons.alertCircle),
-                              ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  '\$${Subscription.subscriptionAmounts['Month']!['Amount']}',
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
+                                )
+                              ],
                             ),
                           ),
                         ),
-                      );
-                    }),
-                const SizedBox(height: 10),
-                const Text(
-                  'Buy premium Plan',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          Subscription.selectedItem = 'Month';
-                          selectedPackageValue = 1;
-                        });
-                      },
-                      child: Container(
-                        height: (context.width() / 3) - 20,
-                        width: (context.width() / 3) - 20,
-                        decoration: BoxDecoration(
-                          color: Subscription.selectedItem == 'Month' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              Subscription.selectedItem = 'Year';
+                              selectedPackageValue = 2;
+                            });
+                          },
+                          child: SizedBox(
+                            height: (context.width() / 2.5) + 18,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Container(
+                                  height: (context.width() / 2.5),
+                                  width: (context.width() / 3) - 20,
+                                  decoration: BoxDecoration(
+                                    color: Subscription.selectedItem == 'Year' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Subscription.selectedItem == 'Year' ? kPremiumPlanColor2 : kPremiumPlanColor,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(height: 15),
+                                      const Text(
+                                        'Mobile App +\nDesktop',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 15),
+                                      const Text(
+                                        'Yearly',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        '\$${Subscription.subscriptionAmounts['Year']!['Amount']}',
+                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor2),
+                                      ),
+                                      const Text(
+                                        '\$119.88',
+                                        style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 8,
+                                  left: 0,
+                                  child: Container(
+                                    height: 25,
+                                    width: 70,
+                                    decoration: const BoxDecoration(
+                                      color: kPremiumPlanColor2,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        'Save 17%',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          border: Border.all(width: 1, color: Subscription.selectedItem == 'Month' ? kPremiumPlanColor2 : kPremiumPlanColor),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Monthly',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              Subscription.selectedItem = 'Lifetime';
+                              selectedPackageValue = 3;
+                            });
+                          },
+                          child: SizedBox(
+                            height: (context.width() / 3) - 8,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Container(
+                                  height: (context.width() / 3) - 20,
+                                  width: (context.width() / 3) - 20,
+                                  decoration: BoxDecoration(
+                                    color: Subscription.selectedItem == 'Lifetime' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    border: Border.all(width: 1, color: Subscription.selectedItem == 'Lifetime' ? kPremiumPlanColor2 : kPremiumPlanColor),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Lifetime\nPurchase',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        '\$${Subscription.subscriptionAmounts['Lifetime']!['Amount']}',
+                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
+                                      ),
+                                      const Text(
+                                        '\$1500.00',
+                                        style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 0,
+                                  left: 0,
+                                  child: Container(
+                                    height: 25,
+                                    width: 70,
+                                    decoration: const BoxDecoration(
+                                      color: kPremiumPlanColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        'Save 33%',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                            Text(
-                              '\$${Subscription.subscriptionAmounts['Month']!['Amount']}',
-                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+                    const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          Subscription.selectedItem = 'Year';
-                          selectedPackageValue = 2;
-                        });
-                      },
-                      child: SizedBox(
-                        height: (context.width() / 2.5) + 18,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              height: (context.width() / 2.5),
-                              width: (context.width() / 3) - 20,
-                              decoration: BoxDecoration(
-                                color: Subscription.selectedItem == 'Year' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                border: Border.all(
-                                  width: 1,
-                                  color: Subscription.selectedItem == 'Year' ? kPremiumPlanColor2 : kPremiumPlanColor,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 15),
-                                  const Text(
-                                    'Mobile App +\nDesktop',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  const Text(
-                                    'Yearly',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    '\$${Subscription.subscriptionAmounts['Year']!['Amount']}',
-                                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor2),
-                                  ),
-                                  const Text(
-                                    '\$119.88',
-                                    style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 8,
-                              left: 0,
-                              child: Container(
-                                height: 25,
-                                width: 70,
-                                decoration: const BoxDecoration(
-                                  color: kPremiumPlanColor2,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Save 17%',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          Subscription.selectedItem = 'Lifetime';
-                          selectedPackageValue = 3;
-                        });
-                      },
-                      child: SizedBox(
-                        height: (context.width() / 3) - 8,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              height: (context.width() / 3) - 20,
-                              width: (context.width() / 3) - 20,
-                              decoration: BoxDecoration(
-                                color: Subscription.selectedItem == 'Lifetime' ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                border: Border.all(width: 1, color: Subscription.selectedItem == 'Lifetime' ? kPremiumPlanColor2 : kPremiumPlanColor),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Lifetime\nPurchase',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '\$${Subscription.subscriptionAmounts['Lifetime']!['Amount']}',
-                                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
-                                  ),
-                                  const Text(
-                                    '\$1500.00',
-                                    style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12, color: Colors.grey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              child: Container(
-                                height: 25,
-                                width: 70,
-                                decoration: const BoxDecoration(
-                                  color: kPremiumPlanColor,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Save 33%',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    UsePaypal(
-                        sandboxMode: sandbox,
-                        clientId: paypalClientId,
-                        secretKey: paypalClientSecret,
-                        returnURL: "https://samplesite.com/return",
-                        cancelURL: "https://samplesite.com/cancel",
-                        transactions: [
-                          {
-                            "amount": {
-                              "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                              "currency": Subscription.currency.toString(),
-                              "details": {
-                                "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                                "shipping": '0',
-                                "shipping_discount": 0
+                        UsePaypal(
+                            sandboxMode: sandbox,
+                            clientId: paypalClientId,
+                            secretKey: paypalClientSecret,
+                            returnURL: "https://samplesite.com/return",
+                            cancelURL: "https://samplesite.com/cancel",
+                            transactions: [
+                              {
+                                "amount": {
+                                  "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                  "currency": Subscription.currency.toString(),
+                                  "details": {
+                                    "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                    "shipping": '0',
+                                    "shipping_discount": 0
+                                  }
+                                },
+                                "description": "The payment transaction description.",
+                                "item_list": {
+                                  "items": [
+                                    {
+                                      "name": "${Subscription.selectedItem} Package",
+                                      "quantity": 1,
+                                      "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                      "currency": Subscription.currency.toString(),
+                                    }
+                                  ],
+                                }
+                              }
+                            ],
+                            note: "Payment From MaanPos app",
+                            onSuccess: (Map params) async {
+                              try {
+                                EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                                final prefs = await SharedPreferences.getInstance();
+
+                                await prefs.setBool('isFiveDayRemainderShown', true);
+
+                                final DatabaseReference subscriptionRef =
+                                    FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
+
+                                SubscriptionModel subscriptionModel = SubscriptionModel(
+                                  subscriptionName: Subscription.selectedItem,
+                                  subscriptionDate: DateTime.now().toString(),
+                                  saleNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Sales'].toInt(),
+                                  purchaseNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Purchase'].toInt(),
+                                  partiesNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Parties'].toInt(),
+                                  dueNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Due Collection'].toInt(),
+                                  duration: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Duration'].toInt(),
+                                  products: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Products'].toInt(),
+                                );
+
+                                await subscriptionRef.set(subscriptionModel.toJson());
+                                EasyLoading.showSuccess('Added Successfully', duration: const Duration());
+                              } catch (e) {
+                                EasyLoading.dismiss();
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                              }
+                              if (mounted) {
+                                await const Home().launch(context);
                               }
                             },
-                            "description": "The payment transaction description.",
-                            "item_list": {
-                              "items": [
-                                {
-                                  "name": "${Subscription.selectedItem} Package",
-                                  "quantity": 1,
-                                  "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                                  "currency": Subscription.currency.toString(),
-                                }
-                              ],
-                            }
-                          }
-                        ],
-                        note: "Payment From MaanPos app",
-                        onSuccess: (Map params) async {
-                          try {
-                            EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                            final prefs = await SharedPreferences.getInstance();
-
-                            await prefs.setBool('isFiveDayRemainderShown', true);
-
-                            final DatabaseReference subscriptionRef =
-                                FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
-
-                            SubscriptionModel subscriptionModel = SubscriptionModel(
-                              subscriptionName: Subscription.selectedItem,
-                              subscriptionDate: DateTime.now().toString(),
-                              saleNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Sales'].toInt(),
-                              purchaseNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Purchase'].toInt(),
-                              partiesNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Parties'].toInt(),
-                              dueNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Due Collection'].toInt(),
-                              duration: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Duration'].toInt(),
-                              products: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Products'].toInt(),
-                            );
-
-                            await subscriptionRef.set(subscriptionModel.toJson());
-                            EasyLoading.showSuccess('Added Successfully', duration: const Duration());
-                          } catch (e) {
-                            EasyLoading.dismiss();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                          }
-                          if (mounted) {
-                            await const Home().launch(context);
-                          }
-                        },
-                        onError: (error) {
-                          EasyLoading.showError('Error');
-                        },
-                        onCancel: (params) {
-                          EasyLoading.showError('Cancel');
-                        }).launch(context);
-                  },
-                  child: Container(
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color: kMainColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Pay With Paypal',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                            onError: (error) {
+                              EasyLoading.showError('Error');
+                            },
+                            onCancel: (params) {
+                              EasyLoading.showError('Cancel');
+                            }).launch(context);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: const BoxDecoration(
+                          color: kMainColor,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Pay With Paypal',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ).visible(selectedPackageValue > widget.initPackageValue),
-              ],
-            ),
+                    ).visible(selectedPackageValue > widget.initPackageValue),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
