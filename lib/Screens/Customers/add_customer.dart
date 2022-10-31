@@ -26,7 +26,6 @@ class AddCustomer extends StatefulWidget {
 }
 
 class _AddCustomerState extends State<AddCustomer> {
-
   String radioItem = 'Retailer';
   String groupValue = '';
   // ignore: prefer_typing_uninitialized_variables
@@ -37,7 +36,8 @@ class _AddCustomerState extends State<AddCustomer> {
   String customerAddress = 'Not Provided';
   String emailAddress = 'Not Provided';
   String dueAmount = '0';
-  String profilePicture = 'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Profile%20Picture%2Fblank-profile-picture-973460_1280.webp?alt=media&token=3578c1e0-7278-4c03-8b56-dd007a9befd3';
+  String profilePicture =
+      'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Profile%20Picture%2Fblank-profile-picture-973460_1280.webp?alt=media&token=3578c1e0-7278-4c03-8b56-dd007a9befd3';
   final ImagePicker _picker = ImagePicker();
   bool showProgress = false;
   double progress = 0.0;
@@ -82,8 +82,7 @@ class _AddCustomerState extends State<AddCustomer> {
       ),
       body: Container(
         alignment: Alignment.topCenter,
-        decoration:
-        const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
         child: Consumer(builder: (context, ref, __) {
           final customerData = ref.watch(customerProvider);
 

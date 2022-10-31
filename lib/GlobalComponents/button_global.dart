@@ -13,13 +13,7 @@ class ButtonGlobal extends StatelessWidget {
   var onPressed;
 
   // ignore: use_key_in_widget_constructors
-  ButtonGlobal({
-    required this.iconWidget,
-    required this.buttontext,
-    required this.iconColor,
-    required this.buttonDecoration,
-    required this.onPressed
-  });
+  ButtonGlobal({required this.iconWidget, required this.buttontext, required this.iconColor, required this.buttonDecoration, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +40,7 @@ class ButtonGlobal extends StatelessWidget {
     );
   }
 }
+
 // ignore: must_be_immutable
 class ButtonGlobalWithoutIcon extends StatelessWidget {
   final String buttontext;
@@ -55,12 +50,7 @@ class ButtonGlobalWithoutIcon extends StatelessWidget {
   final Color buttonTextColor;
 
   // ignore: use_key_in_widget_constructors
-  ButtonGlobalWithoutIcon({
-    required this.buttontext,
-    required this.buttonDecoration,
-    required this.onPressed,
-    required this.buttonTextColor
-  });
+  ButtonGlobalWithoutIcon({required this.buttontext, required this.buttonDecoration, required this.onPressed, required this.buttonTextColor});
 
   @override
   Widget build(BuildContext context) {

@@ -447,32 +447,33 @@ class _EditCustomerState extends State<EditCustomer> {
                       ],
                     ),
                     ButtonGlobalWithoutIcon(
-                        buttontext: 'Update',
-                        buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                        onPressed: () async {
-                          try {
-                            EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                            imagePath == 'No Data' ? null : await uploadFile(imagePath);
-                            DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
-                            await ref.update({
-                              'customerName': updatedCustomerModel.customerName,
-                              'type': updatedCustomerModel.type,
-                              'profilePicture': updatedCustomerModel.profilePicture,
-                              'emailAddress': updatedCustomerModel.emailAddress,
-                              'customerAddress': updatedCustomerModel.customerAddress,
-                            });
-                            EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
-                            //ref.refresh(productProvider);
-                            Future.delayed(const Duration(milliseconds: 100), () {
-                              cRef.refresh(customerProvider);
-                              const CustomerList().launch(context, isNewTask: true);
-                            });
-                          } catch (e) {
-                            EasyLoading.dismiss();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                          }
-                        },
-                        buttonTextColor: Colors.white),
+                      buttontext: 'Update',
+                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                      onPressed: () async {
+                        try {
+                          EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                          imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                          DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
+                          await ref.update({
+                            'customerName': updatedCustomerModel.customerName,
+                            'type': updatedCustomerModel.type,
+                            'profilePicture': updatedCustomerModel.profilePicture,
+                            'emailAddress': updatedCustomerModel.emailAddress,
+                            'customerAddress': updatedCustomerModel.customerAddress,
+                          });
+                          EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                          //ref.refresh(productProvider);
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            cRef.refresh(customerProvider);
+                            const CustomerList().launch(context, isNewTask: true);
+                          });
+                        } catch (e) {
+                          EasyLoading.dismiss();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                        }
+                      },
+                      buttonTextColor: Colors.white,
+                    ),
                   ],
                 ),
               ),

@@ -22,9 +22,9 @@ class SellerInfoModel {
     countryName = json['countryName'];
     userID = json['userId'];
     subscriptionName = json['subscriptionName'];
-    subscriptionDate = json ['subscriptionDate'];
-    subscriptionMethod = json ['subscriptionMethod'];
-    email = json ['email'];
+    subscriptionDate = json['subscriptionDate'];
+    subscriptionMethod = json['subscriptionMethod'];
+    email = json['email'];
   }
   dynamic phoneNumber;
   String? companyName;
@@ -38,7 +38,6 @@ class SellerInfoModel {
   String? subscriptionMethod;
   String? email;
 
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['phoneNumber'] = phoneNumber;
@@ -51,7 +50,7 @@ class SellerInfoModel {
     map['subscriptionName'] = subscriptionName;
     map['subscriptionDate'] = subscriptionDate;
     map['subscriptionMethod'] = subscriptionMethod;
-    map ['email'] = email;
+    map['email'] = email;
     return map;
   }
 }

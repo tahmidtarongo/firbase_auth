@@ -31,7 +31,7 @@ class _FeaturedCardState extends State<FeaturedCard> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                ),
+              ),
               child: Column(
                 children: [
                   Padding(
@@ -47,8 +47,8 @@ class _FeaturedCardState extends State<FeaturedCard> {
                       Text(
                         widget.product.title.toString(),
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 15.0,
+                          color: Colors.black,
+                          fontSize: 15.0,
                         ),
                       ),
                     ],
@@ -57,18 +57,13 @@ class _FeaturedCardState extends State<FeaturedCard> {
                     children: [
                       Text(
                         '\$${widget.product.price.toString()}',
-                        style: const TextStyle(
-                          color: kGreyTextColor,
-                          fontSize: 15.0
-                        ),
+                        style: const TextStyle(color: kGreyTextColor, fontSize: 15.0),
                       ),
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: InkWell(
-                          onTap: (){
-
-                          },
+                          onTap: () {},
                           child: const Icon(
                             Icons.add_shopping_cart,
                             color: kMainColor,

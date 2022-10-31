@@ -20,7 +20,7 @@ class _PurchaseReportScreenState extends State<PurchaseReportScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return await const HomeScreen().launch(context,isNewTask: true);
+        return await const HomeScreen().launch(context, isNewTask: true);
       },
       child: Scaffold(
         appBar: AppBar(

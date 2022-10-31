@@ -12,8 +12,7 @@ import '../../model/print_transaction_model.dart';
 import '../../model/transition_model.dart';
 
 class SalesInvoiceDetails extends StatefulWidget {
-  const SalesInvoiceDetails({Key? key, required this.transitionModel, required this.personalInformationModel})
-      : super(key: key);
+  const SalesInvoiceDetails({Key? key, required this.transitionModel, required this.personalInformationModel}) : super(key: key);
 
   final TransitionModel transitionModel;
   final PersonalInformationModel personalInformationModel;
@@ -23,7 +22,6 @@ class SalesInvoiceDetails extends StatefulWidget {
 }
 
 class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -208,7 +206,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalAmount!.toDouble()+widget.transitionModel.discountAmount!.toDouble()}',
+                          '\$ ${widget.transitionModel.totalAmount!.toDouble() + widget.transitionModel.discountAmount!.toDouble()}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -364,8 +362,8 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
             child: GestureDetector(
               onTap: () async {
                 await printerData.getBluetooth();
-                PrintTransactionModel model = PrintTransactionModel(
-                    transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
+                PrintTransactionModel model =
+                    PrintTransactionModel(transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
                 mainConstant.connected
                     ? printerData.printTicket(
                         printTransactionModel: model,
@@ -383,9 +381,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                   children: [
                                     ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: printerData.availableBluetoothDevices.isNotEmpty
-                                          ? printerData.availableBluetoothDevices.length
-                                          : 0,
+                                      itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
                                       itemBuilder: (context, index) {
                                         return ListTile(
                                           onTap: () async {

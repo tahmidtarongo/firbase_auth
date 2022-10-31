@@ -6,9 +6,12 @@ import '../../constant.dart';
 import '../../model/transition_model.dart';
 
 class SingleLossProfitScreen extends StatefulWidget {
-  const SingleLossProfitScreen(
-      {Key? key, required this.transactionModel, required this.profit, required this.totalQuantity,})
-      : super(key: key);
+  const SingleLossProfitScreen({
+    Key? key,
+    required this.transactionModel,
+    required this.profit,
+    required this.totalQuantity,
+  }) : super(key: key);
 
   final TransitionModel transactionModel;
   final double profit;

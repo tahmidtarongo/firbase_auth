@@ -12,7 +12,6 @@ class EditSocialmedia extends StatefulWidget {
 }
 
 class _EditSocialmediaState extends State<EditSocialmedia> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,32 +30,42 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 10.0,),
+          const SizedBox(
+            height: 10.0,
+          ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaEditCard(
-              iconWidget: const Image(image: AssetImage('images/fb.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/fb.png'),
+              ),
               socialMediaName: 'Facebook',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaEditCard(
-              iconWidget: const Image(image: AssetImage('images/twitter.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/twitter.png'),
+              ),
               socialMediaName: 'Twitter',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaEditCard(
-              iconWidget: const Image(image: AssetImage('images/insta.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/insta.png'),
+              ),
               socialMediaName: 'Instagram',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaEditCard(
-              iconWidget: const Image(image: AssetImage('images/linkedin.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/linkedin.png'),
+              ),
               socialMediaName: 'LinkedIN',
             ),
           ),
@@ -65,6 +74,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
     );
   }
 }
+
 // ignore: must_be_immutable
 class SocialMediaEditCard extends StatelessWidget {
   SocialMediaEditCard({
@@ -106,10 +116,8 @@ class SocialMediaEditCard extends StatelessWidget {
               ),
               Text(
                 'Link',
-                style: GoogleFonts.poppins(
-                    fontSize: 15.0, color: Colors.white),
+                style: GoogleFonts.poppins(fontSize: 15.0, color: Colors.white),
               ),
-
             ],
           ),
         ),

@@ -12,8 +12,7 @@ import '../../model/personal_information_model.dart';
 import '../../model/print_transaction_model.dart';
 
 class DueInvoiceDetails extends StatefulWidget {
-  const DueInvoiceDetails({Key? key, required this.transitionModel, required this.personalInformationModel})
-      : super(key: key);
+  const DueInvoiceDetails({Key? key, required this.transitionModel, required this.personalInformationModel}) : super(key: key);
 
   final DueTransactionModel transitionModel;
   final PersonalInformationModel personalInformationModel;
@@ -23,7 +22,6 @@ class DueInvoiceDetails extends StatefulWidget {
 }
 
 class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -206,9 +204,8 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
             child: GestureDetector(
               onTap: () async {
                 await printerData.getBluetooth();
-                PrintDueTransactionModel model = PrintDueTransactionModel(
-                    dueTransactionModel: widget.transitionModel,
-                    personalInformationModel: widget.personalInformationModel);
+                PrintDueTransactionModel model =
+                    PrintDueTransactionModel(dueTransactionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
                 mainConstant.connected
                     ? printerData.printTicket(
                         printDueTransactionModel: model,
@@ -225,9 +222,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                                   children: [
                                     ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: printerData.availableBluetoothDevices.isNotEmpty
-                                          ? printerData.availableBluetoothDevices.length
-                                          : 0,
+                                      itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
                                       itemBuilder: (context, index) {
                                         return ListTile(
                                           onTap: () async {

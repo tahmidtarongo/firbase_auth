@@ -18,7 +18,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
   bool showPassword = true;
   late String email, password;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
@@ -30,6 +29,7 @@ class _LoginFormState extends State<LoginForm> {
     }
     return false;
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

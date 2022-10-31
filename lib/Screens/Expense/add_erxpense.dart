@@ -22,10 +22,11 @@ class _AddExpenseState extends State<AddExpense> {
   final dateController = TextEditingController();
 
   @override
-  void initState(){
+  void initState() {
     widget.catName == null ? dropdownValue = 'Fashion' : dropdownValue = widget.catName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +71,7 @@ class _AddExpenseState extends State<AddExpense> {
                     border: Border.all(color: kGreyTextColor),
                   ),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       const ExpenseCategoryList().launch(context);
                     },
                     child: Row(
@@ -98,19 +99,13 @@ class _AddExpenseState extends State<AddExpense> {
                         textFieldType: TextFieldType.NAME,
                         readOnly: true,
                         onTap: () async {
-                          var date = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100));
-                          dateController.text =
-                              date.toString().substring(0, 10);
+                          var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                          dateController.text = date.toString().substring(0, 10);
                         },
                         controller: dateController,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            floatingLabelBehavior:
-                            FloatingLabelBehavior.always,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Start Date',
                             hintText: 'Pick Start Date'),
                       ),
@@ -123,19 +118,13 @@ class _AddExpenseState extends State<AddExpense> {
                         textFieldType: TextFieldType.OTHER,
                         readOnly: true,
                         onTap: () async {
-                          var date = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100));
-                          dateController.text =
-                              date.toString().substring(0, 10);
+                          var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                          dateController.text = date.toString().substring(0, 10);
                         },
                         controller: dateController,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            floatingLabelBehavior:
-                            FloatingLabelBehavior.always,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'End Date',
                             hintText: 'Pick End Date'),
                       ),

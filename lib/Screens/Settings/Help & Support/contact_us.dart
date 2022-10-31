@@ -117,8 +117,7 @@ class _ContactUsState extends State<ContactUs> {
                           ),
                           ButtonGlobalWithoutIcon(
                             buttontext: 'Back to Home',
-                            buttonDecoration:
-                                kButtonDecoration.copyWith(color: kMainColor),
+                            buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                             onPressed: () {
                               Navigator.pop(context);
                             },

@@ -37,16 +37,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
               iconColor: Colors.orange,
               icons: Icons.alarm,
               time: 'June 23, 2021',
-              description:
-                  'Lorem ipsum dolor sit amet, consectetur adip gravi iscing elit. Ultricies gravida scelerisque arcu facilisis duis in.',
+              description: 'Lorem ipsum dolor sit amet, consectetur adip gravi iscing elit. Ultricies gravida scelerisque arcu facilisis duis in.',
             ),
             NotificationCard(
               title: 'Purchase Confirmed',
               iconColor: Colors.purple,
               icons: Icons.notifications_none_outlined,
               time: 'June 23, 2021',
-              description:
-                  'Lorem ipsum dolor sit amet, consectetur adip gravi iscing elit. Ultricies gravida scelerisque arcu facilisis duis in.',
+              description: 'Lorem ipsum dolor sit amet, consectetur adip gravi iscing elit. Ultricies gravida scelerisque arcu facilisis duis in.',
             ),
           ],
         ),

@@ -1,4 +1,3 @@
-
 class PurchaseReport {
   late String customerName, purchasePrice, purchaseQuantity;
 
@@ -10,8 +9,8 @@ class PurchaseReport {
         purchaseQuantity = json['purchaseQuantity'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'customerName': customerName,
-    'purchasePrice': purchasePrice,
-    'purchaseQuantity': purchaseQuantity,
-  };
+        'customerName': customerName,
+        'purchasePrice': purchasePrice,
+        'purchaseQuantity': purchaseQuantity,
+      };
 }

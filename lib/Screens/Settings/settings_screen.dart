@@ -76,9 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 10.0
-                          ),
+                          const SizedBox(width: 10.0),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -33,11 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
     const Color(0xffEAFFEA),
     const Color(0xffEDFAFF),
     const Color(0xffFFF6ED),
-    const Color(0xffFFF6ED),
-    const Color(0xffEAFFEA),
+    const Color(0xffFFF3FB),
+    const Color(0xffFFF4F4),
+    const Color(0xffEDFAFF),
     const Color(0xffEDFAFF),
     const Color(0xffEAFFEA),
-    const Color(0xffFFF6ED),
   ];
 
   String customerPackage = '';
@@ -529,7 +529,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
     // ignore: avoid_unnecessary_containers
     return Consumer(builder: (context, ref, __) {
       return Card(
-        elevation: 2,
+        elevation: 1,
         color: widget.color,
         child: Column(
           children: [
@@ -554,6 +554,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
               child: Text(
                 widget.gridItems.title.toString(),
                 style: const TextStyle(fontSize: 16),
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
             ),

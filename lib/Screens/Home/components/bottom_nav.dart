@@ -18,7 +18,7 @@ class _BottomNavState extends State<BottomNav> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      switch(_selectedIndex){
+      switch (_selectedIndex) {
         case 0:
           Navigator.pushNamed(context, '/home');
           break;
@@ -55,8 +55,7 @@ class _BottomNavState extends State<BottomNav> {
           icon: Icon(Icons.backpack),
           label: 'Package',
         ),
-        const BottomNavigationBarItem(
-            icon: Icon(Icons.settings), label: 'Settings'),
+        const BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,

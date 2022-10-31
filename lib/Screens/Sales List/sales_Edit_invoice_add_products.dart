@@ -63,131 +63,137 @@ class _EditSaleInvoiceSaleProductsState extends State<EditSaleInvoiceSaleProduct
       final productList = ref.watch(productProvider);
 
       return Scaffold(
+        backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
             'Add Items',
             style: GoogleFonts.poppins(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 20.0,
             ),
           ),
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: kMainColor,
           elevation: 0.0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20.0),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          onChanged: (value) {
-                            setState(() {
-                              productCode = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Product Code',
-                            hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
-                            border: const OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GestureDetector(
-                          onTap: () => scanBarcodeNormal(),
-                          child: Container(
-                            height: 60.0,
-                            width: 100.0,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(color: kGreyTextColor),
-                            ),
-                            child: const Image(
-                              image: AssetImage('images/barcode.png'),
+        body: Container(
+          alignment: Alignment.topCenter,
+          decoration:
+          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: AppTextField(
+                            textFieldType: TextFieldType.NAME,
+                            onChanged: (value) {
+                              setState(() {
+                                productCode = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: 'Product Code',
+                              hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                productList.when(data: (products) {
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: products.length,
-                      itemBuilder: (_, i) {
-                        if (widget.customerModel!.type.contains('Retailer')) {
-                          productPrice = products[i].productSalePrice;
-                        } else if (widget.customerModel!.type.contains('Dealer')) {
-                          productPrice = products[i].productDealerPrice;
-                        } else if (widget.customerModel!.type.contains('Wholesaler')) {
-                          productPrice = products[i].productWholeSalePrice;
-                        } else if (widget.customerModel!.type.contains('Supplier')) {
-                          productPrice = products[i].productPurchasePrice;
-                        } else if (widget.customerModel!.type.contains('Guest')) {
-                          productPrice = products[i].productSalePrice;
-                        }
-                        return GestureDetector(
-                          onTap: () async {
-                            if (products[i].productStock.toInt() <= 0) {
-                              EasyLoading.showError('Out of stock');
-                            } else {
-                              if (widget.customerModel!.type.contains('Retailer')) {
-                                sentProductPrice = products[i].productSalePrice;
-                              } else if (widget.customerModel!.type.contains('Dealer')) {
-                                sentProductPrice = products[i].productDealerPrice;
-                              } else if (widget.customerModel!.type.contains('Wholesaler')) {
-                                sentProductPrice = products[i].productWholeSalePrice;
-                              } else if (widget.customerModel!.type.contains('Supplier')) {
-                                sentProductPrice = products[i].productPurchasePrice;
-                              } else if (widget.customerModel!.type.contains('Guest')) {
-                                sentProductPrice = products[i].productSalePrice;
-                              }
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: GestureDetector(
+                            onTap: () => scanBarcodeNormal(),
+                            child: Container(
+                              height: 60.0,
+                              width: 100.0,
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: kGreyTextColor),
+                              ),
+                              child: const Image(
+                                image: AssetImage('images/barcode.png'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  productList.when(data: (products) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: products.length,
+                        itemBuilder: (_, i) {
+                          if (widget.customerModel!.type.contains('Retailer')) {
+                            productPrice = products[i].productSalePrice;
+                          } else if (widget.customerModel!.type.contains('Dealer')) {
+                            productPrice = products[i].productDealerPrice;
+                          } else if (widget.customerModel!.type.contains('Wholesaler')) {
+                            productPrice = products[i].productWholeSalePrice;
+                          } else if (widget.customerModel!.type.contains('Supplier')) {
+                            productPrice = products[i].productPurchasePrice;
+                          } else if (widget.customerModel!.type.contains('Guest')) {
+                            productPrice = products[i].productSalePrice;
+                          }
+                          return GestureDetector(
+                            onTap: () async {
+                              if (products[i].productStock.toInt() <= 0) {
+                                EasyLoading.showError('Out of stock');
+                              } else {
+                                if (widget.customerModel!.type.contains('Retailer')) {
+                                  sentProductPrice = products[i].productSalePrice;
+                                } else if (widget.customerModel!.type.contains('Dealer')) {
+                                  sentProductPrice = products[i].productDealerPrice;
+                                } else if (widget.customerModel!.type.contains('Wholesaler')) {
+                                  sentProductPrice = products[i].productWholeSalePrice;
+                                } else if (widget.customerModel!.type.contains('Supplier')) {
+                                  sentProductPrice = products[i].productPurchasePrice;
+                                } else if (widget.customerModel!.type.contains('Guest')) {
+                                  sentProductPrice = products[i].productSalePrice;
+                                }
 
-                              AddToCartModel cartItem = AddToCartModel(
-                                productName: products[i].productName,
-                                subTotal: sentProductPrice,
-                                productId: products[i].productCode,
-                                productBrandName: products[i].brandName,
-                                stock: int.parse(products[i].productStock),
-                              );
-                              providerData.addToCartRiverPod(cartItem);
-                              providerData.addProductsInSales(products[i]);
-                              EasyLoading.showSuccess('Added To Cart');
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: ProductCard(
-                            productTitle: products[i].productName,
-                            productDescription: products[i].brandName,
-                            productPrice: productPrice,
-                            productImage: products[i].productPicture,
-                          ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
-                        );
-                      });
-                }, error: (e, stack) {
-                  return Text(e.toString());
-                }, loading: () {
-                  return const Center(child: CircularProgressIndicator());
-                }),
-              ],
+                                AddToCartModel cartItem = AddToCartModel(
+                                  productName: products[i].productName,
+                                  subTotal: sentProductPrice,
+                                  productId: products[i].productCode,
+                                  productBrandName: products[i].brandName,
+                                  stock: int.parse(products[i].productStock),
+                                );
+                                providerData.addToCartRiverPod(cartItem);
+                                providerData.addProductsInSales(products[i]);
+                                EasyLoading.showSuccess('Added To Cart');
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: ProductCard(
+                              productTitle: products[i].productName,
+                              productDescription: products[i].brandName,
+                              productPrice: productPrice,
+                              productImage: products[i].productPicture,
+                            ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
+                          );
+                        });
+                  }, error: (e, stack) {
+                    return Text(e.toString());
+                  }, loading: () {
+                    return const Center(child: CircularProgressIndicator());
+                  }),
+                ],
+              ),
             ),
           ),
         ),

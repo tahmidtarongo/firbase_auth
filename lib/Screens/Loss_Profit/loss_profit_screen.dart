@@ -116,8 +116,8 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                                 child: Text(
                                                   reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
-                                                  style:
-                                                      TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
+                                                  style: TextStyle(
+                                                      color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                 ),
                                               ),
                                               Column(

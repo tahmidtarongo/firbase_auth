@@ -3,10 +3,9 @@ class BrandsModel {
 
   BrandsModel(this.brandName);
 
-  BrandsModel.fromJson(Map<dynamic, dynamic> json)
-      : brandName = json['brandName'] as String;
+  BrandsModel.fromJson(Map<dynamic, dynamic> json) : brandName = json['brandName'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'brandName': brandName,
-  };
+        'brandName': brandName,
+      };
 }

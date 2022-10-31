@@ -15,7 +15,6 @@ class _PaymentOptionsState extends State<PaymentOptions> {
   bool isCvvFocused = false;
   String radioItem = '';
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

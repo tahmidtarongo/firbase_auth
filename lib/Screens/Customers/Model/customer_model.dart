@@ -1,8 +1,7 @@
 class CustomerModel {
   late String customerName, phoneNumber, type, profilePicture, emailAddress, customerAddress, dueAmount;
 
-  CustomerModel(this.customerName, this.phoneNumber, this.type, this.profilePicture, this.emailAddress,
-      this.customerAddress, this.dueAmount);
+  CustomerModel(this.customerName, this.phoneNumber, this.type, this.profilePicture, this.emailAddress, this.customerAddress, this.dueAmount);
 
   CustomerModel.fromJson(Map<dynamic, dynamic> json)
       : customerName = json['customerName'] as String,

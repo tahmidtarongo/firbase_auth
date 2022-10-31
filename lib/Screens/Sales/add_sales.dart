@@ -35,7 +35,6 @@ class AddSalesScreen extends StatefulWidget {
 }
 
 class _AddSalesScreenState extends State<AddSalesScreen> {
-
   TextEditingController paidText = TextEditingController();
   int invoice = 0;
   double paidAmount = 0;
@@ -99,8 +98,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
           ),
           body: Container(
             alignment: Alignment.topCenter,
-            decoration:
-            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -223,7 +221,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               itemCount: providerData.cartItemList.length,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                  padding: const EdgeInsets.only(left: 10, right: 10),
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemList[index].productName.toString()),
@@ -278,9 +276,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                   ),
                                                   child: const Center(
                                                       child: Text(
-                                                        '+',
-                                                        style: TextStyle(fontSize: 14, color: Colors.white),
-                                                      )),
+                                                    '+',
+                                                    style: TextStyle(fontSize: 14, color: Colors.white),
+                                                  )),
                                                 ),
                                               ),
                                             ],
@@ -826,8 +824,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                       children: [
                                                         ListView.builder(
                                                           shrinkWrap: true,
-                                                          itemCount:
-                                                              printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                              ? printerData.availableBluetoothDevices.length
+                                                              : 0,
                                                           itemBuilder: (context, index) {
                                                             return ListTile(
                                                               onTap: () async {

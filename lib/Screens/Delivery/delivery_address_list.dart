@@ -56,9 +56,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                           padding: const EdgeInsets.all(10.0),
                           child: Card(
                             elevation: 4.0,
-                            shape: RoundedRectangleBorder(
-                                side: const BorderSide(color: Colors.white, width: 2.0),
-                                borderRadius: BorderRadius.circular(15.0)),
+                            shape: RoundedRectangleBorder(side: const BorderSide(color: Colors.white, width: 2.0), borderRadius: BorderRadius.circular(15.0)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,

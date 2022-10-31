@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/add_category.dart';
@@ -18,14 +17,17 @@ class SalesCategoryList extends StatefulWidget {
 }
 
 class _SalesCategoryListState extends State<SalesCategoryList> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context);
-        }, icon: const Image(image: AssetImage('images/x.png'),)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Image(
+              image: AssetImage('images/x.png'),
+            )),
         title: Text(
           'Categories',
           style: GoogleFonts.poppins(
@@ -64,7 +66,7 @@ class _SalesCategoryListState extends State<SalesCategoryList> {
                 Expanded(
                   flex: 1,
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       const AddCategory().launch(context);
                     },
                     child: Container(
@@ -92,9 +94,9 @@ class _SalesCategoryListState extends State<SalesCategoryList> {
                 children: [
                   ...List.generate(
                     demoCategory.length,
-                        (index) => CategoryCard(
+                    (index) => CategoryCard(
                       product: demoCategory[index],
-                      pressed: (){
+                      pressed: () {
                         SaleProducts(catName: demoCategory[index].title).launch(context);
                       },
                     ),

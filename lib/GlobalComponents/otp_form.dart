@@ -5,12 +5,12 @@ import 'button_global.dart';
 
 // ignore: must_be_immutable
 class OtpForm extends StatefulWidget {
- OtpForm({
+  OtpForm({
     Key? key,
-   required this.pressed,
+    required this.pressed,
   }) : super(key: key);
 // ignore: prefer_typing_uninitialized_variables
-var pressed;
+  var pressed;
   @override
   // ignore: library_private_types_in_public_api
   _OtpFormState createState() => _OtpFormState();
@@ -146,8 +146,7 @@ class _OtpFormState extends State<OtpForm> {
               iconWidget: Icons.arrow_forward_rounded,
               iconColor: Colors.white,
               onPressed: widget.pressed,
-              buttonDecoration:
-              kButtonDecoration.copyWith(color: kMainColor),
+              buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
             ),
           ],
         ),

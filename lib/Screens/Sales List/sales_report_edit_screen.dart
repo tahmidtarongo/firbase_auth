@@ -151,666 +151,674 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
       return personalData.when(data: (data) {
         // invoice = data.invoiceCounter!.toInt();
         return Scaffold(
+          backgroundColor: kMainColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: kMainColor,
             title: Text(
               'Edit Sales Invoice',
               style: GoogleFonts.poppins(
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             centerTitle: true,
-            iconTheme: const IconThemeData(color: Colors.black),
+            iconTheme: const IconThemeData(color: Colors.white),
             elevation: 0.0,
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          readOnly: true,
-                          initialValue: widget.transitionModel.invoiceNumber,
-                          decoration: const InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Inv No.',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          readOnly: true,
-                          initialValue: DateFormat.yMMMd().format(DateTime.parse(widget.transitionModel.purchaseDate,)),
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Date',
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: () async {},
-                              icon: const Icon(FeatherIcons.calendar),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  AppTextField(
-                    textFieldType: TextFieldType.NAME,
-                    readOnly: true,
-                    initialValue: widget.transitionModel.customerName,
-                    decoration: const InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelText: 'Customer Name',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  ///_______Added_ItemS__________________________________________________
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                      border: Border.all(width: 1, color: const Color(0xffEAEFFA)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          body: Container(
+            alignment: Alignment.topCenter,
+            decoration:
+            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(
-                              color: Color(0xffEAEFFA),
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                        Expanded(
+                          child: AppTextField(
+                            textFieldType: TextFieldType.NAME,
+                            readOnly: true,
+                            initialValue: widget.transitionModel.invoiceNumber,
+                            decoration: const InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: 'Inv No.',
+                              border: OutlineInputBorder(),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: SizedBox(
-                                width: context.width() / 1.35,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text(
-                                      'Item Added',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    Text(
-                                      'Quantity',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: AppTextField(
+                            textFieldType: TextFieldType.NAME,
+                            readOnly: true,
+                            initialValue: DateFormat.yMMMd().format(DateTime.parse(
+                              widget.transitionModel.purchaseDate,
                             )),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: providerData.cartItemList.length,
-                            itemBuilder: (context, index) {
-                              int i = 0;
-                              for (var element in pastProducts) {
-                                if (element.productId != providerData.cartItemList[index].productId) {
-                                  i++;
-                                }
-                                if (i == pastProducts.length) {
-                                  bool isInTheList = false;
-                                  for (var element in decreaseStockList) {
-                                    if (element.productId == providerData.cartItemList[index].productId) {
-                                      element.quantity = providerData.cartItemList[index].quantity;
-                                      isInTheList = true;
-                                      break;
-                                    }
-                                  }
+                            decoration: InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: 'Date',
+                              border: const OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                onPressed: () async {},
+                                icon: const Icon(FeatherIcons.calendar),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    AppTextField(
+                      textFieldType: TextFieldType.NAME,
+                      readOnly: true,
+                      initialValue: widget.transitionModel.customerName,
+                      decoration: const InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelText: 'Customer Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
 
-                                  isInTheList ? null : decreaseStockList.add(providerData.cartItemList[index]);
-                                }
-                              }
-
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 10, right: 10),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.all(0),
-                                  title: Text(providerData.cartItemList[index].productName.toString()),
-                                  subtitle: Text(
-                                      '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 80,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                providerData.quantityDecrease(index);
-                                              },
-                                              child: Container(
-                                                height: 20,
-                                                width: 20,
-                                                decoration: const BoxDecoration(
-                                                  color: kMainColor,
-                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    '-',
-                                                    style: TextStyle(fontSize: 14, color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              '${providerData.cartItemList[index].quantity}',
-                                              style: GoogleFonts.poppins(
-                                                color: kGreyTextColor,
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 5),
-                                            GestureDetector(
-                                              onTap: () {
-                                                providerData.quantityIncrease(index);
-                                              },
-                                              child: Container(
-                                                height: 20,
-                                                width: 20,
-                                                decoration: const BoxDecoration(
-                                                  color: kMainColor,
-                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                ),
-                                                child: const Center(
-                                                    child: Text(
-                                                  '+',
-                                                  style: TextStyle(fontSize: 14, color: Colors.white),
-                                                )),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                    ///_______Added_ItemS__________________________________________________
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                        border: Border.all(width: 1, color: const Color(0xffEAEFFA)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffEAEFFA),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SizedBox(
+                                  width: context.width() / 1.35,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        'Item Added',
+                                        style: TextStyle(fontSize: 16),
                                       ),
-                                      const SizedBox(width: 10),
-                                      GestureDetector(
-                                        onTap: () {
-                                          int i = 0;
-                                          for (var element in pastProducts) {
-                                            if (element.productId != providerData.cartItemList[index].productId) {
-                                              i++;
-                                            }
-                                            if (i == pastProducts.length) {
-                                              decreaseStockList.removeWhere((element) => element.productId == providerData.cartItemList[index].productId);
-                                            }
-                                          }
-
-                                          providerData.deleteToCart(index);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(4),
-                                          color: Colors.red.withOpacity(0.1),
-                                          child: const Icon(
-                                            Icons.delete,
-                                            size: 20,
-                                            color: Colors.red,
-                                          ),
-                                        ),
+                                      Text(
+                                        'Quantity',
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
                                 ),
-                              );
-                            }),
-                      ],
-                    ).visible(providerData.cartItemList.isNotEmpty),
-                  ),
-                  const SizedBox(height: 20),
+                              )),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: providerData.cartItemList.length,
+                              itemBuilder: (context, index) {
+                                int i = 0;
+                                for (var element in pastProducts) {
+                                  if (element.productId != providerData.cartItemList[index].productId) {
+                                    i++;
+                                  }
+                                  if (i == pastProducts.length) {
+                                    bool isInTheList = false;
+                                    for (var element in decreaseStockList) {
+                                      if (element.productId == providerData.cartItemList[index].productId) {
+                                        element.quantity = providerData.cartItemList[index].quantity;
+                                        isInTheList = true;
+                                        break;
+                                      }
+                                    }
 
-                  ///_______Add_Button__________________________________________________
-                  GestureDetector(
-                    onTap: () {
-                      EditSaleInvoiceSaleProducts(
-                        catName: null,
-                        customerModel: CustomerModel(widget.transitionModel.customerName, widget.transitionModel.customerPhone,
-                            widget.transitionModel.customerType, '', '', 'customerAddress', ''),
-                        transitionModel: widget.transitionModel,
-                      ).launch(context);
-                    },
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                      child: const Center(
-                          child: Text(
-                        'Add Items',
-                        style: TextStyle(color: kMainColor, fontSize: 20),
-                      )),
+                                    isInTheList ? null : decreaseStockList.add(providerData.cartItemList[index]);
+                                  }
+                                }
+
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 10, right: 10),
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    title: Text(providerData.cartItemList[index].productName.toString()),
+                                    subtitle: Text(
+                                        '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 80,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  providerData.quantityDecrease(index);
+                                                },
+                                                child: Container(
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: const BoxDecoration(
+                                                    color: kMainColor,
+                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  ),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      '-',
+                                                      style: TextStyle(fontSize: 14, color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                '${providerData.cartItemList[index].quantity}',
+                                                style: GoogleFonts.poppins(
+                                                  color: kGreyTextColor,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  providerData.quantityIncrease(index);
+                                                },
+                                                child: Container(
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: const BoxDecoration(
+                                                    color: kMainColor,
+                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  ),
+                                                  child: const Center(
+                                                      child: Text(
+                                                    '+',
+                                                    style: TextStyle(fontSize: 14, color: Colors.white),
+                                                  )),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        GestureDetector(
+                                          onTap: () {
+                                            int i = 0;
+                                            for (var element in pastProducts) {
+                                              if (element.productId != providerData.cartItemList[index].productId) {
+                                                i++;
+                                              }
+                                              if (i == pastProducts.length) {
+                                                decreaseStockList.removeWhere((element) => element.productId == providerData.cartItemList[index].productId);
+                                              }
+                                            }
+
+                                            providerData.deleteToCart(index);
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            color: Colors.red.withOpacity(0.1),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              size: 20,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ],
+                      ).visible(providerData.cartItemList.isNotEmpty),
                     ),
-                  ),
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                  ///_____Total______________________________
-                  Container(
-                    decoration:
-                        BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                              color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Sub Total',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                providerData.getTotalAmount().toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
+                    ///_______Add_Button__________________________________________________
+                    GestureDetector(
+                      onTap: () {
+                        EditSaleInvoiceSaleProducts(
+                          catName: null,
+                          customerModel: CustomerModel(widget.transitionModel.customerName, widget.transitionModel.customerPhone,
+                              widget.transitionModel.customerType, '', '', 'customerAddress', ''),
+                          transitionModel: widget.transitionModel,
+                        ).launch(context);
+                      },
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
+                        child: const Center(
+                            child: Text(
+                          'Add Items',
+                          style: TextStyle(color: kMainColor, fontSize: 20),
+                        )),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    ///_____Total______________________________
+                    Container(
+                      decoration:
+                          BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Sub Total',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  providerData.getTotalAmount().toString(),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Discount',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              SizedBox(
-                                width: context.width() / 4,
-                                child: TextField(
-                                  controller: discountText,
-                                  onChanged: (value) {
-                                    if (value == '') {
-                                      setState(() {
-                                        discountAmount = 0;
-                                      });
-                                    } else {
-                                      if (value.toInt() <= providerData.getTotalAmount()) {
-                                        setState(() {
-                                          discountAmount = double.parse(value);
-                                        });
-                                      } else {
-                                        discountText.clear();
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Discount',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  width: context.width() / 4,
+                                  child: TextField(
+                                    controller: discountText,
+                                    onChanged: (value) {
+                                      if (value == '') {
                                         setState(() {
                                           discountAmount = 0;
                                         });
-                                        EasyLoading.showError('Enter a valid Discount');
+                                      } else {
+                                        if (value.toInt() <= providerData.getTotalAmount()) {
+                                          setState(() {
+                                            discountAmount = double.parse(value);
+                                          });
+                                        } else {
+                                          discountText.clear();
+                                          setState(() {
+                                            discountAmount = 0;
+                                          });
+                                          EasyLoading.showError('Enter a valid Discount');
+                                        }
                                       }
-                                    }
-                                  },
-                                  textAlign: TextAlign.right,
-                                  decoration: const InputDecoration(
-                                    hintText: '0',
+                                    },
+                                    textAlign: TextAlign.right,
+                                    decoration: const InputDecoration(
+                                      hintText: '0',
+                                    ),
+                                    keyboardType: TextInputType.number,
                                   ),
-                                  keyboardType: TextInputType.number,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Total',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                calculateSubtotal(total: providerData.getTotalAmount()).toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Previous Pay Amount',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                (double.parse(widget.transitionModel.totalAmount.toString()) -
-                                        double.parse(widget.transitionModel.dueAmount.toString()) +
-                                        double.parse(widget.transitionModel.returnAmount.toString()))
-                                    .toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Paid Amount',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              SizedBox(
-                                width: context.width() / 4,
-                                child: TextField(
-                                  controller: paidText,
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (value) {
-                                    if (value == '') {
-                                      setState(() {
-                                        paidAmount = 0;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        paidAmount = double.parse(value);
-                                      });
-                                    }
-                                  },
-                                  textAlign: TextAlign.right,
-                                  decoration: const InputDecoration(hintText: '0'),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Total',
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  calculateSubtotal(total: providerData.getTotalAmount()).toString(),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Previous Pay Amount',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  (double.parse(widget.transitionModel.totalAmount.toString()) -
+                                          double.parse(widget.transitionModel.dueAmount.toString()) +
+                                          double.parse(widget.transitionModel.returnAmount.toString()))
+                                      .toString(),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Paid Amount',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  width: context.width() / 4,
+                                  child: TextField(
+                                    controller: paidText,
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      if (value == '') {
+                                        setState(() {
+                                          paidAmount = 0;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          paidAmount = double.parse(value);
+                                        });
+                                      }
+                                    },
+                                    textAlign: TextAlign.right,
+                                    decoration: const InputDecoration(hintText: '0'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Return Amount',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  calculateReturnAmount(total: subTotal).abs().toString(),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Due Amount',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  calculateDueAmount(total: subTotal).toString(),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: const [
+                            Text(
+                              'Payment Type',
+                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.wallet,
+                              color: Colors.green,
+                            )
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Return Amount',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                calculateReturnAmount(total: subTotal).abs().toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Due Amount',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                calculateDueAmount(total: subTotal).toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
+                        DropdownButton(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: paymentsTypeList.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              dropdownValue = newValue.toString();
+                            });
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: const [
-                          Text(
-                            'Payment Type',
-                            style: TextStyle(fontSize: 16, color: Colors.black54),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.wallet,
-                            color: Colors.green,
-                          )
-                        ],
-                      ),
-                      DropdownButton(
-                        value: dropdownValue,
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        items: paymentsTypeList.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            dropdownValue = newValue.toString();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: const InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Description',
-                            hintText: 'Add Note',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Container(
-                        height: 60,
-                        width: 100,
-                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), color: Colors.grey.shade200),
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(
-                                FeatherIcons.camera,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'Image',
-                                style: TextStyle(color: Colors.grey, fontSize: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ).visible(false),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(fontSize: 18),
+                    const SizedBox(height: 10),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppTextField(
+                            textFieldType: TextFieldType.NAME,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            decoration: const InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: 'Description',
+                              hintText: 'Add Note',
+                              border: OutlineInputBorder(),
                             ),
                           ),
                         ),
-                      )),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (providerData.cartItemList.isNotEmpty) {
-                              if (isGuestCustomer && dueAmount > 0) {
-                                EasyLoading.showError('Due is not for Guest Customer');
-                              } else {
-                                try {
-                                  EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-
-                                  final userId = FirebaseAuth.instance.currentUser!.uid;
-
-                                  dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
-                                  dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
-                                  returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
-                                  transitionModel.discountAmount = discountAmount;
-                                  transitionModel.totalAmount = subTotal;
-                                  transitionModel.productList = providerData.cartItemList;
-                                  transitionModel.paymentType = dropdownValue;
-                                  transitionModel.invoiceNumber = invoice.toString();
-
-                                  ///________________updateInvoice___________________________________________________________
-                                  String? key;
-                                  await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
-                                    for (var element in value.children) {
-                                      final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
-                                      if (transitionModel.invoiceNumber == t.invoiceNumber) {
-                                        key = element.key;
-                                      }
-                                    }
-                                  });
-                                  await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
-
-                                  ///__________StockMange_________________________________________________
-
-                                  presentProducts = transitionModel.productList!;
-
-                                  for (var pastElement in pastProducts) {
-                                    int i = 0;
-                                    for (var futureElement in presentProducts) {
-                                      if (pastElement.productId == futureElement.productId) {
-                                        if (pastElement.quantity < futureElement.quantity && pastElement.quantity != futureElement.quantity) {
-                                          decreaseStockList.contains(pastElement.productId)
-                                              ? null
-                                              : decreaseStockList.add(
-                                                  AddToCartModel(
-                                                    productName: pastElement.productName,
-                                                    productId: pastElement.productId,
-                                                    quantity: futureElement.quantity.toInt() - pastElement.quantity.toInt(),
-                                                  ),
-                                                );
-                                        } else if (pastElement.quantity > futureElement.quantity && pastElement.quantity != futureElement.quantity) {
-                                          increaseStockList.contains(pastElement.productId)
-                                              ? null
-                                              : increaseStockList.add(
-                                                  AddToCartModel(
-                                                    productName: pastElement.productName,
-                                                    productId: pastElement.productId,
-                                                    quantity: pastElement.quantity - futureElement.quantity,
-                                                  ),
-                                                );
-                                        }
-                                        break;
-                                      } else {
-                                        i++;
-                                        if (i == presentProducts.length) {
-                                          increaseStockList.add(
-                                            AddToCartModel(
-                                              productName: pastElement.productName,
-                                              productId: pastElement.productId,
-                                              quantity: pastElement.quantity,
-                                            ),
-                                          );
-                                        }
-                                      }
-                                    }
-                                  }
-
-                                  ///_____________StockUpdate_______________________________________________________
-
-                                  for (var element in decreaseStockList) {
-                                    decreaseStock(element.productId, element.quantity);
-                                  }
-
-                                  for (var element in increaseStockList) {
-                                    increaseStock(element.productId, element.quantity);
-                                  }
-                                  // double due = transitionModel.dueAmount! - widget.transitionModel.dueAmount!;
-                                  // print(due.toInt());
-
-                                  ///_________DueUpdate______________________________________________________
-                                  if (pastDue < transitionModel.dueAmount!) {
-                                    double due = pastDue - transitionModel.dueAmount!;
-                                    getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: false, due: due.toInt());
-                                  } else if (pastDue > transitionModel.dueAmount!) {
-                                    double due = transitionModel.dueAmount! - pastDue;
-                                    getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: due.toInt());
-                                  }
-                                  // getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: 20);
-
-                                  providerData.clearCart();
-                                  consumerRef.refresh(customerProvider);
-                                  consumerRef.refresh(productProvider);
-                                  consumerRef.refresh(salesReportProvider);
-                                  consumerRef.refresh(transitionProvider);
-                                  consumerRef.refresh(profileDetailsProvider);
-
-                                  EasyLoading.dismiss();
-
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pop(context);
-                                } catch (e) {
-                                  EasyLoading.dismiss();
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                                }
-                              }
-                            } else {
-                              EasyLoading.showError('Add product first');
-                            }
+                        const SizedBox(width: 20),
+                        Container(
+                          height: 60,
+                          width: 100,
+                          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), color: Colors.grey.shade200),
+                          child: Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  FeatherIcons.camera,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  'Image',
+                                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ).visible(false),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
                           },
                           child: Container(
                             height: 60,
-                            decoration: const BoxDecoration(
-                              color: kMainColor,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: const BorderRadius.all(Radius.circular(30)),
                             ),
                             child: const Center(
                               child: Text(
-                                'Save',
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                'Cancel',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        )),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (providerData.cartItemList.isNotEmpty) {
+                                if (isGuestCustomer && dueAmount > 0) {
+                                  EasyLoading.showError('Due is not for Guest Customer');
+                                } else {
+                                  try {
+                                    EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+
+                                    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+                                    dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
+                                    dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
+                                    returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
+                                    transitionModel.discountAmount = discountAmount;
+                                    transitionModel.totalAmount = subTotal;
+                                    transitionModel.productList = providerData.cartItemList;
+                                    transitionModel.paymentType = dropdownValue;
+                                    transitionModel.invoiceNumber = invoice.toString();
+
+                                    ///________________updateInvoice___________________________________________________________
+                                    String? key;
+                                    await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+                                      for (var element in value.children) {
+                                        final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
+                                        if (transitionModel.invoiceNumber == t.invoiceNumber) {
+                                          key = element.key;
+                                        }
+                                      }
+                                    });
+                                    await FirebaseDatabase.instance.ref(userId).child('Sales Transition').child(key!).update(transitionModel.toJson());
+
+                                    ///__________StockMange_________________________________________________
+
+                                    presentProducts = transitionModel.productList!;
+
+                                    for (var pastElement in pastProducts) {
+                                      int i = 0;
+                                      for (var futureElement in presentProducts) {
+                                        if (pastElement.productId == futureElement.productId) {
+                                          if (pastElement.quantity < futureElement.quantity && pastElement.quantity != futureElement.quantity) {
+                                            decreaseStockList.contains(pastElement.productId)
+                                                ? null
+                                                : decreaseStockList.add(
+                                                    AddToCartModel(
+                                                      productName: pastElement.productName,
+                                                      productId: pastElement.productId,
+                                                      quantity: futureElement.quantity.toInt() - pastElement.quantity.toInt(),
+                                                    ),
+                                                  );
+                                          } else if (pastElement.quantity > futureElement.quantity && pastElement.quantity != futureElement.quantity) {
+                                            increaseStockList.contains(pastElement.productId)
+                                                ? null
+                                                : increaseStockList.add(
+                                                    AddToCartModel(
+                                                      productName: pastElement.productName,
+                                                      productId: pastElement.productId,
+                                                      quantity: pastElement.quantity - futureElement.quantity,
+                                                    ),
+                                                  );
+                                          }
+                                          break;
+                                        } else {
+                                          i++;
+                                          if (i == presentProducts.length) {
+                                            increaseStockList.add(
+                                              AddToCartModel(
+                                                productName: pastElement.productName,
+                                                productId: pastElement.productId,
+                                                quantity: pastElement.quantity,
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      }
+                                    }
+
+                                    ///_____________StockUpdate_______________________________________________________
+
+                                    for (var element in decreaseStockList) {
+                                      decreaseStock(element.productId, element.quantity);
+                                    }
+
+                                    for (var element in increaseStockList) {
+                                      increaseStock(element.productId, element.quantity);
+                                    }
+                                    // double due = transitionModel.dueAmount! - widget.transitionModel.dueAmount!;
+                                    // print(due.toInt());
+
+                                    ///_________DueUpdate______________________________________________________
+                                    if (pastDue < transitionModel.dueAmount!) {
+                                      double due = pastDue - transitionModel.dueAmount!;
+                                      getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: false, due: due.toInt());
+                                    } else if (pastDue > transitionModel.dueAmount!) {
+                                      double due = transitionModel.dueAmount! - pastDue;
+                                      getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: due.toInt());
+                                    }
+                                    // getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: 20);
+
+                                    providerData.clearCart();
+                                    consumerRef.refresh(customerProvider);
+                                    consumerRef.refresh(productProvider);
+                                    consumerRef.refresh(salesReportProvider);
+                                    consumerRef.refresh(transitionProvider);
+                                    consumerRef.refresh(profileDetailsProvider);
+
+                                    EasyLoading.dismiss();
+
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    EasyLoading.dismiss();
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                  }
+                                }
+                              } else {
+                                EasyLoading.showError('Add product first');
+                              }
+                            },
+                            child: Container(
+                              height: 60,
+                              decoration: const BoxDecoration(
+                                color: kMainColor,
+                                borderRadius: BorderRadius.all(Radius.circular(30)),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

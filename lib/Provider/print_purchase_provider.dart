@@ -28,8 +28,7 @@ class PrinterPurchase extends ChangeNotifier {
     return status;
   }
 
-  Future<bool> printTicket(
-      {required PrintPurchaseTransactionModel printTransactionModel, required List<ProductModel>? productList}) async {
+  Future<bool> printTicket({required PrintPurchaseTransactionModel printTransactionModel, required List<ProductModel>? productList}) async {
     bool isPrinted = false;
     String? isConnected = await BluetoothThermalPrinter.connectionStatus;
     if (isConnected == "true") {
@@ -48,8 +47,7 @@ class PrinterPurchase extends ChangeNotifier {
     return isPrinted;
   }
 
-  Future<List<int>> getTicket(
-      {required PrintPurchaseTransactionModel printTransactionModel, required List<ProductModel>? productList}) async {
+  Future<List<int>> getTicket({required PrintPurchaseTransactionModel printTransactionModel, required List<ProductModel>? productList}) async {
     List<int> bytes = [];
     CapabilityProfile profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile);
@@ -65,16 +63,12 @@ class PrinterPurchase extends ChangeNotifier {
         ),
         linesAfter: 1);
 
-    bytes += generator.text(printTransactionModel.personalInformationModel.countryName ?? '',
-        styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text(printTransactionModel.personalInformationModel.countryName ?? '', styles: const PosStyles(align: PosAlign.center));
     bytes += generator.text('Tel: ${printTransactionModel.personalInformationModel.phoneNumber ?? ''}',
-        styles: const PosStyles(align: PosAlign.center),
-        linesAfter: 1);
-    bytes += generator.text('Name: ${printTransactionModel.purchaseTransitionModel?.customerName ?? 'Guest'}',
-        styles: const PosStyles(align: PosAlign.left));
+        styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text('Name: ${printTransactionModel.purchaseTransitionModel?.customerName ?? 'Guest'}', styles: const PosStyles(align: PosAlign.left));
     bytes += generator.text('mobile: ${printTransactionModel.purchaseTransitionModel?.customerPhone ?? 'Not Provided'}',
-        styles: const PosStyles(align: PosAlign.left),
-        linesAfter: 1);
+        styles: const PosStyles(align: PosAlign.left), linesAfter: 1);
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(text: 'Item', width: 5, styles: const PosStyles(align: PosAlign.left, bold: true)),
@@ -97,13 +91,9 @@ class PrinterPurchase extends ChangeNotifier {
             styles: const PosStyles(
               align: PosAlign.center,
             )),
+        PosColumn(text: productList?[index].productStock.toString() ?? 'Not Defined', width: 2, styles: const PosStyles(align: PosAlign.center)),
         PosColumn(
-            text: productList?[index].productStock.toString() ?? 'Not Defined',
-            width: 2,
-            styles: const PosStyles(align: PosAlign.center)),
-        PosColumn(
-            text:
-                "${double.parse(productList?[index].productPurchasePrice ?? '') * productList![index].productStock.toInt()}",
+            text: "${double.parse(productList?[index].productPurchasePrice ?? '') * productList![index].productStock.toInt()}",
             width: 3,
             styles: const PosStyles(align: PosAlign.right)),
       ]);
@@ -191,20 +181,11 @@ class PrinterPurchase extends ChangeNotifier {
     ]);
     bytes += generator.hr();
     bytes += generator.row([
-      PosColumn(
-          text: 'TOTAL',
-          width: 8,
-          styles: const PosStyles(
-            align: PosAlign.left,
-            bold: true
-          )),
+      PosColumn(text: 'TOTAL', width: 8, styles: const PosStyles(align: PosAlign.left, bold: true)),
       PosColumn(
           text: printTransactionModel.purchaseTransitionModel?.totalAmount.toString() ?? '',
           width: 4,
-          styles: const PosStyles(
-            align: PosAlign.right,
-            bold: true
-          )),
+          styles: const PosStyles(align: PosAlign.right, bold: true)),
     ]);
 
     // bytes += generator.hr(ch: '=', linesAfter: 1);
@@ -272,15 +253,13 @@ class PrinterPurchase extends ChangeNotifier {
     // ticket.feed(2);
     bytes += generator.text('Thank you!', styles: const PosStyles(align: PosAlign.center, bold: true));
 
-    bytes += generator.text(printTransactionModel.purchaseTransitionModel!.purchaseDate,
-        styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text(printTransactionModel.purchaseTransitionModel!.purchaseDate, styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
 
     bytes += generator.text('Note: Goods once sold will not be taken back or exchanged.',
         styles: const PosStyles(align: PosAlign.center, bold: false), linesAfter: 1);
 
-    bytes += generator.qrcode('https://maantechnology.com',size: QRSize.Size4);
-    bytes += generator.text('Developed By: Maan Technology',
-        styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.qrcode('https://maantechnology.com', size: QRSize.Size4);
+    bytes += generator.text('Developed By: Maan Technology', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
     bytes += generator.cut();
     return bytes;
   }

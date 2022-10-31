@@ -24,7 +24,6 @@ class PurchaseScreen extends StatefulWidget {
 }
 
 class _PurchaseScreenState extends State<PurchaseScreen> {
-
   String dropdownValue = '';
   var cart = FlutterCart();
   String total = 'Cart Is Empty';
@@ -189,10 +188,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            cart.addToCart(
-                                productId: items,
-                                unitPrice: products[index].productSalePrice.toInt(),
-                                productName: products[index].productName);
+                            cart.addToCart(productId: items, unitPrice: products[index].productSalePrice.toInt(), productName: products[index].productName);
                             EasyLoading.showSuccess('Added To Cart', duration: const Duration(milliseconds: 1000));
                             setState(() {
                               total = cart.getTotalAmount().toString();

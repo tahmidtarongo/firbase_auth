@@ -79,10 +79,8 @@ class _AddDiscountState extends State<AddDiscount> {
                 padding: const EdgeInsets.all(8.0),
                 child: AppTextField(
                   textFieldType: TextFieldType.NAME,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelText: 'Discount (USD)'),
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder(), floatingLabelBehavior: FloatingLabelBehavior.always, labelText: 'Discount (USD)'),
                   onChanged: (value) {
                     amount = value;
                   },
@@ -93,10 +91,7 @@ class _AddDiscountState extends State<AddDiscount> {
                 child: AppTextField(
                   textFieldType: TextFieldType.NAME,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelText: 'Note'),
+                  decoration: const InputDecoration(border: OutlineInputBorder(), floatingLabelBehavior: FloatingLabelBehavior.always, labelText: 'Note'),
                 ),
               ),
               ButtonGlobalWithoutIcon(

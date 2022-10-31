@@ -67,136 +67,142 @@ class _LedgerScreenState extends State<LedgerScreen> {
         initialIndex: 0,
         length: 4,
         child: Scaffold(
+          backgroundColor: kMainColor,
           appBar: AppBar(
             title: Text(
               'Ledger',
               style: GoogleFonts.poppins(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 20.0,
               ),
             ),
-            iconTheme: const IconThemeData(color: Colors.black),
+            iconTheme: const IconThemeData(color: Colors.white),
             centerTitle: true,
-            backgroundColor: Colors.white,
+            backgroundColor: kMainColor,
             elevation: 0.0,
           ),
           body: customerData.when(data: (customer) {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const TabBar(
-                    indicatorColor: kMainColor,
-                    labelColor: kMainColor,
-                    tabs: [
-                      Tab(
-                        text: 'Retailer',
-                      ),
-                      Tab(
-                        text: 'Wholesaler',
-                      ),
-                      Tab(
-                        text: 'Dealer',
-                      ),
-                      Tab(
-                        text: 'Supplier',
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: context.height(),
-                    child: TabBarView(children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: retailersList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              LedgerCustomerDetailsScreen(
-                                customerModel: retailersList[index],
-                              ).launch(context);
-                            },
-                            leading: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(retailersList[index].profilePicture)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-                            ),
-                            title: Text(retailersList[index].customerName),
-                            trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                          );
-                        },
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: wholesalerList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              LedgerCustomerDetailsScreen(
-                                customerModel: wholesalerList[index],
-                              ).launch(context);
-                            },
-                            leading: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(wholesalerList[index].profilePicture)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-                            ),
-                            title: Text(wholesalerList[index].customerName),
-                            trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                          );
-                        },
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: dealerList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              LedgerCustomerDetailsScreen(
-                                customerModel: dealerList[index],
-                              ).launch(context);
-                            },
-                            leading: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(dealerList[index].profilePicture)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-                            ),
-                            title: Text(dealerList[index].customerName),
-                            trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                          );
-                        },
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: supplierList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              LedgerCustomerDetailsScreen(
-                                customerModel: supplierList[index],
-                              ).launch(context);
-                            },
-                            leading: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(supplierList[index].profilePicture)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50))),
-                            ),
-                            title: Text(supplierList[index].customerName),
-                            trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                          );
-                        },
-                      ),
-                    ]),
-                  ),
-                ],
+            return Container(
+              alignment: Alignment.topCenter,
+              decoration:
+                  const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const TabBar(
+                      indicatorColor: kMainColor,
+                      labelColor: kMainColor,
+                      tabs: [
+                        Tab(
+                          text: 'Retailer',
+                        ),
+                        Tab(
+                          text: 'Wholesaler',
+                        ),
+                        Tab(
+                          text: 'Dealer',
+                        ),
+                        Tab(
+                          text: 'Supplier',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: context.height(),
+                      child: TabBarView(children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: retailersList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              onTap: () {
+                                LedgerCustomerDetailsScreen(
+                                  customerModel: retailersList[index],
+                                ).launch(context);
+                              },
+                              leading: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(image: NetworkImage(retailersList[index].profilePicture)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                              ),
+                              title: Text(retailersList[index].customerName),
+                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                            );
+                          },
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: wholesalerList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              onTap: () {
+                                LedgerCustomerDetailsScreen(
+                                  customerModel: wholesalerList[index],
+                                ).launch(context);
+                              },
+                              leading: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(image: NetworkImage(wholesalerList[index].profilePicture)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                              ),
+                              title: Text(wholesalerList[index].customerName),
+                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                            );
+                          },
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: dealerList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              onTap: () {
+                                LedgerCustomerDetailsScreen(
+                                  customerModel: dealerList[index],
+                                ).launch(context);
+                              },
+                              leading: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(image: NetworkImage(dealerList[index].profilePicture)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                              ),
+                              title: Text(dealerList[index].customerName),
+                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                            );
+                          },
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: supplierList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              onTap: () {
+                                LedgerCustomerDetailsScreen(
+                                  customerModel: supplierList[index],
+                                ).launch(context);
+                              },
+                              leading: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(image: NetworkImage(supplierList[index].profilePicture)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                              ),
+                              title: Text(supplierList[index].customerName),
+                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                            );
+                          },
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
               ),
             );
           }, error: (e, stack) {

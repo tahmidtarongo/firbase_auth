@@ -95,8 +95,7 @@ class _SaleProductsState extends State<SaleProducts> {
         ),
         body: Container(
           alignment: Alignment.topCenter,
-          decoration:
-          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -163,9 +162,7 @@ class _SaleProductsState extends State<SaleProducts> {
                   //     ),
                   //   ),
                   // ),
-                  const SizedBox(
-                    height: 20.0
-                  ),
+                  const SizedBox(height: 20.0),
                   Row(
                     children: [
                       Expanded(
@@ -182,8 +179,7 @@ class _SaleProductsState extends State<SaleProducts> {
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Product Code',
-                              hintText:
-                                  productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
+                              hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
                               border: const OutlineInputBorder(),
                             ),
                           ),
@@ -265,10 +261,7 @@ class _SaleProductsState extends State<SaleProducts> {
                               productDescription: products[i].brandName,
                               productPrice: productPrice,
                               productImage: products[i].productPicture,
-                            ).visible((products[i].productCode == productCode ||
-                                    productCode == '0000' ||
-                                    productCode == '-1') &&
-                                productPrice != '0'),
+                            ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
                           );
                         });
                   }, error: (e, stack) {
@@ -302,12 +295,7 @@ class _SaleProductsState extends State<SaleProducts> {
 
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  ProductCard(
-      {Key? key,
-      required this.productTitle,
-      required this.productDescription,
-      required this.productPrice,
-      required this.productImage})
+  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage})
       : super(key: key);
 
   // final Product product;

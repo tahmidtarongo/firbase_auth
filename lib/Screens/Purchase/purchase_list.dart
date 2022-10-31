@@ -18,12 +18,7 @@ class _PurchaseListState extends State<PurchaseList> {
   String dropdownValue = 'Last 30 Days';
 
   DropdownButton<String> getCategory() {
-    List<String> dropDownItems = [
-      'Last 7 Days',
-      'Last 30 Days',
-      'Current year',
-      'Last Year'
-    ];
+    List<String> dropDownItems = ['Last 7 Days', 'Last 30 Days', 'Current year', 'Last Year'];
     return DropdownButton(
       items: dropDownItems.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
@@ -45,6 +40,7 @@ class _PurchaseListState extends State<PurchaseList> {
     dateController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,19 +88,13 @@ class _PurchaseListState extends State<PurchaseList> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           onTap: () async {
-                            var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100));
-                            dateController.text =
-                                date.toString().substring(0, 10);
+                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                            dateController.text = date.toString().substring(0, 10);
                           },
                           controller: dateController,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.always,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Start Date',
                               hintText: 'Pick Start Date'),
                         ),
@@ -117,19 +107,13 @@ class _PurchaseListState extends State<PurchaseList> {
                           textFieldType: TextFieldType.OTHER,
                           readOnly: true,
                           onTap: () async {
-                            var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100));
-                            dateController.text =
-                                date.toString().substring(0, 10);
+                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                            dateController.text = date.toString().substring(0, 10);
                           },
                           controller: dateController,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.always,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'End Date',
                               hintText: 'Pick End Date'),
                         ),
@@ -145,8 +129,7 @@ class _PurchaseListState extends State<PurchaseList> {
                   child: DataTable(
                     columnSpacing: 80,
                     horizontalMargin: 0,
-                    headingRowColor:
-                    MaterialStateColor.resolveWith((states) => kDarkWhite),
+                    headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
                     columns: const <DataColumn>[
                       DataColumn(
                         label: Text(
@@ -168,26 +151,26 @@ class _PurchaseListState extends State<PurchaseList> {
                       DataRow(
                         cells: <DataCell>[
                           DataCell(
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(right: 3.0),
-                                    height: 30.0,
-                                    width: 30.0,
-                                    child: const CircleAvatar(
-                                      backgroundImage:
-                                      AssetImage('images/profile.png'),
-                                    ),),
-                                  Text(
-                                    'Riead',
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15.0,
-                                    ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(right: 3.0),
+                                  height: 30.0,
+                                  width: 30.0,
+                                  child: const CircleAvatar(
+                                    backgroundImage: AssetImage('images/profile.png'),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Text(
+                                  'Riead',
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const DataCell(
                             Text('2'),
@@ -205,8 +188,7 @@ class _PurchaseListState extends State<PurchaseList> {
             const Spacer(),
             DataTable(
               columnSpacing: 120,
-              headingRowColor:
-              MaterialStateColor.resolveWith((states) => kDarkWhite),
+              headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
               columns: const <DataColumn>[
                 DataColumn(
                   label: Text(
@@ -223,7 +205,8 @@ class _PurchaseListState extends State<PurchaseList> {
                     '50',
                   ),
                 ),
-              ], rows: const [],
+              ],
+              rows: const [],
             ),
           ],
         ),
@@ -231,4 +214,3 @@ class _PurchaseListState extends State<PurchaseList> {
     );
   }
 }
-

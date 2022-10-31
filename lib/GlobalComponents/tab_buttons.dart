@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class TabButton extends StatelessWidget {
-   TabButton({
+  TabButton({
     required this.title,
     required this.text,
     required this.background,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Marketing/edit_social_media.dart';
@@ -15,7 +14,6 @@ class MarketingScreen extends StatefulWidget {
 }
 
 class _MarketingScreenState extends State<MarketingScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,16 +33,24 @@ class _MarketingScreenState extends State<MarketingScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
             child: GestureDetector(
-              onTap: (){
-                const  EditSocialmedia().launch(context);
+              onTap: () {
+                const EditSocialmedia().launch(context);
               },
               child: Row(
                 children: [
-                  const Icon(Icons.edit,color: kMainColor,),
-                  const SizedBox(width: 5.0,),
-                  Text('Edit',style: GoogleFonts.poppins(
+                  const Icon(
+                    Icons.edit,
                     color: kMainColor,
-                  ),),
+                  ),
+                  const SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    'Edit',
+                    style: GoogleFonts.poppins(
+                      color: kMainColor,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -53,34 +59,42 @@ class _MarketingScreenState extends State<MarketingScreen> {
       ),
       body: Column(
         children: [
-          const  SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaCard(
-              iconWidget: const Image(image: AssetImage('images/fb.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/fb.png'),
+              ),
               socialMediaName: 'Facebook',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaCard(
-              iconWidget: const Image(image: AssetImage('images/twitter.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/twitter.png'),
+              ),
               socialMediaName: 'Twitter',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaCard(
-              iconWidget: const Image(image: AssetImage('images/insta.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/insta.png'),
+              ),
               socialMediaName: 'Instagram',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0,left: 10.0),
+            padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
             child: SocialMediaCard(
-              iconWidget: const Image(image: AssetImage('images/linkedin.png'),),
+              iconWidget: const Image(
+                image: AssetImage('images/linkedin.png'),
+              ),
               socialMediaName: 'LinkedIN',
             ),
           ),
@@ -127,8 +141,7 @@ class SocialMediaCard extends StatelessWidget {
             children: [
               Text(
                 'Share',
-                style: GoogleFonts.poppins(
-                    fontSize: 15.0, color: Colors.white),
+                style: GoogleFonts.poppins(fontSize: 15.0, color: Colors.white),
               ),
               const Icon(
                 Icons.share,

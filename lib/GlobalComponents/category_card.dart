@@ -7,7 +7,7 @@ import 'button_global.dart';
 
 // ignore: must_be_immutable
 class CategoryCard extends StatelessWidget {
-  CategoryCard({Key? key, required this.product,required this.pressed}) : super(key: key);
+  CategoryCard({Key? key, required this.product, required this.pressed}) : super(key: key);
 
   final Product product;
   // ignore: prefer_typing_uninitialized_variables

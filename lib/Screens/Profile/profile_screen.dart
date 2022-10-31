@@ -162,7 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 20.0,
             ),
-            ButtonGlobalWithoutIcon(buttontext: 'Send', buttonDecoration: kButtonDecoration.copyWith(color: kMainColor), onPressed: null, buttonTextColor: Colors.white),
+            ButtonGlobalWithoutIcon(
+                buttontext: 'Send', buttonDecoration: kButtonDecoration.copyWith(color: kMainColor), onPressed: null, buttonTextColor: Colors.white),
           ],
         ),
       ),

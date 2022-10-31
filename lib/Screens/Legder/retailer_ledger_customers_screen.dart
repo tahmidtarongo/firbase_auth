@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Customers/Model/customer_model.dart';
@@ -19,17 +20,18 @@ class _RetailerLedgerScreenState extends State<RetailerLedgerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           widget.type,
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 20.0,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
       body: Column(children: [

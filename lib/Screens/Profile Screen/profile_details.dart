@@ -95,8 +95,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       ),
                       decoration: InputDecoration(
                           labelText: 'Name',
-                          border:
-                              const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                          border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                           hoverColor: kGreyTextColor,
                           fillColor: kGreyTextColor),
                       textFieldType: TextFieldType.NAME,
@@ -112,8 +111,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       ),
                       decoration: InputDecoration(
                           labelText: 'Phone Number',
-                          border:
-                              const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                          border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                           hoverColor: kGreyTextColor,
                           fillColor: kGreyTextColor),
                       textFieldType: TextFieldType.NAME,
@@ -129,8 +127,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       ),
                       decoration: InputDecoration(
                         labelText: 'Business Category',
-                        border:
-                            const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                        border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                         hoverColor: kGreyTextColor,
                         fillColor: kGreyTextColor,
                       ),
@@ -150,8 +147,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             ),
                             decoration: InputDecoration(
                                 labelText: 'Address',
-                                border: const OutlineInputBorder()
-                                    .copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                                border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                                 hoverColor: kGreyTextColor,
                                 fillColor: kGreyTextColor),
                             textFieldType: TextFieldType.NAME,
@@ -169,8 +165,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             ),
                             decoration: InputDecoration(
                                 labelText: 'Language',
-                                border: const OutlineInputBorder()
-                                    .copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                                border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                                 hoverColor: kGreyTextColor,
                                 fillColor: kGreyTextColor),
                             textFieldType: TextFieldType.NAME,

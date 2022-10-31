@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -18,7 +17,6 @@ class PurchaseContact extends StatefulWidget {
 }
 
 class _PurchaseContactState extends State<PurchaseContact> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +41,10 @@ class _PurchaseContactState extends State<PurchaseContact> {
             physics: const NeverScrollableScrollPhysics(),
             defaultChild: Padding(
               padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
-              child: Loader(color: Colors.white.withOpacity(0.2), size: 60,),
+              child: Loader(
+                color: Colors.white.withOpacity(0.2),
+                size: 60,
+              ),
             ),
             query: FirebaseDatabase.instance
                 // ignore: deprecated_member_use
@@ -56,7 +57,7 @@ class _PurchaseContactState extends State<PurchaseContact> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     PurchaseDetails(customerName: customer.customerName).launch(context);
                   },
                   child: Row(

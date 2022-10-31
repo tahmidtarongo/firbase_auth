@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 // const kMainColor = Color(0xFF3F8CFF);
 const kMainColor = Color(0xFFE21A70);
 const kSecondaryMainColor = Color(0xFFFF2885);
@@ -40,6 +39,7 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: const BorderSide(color: kBorderColorTextField),
   );
 }
+
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 5.0),
   border: outlineInputBorder(),
@@ -47,32 +47,10 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
 );
 
-List<String> businessCategory = [
-  'Fashion Store',
-  'Electronics Store',
-  'Computer Store',
-  'Vegetable Store',
-  'Sweet Store',
-  'Meat Store'
-];
-List<String> language = [
-  'English',
-  'Bengali',
-  'Hindi',
-  'Urdu',
-  'French',
-  'Spanish'
-];
+List<String> businessCategory = ['Fashion Store', 'Electronics Store', 'Computer Store', 'Vegetable Store', 'Sweet Store', 'Meat Store'];
+List<String> language = ['English', 'Bengali', 'Hindi', 'Urdu', 'French', 'Spanish'];
 
-List<String> productCategory = [
-  'Fashion',
-  'Electronics',
-  'Computer',
-  'Gadgets',
-  'Watches',
-  'Cloths'
-];
-
+List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];
 
 List<String> userRole = [
   'Super Admin',
@@ -97,4 +75,3 @@ List<String> saleStats = [
   'Monthly',
   'Yearly',
 ];
-

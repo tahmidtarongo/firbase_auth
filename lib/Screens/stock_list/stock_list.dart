@@ -32,212 +32,228 @@ class _StockListState extends State<StockList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           'Stock List',
-          style: GoogleFonts.poppins(color: Colors.black, fontSize: 22.0, fontWeight: FontWeight.w500),
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+          ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
       body: Consumer(builder: (context, ref, __) {
         final providerData = ref.watch(productProvider);
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(height: 10.0),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      color: kMainColor.withOpacity(0.2),
-                      child: Row(
-                        children: const [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
+        return Container(
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: 10.0),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: kMainColor.withOpacity(0.2),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          children: const [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Product',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Quantity',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Purchase',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              'Sale',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      DataTable(
+                        horizontalMargin: 40.0,
+                        columnSpacing: 50.0,
+                        headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
+                        columns: const <DataColumn>[
+                          DataColumn(
+                            label: Text(
                               'Product',
-                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Quantity',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                          DataColumn(
+                            label: Text(
+                              'QTY',
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
+                          DataColumn(
+                            label: Text(
                               'Purchase',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                             ),
                           ),
-                          Text(
-                            'Sale',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          DataColumn(
+                            label: Text(
+                              'Sale',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                    DataTable(
-                      horizontalMargin: 40.0,
-                      columnSpacing: 50.0,
-                      headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'Product',
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'QTY',
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Purchase',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Sale',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ],
-                      rows: const [],
-                    ).visible(false),
-                    providerData.when(data: (product) {
-                      return ListView.builder(
-                          itemCount: product.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          product[index].productName,
-                                          textAlign: TextAlign.start,
-                                          style: GoogleFonts.poppins(
-                                            color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
-                                            fontSize: 16.0,
+                        rows: const [],
+                      ).visible(false),
+                      providerData.when(data: (product) {
+                        return ListView.builder(
+                            itemCount: product.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            product[index].productName,
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFonts.poppins(
+                                              color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                              fontSize: 16.0,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          product[index].brandName,
-                                          textAlign: TextAlign.start,
-                                          style: GoogleFonts.poppins(
-                                            color: product[index].productStock.toInt() < 20 ? Colors.red : kGreyTextColor,
-                                            fontSize: 12.0,
+                                          Text(
+                                            product[index].brandName,
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFonts.poppins(
+                                              color: product[index].productStock.toInt() < 20 ? Colors.red : kGreyTextColor,
+                                              fontSize: 12.0,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Center(
-                                      child: Text(
-                                        product[index].productStock,
-                                        style: GoogleFonts.poppins(
-                                          color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
+                                    Expanded(
                                       flex: 2,
                                       child: Center(
                                         child: Text(
-                                          '\$${product[index].productPurchasePrice}',
+                                          product[index].productStock,
                                           style: GoogleFonts.poppins(
                                             color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                           ),
                                         ),
-                                      )),
-                                  Expanded(
-                                    child: Center(
-                                      child: Text(
-                                        '\$${product[index].productSalePrice}',
-                                        style: GoogleFonts.poppins(
-                                          color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                      ),
+                                    ),
+                                    Expanded(
+                                        flex: 2,
+                                        child: Center(
+                                          child: Text(
+                                            '\$${product[index].productPurchasePrice}',
+                                            style: GoogleFonts.poppins(
+                                              color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                            ),
+                                          ),
+                                        )),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          '\$${product[index].productSalePrice}',
+                                          style: GoogleFonts.poppins(
+                                            color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    }, error: (e, stack) {
-                      return Text(e.toString());
-                    }, loading: () {
-                      return const Center(child: CircularProgressIndicator());
-                    }),
-                  ],
-                ),
-              ],
+                                  ],
+                                ),
+                              );
+                            });
+                      }, error: (e, stack) {
+                        return Text(e.toString());
+                      }, loading: () {
+                        return const Center(child: CircularProgressIndicator());
+                      }),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
       }),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(20),
-        color: kMainColor.withOpacity(0.2),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Text(
-                'Total',
-                textAlign: TextAlign.start,
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
+        color: Colors.white,
+        child: Container(
+          color: kMainColor.withOpacity(.4),
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Text(
+                  'Total',
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                totalStock.toString(),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  totalStock.toString(),
+                  style: GoogleFonts.poppins(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Expanded(
+                  flex: 2,
+                  child: Text(
+                    '\$${totalParPrice.toInt().toString()}',
+                    style: GoogleFonts.poppins(
+                      color: Colors.black,
+                    ),
+                  )),
+              Text(
+                '\$${totalSalePrice.toInt().toString()}',
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.poppins(
                   color: Colors.black,
                 ),
               ),
-            ),
-            Expanded(
-                flex: 2,
-                child: Text(
-                  '\$${totalParPrice.toInt().toString()}',
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                  ),
-                )),
-            Text(
-              '\$${totalSalePrice.toInt().toString()}',
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                color: Colors.black,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

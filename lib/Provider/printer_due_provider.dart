@@ -57,15 +57,10 @@ class PrinterDue extends ChangeNotifier {
         ),
         linesAfter: 1);
 
-    bytes += generator.text(printDueTransactionModel.personalInformationModel.countryName ?? '',
-        styles: const PosStyles(align: PosAlign.center));
-    bytes += generator.text(printDueTransactionModel.personalInformationModel.phoneNumber,
-        styles: const PosStyles(align: PosAlign.center),
-        linesAfter: 1);
-    bytes += generator.text('Received From: ${printDueTransactionModel.dueTransactionModel!.customerName} ',
-        styles: const PosStyles(align: PosAlign.left));
-    bytes += generator.text('mobile: ${printDueTransactionModel.dueTransactionModel!.customerPhone}',
-        styles: const PosStyles(align: PosAlign.left));
+    bytes += generator.text(printDueTransactionModel.personalInformationModel.countryName ?? '', styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text(printDueTransactionModel.personalInformationModel.phoneNumber, styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text('Received From: ${printDueTransactionModel.dueTransactionModel!.customerName} ', styles: const PosStyles(align: PosAlign.left));
+    bytes += generator.text('mobile: ${printDueTransactionModel.dueTransactionModel!.customerPhone}', styles: const PosStyles(align: PosAlign.left));
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(text: 'Invoice', width: 8, styles: const PosStyles(align: PosAlign.left, bold: true)),
@@ -136,12 +131,10 @@ class PrinterDue extends ChangeNotifier {
     // ticket.feed(2);
     bytes += generator.text('Thank you!', styles: const PosStyles(align: PosAlign.center, bold: true));
 
-    bytes += generator.text(printDueTransactionModel.dueTransactionModel!.purchaseDate,
-        styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text(printDueTransactionModel.dueTransactionModel!.purchaseDate, styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
 
-    bytes += generator.qrcode('https://maantechnology.com',size: QRSize.Size4);
-    bytes += generator.text('Developed By: Maan Technology',
-        styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.qrcode('https://maantechnology.com', size: QRSize.Size4);
+    bytes += generator.text('Developed By: Maan Technology', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
     bytes += generator.cut();
     return bytes;
   }

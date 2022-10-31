@@ -52,7 +52,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   padding: const EdgeInsets.all(10.0),
                   child: AppTextField(
                     textFieldType: TextFieldType.EMAIL,
-                    onChanged: (value){
+                    onChanged: (value) {
                       setState(() {
                         email = value;
                       });
@@ -66,8 +66,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 ButtonGlobalWithoutIcon(
                     buttontext: 'Send Reset Link',
-                    buttonDecoration:
-                        kButtonDecoration.copyWith(color: kMainColor),
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                     onPressed: () async {
                       setState(() {
                         showProgress = true;
@@ -95,8 +94,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         } else if (e.code == 'wrong-password') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text(
-                                  'Wrong password provided for that user.'),
+                              content: Text('Wrong password provided for that user.'),
                               duration: Duration(seconds: 3),
                             ),
                           );

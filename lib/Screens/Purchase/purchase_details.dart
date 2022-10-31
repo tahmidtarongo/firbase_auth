@@ -22,16 +22,14 @@ class PurchaseDetails extends StatefulWidget {
 }
 
 class _PurchaseDetailsState extends State<PurchaseDetails> {
-
   var cart = FlutterCart();
   String customer = '';
   @override
   void initState() {
-    widget.customerName == null
-        ? customer = 'Unknown'
-        : customer = widget.customerName;
+    widget.customerName == null ? customer = 'Unknown' : customer = widget.customerName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,18 +48,10 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [
-              const PopupMenuItem(
-                  value: "/purchaseCustomer",
-                  child: Text('Add Customer')),
-              const PopupMenuItem(
-                  value: "/addDiscount",
-                  child: Text('Add Discount')),
-              const PopupMenuItem(
-                  value: "/settings",
-                  child: Text('Cancel All Product')),
-              const PopupMenuItem(
-                  value: "/settings",
-                  child: Text('Vat Doesn\'t Apply')),
+              const PopupMenuItem(value: "/purchaseCustomer", child: Text('Add Customer')),
+              const PopupMenuItem(value: "/addDiscount", child: Text('Add Discount')),
+              const PopupMenuItem(value: "/settings", child: Text('Cancel All Product')),
+              const PopupMenuItem(value: "/settings", child: Text('Vat Doesn\'t Apply')),
             ],
             onSelected: (value) {
               Navigator.pushNamed(context, '$value');
@@ -78,8 +68,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             child: ListView.builder(
               itemCount: cart.cartItem.length,
               itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(
-                    left: 25.0, right: 25.0, bottom: 10.0),
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
                 child: Row(
                   children: [
                     Text(
@@ -107,8 +96,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             thickness: 0.5,
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
+            padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
             child: Row(
               children: [
                 Text(
@@ -130,8 +118,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
+            padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
             child: Row(
               children: [
                 Text(
@@ -161,8 +148,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             width: MediaQuery.of(context).size.width,
             color: kDarkWhite,
             child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
+              padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
               child: Row(
                 children: [
                   Text(
@@ -191,11 +177,10 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
             onPressed: () async {
-              try{
-                EasyLoading.show(status: 'Loading...',dismissOnTap: false);
+              try {
+                EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                 // ignore: no_leading_underscores_for_local_identifiers
-                final DatabaseReference _purchaseReportRef =
-                FirebaseDatabase.instance
+                final DatabaseReference _purchaseReportRef = FirebaseDatabase.instance
                     // ignore: deprecated_member_use
                     .reference()
                     .child(FirebaseAuth.instance.currentUser!.uid)
@@ -207,8 +192,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                 const PaymentOptions().launch(context);
               } catch (e) {
                 EasyLoading.dismiss();
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(e.toString())));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
               }
             },
           ),

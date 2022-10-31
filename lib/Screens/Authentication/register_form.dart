@@ -166,7 +166,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-
                           const LoginForm().launch(context);
                           // Navigator.pushNamed(context, '/loginForm');
                         },

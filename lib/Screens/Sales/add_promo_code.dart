@@ -36,10 +36,8 @@ class _AddPromoCodeState extends State<AddPromoCode> {
               padding: const EdgeInsets.all(8.0),
               child: AppTextField(
                 textFieldType: TextFieldType.NAME,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Add Promo Code'),
+                decoration:
+                    const InputDecoration(border: OutlineInputBorder(), floatingLabelBehavior: FloatingLabelBehavior.always, labelText: 'Add Promo Code'),
               ),
             ),
             ButtonGlobalWithoutIcon(

@@ -68,9 +68,7 @@ class _BrandsListState extends State<BrandsList> {
                         },
                       ),
                     ),
-                    const SizedBox(
-                      width: 10.0
-                    ),
+                    const SizedBox(width: 10.0),
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
@@ -91,9 +89,7 @@ class _BrandsListState extends State<BrandsList> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20.0
-                    ),
+                    const SizedBox(width: 20.0),
                   ],
                 ),
                 SingleChildScrollView(

@@ -22,6 +22,7 @@ class _ExpenseListState extends State<ExpenseList> {
     dateController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,19 +57,13 @@ class _ExpenseListState extends State<ExpenseList> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           onTap: () async {
-                            var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100));
-                            dateController.text =
-                                date.toString().substring(0, 10);
+                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                            dateController.text = date.toString().substring(0, 10);
                           },
                           controller: dateController,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Start Date',
                               hintText: 'Pick Start Date'),
                         ),
@@ -81,19 +76,13 @@ class _ExpenseListState extends State<ExpenseList> {
                           textFieldType: TextFieldType.OTHER,
                           readOnly: true,
                           onTap: () async {
-                            var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100));
-                            dateController.text =
-                                date.toString().substring(0, 10);
+                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                            dateController.text = date.toString().substring(0, 10);
                           },
                           controller: dateController,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'End Date',
                               hintText: 'Pick End Date'),
                         ),
@@ -108,8 +97,7 @@ class _ExpenseListState extends State<ExpenseList> {
                   scrollDirection: Axis.vertical,
                   child: DataTable(
                     horizontalMargin: 0,
-                    headingRowColor:
-                        MaterialStateColor.resolveWith((states) => kDarkWhite),
+                    headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
                     columns: const <DataColumn>[
                       DataColumn(
                         label: SizedBox(
@@ -157,15 +145,15 @@ class _ExpenseListState extends State<ExpenseList> {
                                     ),
                                   ),
                                 ],
-                              ), onTap: () {
-                          }),
+                              ),
+                              onTap: () {}),
                           const DataCell(
                             Text('25'),
                           ),
                           const DataCell(
                             Text('25'),
                           ),
-                          const  DataCell(
+                          const DataCell(
                             Text('50'),
                           ),
                         ],
@@ -177,8 +165,7 @@ class _ExpenseListState extends State<ExpenseList> {
             ),
             const Spacer(),
             DataTable(
-              headingRowColor:
-                  MaterialStateColor.resolveWith((states) => kDarkWhite),
+              headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
               columns: const <DataColumn>[
                 DataColumn(
                   label: SizedBox(
@@ -210,7 +197,9 @@ class _ExpenseListState extends State<ExpenseList> {
               buttontext: 'Add Expense',
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
               onPressed: () {
-                AddExpense(catName: 'Laptop',).launch(context);
+                AddExpense(
+                  catName: 'Laptop',
+                ).launch(context);
               },
               buttonTextColor: Colors.white,
             ),
