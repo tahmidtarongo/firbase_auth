@@ -91,7 +91,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const TabBar(
-                      indicatorColor: kMainColor,
+                      indicatorColor: Colors.blueAccent,
                       labelColor: kMainColor,
                       tabs: [
                         Tab(

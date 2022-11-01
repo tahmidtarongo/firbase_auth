@@ -26,112 +26,118 @@ class _OTPVerifyState extends State<OTPVerify> {
   int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kMainColor,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
         backgroundColor: kMainColor,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Verifying OTP'),
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.topCenter,
-        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'OTP sent to ${PhoneAuth.phoneNumber}',
-                    style: const TextStyle(fontSize: 17, color: Colors.grey),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'Change?',
-                      style: TextStyle(color: Colors.redAccent, fontSize: 17),
+        appBar: AppBar(
+          backgroundColor: kMainColor,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text('Verifying OTP'),
+        ),
+        body: Container(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Text(
+                      'OTP sent to ${PhoneAuth.phoneNumber}',
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 30),
-              Pinput(
-                  length: 6,
-                  showCursor: true,
-                  onCompleted: (pin) {
-                    code = pin;
-                  }),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const Text(
-                    'Resend OTP : ',
-                    style: TextStyle(fontSize: 17, color: Colors.grey),
-                  ),
-                  CountdownTimer(
-                    textStyle: const TextStyle(fontSize: 17, color: Colors.black),
-                    endTime: endTime,
-                    endWidget: TextButton(
-                      onPressed: () {},
+                    TextButton(
+                      onPressed: () {
+                        const PhoneAuth().launch(context, isNewTask: true);
+                      },
                       child: const Text(
-                        'Resend Code',
+                        'Change?',
+                        style: TextStyle(color: Colors.redAccent, fontSize: 17),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Pinput(
+                    defaultPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(width: 1, color: kMainColor),
+                        color: kMainColor.withOpacity(0.1),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 50,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Grow Business',
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  ),
-                  const SizedBox(width: 10),
-                  Container(
-                    width: 50,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ButtonGlobalWithoutIcon(
-                  buttontext: 'Verify Phone Number',
-                  buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
-                  onPressed: () async {
-                    EasyLoading.show(status: 'Loading');
-                    try {
-                      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
-                      await auth.signInWithCredential(credential).then((value) {
-                        if (value.additionalUserInfo!.isNewUser) {
-                          EasyLoading.dismiss();
-                          const ProfileSetup().launch(context);
-                        } else {
-                          EasyLoading.dismiss();
-                          const SuccessScreen().launch(context);
-                        }
-                      });
-                    } catch (e) {
-                      EasyLoading.showError('Wrong OTP');
-                    }
-                  },
-                  buttonTextColor: Colors.white),
-            ],
+                    length: 6,
+                    showCursor: true,
+                    onCompleted: (pin) {
+                      code = pin;
+                    }),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const Text(
+                      'Resend OTP : ',
+                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                    ),
+                    CountdownTimer(
+                      textStyle: const TextStyle(fontSize: 17, color: Colors.black),
+                      endTime: endTime,
+                      endWidget: TextButton(
+                        onPressed: () async {
+                          EasyLoading.show(status: 'Loading', dismissOnTap: false);
+                          try {
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                              phoneNumber: PhoneAuth.phoneNumber,
+                              verificationCompleted: (PhoneAuthCredential credential) {},
+                              verificationFailed: (FirebaseAuthException e) {},
+                              codeSent: (String verificationId, int? resendToken) {
+                                EasyLoading.dismiss();
+                                PhoneAuth.verify = verificationId;
+                                const OTPVerify().launch(context, isNewTask: true);
+                              },
+                              codeAutoRetrievalTimeout: (String verificationId) {},
+                            );
+                          } catch (e) {
+                            EasyLoading.showError('Error');
+                          }
+                        },
+                        child: const Text(
+                          'Resend Code',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                ButtonGlobalWithoutIcon(
+                    buttontext: 'Verify Phone Number',
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                    onPressed: () async {
+                      EasyLoading.show(status: 'Loading');
+                      try {
+                        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
+                        await auth.signInWithCredential(credential).then((value) {
+                          if (value.additionalUserInfo!.isNewUser) {
+                            EasyLoading.dismiss();
+                            const ProfileSetup().launch(context);
+                          } else {
+                            EasyLoading.dismiss();
+                            const SuccessScreen().launch(context, isNewTask: true);
+                          }
+                        });
+                      } catch (e) {
+                        EasyLoading.showError('Wrong OTP');
+                      }
+                    },
+                    buttonTextColor: Colors.white),
+              ],
+            ),
           ),
         ),
       ),

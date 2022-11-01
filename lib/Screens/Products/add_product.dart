@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
-import 'package:mobile_pos/GlobalComponents/category_list.dart';
+import 'package:mobile_pos/Screens/Products/category_list.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
 import 'package:mobile_pos/Screens/Products/unit_list.dart';
 import 'package:mobile_pos/model/product_model.dart';
@@ -187,33 +187,22 @@ class _AddProductState extends State<AddProduct> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 60.0,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(color: kGreyTextColor),
-                      ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          data = await const CategoryList().launch(context);
-                          setState(() {
-                            productCategory = data.categoryName;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(productCategory),
-                            const Spacer(),
-                            const Icon(Icons.keyboard_arrow_down),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                          ],
-                        ),
+                    child: AppTextField(
+                      readOnly: true,
+                      textFieldType: TextFieldType.NAME,
+                      onTap: () async {
+                        data = await const CategoryList().launch(context);
+                        setState(() {
+                          productCategory = data.categoryName;
+                        });
+                      },
+                      decoration:  InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: productCategory,
+
+                        labelText: 'Category',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: const Icon(Icons.keyboard_arrow_down),
                       ),
                     ),
                   ),
@@ -320,33 +309,22 @@ class _AddProductState extends State<AddProduct> {
                   ).visible(data.variations.contains('Type')),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 60.0,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(color: kGreyTextColor),
-                      ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          String data = await const BrandsList().launch(context);
-                          setState(() {
-                            brandName = data;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(brandName),
-                            const Spacer(),
-                            const Icon(Icons.keyboard_arrow_down),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                          ],
-                        ),
+                    child: AppTextField(
+                      readOnly: true,
+                      textFieldType: TextFieldType.NAME,
+                      onTap: () async {
+                        String data = await const BrandsList().launch(context);
+                        setState(() {
+                          brandName = data;
+                        });
+                      },
+                      decoration:  InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: brandName,
+
+                        labelText: 'Brand',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: const Icon(Icons.keyboard_arrow_down),
                       ),
                     ),
                   ),
@@ -430,35 +408,24 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       Expanded(
-                        child: Padding(
+                        child:Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: 60.0,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(color: kGreyTextColor),
-                            ),
-                            child: GestureDetector(
-                              onTap: () async {
-                                String data = await const UnitList().launch(context);
-                                setState(() {
-                                  productUnit = data;
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Text(productUnit),
-                                  const Spacer(),
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  const SizedBox(
-                                    width: 10.0,
-                                  ),
-                                ],
-                              ),
+                          child: AppTextField(
+                            readOnly: true,
+                            textFieldType: TextFieldType.NAME,
+                            onTap: () async {
+                              String data = await const UnitList().launch(context);
+                              setState(() {
+                                productUnit = data;
+                              });
+                            },
+                            decoration:  InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              hintText: productUnit,
+
+                              labelText: 'Units',
+                              border: const OutlineInputBorder(),
+                              suffixIcon: const Icon(Icons.keyboard_arrow_down),
                             ),
                           ),
                         ),

@@ -24,12 +24,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           'Profile',
           style: GoogleFonts.poppins(
-            color: Colors.black,
-            fontSize: 20.0,
+            color: Colors.white,
           ),
         ),
         actions: [
@@ -43,7 +43,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 children: [
                   const Icon(
                     Icons.edit,
-                    color: kMainColor,
+                    color: Colors.white,
                   ),
                   const SizedBox(
                     width: 5.0,
@@ -51,7 +51,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   Text(
                     'Edit',
                     style: GoogleFonts.poppins(
-                      color: kMainColor,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -59,148 +59,152 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             ),
           ),
         ],
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
       body: Consumer(builder: (context, ref, child) {
         AsyncValue<PersonalInformationModel> userProfileDetails = ref.watch(profileDetailsProvider);
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: userProfileDetails.when(data: (details) {
-              return Column(
-                children: [
-                  Center(
-                    child: Container(
-                      height: 100.0,
-                      width: 100.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: NetworkImage(details.pictureUrl ?? ''), fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(50),
+        return Container(
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SingleChildScrollView(
+              child: userProfileDetails.when(data: (details) {
+                return Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 100.0,
+                        width: 100.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(details.pictureUrl ?? ''), fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      readOnly: true,
-                      cursorColor: kGreyTextColor,
-                      controller: TextEditingController(
-                        text: details.companyName,
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: AppTextField(
+                        readOnly: true,
+                        cursorColor: kGreyTextColor,
+                        controller: TextEditingController(
+                          text: details.companyName,
+                        ),
+                        decoration: InputDecoration(
+                            labelText: 'Name',
+                            border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                            hoverColor: kGreyTextColor,
+                            fillColor: kGreyTextColor),
+                        textFieldType: TextFieldType.NAME,
                       ),
-                      decoration: InputDecoration(
-                          labelText: 'Name',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: AppTextField(
+                        readOnly: true,
+                        cursorColor: kGreyTextColor,
+                        controller: TextEditingController(
+                          text: details.phoneNumber,
+                        ),
+                        decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                            hoverColor: kGreyTextColor,
+                            fillColor: kGreyTextColor),
+                        textFieldType: TextFieldType.NAME,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: AppTextField(
+                        readOnly: true,
+                        cursorColor: kGreyTextColor,
+                        controller: TextEditingController(
+                          text: details.businessCategory,
+                        ),
+                        decoration: InputDecoration(
+                          labelText: 'Business Category',
                           border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                           hoverColor: kGreyTextColor,
-                          fillColor: kGreyTextColor),
-                      textFieldType: TextFieldType.NAME,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      readOnly: true,
-                      cursorColor: kGreyTextColor,
-                      controller: TextEditingController(
-                        text: details.phoneNumber,
+                          fillColor: kGreyTextColor,
+                        ),
+                        textFieldType: TextFieldType.NAME,
                       ),
-                      decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
-                          hoverColor: kGreyTextColor,
-                          fillColor: kGreyTextColor),
-                      textFieldType: TextFieldType.NAME,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      readOnly: true,
-                      cursorColor: kGreyTextColor,
-                      controller: TextEditingController(
-                        text: details.businessCategory,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: 'Business Category',
-                        border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
-                        hoverColor: kGreyTextColor,
-                        fillColor: kGreyTextColor,
-                      ),
-                      textFieldType: TextFieldType.NAME,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: AppTextField(
-                            readOnly: true,
-                            cursorColor: kGreyTextColor,
-                            controller: TextEditingController(
-                              text: details.countryName,
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: AppTextField(
+                              readOnly: true,
+                              cursorColor: kGreyTextColor,
+                              controller: TextEditingController(
+                                text: details.countryName,
+                              ),
+                              decoration: InputDecoration(
+                                  labelText: 'Address',
+                                  border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                                  hoverColor: kGreyTextColor,
+                                  fillColor: kGreyTextColor),
+                              textFieldType: TextFieldType.NAME,
                             ),
-                            decoration: InputDecoration(
-                                labelText: 'Address',
-                                border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
-                                hoverColor: kGreyTextColor,
-                                fillColor: kGreyTextColor),
-                            textFieldType: TextFieldType.NAME,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Expanded(
-                          child: AppTextField(
-                            readOnly: true,
-                            cursorColor: kGreyTextColor,
-                            controller: TextEditingController(
-                              text: details.language,
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Expanded(
+                            child: AppTextField(
+                              readOnly: true,
+                              cursorColor: kGreyTextColor,
+                              controller: TextEditingController(
+                                text: details.language,
+                              ),
+                              decoration: InputDecoration(
+                                  labelText: 'Language',
+                                  border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
+                                  hoverColor: kGreyTextColor,
+                                  fillColor: kGreyTextColor),
+                              textFieldType: TextFieldType.NAME,
                             ),
-                            decoration: InputDecoration(
-                                labelText: 'Language',
-                                border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
-                                hoverColor: kGreyTextColor,
-                                fillColor: kGreyTextColor),
-                            textFieldType: TextFieldType.NAME,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  ButtonGlobal(
-                    iconWidget: Icons.arrow_forward,
-                    buttontext: 'Change Password',
-                    iconColor: Colors.white,
-                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                    onPressed: () async {
-                      try {
-                        EasyLoading.show(status: 'Sending Email', dismissOnTap: false);
-                        await FirebaseAuth.instance.sendPasswordResetEmail(
-                          email: FirebaseAuth.instance.currentUser!.email.toString(),
-                        );
-                        EasyLoading.showSuccess('Email Sent! Check your Inbox');
-                        // ignore: use_build_context_synchronously
-                        const LoginForm().launch(context);
-                        FirebaseAuth.instance.signOut();
-                      } catch (e) {
-                        EasyLoading.showError(e.toString());
-                      }
-                    },
-                  ),
-                ],
-              );
-            }, error: (e, stack) {
-              return Text(e.toString());
-            }, loading: () {
-              return const CircularProgressIndicator();
-            }),
+                    ButtonGlobal(
+                      iconWidget: Icons.arrow_forward,
+                      buttontext: 'Change Password',
+                      iconColor: Colors.white,
+                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
+                      onPressed: () async {
+                        try {
+                          EasyLoading.show(status: 'Sending Email', dismissOnTap: false);
+                          await FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: FirebaseAuth.instance.currentUser!.email.toString(),
+                          );
+                          EasyLoading.showSuccess('Email Sent! Check your Inbox');
+                          // ignore: use_build_context_synchronously
+                          const LoginForm().launch(context);
+                          FirebaseAuth.instance.signOut();
+                        } catch (e) {
+                          EasyLoading.showError(e.toString());
+                        }
+                      },
+                    ).visible(false),
+                  ],
+                );
+              }, error: (e, stack) {
+                return Text(e.toString());
+              }, loading: () {
+                return const CircularProgressIndicator();
+              }),
+            ),
           ),
         );
       }),

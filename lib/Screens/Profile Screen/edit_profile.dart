@@ -103,419 +103,424 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           'Update Your Profile',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Consumer(builder: (context, ref, child) {
-          AsyncValue<PersonalInformationModel> userProfileDetails = ref.watch(profileDetailsProvider);
-          loopCount++;
-          if (loopCount == 1) {
-            dropdownValue = userProfileDetails.value!.businessCategory.toString();
-            dropdownLangValue = userProfileDetails.value!.language.toString();
-            profilePicture = userProfileDetails.value?.pictureUrl.toString() ?? '';
-          }
-          return Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Update your profile to connect your customer with better impression",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      color: kGreyTextColor,
-                      fontSize: 15.0,
+      body: Container(
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: SingleChildScrollView(
+          child: Consumer(builder: (context, ref, child) {
+            AsyncValue<PersonalInformationModel> userProfileDetails = ref.watch(profileDetailsProvider);
+            loopCount++;
+            if (loopCount == 1) {
+              dropdownValue = userProfileDetails.value!.businessCategory.toString();
+              dropdownLangValue = userProfileDetails.value!.language.toString();
+              profilePicture = userProfileDetails.value?.pictureUrl.toString() ?? '';
+            }
+            return Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "Update your profile to connect your customer with better impression",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: kGreyTextColor,
+                        fontSize: 15.0,
+                      ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            // ignore: sized_box_for_whitespace
-                            child: Container(
-                              height: 200.0,
-                              width: MediaQuery.of(context).size.width - 80,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              // ignore: sized_box_for_whitespace
+                              child: Container(
+                                height: 200.0,
+                                width: MediaQuery.of(context).size.width - 80,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          pickedImage = await _picker.pickImage(source: ImageSource.gallery);
 
-                                        setState(() {
-                                          imageFile = File(pickedImage!.path);
-                                          imagePath = pickedImage!.path;
-                                        });
+                                          setState(() {
+                                            imageFile = File(pickedImage!.path);
+                                            imagePath = pickedImage!.path;
+                                          });
 
-                                        Future.delayed(const Duration(milliseconds: 100), () {
-                                          Navigator.pop(context);
-                                        });
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.photo_library_rounded,
-                                            size: 60.0,
-                                            color: kMainColor,
-                                          ),
-                                          Text(
-                                            'Gallery',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 20.0,
+                                          Future.delayed(const Duration(milliseconds: 100), () {
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.photo_library_rounded,
+                                              size: 60.0,
                                               color: kMainColor,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              'Gallery',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 20.0,
+                                                color: kMainColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 40.0,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        pickedImage = await _picker.pickImage(source: ImageSource.camera);
-                                        setState(() {
-                                          imageFile = File(pickedImage!.path);
-                                          imagePath = pickedImage!.path;
-                                        });
-                                        Future.delayed(const Duration(milliseconds: 100), () {
-                                          Navigator.pop(context);
-                                        });
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.camera,
-                                            size: 60.0,
-                                            color: kGreyTextColor,
-                                          ),
-                                          Text(
-                                            'Camera',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 20.0,
+                                      const SizedBox(
+                                        width: 40.0,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                                          setState(() {
+                                            imageFile = File(pickedImage!.path);
+                                            imagePath = pickedImage!.path;
+                                          });
+                                          Future.delayed(const Duration(milliseconds: 100), () {
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.camera,
+                                              size: 60.0,
                                               color: kGreyTextColor,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              'Camera',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 20.0,
+                                                color: kGreyTextColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        });
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return Dialog(
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(12.0),
-                    //         ),
-                    //         // ignore: sized_box_for_whitespace
-                    //         child: Container(
-                    //           height: 200.0,
-                    //           width: MediaQuery.of(context).size.width - 80,
-                    //           child: Center(
-                    //             child: Row(
-                    //               mainAxisAlignment: MainAxisAlignment.center,
-                    //               children: [
-                    //                 GestureDetector(
-                    //                   onTap: () async {
-                    //                     pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-                    //                     setState(() {
-                    //                       imageFile = File(pickedImage!.path);
-                    //                       imagePath = pickedImage!.path;
-                    //                     });
-                    //                     Future.delayed(const Duration(milliseconds: 100), () {
-                    //                       Navigator.pop(context);
-                    //                     });
-                    //                   },
-                    //                   child: Column(
-                    //                     mainAxisAlignment: MainAxisAlignment.center,
-                    //                     children: [
-                    //                       const Icon(
-                    //                         Icons.photo_library_rounded,
-                    //                         size: 60.0,
-                    //                         color: kMainColor,
-                    //                       ),
-                    //                       Text(
-                    //                         'Gallery',
-                    //                         style: GoogleFonts.poppins(
-                    //                           fontSize: 20.0,
-                    //                           color: kMainColor,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //                 const SizedBox(
-                    //                   width: 40.0,
-                    //                 ),
-                    //                 GestureDetector(
-                    //                   onTap: () async {
-                    //                     pickedImage = await _picker.pickImage(source: ImageSource.camera);
-                    //                     setState(() {
-                    //                       imageFile = File(pickedImage!.path);
-                    //                       imagePath = pickedImage!.path;
-                    //                     });
-                    //                     Future.delayed(const Duration(milliseconds: 100), () {
-                    //                       Navigator.pop(context);
-                    //                     });
-                    //                   },
-                    //                   child: Column(
-                    //                     mainAxisAlignment: MainAxisAlignment.center,
-                    //                     children: [
-                    //                       const Icon(
-                    //                         Icons.camera,
-                    //                         size: 60.0,
-                    //                         color: kGreyTextColor,
-                    //                       ),
-                    //                       Text(
-                    //                         'Camera',
-                    //                         style: GoogleFonts.poppins(
-                    //                           fontSize: 20.0,
-                    //                           color: kGreyTextColor,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     });
-                  },
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black54, width: 1),
-                          borderRadius: const BorderRadius.all(Radius.circular(120)),
-                          image: imagePath == 'No Data'
-                              ? DecorationImage(
-                                  image: NetworkImage(profilePicture),
-                                  fit: BoxFit.cover,
-                                )
-                              : DecorationImage(
-                                  image: FileImage(imageFile),
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 35,
-                          width: 35,
+                            );
+                          });
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return Dialog(
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(12.0),
+                      //         ),
+                      //         // ignore: sized_box_for_whitespace
+                      //         child: Container(
+                      //           height: 200.0,
+                      //           width: MediaQuery.of(context).size.width - 80,
+                      //           child: Center(
+                      //             child: Row(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               children: [
+                      //                 GestureDetector(
+                      //                   onTap: () async {
+                      //                     pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                      //                     setState(() {
+                      //                       imageFile = File(pickedImage!.path);
+                      //                       imagePath = pickedImage!.path;
+                      //                     });
+                      //                     Future.delayed(const Duration(milliseconds: 100), () {
+                      //                       Navigator.pop(context);
+                      //                     });
+                      //                   },
+                      //                   child: Column(
+                      //                     mainAxisAlignment: MainAxisAlignment.center,
+                      //                     children: [
+                      //                       const Icon(
+                      //                         Icons.photo_library_rounded,
+                      //                         size: 60.0,
+                      //                         color: kMainColor,
+                      //                       ),
+                      //                       Text(
+                      //                         'Gallery',
+                      //                         style: GoogleFonts.poppins(
+                      //                           fontSize: 20.0,
+                      //                           color: kMainColor,
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //                 const SizedBox(
+                      //                   width: 40.0,
+                      //                 ),
+                      //                 GestureDetector(
+                      //                   onTap: () async {
+                      //                     pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                      //                     setState(() {
+                      //                       imageFile = File(pickedImage!.path);
+                      //                       imagePath = pickedImage!.path;
+                      //                     });
+                      //                     Future.delayed(const Duration(milliseconds: 100), () {
+                      //                       Navigator.pop(context);
+                      //                     });
+                      //                   },
+                      //                   child: Column(
+                      //                     mainAxisAlignment: MainAxisAlignment.center,
+                      //                     children: [
+                      //                       const Icon(
+                      //                         Icons.camera,
+                      //                         size: 60.0,
+                      //                         color: kGreyTextColor,
+                      //                       ),
+                      //                       Text(
+                      //                         'Camera',
+                      //                         style: GoogleFonts.poppins(
+                      //                           fontSize: 20.0,
+                      //                           color: kGreyTextColor,
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     });
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 120,
+                          width: 120,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 2),
+                            border: Border.all(color: Colors.black54, width: 1),
                             borderRadius: const BorderRadius.all(Radius.circular(120)),
-                            color: kMainColor,
-                          ),
-                          child: const Icon(
-                            Icons.camera_alt_outlined,
-                            size: 20,
-                            color: Colors.white,
+                            image: imagePath == 'No Data'
+                                ? DecorationImage(
+                                    image: NetworkImage(profilePicture),
+                                    fit: BoxFit.cover,
+                                  )
+                                : DecorationImage(
+                                    image: FileImage(imageFile),
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    height: 60.0,
-                    child: FormField(
-                      builder: (FormFieldState<dynamic> field) {
-                        return InputDecorator(
-                          decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Business Category',
-                              labelStyle: GoogleFonts.poppins(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-                          child: DropdownButtonHideUnderline(child: getCategory(dropdownValue)),
-                        );
-                      },
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 2),
+                              borderRadius: const BorderRadius.all(Radius.circular(120)),
+                              color: kMainColor,
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt_outlined,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ),
-                userProfileDetails.when(data: (details) {
-                  invoiceNumber = details.invoiceCounter!;
-
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: AppTextField(
-                          initialValue: details.companyName,
-                          onChanged: (value) {
-                            setState(() {
-                              companyName = value;
-                            });
-                          }, // Optional
-                          textFieldType: TextFieldType.NAME,
-                          decoration: const InputDecoration(labelText: 'Company & Business Name', border: OutlineInputBorder()),
-                        ),
+                  const SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 60.0,
+                      child: FormField(
+                        builder: (FormFieldState<dynamic> field) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Business Category',
+                                labelStyle: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                            child: DropdownButtonHideUnderline(child: getCategory(dropdownValue)),
+                          );
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SizedBox(
-                          height: 60.0,
+                    ),
+                  ),
+                  userProfileDetails.when(data: (details) {
+                    invoiceNumber = details.invoiceCounter!;
+
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
                           child: AppTextField(
-                            readOnly: true,
-                            textFieldType: TextFieldType.PHONE,
-                            initialValue: details.phoneNumber,
+                            initialValue: details.companyName,
                             onChanged: (value) {
                               setState(() {
-                                phoneNumber = value;
+                                companyName = value;
                               });
-                            },
-                            decoration: const InputDecoration(
-                              labelText: 'Phone Number',
-                              border: OutlineInputBorder(),
-                              // prefix: CountryCodePicker(
-                              //   padding: EdgeInsets.zero,
-                              //   onChanged: print,
-                              //   initialSelection: 'BD',
-                              //   showFlag: false,
-                              //   showDropDownButton: true,
-                              //   alignLeft: false,
-                              // ),
+                            }, // Optional
+                            textFieldType: TextFieldType.NAME,
+                            decoration: const InputDecoration(labelText: 'Company & Business Name', border: OutlineInputBorder()),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SizedBox(
+                            height: 60.0,
+                            child: AppTextField(
+                              readOnly: true,
+                              textFieldType: TextFieldType.PHONE,
+                              initialValue: details.phoneNumber,
+                              onChanged: (value) {
+                                setState(() {
+                                  phoneNumber = value;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Phone Number',
+                                border: OutlineInputBorder(),
+                                // prefix: CountryCodePicker(
+                                //   padding: EdgeInsets.zero,
+                                //   onChanged: print,
+                                //   initialSelection: 'BD',
+                                //   showFlag: false,
+                                //   showDropDownButton: true,
+                                //   alignLeft: false,
+                                // ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: AppTextField(
-                          initialValue: details.countryName,
-                          onChanged: (value) {
-                            setState(() {
-                              initialCountry = value;
-                            });
-                          }, // Optional
-                          textFieldType: TextFieldType.NAME,
-                          decoration: const InputDecoration(labelText: 'Address', border: OutlineInputBorder()),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SizedBox(
-                          height: 60.0,
-                          child: FormField(
-                            builder: (FormFieldState<dynamic> field) {
-                              return InputDecorator(
-                                decoration: InputDecoration(
-                                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'Language',
-                                    labelStyle: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 20.0,
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-                                child: DropdownButtonHideUnderline(child: getLanguage(dropdownLangValue)),
-                              );
-                            },
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: AppTextField(
+                            initialValue: details.countryName,
+                            onChanged: (value) {
+                              setState(() {
+                                initialCountry = value;
+                              });
+                            }, // Optional
+                            textFieldType: TextFieldType.NAME,
+                            decoration: const InputDecoration(labelText: 'Address', border: OutlineInputBorder()),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                }, error: (e, stack) {
-                  return Text(e.toString());
-                }, loading: () {
-                  return const CircularProgressIndicator();
-                }),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                ButtonGlobal(
-                  iconWidget: Icons.arrow_forward,
-                  buttontext: 'Continue',
-                  iconColor: Colors.white,
-                  buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                  onPressed: () async {
-                    if (profilePicture == 'nodata') {
-                      setState(() {
-                        profilePicture = userProfileDetails.value!.pictureUrl.toString();
-                      });
-                    }
-                    if (companyName == 'nodata') {
-                      setState(() {
-                        companyName = userProfileDetails.value!.companyName.toString();
-                      });
-                    }
-                    if (phoneNumber == 'nodata') {
-                      setState(() {
-                        phoneNumber = userProfileDetails.value!.phoneNumber.toString();
-                      });
-                    }
-                    try {
-                      EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                      imagePath == 'No Data' ? null : await uploadFile(imagePath);
-                      // ignore: no_leading_underscores_for_local_identifiers
-                      final DatabaseReference _personalInformationRef = FirebaseDatabase.instance
-                          // ignore: deprecated_member_use
-                          .reference()
-                          .child(FirebaseAuth.instance.currentUser!.uid)
-                          .child('Personal Information');
-                      PersonalInformationModel personalInformation = PersonalInformationModel(
-                        businessCategory: dropdownValue,
-                        companyName: companyName,
-                        phoneNumber: phoneNumber,
-                        countryName: initialCountry,
-                        invoiceCounter: invoiceNumber,
-                        language: dropdownLangValue,
-                        pictureUrl: profilePicture,
-                      );
-                      await _personalInformationRef.set(personalInformation.toJson());
-                      ref.refresh(profileDetailsProvider);
-                      EasyLoading.showSuccess('Updated Successfully', duration: const Duration(milliseconds: 1000));
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, '/home');
-                    } catch (e) {
-                      EasyLoading.dismiss();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                    }
-                    // Navigator.pushNamed(context, '/otp');
-                  },
-                ),
-              ],
-            ),
-          );
-        }),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SizedBox(
+                            height: 60.0,
+                            child: FormField(
+                              builder: (FormFieldState<dynamic> field) {
+                                return InputDecorator(
+                                  decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'Language',
+                                      labelStyle: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 20.0,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                                  child: DropdownButtonHideUnderline(child: getLanguage(dropdownLangValue)),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }, error: (e, stack) {
+                    return Text(e.toString());
+                  }, loading: () {
+                    return const CircularProgressIndicator();
+                  }),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  ButtonGlobal(
+                    iconWidget: Icons.arrow_forward,
+                    buttontext: 'Update Now',
+                    iconColor: Colors.white,
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                    onPressed: () async {
+                      if (profilePicture == 'nodata') {
+                        setState(() {
+                          profilePicture = userProfileDetails.value!.pictureUrl.toString();
+                        });
+                      }
+                      if (companyName == 'nodata') {
+                        setState(() {
+                          companyName = userProfileDetails.value!.companyName.toString();
+                        });
+                      }
+                      if (phoneNumber == 'nodata') {
+                        setState(() {
+                          phoneNumber = userProfileDetails.value!.phoneNumber.toString();
+                        });
+                      }
+                      try {
+                        EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                        imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                        // ignore: no_leading_underscores_for_local_identifiers
+                        final DatabaseReference _personalInformationRef = FirebaseDatabase.instance
+                            // ignore: deprecated_member_use
+                            .reference()
+                            .child(FirebaseAuth.instance.currentUser!.uid)
+                            .child('Personal Information');
+                        PersonalInformationModel personalInformation = PersonalInformationModel(
+                          businessCategory: dropdownValue,
+                          companyName: companyName,
+                          phoneNumber: phoneNumber,
+                          countryName: initialCountry,
+                          invoiceCounter: invoiceNumber,
+                          language: dropdownLangValue,
+                          pictureUrl: profilePicture,
+                        );
+                        await _personalInformationRef.set(personalInformation.toJson());
+                        ref.refresh(profileDetailsProvider);
+                        EasyLoading.showSuccess('Updated Successfully', duration: const Duration(milliseconds: 1000));
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(context, '/home');
+                      } catch (e) {
+                        EasyLoading.dismiss();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                      }
+                      // Navigator.pushNamed(context, '/otp');
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

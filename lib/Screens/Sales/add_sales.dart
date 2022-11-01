@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
@@ -45,6 +46,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
   String? dropdownValue = 'Cash';
   String? selectedPaymentType;
+  TextEditingController dateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
 
   double calculateSubtotal({required double total}) {
     subTotal = total - discountAmount;
@@ -72,7 +74,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     invoiceNumber: invoice.toString(),
     purchaseDate: DateTime.now().toString(),
   );
-  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +124,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           child: AppTextField(
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
-                            initialValue: transitionModel.purchaseDate,
+                            controller: dateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Date',
@@ -131,17 +132,15 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               suffixIcon: IconButton(
                                 onPressed: () async {
                                   final DateTime? picked = await showDatePicker(
-                                    initialDate: selectedDate,
+                                    initialDate: DateTime.now(),
                                     firstDate: DateTime(2015, 8),
                                     lastDate: DateTime(2101),
                                     context: context,
                                   );
-                                  if (picked != null && picked != selectedDate) {
-                                    setState(() {
-                                      selectedDate = picked;
-                                      transitionModel.purchaseDate = picked.toString();
-                                    });
-                                  }
+                                  setState(() {
+                                    dateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                    transitionModel.purchaseDate = picked.toString();
+                                  });
                                 },
                                 icon: const Icon(FeatherIcons.calendar),
                               ),

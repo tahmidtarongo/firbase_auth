@@ -166,23 +166,29 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 const SizedBox(height: 20),
                 ButtonGlobalWithoutIcon(
                     buttontext: 'Get OTP',
-                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
-                      EasyLoading.show(status: 'Loading', dismissOnTap: false);
-                      try {
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                          phoneNumber: '+$countryCode$phoneNumber',
-                          verificationCompleted: (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException e) {},
-                          codeSent: (String verificationId, int? resendToken) {
-                            EasyLoading.dismiss();
-                            PhoneAuth.verify = verificationId;
-                            const OTPVerify().launch(context);
-                          },
-                          codeAutoRetrievalTimeout: (String verificationId) {},
-                        );
-                      } catch (e) {
-                        EasyLoading.showError('Error');
+                      if (phoneNumber.length >= 8 && phoneNumber.isDigit()) {
+                        EasyLoading.show(status: 'Loading', dismissOnTap: false);
+                        try {
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber: '+$countryCode$phoneNumber',
+                            verificationCompleted: (PhoneAuthCredential credential) {},
+                            verificationFailed: (FirebaseAuthException e) {
+                              EasyLoading.showError('Phone number is not valid');
+                            },
+                            codeSent: (String verificationId, int? resendToken) {
+                              EasyLoading.dismiss();
+                              PhoneAuth.verify = verificationId;
+                              const OTPVerify().launch(context, isNewTask: true);
+                            },
+                            codeAutoRetrievalTimeout: (String verificationId) {},
+                          );
+                        } catch (e) {
+                          EasyLoading.showError('Error');
+                        }
+                      } else {
+                        EasyLoading.showError('Enter a valid phone number.');
                       }
                     },
                     buttonTextColor: Colors.white),

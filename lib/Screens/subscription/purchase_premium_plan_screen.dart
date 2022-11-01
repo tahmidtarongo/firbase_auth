@@ -106,12 +106,10 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                 alignment: Alignment.topCenter,
                 decoration:
                     const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 10),
                     ListView.builder(
                         itemCount: imageList.length,
                         shrinkWrap: true,
@@ -462,10 +460,10 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                             }).launch(context);
                       },
                       child: Container(
-                        height: 60,
+                        height: 50,
                         decoration: const BoxDecoration(
                           color: kMainColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         child: const Center(
                           child: Text(

@@ -86,202 +86,207 @@ class _PackageScreenState extends State<PackageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         title: Text(
           'Your Package',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(color: kPremiumPlanColor.withOpacity(0.2), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Free Plan',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: const [
-                            Text(
-                              'You are using ',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Text(
-                              'Free Package',
-                              style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      height: 63,
-                      width: 63,
-                      decoration: const BoxDecoration(
-                        color: kMainColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50),
-                        ),
+      body: Container(
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 80,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: kPremiumPlanColor.withOpacity(0.2), borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Free Plan',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: const [
+                              Text(
+                                'You are using ',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              Text(
+                                'Free Package',
+                                style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      child: Center(
-                          child: Text(
-                        '${(DateTime.parse(subscriptionModel.subscriptionDate).difference(DateTime.now()).inDays.abs() - subscriptionModel.duration).abs()} \nDays Left',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 12, color: Colors.white),
-                      )),
-                    ),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-              ).visible(initialSelectedPackage == 'Free'),
-              Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(color: kPremiumPlanColor.withOpacity(0.2), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(width: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Premium Plan',
-                          style: TextStyle(fontSize: 18),
+                      const Spacer(),
+                      Container(
+                        height: 63,
+                        width: 63,
+                        decoration: const BoxDecoration(
+                          color: kMainColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(50),
+                          ),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Text(
-                              'You are using ',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Text(
-                              '${initialSelectedPackage}ly Package',
-                              style: const TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      height: 63,
-                      width: 63,
-                      decoration: const BoxDecoration(
-                        color: kMainColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50),
-                        ),
+                        child: Center(
+                            child: Text(
+                          '${(DateTime.parse(subscriptionModel.subscriptionDate).difference(DateTime.now()).inDays.abs() - subscriptionModel.duration).abs()} \nDays Left',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 12, color: Colors.white),
+                        )),
                       ),
-                      child: Center(
-                          child: Text(
-                        '${(DateTime.parse(subscriptionModel.subscriptionDate).difference(DateTime.now()).inDays.abs() - subscriptionModel.duration).abs()} \nDays Left',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 12, color: Colors.white),
-                      )),
-                    ).visible(subscriptionModel.subscriptionName != 'Lifetime'),
-                    const SizedBox(width: 20),
-                  ],
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                ).visible(initialSelectedPackage == 'Free'),
+                Container(
+                  height: 80,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: kPremiumPlanColor.withOpacity(0.2), borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(width: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Premium Plan',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Text(
+                                'You are using ',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              Text(
+                                '${initialSelectedPackage}ly Package',
+                                style: const TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Container(
+                        height: 63,
+                        width: 63,
+                        decoration: const BoxDecoration(
+                          color: kMainColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(50),
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          '${(DateTime.parse(subscriptionModel.subscriptionDate).difference(DateTime.now()).inDays.abs() - subscriptionModel.duration).abs()} \nDays Left',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 12, color: Colors.white),
+                        )),
+                      ).visible(subscriptionModel.subscriptionName != 'Lifetime'),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                ).visible(initialSelectedPackage != 'Free'),
+                const SizedBox(height: 20),
+                const Text(
+                  'Package Features',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-              ).visible(initialSelectedPackage != 'Free'),
-              const SizedBox(height: 20),
-              const Text(
-                'Package Features',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              ListView.builder(
-                  itemCount: nameList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, i) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Card(
-                          elevation: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: ListTile(
-                              leading: SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: Image(
-                                  image: AssetImage(imageList[i]),
+                const SizedBox(height: 10),
+                ListView.builder(
+                    itemCount: nameList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (_, i) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Card(
+                            elevation: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ListTile(
+                                leading: SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: Image(
+                                    image: AssetImage(imageList[i]),
+                                  ),
                                 ),
+                                title: Text(
+                                  nameList[i],
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                ),
+                                trailing: initialSelectedPackage == 'Free'
+                                    ? Text(
+                                        '(${initialPackageService?[i] ?? ''}/50)',
+                                        style: const TextStyle(color: Colors.grey),
+                                      )
+                                    : const Text(
+                                        'Unlimited',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
                               ),
-                              title: Text(
-                                nameList[i],
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              trailing: initialSelectedPackage == 'Free'
-                                  ? Text(
-                                      '(${initialPackageService?[i] ?? ''}/50)',
-                                      style: const TextStyle(color: Colors.grey),
-                                    )
-                                  : const Text(
-                                      'Unlimited',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
                             ),
                           ),
                         ),
+                      );
+                    }),
+                const SizedBox(height: 20),
+                const Text(
+                  'For Unlimited Usages',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ).visible(initialSelectedPackage != 'Lifetime'),
+                const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
+                GestureDetector(
+                  onTap: () {
+                    PurchasePremiumPlanScreen(
+                      initialSelectedPackage: initialSelectedPackage.toString(),
+                      initPackageValue: initPackageValue?.toInt() ?? 0,
+                      isCameBack: true,
+                    ).launch(context);
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      color: kMainColor,
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Update Now',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                    );
-                  }),
-              const SizedBox(height: 20),
-              const Text(
-                'For Unlimited Usages',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ).visible(initialSelectedPackage != 'Lifetime'),
-              const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
-              GestureDetector(
-                onTap: () {
-                  PurchasePremiumPlanScreen(
-                    initialSelectedPackage: initialSelectedPackage.toString(),
-                    initPackageValue: initPackageValue?.toInt() ?? 0,
-                    isCameBack: true,
-                  ).launch(context);
-                },
-                child: Container(
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: kMainColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Update Now',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                ),
-              ).visible(initialSelectedPackage != 'Lifetime'),
-            ],
+                ).visible(initialSelectedPackage != 'Lifetime'),
+              ],
+            ),
           ),
         ),
       ),

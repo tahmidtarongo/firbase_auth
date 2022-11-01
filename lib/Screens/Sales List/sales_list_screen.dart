@@ -239,13 +239,16 @@ class _SalesListScreenState extends State<SalesListScreen> {
                           );
                         },
                       )
-                    : const Center(
-                        child: Text(
-                          'Please Add A Sale',
-                          maxLines: 2,
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
+                    : const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Center(
+                          child: Text(
+                            'Please Add A Sale',
+                            maxLines: 2,
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
+                          ),
                         ),
-                      );
+                    );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

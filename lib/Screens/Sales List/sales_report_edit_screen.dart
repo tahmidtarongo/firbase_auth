@@ -134,6 +134,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                 quantity: element.quantity,
                 productId: products.productCode,
                 productBrandName: products.brandName,
+                productPurchasePrice: products.productPurchasePrice,
                 stock: int.parse(products.productStock),
               );
               list.add(cartItem);
@@ -697,6 +698,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
                                     transitionModel.discountAmount = discountAmount;
                                     transitionModel.totalAmount = subTotal;
+
                                     transitionModel.productList = providerData.cartItemList;
                                     transitionModel.paymentType = dropdownValue;
                                     transitionModel.invoiceNumber = invoice.toString();

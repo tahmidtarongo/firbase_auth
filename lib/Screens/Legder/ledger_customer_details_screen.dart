@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -30,6 +31,11 @@ class LedgerCustomerDetailsScreen extends StatefulWidget {
 
 class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScreen> {
   double totalSale = 0;
+  TextEditingController fromDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime(2021)));
+  TextEditingController toDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
+
+  DateTime fromDate = DateTime(2021);
+  DateTime toDate = DateTime.now();
 
   Future<void> getTotalSale() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -172,6 +178,68 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10, bottom: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: fromDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'From Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            fromDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            fromDate = picked!;
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: toDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'To Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            toDate = picked!;
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -179,7 +247,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                             itemBuilder: (context, index) {
                               final reTransaction = transaction.reversed.toList();
 
-                              return reTransaction[index].customerPhone == widget.customerModel.phoneNumber
+                              return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
+                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
                                   ? GestureDetector(
                                       onTap: () {
                                         SalesInvoiceDetails(
@@ -223,7 +294,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       ),
                                                     ),
                                                     Text(
-                                                      reTransaction[index].purchaseDate.substring(0, 10),
+                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                                       style: const TextStyle(color: Colors.grey),
                                                     ),
                                                   ],
@@ -429,6 +500,67 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10, bottom: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: fromDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'From Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            fromDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            fromDate = picked!;
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: toDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'To Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -436,7 +568,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                             itemBuilder: (context, index) {
                               final reTransaction = transaction.reversed.toList();
 
-                              return reTransaction[index].customerPhone == widget.customerModel.phoneNumber
+                              return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
+                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
                                   ? GestureDetector(
                                       onTap: () {
                                         PurchaseInvoiceDetails(
@@ -480,7 +615,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       ),
                                                     ),
                                                     Text(
-                                                      reTransaction[index].purchaseDate.substring(0, 10),
+                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                                       style: const TextStyle(color: Colors.grey),
                                                     ),
                                                   ],

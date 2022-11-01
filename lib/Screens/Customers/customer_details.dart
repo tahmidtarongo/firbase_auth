@@ -382,12 +382,6 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                               FeatherIcons.share,
                                                               color: Colors.grey,
                                                             )),
-                                                        IconButton(
-                                                            onPressed: () {},
-                                                            icon: const Icon(
-                                                              FeatherIcons.moreVertical,
-                                                              color: Colors.grey,
-                                                            )),
                                                       ],
                                                     )
                                                   ],
@@ -589,7 +583,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {},
           ),
-        ),
+        ).visible(false),
       );
     });
   }

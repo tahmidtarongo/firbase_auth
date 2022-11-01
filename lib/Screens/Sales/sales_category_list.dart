@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_pos/GlobalComponents/add_category.dart';
+import 'package:mobile_pos/Screens/Products/add_category.dart';
 import 'package:mobile_pos/GlobalComponents/category_card.dart';
 import 'package:mobile_pos/Screens/Products/product_data.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';

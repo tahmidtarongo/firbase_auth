@@ -173,9 +173,9 @@ class _SplashScreenState extends State<SplashScreen> {
         // const RedeemConfirmationScreen().launch(context);
       } else {
         if (currentUser != null) {
-          const Home().launch(context);
+          const Home().launch(context, isNewTask: true);
         } else {
-          const OnBoard().launch(context);
+          const OnBoard().launch(context, isNewTask: true);
         }
       }
     });

@@ -44,171 +44,180 @@ class _PurchaseListState extends State<PurchaseList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
           'Purchase List',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 20.0,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: kMainColor,
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Column(
-              children: [
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          height: 60.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(color: kGreyTextColor),
-                          ),
-                          child: Center(child: getCategory()),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          readOnly: true,
-                          onTap: () async {
-                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
-                            dateController.text = date.toString().substring(0, 10);
-                          },
-                          controller: dateController,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Start Date',
-                              hintText: 'Pick Start Date'),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: AppTextField(
-                          textFieldType: TextFieldType.OTHER,
-                          readOnly: true,
-                          onTap: () async {
-                            var date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
-                            dateController.text = date.toString().substring(0, 10);
-                          },
-                          controller: dateController,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'End Date',
-                              hintText: 'Pick End Date'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: DataTable(
-                    columnSpacing: 80,
-                    horizontalMargin: 0,
-                    headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
-                    columns: const <DataColumn>[
-                      DataColumn(
-                        label: Text(
-                          'Name',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Quantity',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Amount',
-                        ),
-                      ),
-                    ],
-                    rows: <DataRow>[
-                      DataRow(
-                        cells: <DataCell>[
-                          DataCell(
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(right: 3.0),
-                                  height: 30.0,
-                                  width: 30.0,
-                                  child: const CircleAvatar(
-                                    backgroundImage: AssetImage('images/profile.png'),
-                                  ),
-                                ),
-                                Text(
-                                  'Riead',
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                              ],
+      body: Container(
+        alignment: Alignment.topCenter,
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            height: 60.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(color: kGreyTextColor),
                             ),
+                            child: Center(child: getCategory()),
                           ),
-                          const DataCell(
-                            Text('2'),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: AppTextField(
+                            textFieldType: TextFieldType.NAME,
+                            readOnly: true,
+                            onTap: () async {
+                              var date =
+                                  await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                              setState(() {
+                                dateController.text = date.toString().substring(0, 10);
+                              });
+                            },
+                            controller: dateController,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Start Date',
+                                hintText: 'Pick Start Date'),
                           ),
-                          const DataCell(
-                            Text('25'),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: AppTextField(
+                            textFieldType: TextFieldType.OTHER,
+                            readOnly: true,
+                            onTap: () async {
+                              var date =
+                                  await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
+                              dateController.text = date.toString().substring(0, 10);
+                            },
+                            controller: dateController,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'End Date',
+                                hintText: 'Pick End Date'),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            DataTable(
-              columnSpacing: 120,
-              headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
-              columns: const <DataColumn>[
-                DataColumn(
-                  label: Text(
-                    'Total:',
+                  const SizedBox(
+                    height: 10.0,
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    '8',
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: DataTable(
+                      columnSpacing: 80,
+                      horizontalMargin: 0,
+                      headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label: Text(
+                            'Name',
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Quantity',
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Amount',
+                          ),
+                        ),
+                      ],
+                      rows: <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(right: 3.0),
+                                    height: 30.0,
+                                    width: 30.0,
+                                    child: const CircleAvatar(
+                                      backgroundImage: AssetImage('images/profile.png'),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Riead',
+                                    textAlign: TextAlign.start,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.black,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const DataCell(
+                              Text('2'),
+                            ),
+                            const DataCell(
+                              Text('25'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    '50',
+                ],
+              ),
+              const Spacer(),
+              DataTable(
+                columnSpacing: 120,
+                headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
+                columns: const <DataColumn>[
+                  DataColumn(
+                    label: Text(
+                      'Total:',
+                    ),
                   ),
-                ),
-              ],
-              rows: const [],
-            ),
-          ],
+                  DataColumn(
+                    label: Text(
+                      '8',
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      '50',
+                    ),
+                  ),
+                ],
+                rows: const [],
+              ),
+            ],
+          ),
         ),
       ),
     );
