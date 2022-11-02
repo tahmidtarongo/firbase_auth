@@ -8,6 +8,8 @@ import 'package:mobile_pos/Screens/Customers/customer_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../empty_screen_widget.dart';
+
 class CustomerList extends StatefulWidget {
   const CustomerList({Key? key}) : super(key: key);
 
@@ -132,12 +134,9 @@ class _CustomerListState extends State<CustomerList> {
                           ),
                         );
                       })
-                  : const Center(
-                      child: Text(
-                        'Please Add A Customer',
-                        maxLines: 2,
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
+                  : const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: EmptyScreenWidget(),
                     );
             }, error: (e, stack) {
               return Text(e.toString());

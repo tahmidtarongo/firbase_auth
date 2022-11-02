@@ -293,15 +293,30 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                             color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                                      style: const TextStyle(color: Colors.grey),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                        const SizedBox(height: 5),
+                                                        Text(
+                                                          DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
                                                   'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -311,7 +326,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       Text(
                                                         'Due: \$ ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
-                                                      ),
+                                                      ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(
                                                         children: [
                                                           IconButton(
@@ -614,15 +629,30 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                             color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                                      style: const TextStyle(color: Colors.grey),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                        const SizedBox(height: 3),
+                                                        Text(
+                                                          DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
                                                   'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -632,7 +662,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       Text(
                                                         'Due: \$ ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
-                                                      ),
+                                                      ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(
                                                         children: [
                                                           IconButton(

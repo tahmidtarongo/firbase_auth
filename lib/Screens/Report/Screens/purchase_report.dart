@@ -9,6 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
+import '../../../empty_screen_widget.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Home/home.dart';
 import '../../invoice_details/purchase_invoice_details.dart';
@@ -103,9 +104,19 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                               style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                             ),
                                           ),
-                                          Text(
-                                            DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                            style: const TextStyle(color: Colors.grey),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 2),
+                                              Text(
+                                                DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -229,13 +240,10 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                           );
                         },
                       )
-                    : const Center(
-                        child: Text(
-                          'Please Add A Purchase',
-                          maxLines: 2,
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
-                      );
+                    : const Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: EmptyScreenWidget(),
+                    );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

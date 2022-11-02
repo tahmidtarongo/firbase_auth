@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
+import '../../empty_screen_widget.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({Key? key}) : super(key: key);
@@ -76,15 +77,10 @@ class _ProductListState extends State<ProductList> {
                         );
                       })
                   : const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          'Please Add A Product First',
-                          maxLines: 2,
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
-                      ),
-                    );
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: EmptyScreenWidget(),
+                  ));
             }, error: (e, stack) {
               return Text(e.toString());
             }, loading: () {

@@ -200,6 +200,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                             productDescription: products[index].brandName,
                             productPrice: products[index].productSalePrice,
                             productImage: products[index].productPicture,
+                            stock: products[index].productStock,
                           ),
                         );
                       });

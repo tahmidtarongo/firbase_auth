@@ -12,6 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../Provider/product_provider.dart';
+import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
 
 class LossProfitScreen extends StatefulWidget {
@@ -260,15 +261,9 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                               },
                             )
                           : const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child: Center(
-                                child: Text(
-                                  'Please Add A Sale',
-                                  maxLines: 2,
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                                ),
-                              ),
-                            );
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      );
                     }, error: (e, stack) {
                       return Text(e.toString());
                     }, loading: () {

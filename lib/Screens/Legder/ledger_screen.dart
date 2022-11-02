@@ -8,6 +8,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
+import '../../empty_screen_widget.dart';
 import '../Customers/Model/customer_model.dart';
 import 'ledger_customer_details_screen.dart';
 
@@ -110,97 +111,307 @@ class _LedgerScreenState extends State<LedgerScreen> {
                     SizedBox(
                       height: context.height(),
                       child: TabBarView(children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: retailersList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                LedgerCustomerDetailsScreen(
-                                  customerModel: retailersList[index],
-                                ).launch(context);
-                              },
-                              leading: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(retailersList[index].profilePicture)),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(50),
-                                  ),
-                                ),
+                        retailersList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: retailersList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      LedgerCustomerDetailsScreen(
+                                        customerModel: retailersList[index],
+                                      ).launch(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 50.0,
+                                            width: 50.0,
+                                            child: CircleAvatar(
+                                              foregroundColor: Colors.blue,
+                                              backgroundColor: Colors.white,
+                                              radius: 70.0,
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  retailersList[index].profilePicture,
+                                                  fit: BoxFit.cover,
+                                                  width: 120.0,
+                                                  height: 120.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            retailersList[index].customerName,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$ ${retailersList[index].dueAmount}',
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Due',
+                                                style: GoogleFonts.poppins(
+                                                  color: const Color(0xFFff5f00),
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ).visible(retailersList[index].dueAmount != '' && retailersList[index].dueAmount != '0'),
+                                          const SizedBox(width: 20),
+                                          const Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: kGreyTextColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(60),
+                                child: EmptyScreenWidget(),
                               ),
-                              title: Text(retailersList[index].customerName),
-                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                            );
-                          },
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: wholesalerList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                LedgerCustomerDetailsScreen(
-                                  customerModel: wholesalerList[index],
-                                ).launch(context);
-                              },
-                              leading: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(image: NetworkImage(wholesalerList[index].profilePicture)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
-                              ),
-                              title: Text(wholesalerList[index].customerName),
-                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                            );
-                          },
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: dealerList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                LedgerCustomerDetailsScreen(
-                                  customerModel: dealerList[index],
-                                ).launch(context);
-                              },
-                              leading: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(image: NetworkImage(dealerList[index].profilePicture)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
-                              ),
-                              title: Text(dealerList[index].customerName),
-                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                            );
-                          },
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: supplierList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                LedgerCustomerDetailsScreen(
-                                  customerModel: supplierList[index],
-                                ).launch(context);
-                              },
-                              leading: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(image: NetworkImage(supplierList[index].profilePicture)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
-                              ),
-                              title: Text(supplierList[index].customerName),
-                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                            );
-                          },
-                        ),
+                        wholesalerList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: wholesalerList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      LedgerCustomerDetailsScreen(
+                                        customerModel: wholesalerList[index],
+                                      ).launch(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 50.0,
+                                            width: 50.0,
+                                            child: CircleAvatar(
+                                              foregroundColor: Colors.blue,
+                                              backgroundColor: Colors.white,
+                                              radius: 70.0,
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  wholesalerList[index].profilePicture,
+                                                  fit: BoxFit.cover,
+                                                  width: 120.0,
+                                                  height: 120.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            wholesalerList[index].customerName,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$ ${wholesalerList[index].dueAmount}',
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Due',
+                                                style: GoogleFonts.poppins(
+                                                  color: const Color(0xFFff5f00),
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ).visible(wholesalerList[index].dueAmount != '' && wholesalerList[index].dueAmount != '0'),
+                                          const SizedBox(width: 20),
+                                          const Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: kGreyTextColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),
+                        dealerList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: dealerList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      LedgerCustomerDetailsScreen(
+                                        customerModel: dealerList[index],
+                                      ).launch(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 50.0,
+                                            width: 50.0,
+                                            child: CircleAvatar(
+                                              foregroundColor: Colors.blue,
+                                              backgroundColor: Colors.white,
+                                              radius: 70.0,
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  dealerList[index].profilePicture,
+                                                  fit: BoxFit.cover,
+                                                  width: 120.0,
+                                                  height: 120.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            dealerList[index].customerName,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$ ${dealerList[index].dueAmount}',
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Due',
+                                                style: GoogleFonts.poppins(
+                                                  color: const Color(0xFFff5f00),
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ).visible(dealerList[index].dueAmount != '' && dealerList[index].dueAmount != '0'),
+                                          const SizedBox(width: 20),
+                                          const Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: kGreyTextColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),
+                        supplierList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: supplierList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      LedgerCustomerDetailsScreen(
+                                        customerModel: supplierList[index],
+                                      ).launch(context);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 50.0,
+                                            width: 50.0,
+                                            child: CircleAvatar(
+                                              foregroundColor: Colors.blue,
+                                              backgroundColor: Colors.white,
+                                              radius: 70.0,
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  supplierList[index].profilePicture,
+                                                  fit: BoxFit.cover,
+                                                  width: 120.0,
+                                                  height: 120.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                supplierList[index].customerName,
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$ ${supplierList[index].dueAmount}',
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Due',
+                                                style: GoogleFonts.poppins(
+                                                  color: const Color(0xFFff5f00),
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ).visible(supplierList[index].dueAmount != '' && supplierList[index].dueAmount != '0'),
+                                          const SizedBox(width: 20),
+                                          const Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: kGreyTextColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),
                       ]),
                     ),
                   ],

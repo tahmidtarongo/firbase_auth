@@ -80,8 +80,7 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
         ),
         body: Container(
           alignment: Alignment.topCenter,
-          decoration:
-          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(

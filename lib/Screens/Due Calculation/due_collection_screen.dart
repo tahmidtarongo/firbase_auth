@@ -66,12 +66,12 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     invoiceNumber: invoice.toString(),
     purchaseDate: DateTime.now().toString(),
   );
-  String? dropdownValue = 'Select an invoice';
+  String? dropdownValue = 'Select Inv.';
   String? dropdownPaymentValue = 'Cash';
   String? selectedInvoice;
 
   // List of items in our dropdown menu
-  List<String> items = ['Select an invoice'];
+  List<String> items = ['Select Inv.'];
   int count = 0;
 
   @override
@@ -89,7 +89,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Collect Due',
+              'Due Collection',
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -122,7 +122,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                           return Container(
                             height: 60,
-                            width: 180,
+                            width: 130,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(05),
@@ -131,6 +131,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             ),
                             child: Center(
                               child: DropdownButton(
+                                underline: const SizedBox(),
                                 value: dropdownValue,
                                 icon: const Icon(Icons.keyboard_arrow_down),
                                 items: items.map((String items) {

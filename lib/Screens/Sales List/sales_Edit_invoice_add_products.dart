@@ -79,8 +79,7 @@ class _EditSaleInvoiceSaleProductsState extends State<EditSaleInvoiceSaleProduct
         ),
         body: Container(
           alignment: Alignment.topCenter,
-          decoration:
-          const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -175,7 +174,6 @@ class _EditSaleInvoiceSaleProductsState extends State<EditSaleInvoiceSaleProduct
                                 );
                                 providerData.addToCartRiverPod(cartItem);
                                 providerData.addProductsInSales(products[i]);
-                                EasyLoading.showSuccess('Added To Cart');
                                 Navigator.pop(context);
                               }
                             },
@@ -184,6 +182,7 @@ class _EditSaleInvoiceSaleProductsState extends State<EditSaleInvoiceSaleProduct
                               productDescription: products[i].brandName,
                               productPrice: productPrice,
                               productImage: products[i].productPicture,
+                              stock: products[i].productStock,
                             ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
                           );
                         });
@@ -204,11 +203,12 @@ class _EditSaleInvoiceSaleProductsState extends State<EditSaleInvoiceSaleProduct
 
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage})
+  ProductCard(
+      {Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage, required this.stock})
       : super(key: key);
 
   // final Product product;
-  String productImage, productTitle, productDescription, productPrice;
+  String productImage, productTitle, productDescription, productPrice, stock;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -256,18 +256,10 @@ class _ProductCardState extends State<ProductCard> {
                           color: Colors.black,
                         ),
                       ),
-                      // const SizedBox(width: 5),
-                      // Text(
-                      //   ' X $quantity',
-                      //   style: GoogleFonts.jost(
-                      //     fontSize: 14.0,
-                      //     color: Colors.grey.shade500,
-                      //   ),
-                      // ).visible(quantity != 0),
                     ],
                   ),
                   Text(
-                    widget.productDescription,
+                    'Stock: ${widget.stock}',
                     style: GoogleFonts.jost(
                       fontSize: 15.0,
                       color: kGreyTextColor,
