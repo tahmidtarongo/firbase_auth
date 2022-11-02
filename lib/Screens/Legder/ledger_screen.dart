@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -125,8 +124,11 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(image: NetworkImage(retailersList[index].profilePicture)),
-                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                                  image: DecorationImage(image: NetworkImage(retailersList[index].profilePicture)),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(50),
+                                  ),
+                                ),
                               ),
                               title: Text(retailersList[index].customerName),
                               trailing: const Icon(Icons.arrow_forward_ios_sharp),

@@ -66,9 +66,7 @@ class _SalesDetailsState extends State<SalesDetails> {
         ),
         body: Column(
           children: [
-            const SizedBox(
-              height: 30.0,
-            ),
+            const SizedBox(height: 30.0),
             Expanded(
               child: ListView.builder(
                 itemCount: providerData.cartItemList.length,

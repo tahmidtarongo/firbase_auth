@@ -49,8 +49,9 @@ class _RetailerLedgerScreenState extends State<RetailerLedgerScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage(widget.retailers[index].profilePicture)),
-                    borderRadius: const BorderRadius.all(Radius.circular(50))),
+                  image: DecorationImage(image: NetworkImage(widget.retailers[index].profilePicture)),
+                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                ),
               ),
               title: Text(widget.retailers[index].customerName),
               trailing: const Icon(Icons.arrow_forward_ios_sharp),
