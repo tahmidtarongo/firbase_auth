@@ -252,9 +252,9 @@ class _SalesListScreenState extends State<SalesListScreen> {
                         },
                       )
                     : const Padding(
-                  padding: EdgeInsets.only(top: 60),
-                  child: EmptyScreenWidget(),
-                );
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

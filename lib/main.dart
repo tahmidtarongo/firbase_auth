@@ -35,6 +35,7 @@ import 'Screens/Products/update_product.dart';
 import 'Screens/Purchase List/purchase_list_screen.dart';
 import 'Screens/Purchase/choose_supplier_screen.dart';
 import 'Screens/Sales List/sales_list_screen.dart';
+import 'Screens/Warranty/warranty_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -99,6 +100,7 @@ class MyApp extends StatelessWidget {
         '/Purchase List': (context) => const PurchaseListScreen(),
         '/Loss/Profit': (context) => const LossProfitScreen(),
         '/Ledger': (context) => const LedgerScreen(),
+        '/Warranty': (context) => const WarrantyScreen(),
       },
     );
   }
