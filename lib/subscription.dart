@@ -9,16 +9,16 @@ class Subscription {
     'Lifetime',
   ];
   static List<String> subscriptionAmountMonthlyTextList = [
-    '\$0/month',
-    '\$50/month',
-    '\$100/month',
-    '\$5000',
+    '$currency 0/month',
+    '$currency 50/month',
+    '$currency 100/month',
+    '$currency 5000',
   ];
   static List<String> subscriptionAmountYearlyTextList = [
-    '\$0/month',
-    '\$500/year',
-    '\$1000/year',
-    '\$5000',
+    '$currency 0/month',
+    '$currency 500/year',
+    '$currency 1000/year',
+    '$currency 5000',
   ];
   static Map<String, Map<String, String>> subscriptionPlansService = {
     'Free': {

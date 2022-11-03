@@ -145,16 +145,16 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                               children: [
                                                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                                   Text(
-                                                    'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                    'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                     style: const TextStyle(color: Colors.grey),
                                                   ),
                                                   const SizedBox(height: 5),
                                                   Text(
-                                                    'Profit : \$ $lossProfit',
+                                                    'Profit : $currency $lossProfit',
                                                     style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                                   ).visible(!lossProfit.isNegative),
                                                   Text(
-                                                    'Loss: \$ ${lossProfit.abs()}',
+                                                    'Loss: $currency ${lossProfit.abs()}',
                                                     style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                                                   ).visible(lossProfit.isNegative),
                                                 ]),

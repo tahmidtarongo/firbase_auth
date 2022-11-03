@@ -316,7 +316,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                               ),
                                               const SizedBox(height: 10),
                                               Text(
-                                                'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
                                               personalData.when(data: (data) {
@@ -324,7 +324,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'Due: \$ ${reTransaction[index].dueAmount.toString()}',
+                                                      'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                       style: const TextStyle(fontSize: 16),
                                                     ),
                                                     Row(
@@ -468,14 +468,14 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                               ),
                                               const SizedBox(height: 10),
                                               Text(
-                                                'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'Due: \$ ${reTransaction[index].dueAmount.toString()}',
+                                                    'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                     style: const TextStyle(fontSize: 16),
                                                   ),
                                                   personalData.when(data: (data) {

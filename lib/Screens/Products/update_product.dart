@@ -372,11 +372,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productPurchasePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
-                              hintText: '\$300.90',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 300.90',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -392,11 +392,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Sale Price',
-                              hintText: '\$234.09',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 234.09',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -416,11 +416,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productWholeSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
-                              hintText: '\$155',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 155',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -436,11 +436,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productDealerPrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
-                              hintText: '\$130',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 130',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -460,11 +460,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                               updatedProductModel.productDiscount = value;
                             });
                           },
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
-                            hintText: '\$34.90',
-                            border: OutlineInputBorder(),
+                            hintText: '$currency 34.90',
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       )).visible(false),

@@ -128,7 +128,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '\$ ${customer[index].dueAmount}',
+                                                  '$currency ${customer[index].dueAmount}',
                                                   style: GoogleFonts.poppins(
                                                     color: Colors.black,
                                                     fontSize: 15.0,

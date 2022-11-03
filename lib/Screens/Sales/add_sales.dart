@@ -158,7 +158,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           children: [
                             const Text('Due Amount: '),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '\$ 0' : '\$${widget.customerModel.dueAmount}',
+                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

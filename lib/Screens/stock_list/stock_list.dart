@@ -180,7 +180,7 @@ class _StockListState extends State<StockList> {
                                         flex: 2,
                                         child: Center(
                                           child: Text(
-                                            '\$${product[index].productPurchasePrice}',
+                                            '$currency${product[index].productPurchasePrice}',
                                             style: GoogleFonts.poppins(
                                               color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                             ),
@@ -189,7 +189,7 @@ class _StockListState extends State<StockList> {
                                     Expanded(
                                       child: Center(
                                         child: Text(
-                                          '\$${product[index].productSalePrice}',
+                                          '$currency${product[index].productSalePrice}',
                                           style: GoogleFonts.poppins(
                                             color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                           ),
@@ -240,13 +240,13 @@ class _StockListState extends State<StockList> {
               Expanded(
                   flex: 2,
                   child: Text(
-                    '\$${totalParPrice.toInt().toString()}',
+                    '$currency${totalParPrice.toInt().toString()}',
                     style: GoogleFonts.poppins(
                       color: Colors.black,
                     ),
                   )),
               Text(
-                '\$${totalSalePrice.toInt().toString()}',
+                '$currency${totalSalePrice.toInt().toString()}',
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.poppins(
                   color: Colors.black,

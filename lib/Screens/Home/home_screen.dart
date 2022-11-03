@@ -236,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //   ),
                           //   child: Center(
                           //     child: Text(
-                          //       '\$ 450',
+                          //       '$currency 450',
                           //       style: GoogleFonts.poppins(
                           //         fontSize: 20.0,
                           //         color: Colors.black,

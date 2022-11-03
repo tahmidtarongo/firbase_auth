@@ -444,11 +444,11 @@ class _AddProductState extends State<AddProduct> {
                                 productPurchasePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
-                              hintText: '\$300.90',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 300.90',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -463,11 +463,11 @@ class _AddProductState extends State<AddProduct> {
                                 productSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'MRP',
-                              hintText: '\$234.09',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 234.09',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -486,11 +486,11 @@ class _AddProductState extends State<AddProduct> {
                                 productWholeSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
-                              hintText: '\$155',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 155',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -505,11 +505,11 @@ class _AddProductState extends State<AddProduct> {
                                 productDealerPrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
-                              hintText: '\$130',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 130',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -528,11 +528,11 @@ class _AddProductState extends State<AddProduct> {
                               productDiscount = value;
                             });
                           },
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
-                            hintText: '\$34.90',
-                            border: OutlineInputBorder(),
+                            hintText: '$currency 34.90',
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       )).visible(false),

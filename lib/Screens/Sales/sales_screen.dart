@@ -143,7 +143,7 @@ class _SaleProductsState extends State<SaleProducts> {
                   //             child: Text(
                   //               providerData.getTotalAmount() <= 0
                   //                   ? 'Cart is empty'
-                  //                   : 'Total: \$${providerData.getTotalAmount().toString()}',
+                  //                   : 'Total: $currency${providerData.getTotalAmount().toString()}',
                   //               style: GoogleFonts.poppins(
                   //                 color: Colors.white,
                   //                 fontSize: 16.0,
@@ -369,7 +369,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const Spacer(),
             Text(
-              '\$${widget.productPrice}',
+              '$currency${widget.productPrice}',
               style: GoogleFonts.jost(
                 fontSize: 20.0,
                 color: Colors.black,

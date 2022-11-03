@@ -140,7 +140,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                       Positioned(
                         right: 0,
                         child: Text(
-                          '\$${providerData.cartItemList[index].subTotal.toString()}',
+                          '$currency${providerData.cartItemList[index].subTotal.toString()}',
                           style: GoogleFonts.poppins(
                             color: kGreyTextColor,
                             fontSize: 15.0,

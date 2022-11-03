@@ -107,7 +107,7 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              '\$ ${customer[index].dueAmount}',
+                                              '$currency ${customer[index].dueAmount}',
                                               style: GoogleFonts.poppins(
                                                 color: Colors.black,
                                                 fontSize: 15.0,

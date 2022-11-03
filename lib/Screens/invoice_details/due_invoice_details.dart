@@ -132,7 +132,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalDue}',
+                          '${mainConstant.currency} ${widget.transitionModel.totalDue}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -153,7 +153,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.payDueAmount}',
+                          '${mainConstant.currency} ${widget.transitionModel.payDueAmount}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -174,7 +174,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.dueAmountAfterPay}',
+                          '${mainConstant.currency} ${widget.transitionModel.dueAmountAfterPay}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

@@ -102,7 +102,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         flex: 2,
                         child: Center(
                           child: Text(
-                            'Total: \$$total',
+                            'Total: $currency$total',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16.0,

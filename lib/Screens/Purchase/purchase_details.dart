@@ -80,7 +80,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                     ),
                     const Spacer(),
                     Text(
-                      '\$${cart.cartItem[index].unitPrice.toString()}',
+                      '$currency${cart.cartItem[index].unitPrice.toString()}',
                       style: GoogleFonts.poppins(
                         color: kGreyTextColor,
                         fontSize: 15.0,
