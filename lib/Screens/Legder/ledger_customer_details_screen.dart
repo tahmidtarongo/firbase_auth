@@ -132,7 +132,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     ),
                                   ),
                                   title: Text(
-                                    "\$${totalSale.toInt().toString()}",
+                                    "$currency${totalSale.toInt().toString()}",
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -311,12 +311,12 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
-                                                  'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                  'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
-                                                  'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                  'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -324,7 +324,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Due: \$ ${reTransaction[index].dueAmount.toString()}',
+                                                        'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
                                                       ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(
@@ -469,7 +469,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     ),
                                   ),
                                   title: Text(
-                                    "\$${totalSale.toInt().toString()}",
+                                    "$currency${totalSale.toInt().toString()}",
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -647,12 +647,12 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
-                                                  'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                  'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 5),
                                                 Text(
-                                                  'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                  'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -660,7 +660,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Due: \$ ${reTransaction[index].dueAmount.toString()}',
+                                                        'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
                                                       ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(

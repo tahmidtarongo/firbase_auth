@@ -118,7 +118,7 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
                               height: 5.0,
                             ),
                             Text(
-                              '\$00.00',
+                              '$currency 00.00',
                               style: GoogleFonts.poppins(
                                 fontSize: 20.0,
                                 color: kGreyTextColor,

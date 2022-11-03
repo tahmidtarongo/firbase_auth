@@ -169,7 +169,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                 ),
                                 SizedBox(width: MediaQuery.of(context).size.width / 12),
                                 Text(
-                                  '\$ ${widget.transitionModel.productList![i].subTotal}',
+                                  '$currency ${widget.transitionModel.productList![i].subTotal}',
                                   maxLines: 2,
                                   style: kTextStyle.copyWith(color: kGreyTextColor),
                                 ),
@@ -181,7 +181,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '\$ ${double.parse(widget.transitionModel.productList![i].subTotal) * widget.transitionModel.productList![i].quantity}',
+                                  '$currency ${double.parse(widget.transitionModel.productList![i].subTotal) * widget.transitionModel.productList![i].quantity}',
                                   maxLines: 2,
                                   style: kTextStyle.copyWith(color: kTitleColor),
                                 ),
@@ -206,7 +206,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalAmount!.toDouble() + widget.transitionModel.discountAmount!.toDouble()}',
+                          '$currency ${widget.transitionModel.totalAmount!.toDouble() + widget.transitionModel.discountAmount!.toDouble()}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -227,7 +227,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ 0.00',
+                          '$currency 0.00',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -248,7 +248,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.discountAmount}',
+                          '$currency ${widget.transitionModel.discountAmount}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -269,7 +269,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ 0.00',
+                          '$currency 0.00',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -290,7 +290,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalAmount}',
+                          '$currency ${widget.transitionModel.totalAmount}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -311,7 +311,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble()}',
+                          '$currency ${widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble()}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -332,7 +332,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '\$ ${widget.transitionModel.dueAmount}',
+                          '$currency ${widget.transitionModel.dueAmount}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

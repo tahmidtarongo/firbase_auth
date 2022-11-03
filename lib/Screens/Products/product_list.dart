@@ -71,7 +71,7 @@ class _ProductListState extends State<ProductList> {
                           title: Text(products[i].productName),
                           subtitle: Text("Stock : ${products[i].productStock}"),
                           trailing: Text(
-                            "\$ ${products[i].productSalePrice}",
+                            "$currency ${products[i].productSalePrice}",
                             style: const TextStyle(fontSize: 18),
                           ),
                         );

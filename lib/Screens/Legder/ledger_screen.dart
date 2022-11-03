@@ -157,7 +157,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '\$ ${retailersList[index].dueAmount}',
+                                                '$currency ${retailersList[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -233,7 +233,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '\$ ${wholesalerList[index].dueAmount}',
+                                                '$currency ${wholesalerList[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -306,7 +306,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '\$ ${dealerList[index].dueAmount}',
+                                                '$currency ${dealerList[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -385,7 +385,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '\$ ${supplierList[index].dueAmount}',
+                                                '$currency ${supplierList[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,

@@ -375,7 +375,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
-                              hintText: '\$300.90',
+                              hintText: '$currency300.90',
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -395,7 +395,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Sale Price',
-                              hintText: '\$234.09',
+                              hintText: '$currency234.09',
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -419,7 +419,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
-                              hintText: '\$155',
+                              hintText: '$currency155',
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -439,7 +439,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
-                              hintText: '\$130',
+                              hintText: '$currency130',
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -463,7 +463,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
-                            hintText: '\$34.90',
+                            hintText: '$currency34.90',
                             border: OutlineInputBorder(),
                           ),
                         ),

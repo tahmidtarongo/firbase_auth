@@ -550,6 +550,27 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       ListTile(
                         title: Text(
+                          'Currency',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          // const SubscriptionScreen().launch(context);
+                          const PackageScreen().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.currency_exchange,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
                           'Log Out',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
