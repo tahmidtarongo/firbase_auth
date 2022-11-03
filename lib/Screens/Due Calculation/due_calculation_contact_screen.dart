@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 
 class DueCalculationContactScreen extends StatefulWidget {

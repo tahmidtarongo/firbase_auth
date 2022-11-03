@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -11,6 +13,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart.dart';
+import '../../currency.dart';
 import '../../model/add_to_cart_model.dart';
 import '../../model/transition_model.dart';
 
@@ -270,7 +273,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const Spacer(),
             Text(
-              '\$${widget.productPrice}',
+              '$currency${widget.productPrice}',
               style: GoogleFonts.jost(
                 fontSize: 20.0,
                 color: Colors.black,

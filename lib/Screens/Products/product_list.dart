@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 
 class ProductList extends StatefulWidget {
@@ -94,7 +95,7 @@ class _ProductListState extends State<ProductList> {
             iconWidget: Icons.add,
             buttontext: 'Add New Product',
             iconColor: Colors.white,
-            buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
+            buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {
               Navigator.pushNamed(context, '/AddProducts');
             },

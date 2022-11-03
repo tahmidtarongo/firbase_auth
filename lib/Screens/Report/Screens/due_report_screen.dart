@@ -9,6 +9,7 @@ import '../../../Provider/due_transaction_provider.dart';
 import '../../../Provider/printer_due_provider.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
+import '../../../currency.dart';
 import '../../../empty_screen_widget.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Home/home.dart';
@@ -121,19 +122,19 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        'Total : \$ ${reTransaction[index].totalDue.toString()}',
+                                        'Total : $currency ${reTransaction[index].totalDue.toString()}',
                                         style: const TextStyle(color: Colors.grey),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        'Paid : \$ ${reTransaction[index].totalDue!.toDouble() - reTransaction[index].dueAmountAfterPay!.toDouble()}',
+                                        'Paid : $currency ${reTransaction[index].totalDue!.toDouble() - reTransaction[index].dueAmountAfterPay!.toDouble()}',
                                         style: const TextStyle(color: Colors.grey),
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Due: \$ ${reTransaction[index].dueAmountAfterPay.toString()}',
+                                            'Due: $currency ${reTransaction[index].dueAmountAfterPay.toString()}',
                                             style: const TextStyle(fontSize: 16),
                                           ).visible(reTransaction[index].dueAmountAfterPay!.toInt() != 0),
                                           personalData.when(data: (data) {

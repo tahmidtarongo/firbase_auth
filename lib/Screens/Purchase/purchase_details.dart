@@ -10,6 +10,7 @@ import 'package:mobile_pos/Screens/Purchase/Model/purchase_report.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 
 // ignore: must_be_immutable
 class PurchaseDetails extends StatefulWidget {
@@ -80,7 +81,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                     ),
                     const Spacer(),
                     Text(
-                      '\$${cart.cartItem[index].unitPrice.toString()}',
+                      '$currency${cart.cartItem[index].unitPrice.toString()}',
                       style: GoogleFonts.poppins(
                         color: kGreyTextColor,
                         fontSize: 15.0,

@@ -11,6 +11,7 @@ import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 
 // ignore: must_be_immutable
 class PurchaseScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         flex: 2,
                         child: Center(
                           child: Text(
-                            'Total: \$$total',
+                            'Total: $currency$total',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16.0,

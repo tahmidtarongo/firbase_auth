@@ -15,6 +15,7 @@ import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/print_transaction_model.dart';
 import '../../model/transition_model.dart';
 import '../invoice_details/purchase_invoice_details.dart';

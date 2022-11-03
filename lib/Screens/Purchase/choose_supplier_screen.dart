@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 
 class PurchaseContacts extends StatefulWidget {
@@ -138,7 +139,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '\$ ${customer[index].dueAmount}',
+                                                  '$currency ${customer[index].dueAmount}',
                                                   style: GoogleFonts.poppins(
                                                     color: Colors.black,
                                                     fontSize: 15.0,

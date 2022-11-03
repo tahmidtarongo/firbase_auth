@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/constant.dart';
 
+import '../../currency.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -138,19 +140,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Transactions(
                         title: 'Sales',
-                        amount: '\$1509.09',
+                        amount: '$currency 1509.09',
                         tranColor: Colors.black,
                         pressed: () {},
                       ),
                       Transactions(
                         title: 'Due',
-                        amount: '\$509.09',
+                        amount: '$currency 509.09',
                         tranColor: kGreyTextColor,
                         pressed: null,
                       ),
                       Transactions(
                         title: 'Promo',
-                        amount: '\$109.09',
+                        amount: '$currency 109.09',
                         tranColor: kGreyTextColor,
                         pressed: null,
                       ),

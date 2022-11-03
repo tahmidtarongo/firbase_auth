@@ -7,6 +7,7 @@ import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 import '../Home/home.dart';
@@ -229,7 +230,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 Text(
-                                  '\$${Subscription.subscriptionAmounts['Month']!['Amount']}',
+                                  '$currency${Subscription.subscriptionAmounts['Month']!['Amount']}',
                                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
                                 )
                               ],
@@ -281,12 +282,12 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
-                                        '\$${Subscription.subscriptionAmounts['Year']!['Amount']}',
+                                        '$currency${Subscription.subscriptionAmounts['Year']!['Amount']}',
                                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor2),
                                       ),
-                                      const Text(
-                                        '\$119.88',
-                                        style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
+                                       Text(
+                                        '$currency 119.88',
+                                        style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
                                       ),
                                     ],
                                   ),
@@ -350,12 +351,12 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        '\$${Subscription.subscriptionAmounts['Lifetime']!['Amount']}',
+                                        '$currency${Subscription.subscriptionAmounts['Lifetime']!['Amount']}',
                                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
                                       ),
-                                      const Text(
-                                        '\$1500.00',
-                                        style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12, color: Colors.grey),
+                                       Text(
+                                        '$currency 1500.00',
+                                        style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12, color: Colors.grey),
                                       ),
                                     ],
                                   ),

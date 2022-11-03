@@ -8,6 +8,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import '../Customers/Model/customer_model.dart';
 import 'ledger_customer_details_screen.dart';

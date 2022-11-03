@@ -24,6 +24,7 @@ import '../../Provider/product_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/purchase_report_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
 
@@ -159,7 +160,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                           children: [
                             const Text('Due Amount: '),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '\$ 0' : '\$${widget.customerModel.dueAmount}',
+                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

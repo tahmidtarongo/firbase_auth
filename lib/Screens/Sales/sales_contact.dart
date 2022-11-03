@@ -9,6 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 
 class SalesContact extends StatefulWidget {
   const SalesContact({Key? key}) : super(key: key);
@@ -199,7 +200,7 @@ class _SalesContactState extends State<SalesContact> {
                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    '\$ ${customer[index].dueAmount}',
+                                                    '$currency ${customer[index].dueAmount}',
                                                     style: GoogleFonts.poppins(
                                                       color: Colors.black,
                                                       fontSize: 15.0,

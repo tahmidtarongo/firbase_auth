@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 
 // ignore: must_be_immutable
 class SalesDetails extends StatefulWidget {
@@ -140,7 +141,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                       Positioned(
                         right: 0,
                         child: Text(
-                          '\$${providerData.cartItemList[index].subTotal.toString()}',
+                          '$currency${providerData.cartItemList[index].subTotal.toString()}',
                           style: GoogleFonts.poppins(
                             color: kGreyTextColor,
                             fontSize: 15.0,

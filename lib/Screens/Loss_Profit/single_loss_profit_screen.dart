@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/transition_model.dart';
 
 class SingleLossProfitScreen extends StatefulWidget {
@@ -174,14 +175,14 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                                 flex: 2,
                                 child: Center(
                                   child: Text(
-                                    !profit.isNegative ? "\$${profit.abs().toInt().toString()}" : '0',
+                                    !profit.isNegative ? "$currency${profit.abs().toInt().toString()}" : '0',
                                     style: GoogleFonts.poppins(),
                                   ),
                                 )),
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  profit.isNegative ? "\$${profit.abs().toInt().toString()}" : '0',
+                                  profit.isNegative ? "$currency${profit.abs().toInt().toString()}" : '0',
                                   style: GoogleFonts.poppins(),
                                 ),
                               ),
@@ -229,13 +230,13 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         Expanded(
                             flex: 2,
                             child: Text(
-                              "\$${getTotalProfit().toInt()}",
+                              "$currency${getTotalProfit().toInt()}",
                               style: GoogleFonts.poppins(
                                 color: Colors.black,
                               ),
                             )),
                         Text(
-                          "\$${getTotalLoss().toInt()}",
+                          "$currency${getTotalLoss().toInt()}",
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -265,7 +266,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                           ),
                         ),
                         Text(
-                          "\$${widget.transactionModel.discountAmount!.toInt().toString()}",
+                          "$currency${widget.transactionModel.discountAmount!.toInt().toString()}",
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -297,7 +298,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                           ),
                         ),
                         Text(
-                          widget.profit.isNegative ? "\$${widget.profit.toInt().abs()}" : "\$${widget.profit.toInt()}",
+                          widget.profit.isNegative ? "$currency${widget.profit.toInt().abs()}" : "$currency${widget.profit.toInt()}",
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                             color: Colors.black,

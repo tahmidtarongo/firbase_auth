@@ -5,6 +5,8 @@ import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../currency.dart';
+
 class SalesScreen extends StatefulWidget {
   const SalesScreen({Key? key}) : super(key: key);
 
@@ -133,8 +135,8 @@ class _SalesScreenState extends State<SalesScreen> {
                     const DataCell(
                       Text('Cash'),
                     ),
-                    const DataCell(
-                      Text('\$3975'),
+                     DataCell(
+                      Text('$currency 3975'),
                     ),
                   ],
                 ),

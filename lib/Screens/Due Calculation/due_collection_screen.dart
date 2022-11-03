@@ -17,6 +17,7 @@ import '../../Provider/printer_due_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/due_transaction_model.dart';
 import '../Customers/Model/customer_model.dart';
 

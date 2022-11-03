@@ -16,6 +16,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Home/home_screen.dart';
 
 // ignore: must_be_immutable
@@ -372,11 +373,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productPurchasePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
-                              hintText: '$currency300.90',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 300.90',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -392,11 +393,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Sale Price',
-                              hintText: '$currency234.09',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 234.09',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -416,11 +417,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productWholeSalePrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
-                              hintText: '$currency155',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 155',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -436,11 +437,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productDealerPrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
-                              hintText: '$currency130',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 130',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -460,11 +461,11 @@ class _UpdateProductState extends State<UpdateProduct> {
                               updatedProductModel.productDiscount = value;
                             });
                           },
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
-                            hintText: '$currency34.90',
-                            border: OutlineInputBorder(),
+                            hintText: '$currency 34.90',
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       )).visible(false),

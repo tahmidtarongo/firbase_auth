@@ -8,6 +8,7 @@ import 'package:mobile_pos/Screens/Customers/customer_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 
 class CustomerList extends StatefulWidget {

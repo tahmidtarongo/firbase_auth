@@ -12,6 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
 import '../invoice_details/sales_invoice_details_screen.dart';
@@ -123,19 +124,19 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                        'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                         style: const TextStyle(color: Colors.grey),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        'Paid : \$ ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                        'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                         style: const TextStyle(color: Colors.grey),
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Due: \$ ${reTransaction[index].dueAmount.toString()}',
+                                            'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                             style: const TextStyle(fontSize: 16),
                                           ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                           personalData.when(data: (data) {

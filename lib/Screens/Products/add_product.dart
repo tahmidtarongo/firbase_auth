@@ -22,6 +22,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Home/home.dart';
 
 // ignore: must_be_immutable
@@ -505,11 +506,11 @@ class _AddProductState extends State<AddProduct> {
                                 productDealerPrice = value;
                               });
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
-                              hintText: '$currency130',
-                              border: OutlineInputBorder(),
+                              hintText: '$currency 130',
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -528,11 +529,11 @@ class _AddProductState extends State<AddProduct> {
                               productDiscount = value;
                             });
                           },
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
-                            hintText: '$currency34.90',
-                            border: OutlineInputBorder(),
+                            hintText: '$currency 34.90',
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       )).visible(false),

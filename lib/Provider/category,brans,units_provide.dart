@@ -1,3 +1,6 @@
+
+// ignore_for_file: file_names
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_pos/GlobalComponents/Model/category_model.dart';
 import 'package:mobile_pos/Screens/Products/Model/brands_model.dart';

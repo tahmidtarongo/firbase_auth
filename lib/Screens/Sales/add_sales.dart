@@ -21,6 +21,7 @@ import '../../Provider/printer_provider.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/seles_report_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/print_transaction_model.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
@@ -158,7 +159,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           children: [
                             const Text('Due Amount: '),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '\$ 0' : '\$${widget.customerModel.dueAmount}',
+                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

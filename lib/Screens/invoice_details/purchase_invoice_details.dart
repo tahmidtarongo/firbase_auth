@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/print_purchase_provider.dart';
+import '../../currency.dart';
 import '../../invoice_constant.dart';
 // ignore: library_prefixes
 import '../../constant.dart' as mainConstant;

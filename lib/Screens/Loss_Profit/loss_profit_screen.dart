@@ -11,7 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
-import '../../Provider/product_provider.dart';
+import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
 
@@ -52,10 +52,8 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
               children: [
                 Consumer(builder: (context, ref, __) {
                   final providerData = ref.watch(transitionProvider);
-                  final profile = ref.watch(profileDetailsProvider);
                   final printerData = ref.watch(printerProviderNotifier);
                   final personalData = ref.watch(profileDetailsProvider);
-                  final allProducts = ref.watch(productProvider);
 
                   return SingleChildScrollView(
                     child: providerData.when(data: (transaction) {
@@ -146,16 +144,16 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                               children: [
                                                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                                   Text(
-                                                    'Total : \$ ${reTransaction[index].totalAmount.toString()}',
+                                                    'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                     style: const TextStyle(color: Colors.grey),
                                                   ),
                                                   const SizedBox(height: 5),
                                                   Text(
-                                                    'Profit : \$ $lossProfit',
+                                                    'Profit : $currency $lossProfit',
                                                     style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                                   ).visible(!lossProfit.isNegative),
                                                   Text(
-                                                    'Loss: \$ ${lossProfit.abs()}',
+                                                    'Loss: $currency ${lossProfit.abs()}',
                                                     style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                                                   ).visible(lossProfit.isNegative),
                                                 ]),

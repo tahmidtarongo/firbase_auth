@@ -16,7 +16,7 @@ bool isExpiringInOneDays = false;
 
 //___________currency__________________________
 
-String currency = '\$';
+
 
 const String appVersion = '1.0.0';
 

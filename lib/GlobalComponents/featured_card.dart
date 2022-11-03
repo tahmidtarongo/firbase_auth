@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/Products/product_data.dart';
 
 import '../constant.dart';
+import '../currency.dart';
 
 class FeaturedCard extends StatefulWidget {
   const FeaturedCard({
@@ -56,7 +57,7 @@ class _FeaturedCardState extends State<FeaturedCard> {
                   Row(
                     children: [
                       Text(
-                        '\$${widget.product.price.toString()}',
+                        '$currency${widget.product.price.toString()}',
                         style: const TextStyle(color: kGreyTextColor, fontSize: 15.0),
                       ),
                       const Spacer(),
