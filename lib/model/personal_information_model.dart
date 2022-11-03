@@ -26,6 +26,7 @@ class PersonalInformationModel {
   String? countryName;
   int? invoiceCounter;
 
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['phoneNumber'] = phoneNumber;

@@ -71,6 +71,7 @@ dependencies:
   nb_utils: ^4.6.22
   country_picker: ^2.0.16
   flutter_countdown_timer: ^4.1.0
+  currency_picker: ^2.0.12
 
 dev_dependencies:
   flutter_test:
