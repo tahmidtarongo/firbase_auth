@@ -214,7 +214,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                               ],
                                             );
                                           }, error: (e, stack) {

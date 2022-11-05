@@ -218,7 +218,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                               ],
                                             );
                                           }, error: (e, stack) {

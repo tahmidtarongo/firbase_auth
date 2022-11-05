@@ -217,7 +217,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                                 IconButton(
                                                     onPressed: () {
                                                       cart.clearCart();

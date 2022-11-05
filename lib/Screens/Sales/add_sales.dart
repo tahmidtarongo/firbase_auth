@@ -590,6 +590,24 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   transitionModel.productList = providerData.cartItemList;
                                   transitionModel.paymentType = dropdownValue;
                                   transitionModel.invoiceNumber = invoice.toString();
+
+                                  ///__________total LossProfit & quantity________________________________________________________________
+
+                                  int totalQuantity = 0;
+                                  double lossProfit = 0;
+                                  double totalPurchasePrice = 0;
+                                  double totalSalePrice = 0;
+                                  for (var element in transitionModel.productList!) {
+                                    totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice) * element.quantity);
+                                    totalSalePrice = totalSalePrice + (double.parse(element.subTotal) * element.quantity);
+
+                                    totalQuantity = totalQuantity + element.quantity;
+                                  }
+                                  lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(transitionModel.discountAmount.toString()));
+
+                                  transitionModel.totalQuantity = totalQuantity;
+                                  transitionModel.lossProfit = lossProfit;
+
                                   await ref.push().set(transitionModel.toJson());
 
                                   ///__________StockMange_________________________________________________-
@@ -767,6 +785,21 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     transitionModel.productList = providerData.cartItemList;
                                     transitionModel.paymentType = dropdownValue;
                                     transitionModel.invoiceNumber = invoice.toString();
+
+                                    int totalQuantity = 0;
+                                    double lossProfit = 0;
+                                    double totalPurchasePrice = 0;
+                                    double totalSalePrice = 0;
+                                    for (var element in transitionModel.productList!) {
+                                      totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice) * element.quantity);
+                                      totalSalePrice = totalSalePrice + (double.parse(element.subTotal) * element.quantity);
+
+                                      totalQuantity = totalQuantity + element.quantity;
+                                    }
+                                    lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(transitionModel.discountAmount.toString()));
+
+                                    transitionModel.totalQuantity = totalQuantity;
+                                    transitionModel.lossProfit = lossProfit;
 
                                     await ref.push().set(transitionModel.toJson());
 

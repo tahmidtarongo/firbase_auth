@@ -214,7 +214,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                               ],
                                             );
                                           }, error: (e, stack) {

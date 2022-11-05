@@ -382,7 +382,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                             icon: const Icon(
                                                               FeatherIcons.share,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                       ],
                                                     )
                                                   ],
@@ -536,13 +536,13 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                             icon: const Icon(
                                                               FeatherIcons.share,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                         IconButton(
                                                             onPressed: () {},
                                                             icon: const Icon(
                                                               FeatherIcons.moreVertical,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                       ],
                                                     );
                                                   }, error: (e, stack) {

@@ -221,7 +221,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                                 IconButton(
                                                     onPressed: () {
                                                       cart.clearCart();

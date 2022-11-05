@@ -223,14 +223,14 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                       suffixIcon: IconButton(
                                         onPressed: () async {
                                           final DateTime? picked = await showDatePicker(
-                                            initialDate: DateTime.now(),
+                                            initialDate: toDate,
                                             firstDate: DateTime(2015, 8),
                                             lastDate: DateTime(2101),
                                             context: context,
                                           );
                                           setState(() {
                                             toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
-                                            toDate = picked!;
+                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
                                           });
                                         },
                                         icon: const Icon(FeatherIcons.calendar),
@@ -249,9 +249,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               final reTransaction = transaction.reversed.toList();
 
                               return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
-                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
                                       (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
-                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
                                   ? GestureDetector(
                                       onTap: () {
                                         SalesInvoiceDetails(
@@ -405,7 +406,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                               icon: const Icon(
                                                                 FeatherIcons.share,
                                                                 color: Colors.grey,
-                                                              )),
+                                                              )).visible(false),
                                                         ],
                                                       )
                                                     ],
@@ -567,6 +568,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                           );
                                           setState(() {
                                             toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
                                           });
                                         },
                                         icon: const Icon(FeatherIcons.calendar),
@@ -585,9 +587,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               final reTransaction = transaction.reversed.toList();
 
                               return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
-                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
                                       (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
-                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
                                   ? GestureDetector(
                                       onTap: () {
                                         PurchaseInvoiceDetails(
@@ -743,7 +746,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                               icon: const Icon(
                                                                 FeatherIcons.share,
                                                                 color: Colors.grey,
-                                                              )),
+                                                              )).visible(false),
                                                         ],
                                                       )
                                                     ],
