@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../GlobalComponents/button_global.dart';
 import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';
+import '../../currency.dart';
 import '../../model/print_transaction_model.dart';
 import '../invoice_details/purchase_invoice_details.dart';
 import '../invoice_details/sales_invoice_details_screen.dart';
@@ -381,7 +382,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                             icon: const Icon(
                                                               FeatherIcons.share,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                       ],
                                                     )
                                                   ],
@@ -535,13 +536,13 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                             icon: const Icon(
                                                               FeatherIcons.share,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                         IconButton(
                                                             onPressed: () {},
                                                             icon: const Icon(
                                                               FeatherIcons.moreVertical,
                                                               color: Colors.grey,
-                                                            )),
+                                                            )).visible(false),
                                                       ],
                                                     );
                                                   }, error: (e, stack) {

@@ -24,6 +24,7 @@ import '../../Provider/product_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/purchase_report_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
 

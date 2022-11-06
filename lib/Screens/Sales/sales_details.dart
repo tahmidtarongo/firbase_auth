@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 
 // ignore: must_be_immutable
 class SalesDetails extends StatefulWidget {

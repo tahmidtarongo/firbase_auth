@@ -6,6 +6,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../currency.dart';
 import '../Home/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -45,6 +46,16 @@ class _SplashScreenState extends State<SplashScreen> {
     init();
     getPermission();
     checkForUpdate();
+    getCurrency();
+  }
+  getCurrency() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString('currency');
+      if (!data.isEmptyOrNull) {
+        currency = data!;
+      } else {
+        currency = '৳';
+      }
   }
 
   var currentUser = FirebaseAuth.instance.currentUser;

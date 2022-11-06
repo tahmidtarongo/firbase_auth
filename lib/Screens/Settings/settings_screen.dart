@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/personal_information_model.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
 import '../subscription/package_screen.dart';
@@ -21,6 +22,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  String? dropdownValue = '৳ (Taka)';
+
   bool expanded = false;
   bool expandedHelp = false;
   bool expandedAbout = false;
@@ -35,6 +38,27 @@ class _SettingScreenState extends State<SettingScreen> {
     // TODO: implement initState
     super.initState();
     printerIsEnable();
+    getCurrency();
+  }
+
+  getCurrency() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString('currency');
+
+    if (!data.isEmptyOrNull) {
+      for (var element in items) {
+        if (element.substring(0, 2).contains(data!)) {
+          setState(() {
+            dropdownValue = element;
+          });
+          break;
+        }
+      }
+    } else {
+      setState(() {
+        dropdownValue = items[0];
+      });
+    }
   }
 
   void printerIsEnable() async {
@@ -546,6 +570,43 @@ class _SettingScreenState extends State<SettingScreen> {
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           color: kGreyTextColor,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Currency',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        leading: const Icon(
+                          Icons.currency_exchange,
+                          color: kMainColor,
+                        ),
+                        trailing: DropdownButton(
+                          underline: const SizedBox(),
+                          value: dropdownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) async {
+                            final prefs = await SharedPreferences.getInstance();
+                            if (newValue == '\$ (US Dollar)') {
+                              currency = '\$';
+                              await prefs.setString('currency', currency);
+                            } else {
+                              currency = newValue.toString().substring(0, 1);
+                              await prefs.setString('currency', currency);
+                            }
+                            setState(() {
+                              dropdownValue = newValue.toString();
+                            });
+                          },
                         ),
                       ),
                       ListTile(

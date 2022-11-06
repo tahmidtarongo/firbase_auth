@@ -9,6 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart.dart';
 import '../../Provider/seles_report_provider.dart';
+import '../../currency.dart';
 
 class PaymentCompleted extends StatefulWidget {
   const PaymentCompleted({Key? key}) : super(key: key);

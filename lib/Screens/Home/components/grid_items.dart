@@ -27,7 +27,7 @@ List<GridItems> freeIcons = [
     icon: 'images/duelist.png',
   ),
   GridItems(
-    title: 'Stock',
+    title: 'Stock List',
     icon: 'images/stock1.png',
   ),
 
@@ -51,6 +51,10 @@ List<GridItems> freeIcons = [
     title: 'Ledger',
     icon: 'images/ledger.png',
   ),
+  // GridItems(
+  //   title: 'Warranty',
+  //   icon: 'images/warranty.png',
+  // ),
   // GridItems(
   //   title: 'Delivery',
   //   icon: 'images/delivery.png',

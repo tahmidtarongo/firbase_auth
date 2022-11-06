@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/printer_due_provider.dart';
+import '../../currency.dart';
 import '../../invoice_constant.dart';
 // ignore: library_prefixes
 import '../../constant.dart' as mainConstant;
@@ -132,7 +133,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '${mainConstant.currency} ${widget.transitionModel.totalDue}',
+                          '$currency ${widget.transitionModel.totalDue}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -153,7 +154,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '${mainConstant.currency} ${widget.transitionModel.payDueAmount}',
+                          '$currency ${widget.transitionModel.payDueAmount}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -174,7 +175,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '${mainConstant.currency} ${widget.transitionModel.dueAmountAfterPay}',
+                          '$currency ${widget.transitionModel.dueAmountAfterPay}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

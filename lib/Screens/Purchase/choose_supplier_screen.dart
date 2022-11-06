@@ -8,6 +8,8 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
+import '../../empty_screen_widget.dart';
 
 class PurchaseContacts extends StatefulWidget {
   const PurchaseContacts({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class PurchaseContacts extends StatefulWidget {
 class _PurchaseContactsState extends State<PurchaseContacts> {
   Color color = Colors.black26;
   String searchCustomer = '';
+  int counter = 0;
+  bool hasAnyDur = false;
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -46,7 +50,13 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: providerData.when(data: (customer) {
-                return customer.isNotEmpty
+                for (var element in customer) {
+                  if (element.type == 'Supplier') {
+                    hasAnyDur = true;
+                    break;
+                  }
+                }
+                return hasAnyDur
                     ? Column(
                         children: [
                           Padding(
@@ -74,6 +84,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                             itemCount: customer.length,
                             itemBuilder: (_, index) {
                               customer[index].type == 'Supplier' ? color = const Color(0xFFA569BD) : Colors.white;
+                              customer[index].type == 'Supplier' ? counter++ : null;
                               return customer[index].customerName.contains(searchCustomer) && customer[index].type.contains('Supplier')
                                   ? GestureDetector(
                                       onTap: () {
@@ -157,12 +168,9 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                           ),
                         ],
                       )
-                    : const Center(
-                        child: Text(
-                          'No Supplier Available',
-                          maxLines: 2,
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
+                    : const Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: EmptyScreenWidget(),
                       );
               }, error: (e, stack) {
                 return Text(e.toString());

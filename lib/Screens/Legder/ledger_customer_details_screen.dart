@@ -15,6 +15,7 @@ import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/print_transaction_model.dart';
 import '../../model/transition_model.dart';
 import '../invoice_details/purchase_invoice_details.dart';
@@ -222,14 +223,14 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                       suffixIcon: IconButton(
                                         onPressed: () async {
                                           final DateTime? picked = await showDatePicker(
-                                            initialDate: DateTime.now(),
+                                            initialDate: toDate,
                                             firstDate: DateTime(2015, 8),
                                             lastDate: DateTime(2101),
                                             context: context,
                                           );
                                           setState(() {
                                             toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
-                                            toDate = picked!;
+                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
                                           });
                                         },
                                         icon: const Icon(FeatherIcons.calendar),
@@ -248,9 +249,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               final reTransaction = transaction.reversed.toList();
 
                               return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
-                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
                                       (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
-                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
                                   ? GestureDetector(
                                       onTap: () {
                                         SalesInvoiceDetails(
@@ -293,15 +295,30 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                             color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                                      style: const TextStyle(color: Colors.grey),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                        const SizedBox(height: 5),
+                                                        Text(
+                                                          DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
                                                   'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -311,7 +328,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       Text(
                                                         'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
-                                                      ),
+                                                      ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(
                                                         children: [
                                                           IconButton(
@@ -389,7 +406,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                               icon: const Icon(
                                                                 FeatherIcons.share,
                                                                 color: Colors.grey,
-                                                              )),
+                                                              )).visible(false),
                                                         ],
                                                       )
                                                     ],
@@ -551,6 +568,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                           );
                                           setState(() {
                                             toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
                                           });
                                         },
                                         icon: const Icon(FeatherIcons.calendar),
@@ -569,9 +587,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                               final reTransaction = transaction.reversed.toList();
 
                               return reTransaction[index].customerPhone == widget.customerModel.phoneNumber &&
-                                      fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) &&
+                                      (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
                                       (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
-                                          DateTime.parse(reTransaction[index].purchaseDate).isToday)
+                                          DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
                                   ? GestureDetector(
                                       onTap: () {
                                         PurchaseInvoiceDetails(
@@ -614,15 +633,30 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                             color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                                      style: const TextStyle(color: Colors.grey),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                        const SizedBox(height: 3),
+                                                        Text(
+                                                          DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                          style: const TextStyle(color: Colors.grey),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
                                                   'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 personalData.when(data: (data) {
@@ -632,7 +666,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                       Text(
                                                         'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                         style: const TextStyle(fontSize: 16),
-                                                      ),
+                                                      ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                       Row(
                                                         children: [
                                                           IconButton(
@@ -712,7 +746,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                               icon: const Icon(
                                                                 FeatherIcons.share,
                                                                 color: Colors.grey,
-                                                              )),
+                                                              )).visible(false),
                                                         ],
                                                       )
                                                     ],

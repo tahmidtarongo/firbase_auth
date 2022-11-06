@@ -8,6 +8,8 @@ class TransitionModel {
   double? dueAmount;
   double? returnAmount;
   double? discountAmount;
+  double? lossProfit;
+  int? totalQuantity;
 
   bool? isPaid;
   String? paymentType;
@@ -26,6 +28,8 @@ class TransitionModel {
     this.isPaid,
     this.paymentType,
     this.productList,
+    this.lossProfit,
+    this.totalQuantity,
   });
 
   TransitionModel.fromJson(Map<dynamic, dynamic> json) {
@@ -36,6 +40,8 @@ class TransitionModel {
     purchaseDate = json['purchaseDate'].toString();
     totalAmount = double.parse(json['totalAmount'].toString());
     discountAmount = double.parse(json['discountAmount'].toString());
+    lossProfit = double.parse(json['lossProfit'].toString());
+    totalQuantity = json['totalQuantity'];
     dueAmount = double.parse(json['dueAmount'].toString());
     returnAmount = double.parse(json['returnAmount'].toString());
     isPaid = json['isPaid'];
@@ -55,9 +61,11 @@ class TransitionModel {
         'invoiceNumber': invoiceNumber,
         'purchaseDate': purchaseDate,
         'discountAmount': discountAmount,
+        'lossProfit': lossProfit,
         'totalAmount': totalAmount,
         'dueAmount': dueAmount,
         'returnAmount': returnAmount,
+        'totalQuantity': totalQuantity,
         'isPaid': isPaid,
         'paymentType': paymentType,
         'productList': productList?.map((e) => e.toJson()).toList(),

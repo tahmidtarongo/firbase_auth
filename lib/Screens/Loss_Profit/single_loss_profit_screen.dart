@@ -3,19 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/transition_model.dart';
 
 class SingleLossProfitScreen extends StatefulWidget {
   const SingleLossProfitScreen({
     Key? key,
     required this.transactionModel,
-    required this.profit,
-    required this.totalQuantity,
   }) : super(key: key);
 
   final TransitionModel transactionModel;
-  final double profit;
-  final int totalQuantity;
 
   @override
   State<SingleLossProfitScreen> createState() => _SingleLossProfitScreenState();
@@ -220,7 +217,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            widget.totalQuantity.toString(),
+                            widget.transactionModel.totalQuantity.toString(),
                             style: GoogleFonts.poppins(
                               color: Colors.black,
                             ),
@@ -291,13 +288,15 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            widget.profit.isNegative ? 'Total Loss' : 'Total Profit',
+                            widget.transactionModel.lossProfit!.isNegative ? 'Total Loss' : 'Total Profit',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
                           ),
                         ),
                         Text(
-                          widget.profit.isNegative ? "$currency${widget.profit.toInt().abs()}" : "$currency${widget.profit.toInt()}",
+                          widget.transactionModel.lossProfit!.isNegative
+                              ? "$currency${widget.transactionModel.lossProfit!.toInt().abs()}"
+                              : "$currency${widget.transactionModel.lossProfit!.toInt()}",
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                             color: Colors.black,

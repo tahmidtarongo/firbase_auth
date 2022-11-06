@@ -167,8 +167,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
           ),
           body: Container(
             alignment: Alignment.topCenter,
-            decoration:
-            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -196,14 +195,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             initialValue: DateFormat.yMMMd().format(DateTime.parse(
                               widget.transitionModel.purchaseDate,
                             )),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Date',
-                              border: const OutlineInputBorder(),
-                              suffixIcon: IconButton(
-                                onPressed: () async {},
-                                icon: const Icon(FeatherIcons.calendar),
-                              ),
+                              border: OutlineInputBorder(),
                             ),
                           ),
                         ),

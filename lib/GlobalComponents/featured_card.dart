@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/Products/product_data.dart';
 
 import '../constant.dart';
+import '../currency.dart';
 
 class FeaturedCard extends StatefulWidget {
   const FeaturedCard({

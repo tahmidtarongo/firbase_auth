@@ -6,6 +6,8 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
+import '../../empty_screen_widget.dart';
 
 class DueCalculationContactScreen extends StatefulWidget {
   const DueCalculationContactScreen({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class DueCalculationContactScreen extends StatefulWidget {
 
 class _DueCalculationContactScreenState extends State<DueCalculationContactScreen> {
   late Color color;
+  bool hasAnyDur = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +46,13 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
               final providerData = ref.watch(customerProvider);
 
               return providerData.when(data: (customer) {
-                return customer.isNotEmpty
+                for (var element in customer) {
+                  if (element.dueAmount.toInt() > 0) {
+                    hasAnyDur = true;
+                    break;
+                  }
+                }
+                return hasAnyDur
                     ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -133,16 +142,11 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                 )
                               : Container();
                         })
-                    : const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Center(
-                          child: Text(
-                            'No Due Available',
-                            maxLines: 2,
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                          ),
-                        ),
-                      );
+                    : const Center(
+                        child: Padding(
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      ));
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

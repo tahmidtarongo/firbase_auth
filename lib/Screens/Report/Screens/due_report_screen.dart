@@ -9,6 +9,8 @@ import '../../../Provider/due_transaction_provider.dart';
 import '../../../Provider/printer_due_provider.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
+import '../../../currency.dart';
+import '../../../empty_screen_widget.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Home/home.dart';
 import '../../invoice_details/due_invoice_details.dart';
@@ -102,9 +104,19 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                   color: reTransaction[index].dueAmountAfterPay! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                             ),
                                           ),
-                                          Text(
-                                            DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                            style: const TextStyle(color: Colors.grey),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 3,),
+                                              Text(
+                                                DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -202,7 +214,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                               ],
                                             );
                                           }, error: (e, stack) {
@@ -225,16 +237,11 @@ class _DueReportScreenState extends State<DueReportScreen> {
                           );
                         },
                       )
-                    : const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Center(
-                          child: Text(
-                            'Please Collect A Due',
-                            maxLines: 2,
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                          ),
-                        ),
-                      );
+                    : const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: EmptyScreenWidget(),
+                    ));
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

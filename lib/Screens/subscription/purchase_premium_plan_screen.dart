@@ -7,6 +7,7 @@ import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 import '../Home/home.dart';

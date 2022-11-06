@@ -12,6 +12,8 @@ import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../../model/print_transaction_model.dart';
 import '../../Provider/add_to_cart_purchase.dart';
+import '../../currency.dart';
+import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
 import '../invoice_details/purchase_invoice_details.dart';
 
@@ -106,9 +108,19 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                               style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                             ),
                                           ),
-                                          Text(
-                                            DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
-                                            style: const TextStyle(color: Colors.grey),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -209,7 +221,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                     icon: const Icon(
                                                       FeatherIcons.share,
                                                       color: Colors.grey,
-                                                    )),
+                                                    )).visible(false),
                                                 IconButton(
                                                     onPressed: () {
                                                       cart.clearCart();
@@ -243,13 +255,10 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                           );
                         },
                       )
-                    : const Center(
-                        child: Text(
-                          'Please Add A Purchase',
-                          maxLines: 2,
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
-                      );
+                    : const Padding(
+                  padding: EdgeInsets.only(top: 60),
+                  child: EmptyScreenWidget(),
+                );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

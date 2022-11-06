@@ -11,6 +11,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/add_to_cart.dart';
+import '../../currency.dart';
 import '../../model/add_to_cart_model.dart';
 
 // ignore: must_be_immutable
@@ -261,6 +262,7 @@ class _SaleProductsState extends State<SaleProducts> {
                               productDescription: products[i].brandName,
                               productPrice: productPrice,
                               productImage: products[i].productPicture,
+                              stock: products[i].productStock,
                             ).visible((products[i].productCode == productCode || productCode == '0000' || productCode == '-1') && productPrice != '0'),
                           );
                         });
@@ -295,11 +297,11 @@ class _SaleProductsState extends State<SaleProducts> {
 
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage})
+  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage, required this.stock})
       : super(key: key);
 
   // final Product product;
-  String productImage, productTitle, productDescription, productPrice;
+  String productImage, productTitle, productDescription, productPrice, stock;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -358,7 +360,7 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   ),
                   Text(
-                    widget.productDescription,
+                    'Stock: ${widget.stock}',
                     style: GoogleFonts.jost(
                       fontSize: 15.0,
                       color: kGreyTextColor,

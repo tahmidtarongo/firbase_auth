@@ -167,14 +167,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             initialValue: DateFormat.yMMMd().format(DateTime.parse(
                               widget.transitionModel.purchaseDate,
                             )),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Date',
-                              border: const OutlineInputBorder(),
-                              suffixIcon: IconButton(
-                                onPressed: () async {},
-                                icon: const Icon(FeatherIcons.calendar),
-                              ),
+                              border: OutlineInputBorder(),
                             ),
                           ),
                         ),

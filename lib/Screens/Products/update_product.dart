@@ -16,6 +16,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Home/home_screen.dart';
 
 // ignore: must_be_immutable

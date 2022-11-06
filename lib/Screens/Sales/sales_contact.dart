@@ -9,6 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 
 class SalesContact extends StatefulWidget {
   const SalesContact({Key? key}) : super(key: key);

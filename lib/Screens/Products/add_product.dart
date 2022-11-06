@@ -22,6 +22,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Home/home.dart';
 
 // ignore: must_be_immutable
