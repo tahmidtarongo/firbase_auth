@@ -542,23 +542,28 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                     ? Navigator.of(context).pushNamed('/${widget.gridItems.title}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');
               },
-              child: Image(
-                height: 70,
-                width: 70,
-                image: AssetImage(
-                  widget.gridItems.icon.toString(),
-                ),
+              child: Column(
+                children: [
+                  Image(
+                    height: 70,
+                    width: 70,
+                    image: AssetImage(
+                      widget.gridItems.icon.toString(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.gridItems.title.toString(),
+                      style: const TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.gridItems.title.toString(),
-                style: const TextStyle(fontSize: 16),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+
           ],
         ),
       );

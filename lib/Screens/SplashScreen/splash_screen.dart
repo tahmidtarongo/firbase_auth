@@ -211,7 +211,7 @@ class _SplashScreenState extends State<SplashScreen> {
               decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
               child: const Image(
                 image: AssetImage(
-                  'images/maanpos_logo.png',
+                  'images/maan_pos.png',
                 ),
               ),
             ),
