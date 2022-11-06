@@ -173,7 +173,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                                   maxLines: 2,
                                   style: kTextStyle.copyWith(color: kGreyTextColor),
                                 ),
-                                SizedBox(width: MediaQuery.of(context).size.width / 12),
+                                const Spacer(),
                                 Text(
                                   widget.transitionModel.productList![i].productStock.toString(),
                                   maxLines: 1,

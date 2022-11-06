@@ -87,7 +87,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                             reTransaction[index].customerName,
                                             style: const TextStyle(fontSize: 16),
                                           ),
-                                          Text('#${reTransaction[index].invoiceNumber}'),
+                                          Text('#${reTransaction[index].invoiceNumber}',style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
