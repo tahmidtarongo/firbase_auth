@@ -887,7 +887,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                               subtitle: const Text("Click to connect"),
                                                             );
                                                           },
-                                                        ),
+                                                        ).visible(printerData.availableBluetoothDevices.isNotEmpty),
+                                                        const Text('Please connect your bluetooth Printer',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                                         const SizedBox(height: 10),
                                                         Container(
                                                           height: 1,

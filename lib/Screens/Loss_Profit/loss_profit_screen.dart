@@ -165,7 +165,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                 Text(
                                                   totalProfit.toString(),
                                                   style: const TextStyle(
-                                                    color: Colors.greenAccent,
+                                                    color: Colors.green,
                                                     fontSize: 20,
                                                   ),
                                                 ),
@@ -173,7 +173,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                 const Text(
                                                   'Profit',
                                                   style: TextStyle(
-                                                    color: Colors.grey,
+                                                    color: Colors.black,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -199,7 +199,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                 const Text(
                                                   'Loss',
                                                   style: TextStyle(
-                                                    color: Colors.grey,
+                                                    color: Colors.black,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -239,7 +239,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                 reTransaction[index].customerName,
                                                                 style: const TextStyle(fontSize: 16),
                                                               ),
-                                                              Text('#${reTransaction[index].invoiceNumber}'),
+                                                              Text('#${reTransaction[index].invoiceNumber}',style: const TextStyle(color: Colors.black),),
                                                             ],
                                                           ),
                                                           const SizedBox(height: 10),

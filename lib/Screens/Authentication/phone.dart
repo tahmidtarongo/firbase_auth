@@ -80,7 +80,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text('Get control of your business with  '),
+                    Text('Manage your business with '),
                     Image(width: 100, image: AssetImage('images/maanpos.png')),
                   ],
                 ),
@@ -157,7 +157,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Phone",
+                          hintText: "Enter Your Phone Number",
                         ),
                       ))
                     ],

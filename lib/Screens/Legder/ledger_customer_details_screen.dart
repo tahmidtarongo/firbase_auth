@@ -173,7 +173,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                         color: Colors.orange,
                                       ),
                                     ),
-                                  ]),
+                                  ]).visible(false),
                                   subtitle: const Text('Total Sale'),
                                 ),
                               ),

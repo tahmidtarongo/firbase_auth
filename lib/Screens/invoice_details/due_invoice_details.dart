@@ -88,6 +88,10 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       ),
                     ],
                   ),
+                  Divider(
+                    thickness: 1.0,
+                    color: kGreyTextColor.withOpacity(0.1),
+                  ),
                   const SizedBox(height: 5.0),
                   Row(
                     children: [

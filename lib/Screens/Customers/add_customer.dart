@@ -430,7 +430,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'Previous Due',
+                                    labelText: 'Opening Balance',
                                     hintText: 'Amount'),
                               ),
                             ),
