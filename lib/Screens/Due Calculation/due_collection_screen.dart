@@ -19,6 +19,7 @@ import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/due_transaction_model.dart';
+import '../../subscription.dart';
 import '../Customers/Model/customer_model.dart';
 
 class DueCollectionScreen extends StatefulWidget {
@@ -456,7 +457,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   );
 
                                   ///________Subscription_____________________________________________________
-                                  decreaseSubscriptionSale();
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber',context: context);
 
                                   ///________Print_______________________________________________________
                                   if (isPrintEnable) {
@@ -652,12 +653,5 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     ref.child(key!).update({'due': '$totalDue'});
   }
 
-  void decreaseSubscriptionSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/dueNumber');
-    var data = await ref.once();
-    int beforeSale = int.parse(data.snapshot.value.toString());
-    int afterSale = beforeSale - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({'dueNumber': afterSale});
-  }
+
 }

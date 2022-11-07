@@ -23,6 +23,7 @@ import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
+import '../../subscription.dart';
 import '../Home/home.dart';
 
 // ignore: must_be_immutable
@@ -197,10 +198,9 @@ class _AddProductState extends State<AddProduct> {
                           productCategory = data.categoryName;
                         });
                       },
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         hintText: productCategory,
-
                         labelText: 'Category',
                         border: const OutlineInputBorder(),
                         suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -319,10 +319,9 @@ class _AddProductState extends State<AddProduct> {
                           brandName = data;
                         });
                       },
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         hintText: brandName,
-
                         labelText: 'Brand',
                         border: const OutlineInputBorder(),
                         suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -409,7 +408,7 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                       Expanded(
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AppTextField(
                             readOnly: true,
@@ -420,10 +419,9 @@ class _AddProductState extends State<AddProduct> {
                                 productUnit = data;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintText: productUnit,
-
                               labelText: 'Units',
                               border: const OutlineInputBorder(),
                               suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -445,7 +443,7 @@ class _AddProductState extends State<AddProduct> {
                                 productPurchasePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
                               hintText: '$currency 300.90',
@@ -464,7 +462,7 @@ class _AddProductState extends State<AddProduct> {
                                 productSalePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'MRP',
                               hintText: '$currency 234.09',
@@ -487,7 +485,7 @@ class _AddProductState extends State<AddProduct> {
                                 productWholeSalePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
                               hintText: '$currency 155',
@@ -506,7 +504,7 @@ class _AddProductState extends State<AddProduct> {
                                 productDealerPrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
                               hintText: '$currency 130',
@@ -529,7 +527,7 @@ class _AddProductState extends State<AddProduct> {
                               productDiscount = value;
                             });
                           },
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
                             hintText: '$currency 34.90',
@@ -740,7 +738,7 @@ class _AddProductState extends State<AddProduct> {
                             productPicture,
                           );
                           await _productInformationRef.push().set(productModel.toJson());
-                          decreaseSubscriptionSale();
+                          Subscription.decreaseSubscriptionLimits(itemType: 'products',context: context);
                           EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
                           ref.refresh(productProvider);
                           Future.delayed(const Duration(milliseconds: 100), () {
@@ -766,12 +764,4 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
-  void decreaseSubscriptionSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/products');
-    var data = await ref.once();
-    int beforeSale = int.parse(data.snapshot.value.toString());
-    int afterSale = beforeSale - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({'products': afterSale});
-  }
 }

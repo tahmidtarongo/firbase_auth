@@ -25,6 +25,7 @@ import '../../Provider/profile_provider.dart';
 import '../../Provider/purchase_report_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
+import '../../subscription.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
 
@@ -606,7 +607,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                 await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                 ///________Subscription_____________________________________________________
-                                decreaseSubscriptionSale();
+                                Subscription.decreaseSubscriptionLimits(itemType: 'purchaseNumber',context: context);
 
                                 ///_________DueUpdate______________________________________________________
                                 getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -777,7 +778,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                   ///________Subscription_____________________________________________________
-                                  decreaseSubscriptionSale();
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'purchaseNumber',context: context);
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -952,14 +953,6 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     });
   }
 
-  void decreaseSubscriptionSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/purchaseNumber');
-    var data = await ref.once();
-    int beforeSale = int.parse(data.snapshot.value.toString());
-    int afterSale = beforeSale - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({'purchaseNumber': afterSale});
-  }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;

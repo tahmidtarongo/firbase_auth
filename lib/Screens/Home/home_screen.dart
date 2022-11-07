@@ -1,7 +1,4 @@
-import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/constant.dart';
-import 'package:mobile_pos/model/subscription_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/profile_provider.dart';
@@ -40,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     const Color(0xffEAFFEA),
     const Color(0xffFFF6ED),
   ];
-
-  String customerPackage = '';
   List<Map<String, dynamic>> sliderList = [
     {
       "icon": 'images/banner1.png',
@@ -51,129 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   ];
   PageController pageController = PageController(initialPage: 0);
-
-  void subscriptionRemainder() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
-
-    final model = await ref.get();
-    var data = jsonDecode(jsonEncode(model.value));
-    final dataModel = SubscriptionModel.fromJson(data);
-    setState(() {
-      customerPackage = dataModel.subscriptionName;
-    });
-
-    final remainTime = DateTime.parse(dataModel.subscriptionDate).difference(DateTime.now());
-
-    if (dataModel.subscriptionName != 'Lifetime') {
-      if (remainTime.inHours.abs().isBetween((dataModel.duration * 24) - 24, dataModel.duration * 24)) {
-        await prefs.setBool('isFiveDayRemainderShown', false);
-        setState(() {
-          isExpiringInOneDays = true;
-          isExpiringInFiveDays = false;
-        });
-      } else if (remainTime.inHours.abs().isBetween((dataModel.duration * 24) - 120, dataModel.duration * 24)) {
-        setState(() {
-          isExpiringInFiveDays = true;
-          isExpiringInOneDays = false;
-        });
-      }
-
-      final bool? isFiveDayRemainderShown = prefs.getBool('isFiveDayRemainderShown');
-
-      if (isExpiringInFiveDays && isFiveDayRemainderShown == false) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: SizedBox(
-                height: 200,
-                width: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Your Package Will Expire in 5 Day',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () async {
-                        await prefs.setBool('isFiveDayRemainderShown', true);
-                        // ignore: use_build_context_synchronously
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      }
-      if (isExpiringInOneDays) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Your Package Will Expire Today\n\nPlease Purchase again',
-                        style: TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 20),
-                      Column(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              const PackageScreen().launch(context);
-                            },
-                            child: const Text('Purchase'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              'Cancel',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    subscriptionRemainder();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -220,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Text(
-                                '$customerPackage Plan',
+                                '${Subscription.selectedItem} Plan',
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
                                 ),
@@ -443,88 +314,6 @@ class HomeGridCards extends StatefulWidget {
 }
 
 class _HomeGridCardsState extends State<HomeGridCards> {
-  Future<bool> subscriptionChecker({
-    required String item,
-  }) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final DatabaseReference subscriptionRef = FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
-    final model = await ref.get();
-    var data = jsonDecode(jsonEncode(model.value));
-    Subscription.selectedItem = SubscriptionModel.fromJson(data).subscriptionName;
-    final dataModel = SubscriptionModel.fromJson(data);
-    final remainTime = DateTime.parse(dataModel.subscriptionDate).difference(DateTime.now());
-
-    if (dataModel.subscriptionName == 'Free') {
-      if (remainTime.inHours.abs() > 720) {
-        SubscriptionModel subscriptionModel = SubscriptionModel(
-          subscriptionName: 'Free',
-          subscriptionDate: DateTime.now().toString(),
-          saleNumber: Subscription.subscriptionPlansService['Free']!['Sales'].toInt(),
-          purchaseNumber: Subscription.subscriptionPlansService['Free']!['Purchase'].toInt(),
-          partiesNumber: Subscription.subscriptionPlansService['Free']!['Parties'].toInt(),
-          dueNumber: Subscription.subscriptionPlansService['Free']!['Due Collection'].toInt(),
-          duration: 30,
-          products: Subscription.subscriptionPlansService['Free']!['Products'].toInt(),
-        );
-        await subscriptionRef.set(subscriptionModel.toJson());
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isFiveDayRemainderShown', true);
-      } else if (item == 'Sales' && dataModel.saleNumber <= 0) {
-        return false;
-      } else if (item == 'Parties' && dataModel.partiesNumber <= 0) {
-        return false;
-      } else if (item == 'Purchase' && dataModel.purchaseNumber <= 0) {
-        return false;
-      } else if (item == 'Products' && dataModel.products <= 0) {
-        return false;
-      } else if (item == 'Due List' && dataModel.dueNumber <= 0) {
-        return false;
-      }
-    } else if (dataModel.subscriptionName == 'Month') {
-      if (remainTime.inHours.abs() > 720) {
-        SubscriptionModel subscriptionModel = SubscriptionModel(
-          subscriptionName: 'Free',
-          subscriptionDate: DateTime.now().toString(),
-          saleNumber: Subscription.subscriptionPlansService['Free']!['Sales'].toInt(),
-          purchaseNumber: Subscription.subscriptionPlansService['Free']!['Purchase'].toInt(),
-          partiesNumber: Subscription.subscriptionPlansService['Free']!['Parties'].toInt(),
-          dueNumber: Subscription.subscriptionPlansService['Free']!['Due Collection'].toInt(),
-          duration: 30,
-          products: Subscription.subscriptionPlansService['Free']!['Products'].toInt(),
-        );
-        await subscriptionRef.set(subscriptionModel.toJson());
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isFiveDayRemainderShown', true);
-      } else {
-        return true;
-      }
-    } else if (dataModel.subscriptionName == 'Year') {
-      if (remainTime.inHours.abs() > 8760) {
-        SubscriptionModel subscriptionModel = SubscriptionModel(
-          subscriptionName: 'Free',
-          subscriptionDate: DateTime.now().toString(),
-          saleNumber: Subscription.subscriptionPlansService['Free']!['Sales'].toInt(),
-          purchaseNumber: Subscription.subscriptionPlansService['Free']!['Purchase'].toInt(),
-          partiesNumber: Subscription.subscriptionPlansService['Free']!['Parties'].toInt(),
-          dueNumber: Subscription.subscriptionPlansService['Free']!['Due Collection'].toInt(),
-          duration: 30,
-          products: Subscription.subscriptionPlansService['Free']!['Products'].toInt(),
-        );
-        await subscriptionRef.set(subscriptionModel.toJson());
-
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isFiveDayRemainderShown', true);
-      } else {
-        return true;
-      }
-      EasyLoading.dismiss();
-    } else if (dataModel.subscriptionName == 'Lifetime') {
-      return true;
-    }
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
@@ -538,7 +327,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
               onPressed: () async {
                 setState(() {});
 
-                await subscriptionChecker(item: widget.gridItems.title)
+                await Subscription.subscriptionChecker(item: widget.gridItems.title)
                     ? Navigator.of(context).pushNamed('/${widget.gridItems.title}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');
               },
@@ -563,7 +352,6 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                 ],
               ),
             ),
-
           ],
         ),
       );

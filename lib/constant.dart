@@ -11,8 +11,7 @@ bool connected = false;
 bool isPrintEnable = true;
 List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay', 'Due'];
 
-bool isExpiringInFiveDays = false;
-bool isExpiringInOneDays = false;
+
 
 //___________currency__________________________
 

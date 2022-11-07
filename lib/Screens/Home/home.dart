@@ -7,6 +7,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:mobile_pos/Screens/Report/reports.dart';
 import 'package:mobile_pos/Screens/Settings/settings_screen.dart';
+import 'package:mobile_pos/subscription.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
@@ -41,6 +42,7 @@ class _HomeState extends State<Home> {
     super.initState();
     getConnectivity();
     checkInternet();
+    Subscription.getUserLimitsData(context: context, wannaShowMsg: true);
   }
 
   checkInternet() async {

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
@@ -7,6 +10,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../currency.dart';
+import '../../model/subscription_model.dart';
+import '../../subscription.dart';
 import '../Home/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,9 +24,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String newUpdateVersion = '1.1';
-
+  var currentUser = FirebaseAuth.instance.currentUser;
   bool isUpdateAvailable = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   void showSnack(String text) {
     if (_scaffoldKey.currentContext != null) {
       ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(SnackBar(content: Text(text)));
@@ -40,25 +46,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void saveSkipUpdateData() async {}
 
-  @override
-  void initState() {
-    super.initState();
-    init();
-    getPermission();
-    checkForUpdate();
-    getCurrency();
-  }
+
+
   getCurrency() async {
     final prefs = await SharedPreferences.getInstance();
     String? data = prefs.getString('currency');
-      if (!data.isEmptyOrNull) {
-        currency = data!;
-      } else {
-        currency = '৳';
-      }
+    if (!data.isEmptyOrNull) {
+      currency = data!;
+    } else {
+      currency = '৳';
+    }
   }
-
-  var currentUser = FirebaseAuth.instance.currentUser;
 
   void init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -192,6 +190,17 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     defaultBlurRadius = 10.0;
     defaultSpreadRadius = 0.5;
+  }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+    getPermission();
+    checkForUpdate();
+    getCurrency();
   }
 
   @override

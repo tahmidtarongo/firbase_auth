@@ -16,6 +16,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
+import '../../subscription.dart';
 
 class AddCustomer extends StatefulWidget {
   const AddCustomer({Key? key}) : super(key: key);
@@ -475,7 +476,7 @@ class _AddCustomerState extends State<AddCustomer> {
                               await _customerInformationRef.push().set(customerModel.toJson());
 
                               ///________Subscription_____________________________________________________
-                              decreaseSubscriptionSale();
+                              Subscription.decreaseSubscriptionLimits(itemType: 'partiesNumber', context: context);
 
                               EasyLoading.showSuccess('Added Successfully!');
                               ref.refresh(customerProvider);
@@ -499,12 +500,4 @@ class _AddCustomerState extends State<AddCustomer> {
     );
   }
 
-  void decreaseSubscriptionSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/partiesNumber');
-    var data = await ref.once();
-    int beforeSale = int.parse(data.snapshot.value.toString());
-    int afterSale = beforeSale - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({'partiesNumber': afterSale});
-  }
 }

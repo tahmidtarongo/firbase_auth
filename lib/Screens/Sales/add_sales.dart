@@ -15,6 +15,7 @@ import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:mobile_pos/model/transition_model.dart';
+import 'package:mobile_pos/subscription.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/printer_provider.dart';
@@ -624,7 +625,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                   ///________Subscription_____________________________________________________
-                                  decreaseSubscriptionSale();
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber',context: context);
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -817,7 +818,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                     ///________Subscription_____________________________________________________
-                                    decreaseSubscriptionSale();
+                                    Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber',context: context);
 
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -888,7 +889,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             );
                                                           },
                                                         ).visible(printerData.availableBluetoothDevices.isNotEmpty),
-                                                        const Text('Please connect your bluetooth Printer',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                                        const Text(
+                                                          'Please connect your bluetooth Printer',
+                                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                        ),
                                                         const SizedBox(height: 10),
                                                         Container(
                                                           height: 1,
@@ -986,15 +990,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     int remainStock = stock - quantity;
 
     ref.child(productPath).update({'productStock': '$remainStock'});
-  }
-
-  void decreaseSubscriptionSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/saleNumber');
-    var data = await ref.once();
-    int beforeSale = int.parse(data.snapshot.value.toString());
-    int afterSale = beforeSale - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({'saleNumber': afterSale});
   }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
