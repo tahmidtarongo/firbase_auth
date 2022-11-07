@@ -45,7 +45,8 @@ class _AddProductState extends State<AddProduct> {
   String productCategory = 'Select Product Category';
   String brandName = 'Select Brand';
   String productUnit = 'Select Unit';
-  late String productName, productStock, productSalePrice, productPurchasePrice, productCode;
+  late String productName, productStock, productSalePrice, productPurchasePrice;
+  String productCode = 'Not Provided';
   String productWholeSalePrice = '0';
   String productDealerPrice = '0';
   String productPicture =
@@ -155,8 +156,8 @@ class _AddProductState extends State<AddProduct> {
                     itemBuilder: (context, snapshot, animation, index) {
                       final json = snapshot.value as Map<dynamic, dynamic>;
                       final product = ProductModel.fromJson(json);
-                      codeList.add(product.productCode.toLowerCase());
-                      productNameList.add(product.productName.toLowerCase());
+                      codeList.add(product.productCode.toLowerCase().removeAllWhiteSpace());
+                      productNameList.add(product.productName.toLowerCase().removeAllWhiteSpace());
                       return Container();
                     },
                   ).visible(loop <= 1),
@@ -338,20 +339,24 @@ class _AddProductState extends State<AddProduct> {
                             controller: productCodeController,
                             textFieldType: TextFieldType.NAME,
                             onChanged: (value) {
-                              setState(() {
-                                productCode = value;
-                                promoCodeHint = value;
-                              });
+                              if (value.removeAllWhiteSpace() != '') {
+                                setState(() {
+                                  productCode = value;
+                                  promoCodeHint = value;
+                                });
+                              }
                             },
                             onFieldSubmitted: (value) {
                               if (codeList.contains(value)) {
                                 EasyLoading.showError('This Product Already added!');
                                 productCodeController.clear();
                               } else {
-                                setState(() {
-                                  productCode = value;
-                                  promoCodeHint = value;
-                                });
+                                if (value.removeAllWhiteSpace() != '') {
+                                  setState(() {
+                                    productCode = value;
+                                    promoCodeHint = value;
+                                  });
+                                }
                               }
                             },
                             decoration: InputDecoration(
@@ -392,7 +397,7 @@ class _AddProductState extends State<AddProduct> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AppTextField(
-                            textFieldType: TextFieldType.NAME,
+                            textFieldType: TextFieldType.NUMBER,
                             onChanged: (value) {
                               setState(() {
                                 productStock = value;
@@ -706,7 +711,8 @@ class _AddProductState extends State<AddProduct> {
                     buttontext: 'Save and Publish',
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
-                      if (!codeList.contains(productCode.toLowerCase()) && !productNameList.contains(productName.toLowerCase())) {
+                      if ((productCode == 'Not Provided' ? true : codeList.contains(productCode.toLowerCase().removeAllWhiteSpace())) &&
+                          !productNameList.contains(productName.toLowerCase().removeAllWhiteSpace())) {
                         try {
                           EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
@@ -738,7 +744,7 @@ class _AddProductState extends State<AddProduct> {
                             productPicture,
                           );
                           await _productInformationRef.push().set(productModel.toJson());
-                          Subscription.decreaseSubscriptionLimits(itemType: 'products',context: context);
+                          Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
                           EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
                           ref.refresh(productProvider);
                           Future.delayed(const Duration(milliseconds: 100), () {
@@ -763,5 +769,4 @@ class _AddProductState extends State<AddProduct> {
       ),
     );
   }
-
 }
