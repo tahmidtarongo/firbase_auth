@@ -19,18 +19,16 @@ import '../../constant.dart';
 import '../../currency.dart';
 import '../Home/home_screen.dart';
 
-// ignore: must_be_immutable
 class UpdateProduct extends StatefulWidget {
-  UpdateProduct({Key? key, this.productModel}) : super(key: key);
+  const UpdateProduct({Key? key, this.productModel}) : super(key: key);
 
-  ProductModel? productModel;
+  final ProductModel? productModel;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _UpdateProductState createState() => _UpdateProductState();
+  UpdateProductState createState() => UpdateProductState();
 }
 
-class _UpdateProductState extends State<UpdateProduct> {
+class UpdateProductState extends State<UpdateProduct> {
   late String productKey;
   late ProductModel updatedProductModel;
   GetCategoryAndVariationModel data = GetCategoryAndVariationModel(variations: [], categoryName: '');
@@ -113,6 +111,8 @@ class _UpdateProductState extends State<UpdateProduct> {
                       strokeWidth: 5.0,
                     ),
                   ),
+
+                  ///________Name__________________________________________
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: AppTextField(
@@ -126,7 +126,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                       decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: 'Product name',
-                        hintText: 'Smart Watch',
+                        hintText: 'Enter Product Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -320,7 +320,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                         ),
                       ),
                       Expanded(
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AppTextField(
                             readOnly: true,
@@ -373,7 +373,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productPurchasePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Purchase Price',
                               hintText: '$currency 300.90',
@@ -393,7 +393,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productSalePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Sale Price',
                               hintText: '$currency 234.09',
@@ -417,7 +417,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productWholeSalePrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'WholeSale Price',
                               hintText: '$currency 155',
@@ -437,7 +437,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                                 updatedProductModel.productDealerPrice = value;
                               });
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Dealer price',
                               hintText: '$currency 130',
@@ -461,7 +461,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                               updatedProductModel.productDiscount = value;
                             });
                           },
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Discount',
                             hintText: '$currency 34.90',

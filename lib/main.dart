@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
         // ignore: missing_required_param
 
         '/AddProducts': (context) => AddProduct(),
-        '/UpdateProducts': (context) => UpdateProduct(),
+        '/UpdateProducts': (context) => const UpdateProduct(),
 
         '/Products': (context) => const ProductList(),
         '/SalesList': (context) => const SalesScreen(),
