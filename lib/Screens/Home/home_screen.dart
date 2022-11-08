@@ -344,9 +344,10 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       widget.gridItems.title.toString(),
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
+
                     ),
                   ),
                 ],
