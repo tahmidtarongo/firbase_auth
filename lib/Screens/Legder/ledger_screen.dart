@@ -422,7 +422,15 @@ class _LedgerScreenState extends State<LedgerScreen> {
           }, error: (e, stack) {
             return Text(e.toString());
           }, loading: () {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+              alignment: Alignment.topCenter,
+              decoration:
+                  const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),),
+              child: const Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }),
         ),
       );
