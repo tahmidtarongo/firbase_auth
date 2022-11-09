@@ -9,6 +9,7 @@ import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
+import 'add_product.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({Key? key}) : super(key: key);
@@ -18,6 +19,8 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  List<String> productCodeList = [];
+  List<String> productNameList = [];
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -47,9 +50,15 @@ class _ProductListState extends State<ProductList> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: products.length,
                       itemBuilder: (_, i) {
+                        productCodeList.add(products[i].productCode.removeAllWhiteSpace().toLowerCase());
+                        productNameList.add(products[i].productName.removeAllWhiteSpace().toLowerCase());
                         return ListTile(
                           onTap: () {
-                            UpdateProduct(productModel: products[i]).launch(context);
+                            UpdateProduct(
+                              productModel: products[i],
+                              productCodeList: productCodeList,
+                              productNameList: productNameList,
+                            ).launch(context);
                           },
                           leading: Container(
                             height: 50,
@@ -78,10 +87,10 @@ class _ProductListState extends State<ProductList> {
                         );
                       })
                   : const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 60),
-                    child: EmptyScreenWidget(),
-                  ));
+                      child: Padding(
+                      padding: EdgeInsets.only(top: 60),
+                      child: EmptyScreenWidget(),
+                    ));
             }, error: (e, stack) {
               return Text(e.toString());
             }, loading: () {
@@ -97,7 +106,12 @@ class _ProductListState extends State<ProductList> {
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {
-              Navigator.pushNamed(context, '/AddProducts');
+              print(productNameList);
+              print(productCodeList);
+              AddProduct(
+                productNameList: productNameList,
+                productCodeList: productCodeList,
+              ).launch(context);
             },
           ),
         ),

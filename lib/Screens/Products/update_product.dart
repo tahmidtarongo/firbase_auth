@@ -20,9 +20,11 @@ import '../../currency.dart';
 import '../Home/home_screen.dart';
 
 class UpdateProduct extends StatefulWidget {
-  const UpdateProduct({Key? key, this.productModel}) : super(key: key);
+  const UpdateProduct({Key? key, required this.productModel, required this.productNameList, required this.productCodeList}) : super(key: key);
 
-  final ProductModel? productModel;
+  final ProductModel productModel;
+  final List<String> productNameList;
+  final List<String> productCodeList;
 
   @override
   UpdateProductState createState() => UpdateProductState();
@@ -129,6 +131,30 @@ class UpdateProductState extends State<UpdateProduct> {
                         hintText: 'Enter Product Name',
                         border: OutlineInputBorder(),
                       ),
+                    ),
+                  ),
+
+                  ///________Name__________________________________________
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        labelText: 'Product Name',
+                        hintText: 'Enter Product Name.',
+                      ),
+                      validator: (value) {
+                        if (value.isEmptyOrNull) {
+                          return 'Product name is required.';
+                        } else if (widget.productNameList.contains(value?.toLowerCase().removeAllWhiteSpace())) {
+                          return 'Product name is already added.';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        updatedProductModel.productName = value!;
+                      },
                     ),
                   ),
                   Padding(

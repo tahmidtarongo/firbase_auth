@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,19 +21,15 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
-import '../../currency.dart';
 import '../../subscription.dart';
 import '../Home/home.dart';
 
-// ignore: must_be_immutable
 class AddProduct extends StatefulWidget {
-  AddProduct({Key? key, this.catName, this.unitsName, this.brandName}) : super(key: key);
-  // ignore: prefer_typing_uninitialized_variables
-  var catName;
-  // ignore: prefer_typing_uninitialized_variables
-  var unitsName;
-  // ignore: prefer_typing_uninitialized_variables
-  var brandName;
+  const AddProduct({Key? key, required this.productNameList, required this.productCodeList}) : super(key: key);
+
+  final List<String> productNameList;
+  final List<String> productCodeList;
+
   @override
   AddProductState createState() => AddProductState();
 }
@@ -42,9 +37,12 @@ class AddProduct extends StatefulWidget {
 class AddProductState extends State<AddProduct> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   GetCategoryAndVariationModel data = GetCategoryAndVariationModel(variations: [], categoryName: '');
-  String productCategory = 'Select Product Category';
-  String brandName = 'Select Brand';
-  String productUnit = 'Select Unit';
+  String productCategory = '';
+  String productCategoryHint = 'Select Product Category';
+  String brandName = '';
+  String brandNameHint = 'Select Brand';
+  String productUnit = '';
+  String productUnitHint = 'Select Unit';
   late String productName,
       productStock,
       productSalePrice,
@@ -66,12 +64,8 @@ class AddProductState extends State<AddProduct> {
   double progress = 0.0;
   final ImagePicker _picker = ImagePicker();
   XFile? pickedImage;
-  List<String> codeList = [];
-  List<String> productNameList = [];
   String promoCodeHint = 'Enter Product Code';
   TextEditingController productCodeController = TextEditingController();
-
-  int loop = 0;
   File imageFile = File('No File');
   String imagePath = 'No Data';
 
@@ -102,7 +96,7 @@ class AddProductState extends State<AddProduct> {
       barcodeScanRes = 'Failed to get platform version.';
     }
     if (!mounted) return;
-    if (codeList.contains(barcodeScanRes)) {
+    if (widget.productCodeList.contains(barcodeScanRes)) {
       EasyLoading.showError('This Product Already added!');
     } else {
       if (barcodeScanRes != '-1') {
@@ -112,16 +106,7 @@ class AddProductState extends State<AddProduct> {
   }
 
   @override
-  void initState() {
-    widget.catName == null ? productCategory = 'Select Product Category' : productCategory = widget.catName;
-    widget.unitsName == null ? productUnit = 'Select Units' : productUnit = widget.unitsName;
-    widget.brandName == null ? brandName = 'Select Brands' : brandName = widget.brandName;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    loop++;
     return Scaffold(
       backgroundColor: kMainColor,
       appBar: AppBar(
@@ -148,30 +133,6 @@ class AddProductState extends State<AddProduct> {
                 key: globalKey,
                 child: Column(
                   children: [
-                    FirebaseAnimatedList(
-                      shrinkWrap: true,
-                      query: FirebaseDatabase.instance
-                          // ignore: deprecated_member_use
-                          .reference()
-                          .child(FirebaseAuth.instance.currentUser!.uid)
-                          .child('Products'),
-                      itemBuilder: (context, snapshot, animation, index) {
-                        final json = snapshot.value as Map<dynamic, dynamic>;
-                        final product = ProductModel.fromJson(json);
-                        codeList.add(product.productCode.toLowerCase().removeAllWhiteSpace());
-                        productNameList.add(product.productName.toLowerCase().removeAllWhiteSpace());
-                        return Container();
-                      },
-                    ).visible(loop <= 1),
-                    const SizedBox(height: 10.0),
-                    Visibility(
-                      visible: showProgress,
-                      child: const CircularProgressIndicator(
-                        color: kMainColor,
-                        strokeWidth: 5.0,
-                      ),
-                    ),
-
                     ///________Name__________________________________________
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -185,7 +146,7 @@ class AddProductState extends State<AddProduct> {
                         validator: (value) {
                           if (value.isEmptyOrNull) {
                             return 'Product name is required.';
-                          } else if (productNameList.contains(value?.toLowerCase().removeAllWhiteSpace())) {
+                          } else if (widget.productNameList.contains(value?.toLowerCase().removeAllWhiteSpace())) {
                             return 'Product name is already added.';
                           }
                           return null;
@@ -205,11 +166,12 @@ class AddProductState extends State<AddProduct> {
                           data = await const CategoryList().launch(context);
                           setState(() {
                             productCategory = data.categoryName;
+                            productCategoryHint = data.categoryName;
                           });
                         },
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: productCategory,
+                          hintText: productCategoryHint,
                           labelText: 'Category',
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -316,11 +278,12 @@ class AddProductState extends State<AddProduct> {
                           String data = await const BrandsList().launch(context);
                           setState(() {
                             brandName = data;
+                            brandNameHint = data;
                           });
                         },
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: brandName,
+                          hintText: brandNameHint,
                           labelText: 'Brand',
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -340,7 +303,7 @@ class AddProductState extends State<AddProduct> {
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'Product Code is Required';
-                                } else if (codeList.contains(value?.toLowerCase().removeAllWhiteSpace())) {
+                                } else if (widget.productCodeList.contains(value?.toLowerCase().removeAllWhiteSpace())) {
                                   return 'This Product Already added!';
                                 }
                                 return null;
@@ -416,11 +379,12 @@ class AddProductState extends State<AddProduct> {
                                 String data = await const UnitList().launch(context);
                                 setState(() {
                                   productUnit = data;
+                                  productUnitHint = data;
                                 });
                               },
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                hintText: productUnit,
+                                hintText: productUnitHint,
                                 labelText: 'Units',
                                 border: const OutlineInputBorder(),
                                 suffixIcon: const Icon(Icons.keyboard_arrow_down),
