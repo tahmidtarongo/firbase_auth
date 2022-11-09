@@ -430,7 +430,7 @@ class AddProductState extends State<AddProduct> {
                               decoration: const InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: 'MRP',
-                                hintText: 'Enter MRP.',
+                                hintText: 'Enter MRP/Retail Price.',
                                 border: OutlineInputBorder(),
                               ),
                             ),

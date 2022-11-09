@@ -218,9 +218,17 @@ class _SaleProductsState extends State<SaleProducts> {
                           if (widget.customerModel!.type.contains('Retailer')) {
                             productPrice = products[i].productSalePrice;
                           } else if (widget.customerModel!.type.contains('Dealer')) {
-                            productPrice = products[i].productDealerPrice;
+                            if (products[i].productDealerPrice == '') {
+                              productPrice = '0';
+                            } else {
+                              productPrice = products[i].productDealerPrice;
+                            }
                           } else if (widget.customerModel!.type.contains('Wholesaler')) {
-                            productPrice = products[i].productWholeSalePrice;
+                            if (products[i].productWholeSalePrice == '') {
+                              productPrice = '0';
+                            } else {
+                              productPrice = products[i].productWholeSalePrice;
+                            }
                           } else if (widget.customerModel!.type.contains('Supplier')) {
                             productPrice = products[i].productPurchasePrice;
                           } else if (widget.customerModel!.type.contains('Guest')) {
@@ -297,7 +305,8 @@ class _SaleProductsState extends State<SaleProducts> {
 
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  ProductCard({Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage, required this.stock})
+  ProductCard(
+      {Key? key, required this.productTitle, required this.productDescription, required this.productPrice, required this.productImage, required this.stock})
       : super(key: key);
 
   // final Product product;

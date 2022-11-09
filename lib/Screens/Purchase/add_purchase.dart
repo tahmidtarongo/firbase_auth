@@ -172,7 +172,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: widget.customerModel.customerName,
+                          initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Supplier Name',

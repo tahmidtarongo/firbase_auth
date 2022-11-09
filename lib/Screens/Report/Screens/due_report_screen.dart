@@ -81,7 +81,9 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            reTransaction[index].customerName,
+                                            reTransaction[index].customerName.isNotEmpty
+                                                ? reTransaction[index].customerName
+                                                : reTransaction[index].customerPhone,
                                             style: const TextStyle(fontSize: 16),
                                           ),
                                           Text('#${reTransaction[index].invoiceNumber}'),
@@ -111,7 +113,9 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                 DateFormat.yMMMd().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
-                                              const SizedBox(height: 3,),
+                                              const SizedBox(
+                                                height: 3,
+                                              ),
                                               Text(
                                                 DateFormat.jm().format(DateTime.parse(reTransaction[index].purchaseDate)),
                                                 style: const TextStyle(color: Colors.grey),
@@ -121,7 +125,6 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10),
-
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -131,11 +134,12 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                 'Total : $currency ${reTransaction[index].totalDue.toString()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
-                                              const SizedBox(height: 10),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Paid : $currency ${reTransaction[index].totalDue!.toDouble() - reTransaction[index].dueAmountAfterPay!.toDouble()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Due: $currency ${reTransaction[index].dueAmountAfterPay.toString()}',
                                                 style: const TextStyle(fontSize: 16),
@@ -186,6 +190,13 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                                               subtitle: const Text("Click to connect"),
                                                                             );
                                                                           },
+                                                                        ),
+                                                                        const Padding(
+                                                                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                          child: Text(
+                                                                            'Please connect your bluetooth Printer',
+                                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                          ),
                                                                         ),
                                                                         const SizedBox(height: 10),
                                                                         Container(height: 1, width: double.infinity, color: Colors.grey),
@@ -243,10 +254,10 @@ class _DueReportScreenState extends State<DueReportScreen> {
                         },
                       )
                     : const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 60),
-                      child: EmptyScreenWidget(),
-                    ));
+                        child: Padding(
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      ));
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

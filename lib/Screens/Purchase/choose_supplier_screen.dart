@@ -118,7 +118,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  customer[index].customerName,
+                                                  customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
                                                   style: GoogleFonts.poppins(
                                                     color: Colors.black,
                                                     fontSize: 15.0,
@@ -169,8 +169,8 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                         ],
                       )
                     : const Padding(
-                    padding: EdgeInsets.only(top: 60),
-                    child: EmptyScreenWidget(),
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
                       );
               }, error: (e, stack) {
                 return Text(e.toString());

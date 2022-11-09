@@ -53,8 +53,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
 
           return Container(
             alignment: Alignment.topCenter,
-            decoration:
-            const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
             child: SingleChildScrollView(
               child: providerData.when(data: (transaction) {
                 final reTransaction = transaction.reversed.toList();
@@ -83,10 +82,15 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            reTransaction[index].customerName,
+                                            reTransaction[index].customerName.isNotEmpty
+                                                ? reTransaction[index].customerName
+                                                : reTransaction[index].customerPhone,
                                             style: const TextStyle(fontSize: 16),
                                           ),
-                                          Text('#${reTransaction[index].invoiceNumber}',style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                          Text(
+                                            '#${reTransaction[index].invoiceNumber}',
+                                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -122,35 +126,25 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10),
-                                      Text(
-                                        'Total : $currency ${reTransaction[index].totalAmount.toString()}',
-                                        style: const TextStyle(color: Colors.grey),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
-                                        style: const TextStyle(color: Colors.grey),
-                                      ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
-                                                style: const TextStyle(color: Colors.grey),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
-                                                style: const TextStyle(color: Colors.grey),
-                                              ),
-                                              Text(
-                                                'Due: $currency ${reTransaction[index].dueAmount.toString()}',
-                                                style: const TextStyle(fontSize: 16),
-                                              ).visible(reTransaction[index].dueAmount!.toInt() != 0),
-                                            ],
-                                          ),
+                                          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                            Text(
+                                              'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                              style: const TextStyle(color: Colors.grey),
+                                            ),
+                                            const SizedBox(height: 3),
+                                            Text(
+                                              'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                              style: const TextStyle(color: Colors.grey),
+                                            ),
+                                            const SizedBox(height: 3),
+                                            Text(
+                                              'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                              style: const TextStyle(fontSize: 16),
+                                            ).visible(reTransaction[index].dueAmount!.toInt() != 0),
+                                          ]),
                                           personalData.when(data: (data) {
                                             return Row(
                                               children: [
@@ -198,6 +192,13 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                                               subtitle: const Text("Click to connect"),
                                                                             );
                                                                           },
+                                                                        ),
+                                                                        const Padding(
+                                                                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                          child: Text(
+                                                                            'Please connect your bluetooth Printer',
+                                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                          ),
                                                                         ),
                                                                         const SizedBox(height: 10),
                                                                         Container(height: 1, width: double.infinity, color: Colors.grey),
@@ -255,9 +256,9 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                         },
                       )
                     : const Padding(
-                      padding: EdgeInsets.only(top: 60),
-                      child: EmptyScreenWidget(),
-                    );
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

@@ -360,17 +360,9 @@ class UpdateProductState extends State<UpdateProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              readOnly: true,
                               keyboardType: TextInputType.number,
                               controller: purchasePriceController,
-                              validator: (value) {
-                                if (value.isEmptyOrNull) {
-                                  return 'Purchase Price is required';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                updatedProductModel.productPurchasePrice = value!;
-                              },
                               decoration: const InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: 'Purchase Price',
@@ -384,17 +376,9 @@ class UpdateProductState extends State<UpdateProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              readOnly: true,
                               controller: mrpController,
                               keyboardType: TextInputType.number,
-                              validator: (value) {
-                                if (value.isEmptyOrNull) {
-                                  return 'MRP is required';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                widget.productModel.productSalePrice = value!;
-                              },
                               decoration: const InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: 'MRP',

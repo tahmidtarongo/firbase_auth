@@ -128,16 +128,20 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
+
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+
                                             children: [
                                               Text(
                                                 'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
-                                              const SizedBox(height: 10),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                 style: const TextStyle(fontSize: 16),

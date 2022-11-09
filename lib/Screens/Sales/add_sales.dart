@@ -171,7 +171,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: widget.customerModel.customerName,
+                          initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Customer Name',
@@ -625,7 +625,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                   ///________Subscription_____________________________________________________
-                                  Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber',context: context);
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -818,7 +818,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                     ///________Subscription_____________________________________________________
-                                    Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber',context: context);
+                                    Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
 
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
@@ -889,9 +889,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             );
                                                           },
                                                         ).visible(printerData.availableBluetoothDevices.isNotEmpty),
-                                                        const Text(
-                                                          'Please connect your bluetooth Printer',
-                                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                        const Padding(
+                                                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                          child: Text(
+                                                            'Please connect your bluetooth Printer',
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
                                                         ),
                                                         const SizedBox(height: 10),
                                                         Container(
