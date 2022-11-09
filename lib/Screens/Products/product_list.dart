@@ -71,12 +71,6 @@ class _ProductListState extends State<ProductList> {
                                   ),
                                   fit: BoxFit.cover,
                                 )),
-                            // child: CachedNetworkImage(
-                            //   imageUrl: products[i].productPicture,
-                            //   placeholder: (context, url) => const SizedBox(height: 50, width: 50, ),
-                            //   errorWidget: (context, url, error) => const Icon(Icons.error),
-                            //   fit: BoxFit.cover,
-                            // ),
                           ),
                           title: Text(products[i].productName),
                           subtitle: Text("Stock : ${products[i].productStock}"),
@@ -106,8 +100,6 @@ class _ProductListState extends State<ProductList> {
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {
-              print(productNameList);
-              print(productCodeList);
               AddProduct(
                 productNameList: productNameList,
                 productCodeList: productCodeList,

@@ -43,28 +43,20 @@ class AddProductState extends State<AddProduct> {
   String brandNameHint = 'Select Brand';
   String productUnit = '';
   String productUnitHint = 'Select Unit';
-  late String productName,
-      productStock,
-      productSalePrice,
-      productPurchasePrice,
-      productCode,
-      productWholeSalePrice,
-      productDealerPrice,
-      productManufacturer,
-      size,
-      color,
-      weight,
-      capacity,
-      type;
+  late String productName, productStock, productSalePrice, productPurchasePrice, productCode;
+  String productWholeSalePrice = '0';
+  String productDealerPrice = '0';
+  String productManufacturer = '';
+  String size = '';
+  String color = '';
+  String weight = '';
+  String capacity = '';
+  String type = '';
   String productPicture =
       'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Customer%20Picture%2FNo_Image_Available.jpeg?alt=media&token=3de0d45e-0e4a-4a7b-b115-9d6722d5031f';
-  String productDiscount = 'Not Provided';
-  List<String> catItems = [];
-  bool showProgress = false;
-  double progress = 0.0;
+  String productDiscount = '';
   final ImagePicker _picker = ImagePicker();
   XFile? pickedImage;
-  String promoCodeHint = 'Enter Product Code';
   TextEditingController productCodeController = TextEditingController();
   File imageFile = File('No File');
   String imagePath = 'No Data';
@@ -128,7 +120,7 @@ class AddProductState extends State<AddProduct> {
         child: Consumer(builder: (context, ref, __) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
               child: Form(
                 key: globalKey,
                 child: Column(
@@ -263,7 +255,7 @@ class AddProductState extends State<AddProduct> {
                         decoration: const InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: 'Type',
-                          hintText: 'Usb C',
+                          hintText: 'Enter Type.',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -364,7 +356,7 @@ class AddProductState extends State<AddProduct> {
                               decoration: const InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: 'Stock',
-                                hintText: '20',
+                                hintText: 'Enter Stock.',
                                 border: OutlineInputBorder(),
                               ),
                             ),

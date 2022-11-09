@@ -111,8 +111,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                 Container(
                   padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
                   width: 120,
+                  height: 120,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
+                    borderRadius: BorderRadius.circular(90),
                     image: DecorationImage(
                       image: NetworkImage(widget.customerModel.profilePicture),
                       fit: BoxFit.cover,
