@@ -11,13 +11,10 @@ bool connected = false;
 bool isPrintEnable = true;
 List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay', 'Due'];
 
-
-
 //___________currency__________________________
 
-
-
-const String appVersion = '1.0.0';
+const String appVersion = '1.1.0';
+const String playStoreUrl = "market://details?id=com.maantechnology.maanpos";
 
 const String paypalClientId = 'ASWARYNRARFIbKf8U4u5Bq9-8tYVszzpkfRhohErQil3izlffjVQE-L0K2M0_bobdPhj2Qyf7uHoGctI';
 const String paypalClientSecret = 'EDNYPyTGpziJzfVhqsf75iodgFGSCOZAKXTHuD9YR5PWt5ruwc1HIzgT6STEznFfGro5E8h466i0sPtb';

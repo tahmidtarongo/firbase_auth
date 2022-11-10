@@ -7,6 +7,7 @@ import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../Provider/profile_provider.dart';
 import '../../subscription.dart';
@@ -44,9 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": 'images/banner2.png',
     }
   ];
-  PageController pageController = PageController(initialPage: 0);
+  PageController pageController = PageController(
+    initialPage: 0,
+  );
+
   @override
   Widget build(BuildContext context) {
+    int i = 0;
     return SafeArea(
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
@@ -110,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //   child: Center(
                           //     child: Text(
                           //       '$currency 450',
-                          //       style: GoogleFonts.poppins(
+                          //       style: GoogleFonts.p(
                           //         fontSize: 20.0,
                           //         color: Colors.black,
                           //       ),
@@ -217,49 +222,94 @@ class _HomeScreenState extends State<HomeScreen> {
                       // ),
 
                       homePageImageProvider.when(data: (images) {
-                        return Container(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'What\'s New',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
+                        if (images.isNotEmpty) {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'What\'s New',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                height: 180,
-                                width: 320,
-                                child: PageView.builder(
-                                  pageSnapping: true,
-                                  itemCount: images.length,
-                                  controller: pageController,
-                                  onPageChanged: (int index) {},
-                                  itemBuilder: (_, index) {
-                                    return GestureDetector(
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    GestureDetector(
+                                      child: const Icon(Icons.keyboard_arrow_left),
                                       onTap: () {
-                                        const PackageScreen().launch(context);
+                                        pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
                                       },
-                                      child: Image(
-                                        image: NetworkImage(
-                                          images[index].imageUrl,
-                                        ),
-                                        fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      height: 180,
+                                      width: 320,
+                                      child: PageView.builder(
+                                        pageSnapping: true,
+                                        itemCount: images.length,
+                                        controller: pageController,
+                                        itemBuilder: (_, index) {
+                                          if (images[index].imageUrl.contains('https://firebasestorage.googleapis.com')) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                const PackageScreen().launch(context);
+                                              },
+                                              child: Image(
+                                                image: NetworkImage(
+                                                  images[index].imageUrl,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            );
+                                          } else {
+                                            YoutubePlayerController videoController = YoutubePlayerController(
+                                              flags: const YoutubePlayerFlags(
+                                                autoPlay: false,
+                                                mute: false,
+                                              ),
+                                              initialVideoId: images[index].imageUrl,
+                                            );
+                                            return YoutubePlayer(
+                                              controller: videoController,
+                                              showVideoProgressIndicator: true,
+                                              onReady: () {},
+                                            );
+                                          }
+                                        },
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    GestureDetector(
+                                      child: const Icon(Icons.keyboard_arrow_right),
+                                      onTap: () {
+                                        pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(height: 30),
-                            ],
-                          ),
-                        );
+                                const SizedBox(height: 30),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            padding: const EdgeInsets.all(10),
+                            height: 180,
+                            width: 320,
+                            decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('image/banner1.png'))),
+                          );
+                        }
                       }, error: (e, stack) {
-                        return Text(e.toString());
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          height: 180,
+                          width: 320,
+                          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('image/banner1.png'))),
+                        );
                       }, loading: () {
                         return const CircularProgressIndicator();
                       }),

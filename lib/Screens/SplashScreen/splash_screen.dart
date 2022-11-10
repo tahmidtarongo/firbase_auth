@@ -8,10 +8,9 @@ import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../currency.dart';
-import '../../model/subscription_model.dart';
-import '../../subscription.dart';
 import '../Home/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,19 +33,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<void> checkForUpdate() async {}
-
   void getPermission() async {
-    // ignore: unused_local_variable
     Map<Permission, PermissionStatus> statuses = await [
       Permission.bluetoothScan,
       Permission.bluetoothConnect,
     ].request();
   }
-
-  void saveSkipUpdateData() async {}
-
-
 
   getCurrency() async {
     final prefs = await SharedPreferences.getInstance();
@@ -58,49 +50,67 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void init() async {
-    final prefs = await SharedPreferences.getInstance();
-    isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
-    final String? skipVersion = prefs.getString('skipVersion');
-    await Future.delayed(const Duration(seconds: 2), () {
-      if (isUpdateAvailable && (skipVersion == null || skipVersion != newUpdateVersion)) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Padding(
+  Future<void> updateNotifier() async {
+    bool forceUpdate = false;
+    bool normalUpdate = false;
+    String updatedAppVersion = '';
+    await FirebaseDatabase.instance.ref().child('Admin Panel').child('App Update').orderByKey().get().then((value) {
+      final updateData = jsonDecode(jsonEncode(value.value));
+      forceUpdate = updateData['forceUpdateApp'];
+      normalUpdate = updateData['normalUpdateApp'];
+      updatedAppVersion = updateData['updatedAppVersion'];
+    });
+
+    int thisAppVersion = int.parse(appVersion.replaceAll('.', ''));
+    int updateVersion = int.parse(updatedAppVersion.replaceAll('.', ''));
+
+    if (normalUpdate && !forceUpdate && (updateVersion > thisAppVersion)) {
+      final prefs = await SharedPreferences.getInstance();
+      isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 2,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20, bottom: 10),
-                              child: Text(
-                                'A new update available\n\n'
-                                'Please update your app',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'NEW UPDATE AVAILABLE',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
+                            ),
+                            const SizedBox(height: 13),
+                            const Text(
+                              'Please update your app',
+                              style: TextStyle(
+                                fontSize: 20,
                               ),
                             ),
-                            const SizedBox(
-                              height: 30,
-                            ),
+                            const SizedBox(height: 20),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: GestureDetector(
-                                onTap: () async {
-                                  await prefs.remove('skipVersion');
+                                onTap: () {
+                                  final url = Uri.parse(playStoreUrl);
+                                  launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
                                 },
                                 child: Container(
                                   height: 50,
@@ -111,35 +121,6 @@ class _SplashScreenState extends State<SplashScreen> {
                                   child: const Center(
                                       child: Text(
                                     'Update Now',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  await prefs.setBool('isSkipUpdate', false);
-                                  await prefs.setString('skipVersion', newUpdateVersion);
-
-                                  if (currentUser != null) {
-                                    // ignore: use_build_context_synchronously
-                                    const Home().launch(context);
-                                  } else {
-                                    // ignore: use_build_context_synchronously
-                                    const OnBoard().launch(context);
-                                  }
-                                },
-                                child: Container(
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    color: kMainColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  child: const Center(
-                                      child: Text(
-                                    'Skip this update',
                                     style: TextStyle(color: Colors.white),
                                   )),
                                 ),
@@ -176,31 +157,95 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
               ),
-            );
-          },
-        );
-        // const RedeemConfirmationScreen().launch(context);
+            ),
+          );
+        },
+      );
+    } else if (forceUpdate && (updateVersion > thisAppVersion)) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Center(
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            const Text(
+                              'NEW UPDATE AVAILABLE',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
+                            ),
+                            const SizedBox(height: 13),
+                            const Text(
+                              'Please update your app',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  final url = Uri.parse(playStoreUrl);
+                                  launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                                child: Container(
+                                  height: 50,
+                                  decoration: const BoxDecoration(
+                                    color: kMainColor,
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  child: const Center(
+                                      child: Text(
+                                    'Update Now',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      if (currentUser != null) {
+        const Home().launch(context, isNewTask: true);
       } else {
-        if (currentUser != null) {
-          const Home().launch(context, isNewTask: true);
-        } else {
-          const OnBoard().launch(context, isNewTask: true);
-        }
+        const OnBoard().launch(context, isNewTask: true);
       }
-    });
-    defaultBlurRadius = 10.0;
-    defaultSpreadRadius = 0.5;
+    }
   }
-
-
 
   @override
   void initState() {
     super.initState();
-    init();
-    getPermission();
-    checkForUpdate();
     getCurrency();
+    updateNotifier();
   }
 
   @override
