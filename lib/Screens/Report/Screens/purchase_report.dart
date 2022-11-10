@@ -262,7 +262,10 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }),
             ),
           );

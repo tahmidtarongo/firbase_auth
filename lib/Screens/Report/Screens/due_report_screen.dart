@@ -129,6 +129,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Total : $currency ${reTransaction[index].totalDue.toString()}',
@@ -261,7 +262,10 @@ class _DueReportScreenState extends State<DueReportScreen> {
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }),
             ),
           );

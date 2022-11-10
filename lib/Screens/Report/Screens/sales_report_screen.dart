@@ -262,7 +262,10 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }),
             ),
           );

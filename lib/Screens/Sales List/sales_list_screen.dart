@@ -84,10 +84,15 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            reTransaction[index].customerName,
+                                            reTransaction[index].customerName.isNotEmpty
+                                                ? reTransaction[index].customerName
+                                                : reTransaction[index].customerPhone,
                                             style: const TextStyle(fontSize: 16),
                                           ),
-                                          Text('#${reTransaction[index].invoiceNumber}',style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                          Text(
+                                            '#${reTransaction[index].invoiceNumber}',
+                                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -123,14 +128,11 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10),
-
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
-
                                             crossAxisAlignment: CrossAxisAlignment.start,
-
                                             children: [
                                               Text(
                                                 'Total : $currency ${reTransaction[index].totalAmount.toString()}',
@@ -194,6 +196,13 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                                                 subtitle: const Text("Click to connect"),
                                                                               );
                                                                             },
+                                                                          ),
+                                                                          const Padding(
+                                                                            padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                            child: Text(
+                                                                              'Please connect your bluetooth Printer',
+                                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                            ),
                                                                           ),
                                                                           const SizedBox(height: 10),
                                                                           Container(height: 1, width: double.infinity, color: Colors.grey),

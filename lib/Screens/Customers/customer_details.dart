@@ -371,29 +371,56 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                           builder: (_) {
                                                                             return Dialog(
                                                                               child: SizedBox(
-                                                                                height: 200,
-                                                                                child: ListView.builder(
-                                                                                  itemCount: printerData.availableBluetoothDevices.isNotEmpty
-                                                                                      ? printerData.availableBluetoothDevices.length
-                                                                                      : 0,
-                                                                                  itemBuilder: (context, index) {
-                                                                                    return ListTile(
-                                                                                      onTap: () async {
-                                                                                        String select = printerData.availableBluetoothDevices[index];
-                                                                                        List list = select.split("#");
-                                                                                        // String name = list[0];
-                                                                                        String mac = list[1];
-                                                                                        bool isConnect = await printerData.setConnect(mac);
-                                                                                        // ignore: use_build_context_synchronously
-                                                                                        isConnect
+                                                                                child: Column(
+                                                                                  mainAxisSize: MainAxisSize.min,
+                                                                                  children: [
+                                                                                    ListView.builder(
+                                                                                      shrinkWrap: true,
+                                                                                      itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                                          ? printerData.availableBluetoothDevices.length
+                                                                                          : 0,
+                                                                                      itemBuilder: (context, index) {
+                                                                                        return ListTile(
+                                                                                          onTap: () async {
+                                                                                            String select = printerData.availableBluetoothDevices[index];
+                                                                                            List list = select.split("#");
+                                                                                            // String name = list[0];
+                                                                                            String mac = list[1];
+                                                                                            bool isConnect = await printerData.setConnect(mac);
                                                                                             // ignore: use_build_context_synchronously
-                                                                                            ? finish(context)
-                                                                                            : toast('Try Again');
+                                                                                            isConnect
+                                                                                                // ignore: use_build_context_synchronously
+                                                                                                ? finish(context)
+                                                                                                : toast('Try Again');
+                                                                                          },
+                                                                                          title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                                          subtitle: const Text("Click to connect"),
+                                                                                        );
                                                                                       },
-                                                                                      title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                      subtitle: const Text("Click to connect"),
-                                                                                    );
-                                                                                  },
+                                                                                    ),
+                                                                                    const Padding(
+                                                                                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                                      child: Text(
+                                                                                        'Please connect your bluetooth Printer',
+                                                                                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                                      ),
+                                                                                    ),
+                                                                                    const SizedBox(height: 10),
+                                                                                    Container(height: 1, width: double.infinity, color: Colors.grey),
+                                                                                    const SizedBox(height: 15),
+                                                                                    GestureDetector(
+                                                                                      onTap: () {
+                                                                                        Navigator.pop(context);
+                                                                                      },
+                                                                                      child: const Center(
+                                                                                        child: Text(
+                                                                                          'Cancel',
+                                                                                          style: TextStyle(color: kMainColor),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    const SizedBox(height: 15),
+                                                                                  ],
                                                                                 ),
                                                                               ),
                                                                             );
@@ -496,16 +523,27 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                 ],
                                               ),
                                               const SizedBox(height: 10),
-                                              Text(
-                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
-                                                style: const TextStyle(color: Colors.grey),
-                                              ),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    'Due: $currency ${reTransaction[index].dueAmount.toString()}',
-                                                    style: const TextStyle(fontSize: 16),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                        style: const TextStyle(color: Colors.grey),
+                                                      ),
+                                                      const SizedBox(height: 3),
+                                                      Text(
+                                                        'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                        style: const TextStyle(color: Colors.grey),
+                                                      ),
+                                                      const SizedBox(height: 3),
+                                                      Text(
+                                                        'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                                        style: const TextStyle(fontSize: 16),
+                                                      ),
+                                                    ],
                                                   ),
                                                   personalData.when(data: (data) {
                                                     return Row(
@@ -519,16 +557,19 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                               );
                                                               connected
                                                                   ? printerDataPurchase.printTicket(
-                                                                      printTransactionModel: model,
-                                                                      productList: model.purchaseTransitionModel!.productList,
-                                                                    )
+                                                                printTransactionModel: model,
+                                                                productList: model.purchaseTransitionModel!.productList,
+                                                              )
                                                                   : showDialog(
-                                                                      context: context,
-                                                                      builder: (_) {
-                                                                        return Dialog(
-                                                                          child: SizedBox(
-                                                                            height: 200,
-                                                                            child: ListView.builder(
+                                                                  context: context,
+                                                                  builder: (_) {
+                                                                    return Dialog(
+                                                                      child: SizedBox(
+                                                                        child: Column(
+                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          children: [
+                                                                            ListView.builder(
+                                                                              shrinkWrap: true,
                                                                               itemCount: printerData.availableBluetoothDevices.isNotEmpty
                                                                                   ? printerData.availableBluetoothDevices.length
                                                                                   : 0,
@@ -542,7 +583,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                                     bool isConnect = await printerData.setConnect(mac);
                                                                                     // ignore: use_build_context_synchronously
                                                                                     isConnect
-                                                                                        // ignore: use_build_context_synchronously
+                                                                                    // ignore: use_build_context_synchronously
                                                                                         ? finish(context)
                                                                                         : toast('Try Again');
                                                                                   },
@@ -551,9 +592,33 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                                 );
                                                                               },
                                                                             ),
-                                                                          ),
-                                                                        );
-                                                                      });
+                                                                            const Padding(
+                                                                              padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                              child: Text(
+                                                                                'Please connect your bluetooth Printer',
+                                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                              ),
+                                                                            ),
+                                                                            const SizedBox(height: 10),
+                                                                            Container(height: 1, width: double.infinity, color: Colors.grey),
+                                                                            const SizedBox(height: 15),
+                                                                            GestureDetector(
+                                                                              onTap: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: const Center(
+                                                                                child: Text(
+                                                                                  'Cancel',
+                                                                                  style: TextStyle(color: kMainColor),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            const SizedBox(height: 15),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  });
                                                             },
                                                             icon: const Icon(
                                                               FeatherIcons.printer,
