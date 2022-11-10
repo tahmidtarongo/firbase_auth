@@ -81,11 +81,13 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            reTransaction[index].customerName,
+                                            reTransaction[index].customerName.isNotEmpty? reTransaction[index].customerName:reTransaction[index].customerPhone,
                                             style: const TextStyle(fontSize: 16),
                                           ),
-                                          Text('#${reTransaction[index].invoiceNumber}',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold
-                                          ),),
+                                          Text(
+                                            '#${reTransaction[index].invoiceNumber}',
+                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -121,21 +123,22 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10),
-
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Total : $currency ${reTransaction[index].totalAmount.toString()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
-                                              const SizedBox(height: 10),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
                                                 style: const TextStyle(color: Colors.grey),
                                               ),
+                                              const SizedBox(height: 3),
                                               Text(
                                                 'Due: $currency ${reTransaction[index].dueAmount.toString()}',
                                                 style: const TextStyle(fontSize: 16),
@@ -189,8 +192,16 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                               );
                                                                             },
                                                                           ),
+                                                                          const Padding(
+                                                                            padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                            child: Text(
+                                                                              'Please connect your bluetooth Printer',
+                                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          ),
                                                                           const SizedBox(height: 10),
                                                                           Container(height: 1, width: double.infinity, color: Colors.grey),
+
                                                                           const SizedBox(height: 15),
                                                                           GestureDetector(
                                                                             onTap: () {
@@ -244,14 +255,17 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                         },
                       )
                     : const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 60),
-                      child: EmptyScreenWidget(),
-                    ));
+                        child: Padding(
+                        padding: EdgeInsets.only(top: 60),
+                        child: EmptyScreenWidget(),
+                      ));
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }),
             ),
           );

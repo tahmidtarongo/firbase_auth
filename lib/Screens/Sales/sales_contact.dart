@@ -179,7 +179,7 @@ class _SalesContactState extends State<SalesContact> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    customer[index].customerName,
+                                                    customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
                                                     style: GoogleFonts.poppins(
                                                       color: Colors.black,
                                                       fontSize: 15.0,

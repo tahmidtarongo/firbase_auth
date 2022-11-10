@@ -146,7 +146,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            retailersList[index].customerName,
+                                            retailersList[index].customerName.isNotEmpty ? retailersList[index].customerName : retailersList[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -222,7 +222,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            wholesalerList[index].customerName,
+                                            wholesalerList[index].customerName.isNotEmpty
+                                                ? wholesalerList[index].customerName
+                                                : wholesalerList[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -295,7 +297,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            dealerList[index].customerName,
+                                            dealerList[index].customerName.isNotEmpty ? dealerList[index].customerName : dealerList[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -372,7 +374,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                supplierList[index].customerName,
+                                                supplierList[index].customerName.isNotEmpty
+                                                    ? supplierList[index].customerName
+                                                    : supplierList[index].phoneNumber,
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -422,7 +426,17 @@ class _LedgerScreenState extends State<LedgerScreen> {
           }, error: (e, stack) {
             return Text(e.toString());
           }, loading: () {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+              alignment: Alignment.topCenter,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }),
         ),
       );

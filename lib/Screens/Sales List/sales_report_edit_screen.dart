@@ -208,7 +208,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                     AppTextField(
                       textFieldType: TextFieldType.NAME,
                       readOnly: true,
-                      initialValue: widget.transitionModel.customerName,
+                      initialValue: widget.transitionModel.customerName.isNotEmpty? widget.transitionModel.customerName: widget.transitionModel.customerPhone,
                       decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: 'Customer Name',

@@ -13,28 +13,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../GlobalComponents/Model/category_model.dart';
 import '../../constant.dart';
-import '../../currency.dart';
 import '../Home/home_screen.dart';
 
-// ignore: must_be_immutable
 class UpdateProduct extends StatefulWidget {
-  UpdateProduct({Key? key, this.productModel}) : super(key: key);
+  const UpdateProduct({Key? key, required this.productModel, required this.productNameList, required this.productCodeList}) : super(key: key);
 
-  ProductModel? productModel;
+  final ProductModel productModel;
+  final List<String> productNameList;
+  final List<String> productCodeList;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _UpdateProductState createState() => _UpdateProductState();
+  UpdateProductState createState() => UpdateProductState();
 }
 
-class _UpdateProductState extends State<UpdateProduct> {
+class UpdateProductState extends State<UpdateProduct> {
   late String productKey;
   late ProductModel updatedProductModel;
-  GetCategoryAndVariationModel data = GetCategoryAndVariationModel(variations: [], categoryName: '');
-  bool showProgress = false;
   final ImagePicker _picker = ImagePicker();
   XFile? pickedImage;
   File imageFile = File('No File');
@@ -71,12 +66,39 @@ class _UpdateProductState extends State<UpdateProduct> {
     });
   }
 
+  TextEditingController productNameController = TextEditingController();
+  TextEditingController sizeController = TextEditingController();
+  TextEditingController colorController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
+  TextEditingController capacityController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
+  TextEditingController purchasePriceController = TextEditingController();
+  TextEditingController mrpController = TextEditingController();
+  TextEditingController wholeSaleController = TextEditingController();
+  TextEditingController dealerPriceController = TextEditingController();
+  TextEditingController manufacturerController = TextEditingController();
+
   @override
   void initState() {
-    getProductKey(widget.productModel!.productCode);
-    updatedProductModel = widget.productModel!;
+    getProductKey(widget.productModel.productCode);
+    updatedProductModel = widget.productModel;
     super.initState();
+
+    ///________set_previous_data_________________________
+    productNameController.value = TextEditingValue(text: widget.productModel.productName);
+    sizeController.value = TextEditingValue(text: widget.productModel.size);
+    colorController.value = TextEditingValue(text: widget.productModel.color);
+    weightController.value = TextEditingValue(text: widget.productModel.weight);
+    capacityController.value = TextEditingValue(text: widget.productModel.capacity);
+    typeController.value = TextEditingValue(text: widget.productModel.type);
+    purchasePriceController.value = TextEditingValue(text: widget.productModel.productPurchasePrice);
+    mrpController.value = TextEditingValue(text: widget.productModel.productSalePrice);
+    wholeSaleController.value = TextEditingValue(text: widget.productModel.productWholeSalePrice);
+    dealerPriceController.value = TextEditingValue(text: widget.productModel.productDealerPrice);
+    manufacturerController.value = TextEditingValue(text: widget.productModel.productManufacturer);
   }
+
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,570 +122,728 @@ class _UpdateProductState extends State<UpdateProduct> {
           decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Visibility(
-                    visible: showProgress,
-                    child: const CircularProgressIndicator(
-                      color: kMainColor,
-                      strokeWidth: 5.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      initialValue: widget.productModel!.productName,
-                      textFieldType: TextFieldType.NAME,
-                      onChanged: (value) {
-                        setState(() {
-                          updatedProductModel.productName = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Product name',
-                        hintText: 'Smart Watch',
-                        border: OutlineInputBorder(),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+              child: Form(
+                key: globalKey,
+                child: Column(
+                  children: [
+                    ///________Name__________________________________________
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: productNameController,
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(),
+                          labelText: 'Product Name',
+                          hintText: 'Enter Product Name.',
+                        ),
+                        validator: (value) {
+                          if (value.isEmptyOrNull) {
+                            return 'Product name is required.';
+                          } else if (widget.productNameList.contains(value?.toLowerCase().removeAllWhiteSpace()) && value != widget.productModel.productName) {
+                            return 'Product name is already added.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          updatedProductModel.productName = value!;
+                        },
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      readOnly: true,
-                      textFieldType: TextFieldType.EMAIL,
-                      initialValue: widget.productModel!.productCategory,
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Category',
-                        border: OutlineInputBorder(),
+
+                    ///______category___________________________
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          hintText: widget.productModel.productCategory,
+                          labelText: 'Category',
+                          border: const OutlineInputBorder(),
+                          suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.size,
-                            textFieldType: TextFieldType.NAME,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.size = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Size',
-                              hintText: 'M',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ).visible(widget.productModel!.size != 'Not Provided'),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.color,
-                            textFieldType: TextFieldType.NAME,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.color = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Color',
-                              hintText: 'Green',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ).visible(widget.productModel!.color != 'Not Provided'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.weight,
-                            textFieldType: TextFieldType.NAME,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.weight = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Weight',
-                              hintText: '10 inc',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ).visible(widget.productModel!.weight != 'Not Provided'),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.capacity,
-                            textFieldType: TextFieldType.NAME,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.capacity = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Capacity',
-                              hintText: '244 liter',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ).visible(widget.productModel!.capacity != 'Not Provided'),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      initialValue: widget.productModel!.type,
-                      textFieldType: TextFieldType.NAME,
-                      onChanged: (value) {
-                        setState(() {
-                          updatedProductModel.type = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Type',
-                        hintText: 'Usb C',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ).visible(widget.productModel!.type != 'Not Provided'),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      readOnly: true,
-                      textFieldType: TextFieldType.EMAIL,
-                      initialValue: widget.productModel!.brandName,
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Brand',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            readOnly: true,
-                            textFieldType: TextFieldType.NAME,
-                            decoration: InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Product Code',
-                              hintText: widget.productModel!.productCode,
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: 60.0,
-                            width: 100.0,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(color: kGreyTextColor),
-                            ),
-                            child: const Image(
-                              image: AssetImage('images/barcode.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productStock,
-                            textFieldType: TextFieldType.NAME,
-                            readOnly: true,
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Stock',
-                              hintText: '20',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child:Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            readOnly: true,
-                            textFieldType: TextFieldType.EMAIL,
-                            initialValue: widget.productModel!.productUnit,
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Unit',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                        // child: Padding(
-                        //   padding: const EdgeInsets.all(10.0),
-                        //   child: Container(
-                        //     height: 60.0,
-                        //     width: MediaQuery.of(context).size.width,
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(5.0),
-                        //       border: Border.all(color: kGreyTextColor),
-                        //     ),
-                        //     child: Row(
-                        //       children: [
-                        //         const SizedBox(
-                        //           width: 10.0,
-                        //         ),
-                        //         Text(widget.productModel!.productUnit),
-                        //         const Spacer(),
-                        //         const Icon(Icons.keyboard_arrow_down),
-                        //         const SizedBox(
-                        //           width: 10.0,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productPurchasePrice,
-                            textFieldType: TextFieldType.PHONE,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.productPurchasePrice = value;
-                              });
-                            },
-                            decoration:  InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Purchase Price',
-                              hintText: '$currency 300.90',
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productSalePrice,
-                            textFieldType: TextFieldType.PHONE,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.productSalePrice = value;
-                              });
-                            },
-                            decoration:  InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Sale Price',
-                              hintText: '$currency 234.09',
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productWholeSalePrice,
-                            textFieldType: TextFieldType.PHONE,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.productWholeSalePrice = value;
-                              });
-                            },
-                            decoration:  InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'WholeSale Price',
-                              hintText: '$currency 155',
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productDealerPrice,
-                            textFieldType: TextFieldType.PHONE,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.productDealerPrice = value;
-                              });
-                            },
-                            decoration:  InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Dealer price',
-                              hintText: '$currency 130',
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: AppTextField(
-                          textFieldType: TextFieldType.PHONE,
-                          initialValue: widget.productModel!.productDiscount,
-                          onChanged: (value) {
-                            setState(() {
-                              updatedProductModel.productDiscount = value;
-                            });
-                          },
-                          decoration:  InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Discount',
-                            hintText: '$currency 34.90',
-                            border: const OutlineInputBorder(),
-                          ),
-                        ),
-                      )).visible(false),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: AppTextField(
-                            initialValue: widget.productModel!.productManufacturer,
-                            textFieldType: TextFieldType.NAME,
-                            onChanged: (value) {
-                              setState(() {
-                                updatedProductModel.productManufacturer = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Manufacturer',
-                              hintText: 'Apple',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Dialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              // ignore: sized_box_for_whitespace
-                              child: Container(
-                                height: 200.0,
-                                width: MediaQuery.of(context).size.width - 80,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () async {
-                                          pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-                                          setState(() {
-                                            imageFile = File(pickedImage!.path);
-                                            imagePath = pickedImage!.path;
-                                          });
-                                          Future.delayed(const Duration(milliseconds: 100), () {
-                                            Navigator.pop(context);
-                                          });
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.photo_library_rounded,
-                                              size: 60.0,
-                                              color: kMainColor,
-                                            ),
-                                            Text(
-                                              'Gallery',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 20.0,
-                                                color: kMainColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 40.0,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          pickedImage = await _picker.pickImage(source: ImageSource.camera);
-                                          setState(() {
-                                            imageFile = File(pickedImage!.path);
-                                            imagePath = pickedImage!.path;
-                                          });
-                                          Future.delayed(const Duration(milliseconds: 100), () {
-                                            Navigator.pop(context);
-                                          });
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.camera,
-                                              size: 60.0,
-                                              color: kGreyTextColor,
-                                            ),
-                                            Text(
-                                              'Camera',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 20.0,
-                                                color: kGreyTextColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                    child: Stack(
+
+                    ///_____SIZE & Color__________________________
+                    Row(
                       children: [
-                        Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black54, width: 1),
-                            borderRadius: const BorderRadius.all(Radius.circular(120)),
-                            image: imagePath == 'No Data'
-                                ? DecorationImage(
-                                    image: NetworkImage(widget.productModel!.productPicture),
-                                    fit: BoxFit.cover,
-                                  )
-                                : DecorationImage(
-                                    image: FileImage(imageFile),
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: const BorderRadius.all(Radius.circular(120)),
-                              color: kMainColor,
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt_outlined,
-                              size: 20,
-                              color: Colors.white,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: sizeController,
+                              onSaved: (value) {
+                                updatedProductModel.size = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Size',
+                                hintText: 'Enter Size.',
+                                border: OutlineInputBorder(),
+                              ),
                             ),
                           ),
-                        )
+                        ).visible(widget.productModel.size.isNotEmpty),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: colorController,
+                              onSaved: (value) {
+                                updatedProductModel.color = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Color',
+                                hintText: 'Enter Color.',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ).visible(widget.productModel.color.isNotEmpty),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ButtonGlobalWithoutIcon(
-                    buttontext: 'Save and Publish',
-                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                    onPressed: () async {
-                      try {
-                        imagePath == 'No Data' ? null : await uploadFile(imagePath);
-                        EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                        DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Products/$productKey");
-                        await ref.update({
-                          'productName': updatedProductModel.productName,
-                          'productCategory': updatedProductModel.productCategory,
-                          'size': updatedProductModel.size,
-                          'color': updatedProductModel.color,
-                          'weight': updatedProductModel.weight,
-                          'capacity': updatedProductModel.capacity,
-                          'type': updatedProductModel.type,
-                          'brandName': updatedProductModel.brandName,
-                          'productCode': updatedProductModel.productCode,
-                          'productStock': updatedProductModel.productStock,
-                          'productUnit': updatedProductModel.productUnit,
-                          'productSalePrice': updatedProductModel.productSalePrice,
-                          'productPurchasePrice': updatedProductModel.productPurchasePrice,
-                          'productDiscount': updatedProductModel.productDiscount,
-                          'productWholeSalePrice': updatedProductModel.productWholeSalePrice,
-                          'productDealerPrice': updatedProductModel.productDealerPrice,
-                          'productManufacturer': updatedProductModel.productManufacturer,
-                          'productPicture': updatedProductModel.productPicture,
-                        });
-                        EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
-                        //ref.refresh(productProvider);
-                        Future.delayed(const Duration(milliseconds: 100), () {
-                          const HomeScreen().launch(context, isNewTask: true);
-                        });
-                      } catch (e) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                      }
-                    },
-                    buttonTextColor: Colors.white,
-                  ),
-                ],
+
+                    ///_______Weight & Capacity & Type_____________________________
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: weightController,
+                              onSaved: (value) {
+                                updatedProductModel.weight = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Weight',
+                                hintText: 'Enter Weight.',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ).visible(widget.productModel.weight.isNotEmpty),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: capacityController,
+                              onSaved: (value) {
+                                updatedProductModel.capacity = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Capacity',
+                                hintText: 'Enter Capacity.',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ).visible(widget.productModel.capacity.isNotEmpty),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: typeController,
+                        onSaved: (value) {
+                          updatedProductModel.type = value!;
+                        },
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          labelText: 'Type',
+                          hintText: 'Usb C',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ).visible(widget.productModel.type.isNotEmpty),
+
+                    ///___________Brand___________________________________
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          hintText: widget.productModel.brandName,
+                          labelText: 'Brand',
+                          border: const OutlineInputBorder(),
+                          suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                        ),
+                      ),
+                    ),
+
+                    ///_________product_code_______________________________
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                hintText: widget.productModel.productCode,
+                                labelText: 'Product Code',
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: GestureDetector(
+                              child: Container(
+                                height: 60.0,
+                                width: 100.0,
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(color: kGreyTextColor),
+                                ),
+                                child: const Image(
+                                  image: AssetImage('images/barcode.png'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    ///_______stock & unit______________________
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Stock',
+                                hintText: widget.productModel.productStock,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                hintText: widget.productModel.productUnit,
+                                labelText: 'Units',
+                                border: const OutlineInputBorder(),
+                                suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    ///__________purchase & sale price_______________________________
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              readOnly: true,
+                              keyboardType: TextInputType.number,
+                              controller: purchasePriceController,
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Purchase Price',
+                                hintText: 'Enter Purchase Price.',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: mrpController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'MRP',
+                                hintText: 'Enter MRP.',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    ///___________wholeSale_DealerPrice____________________________
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: wholeSaleController,
+                              keyboardType: TextInputType.number,
+                              onSaved: (value) {
+                                updatedProductModel.productWholeSalePrice = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'WholeSale Price',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: dealerPriceController,
+                              keyboardType: TextInputType.number,
+                              onSaved: (value) {
+                                updatedProductModel.productDealerPrice = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Dealer price',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: 'Discount',
+                              hintText: 'Enter Discount.',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        )).visible(false),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextFormField(
+                              controller: manufacturerController,
+                              onSaved: (value) {
+                                updatedProductModel.productManufacturer = value!;
+                              },
+                              decoration: const InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: 'Manufacturer',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                // ignore: sized_box_for_whitespace
+                                child: Container(
+                                  height: 200.0,
+                                  width: MediaQuery.of(context).size.width - 80,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                                            setState(() {
+                                              imageFile = File(pickedImage!.path);
+                                              imagePath = pickedImage!.path;
+                                            });
+                                            Future.delayed(const Duration(milliseconds: 100), () {
+                                              Navigator.pop(context);
+                                            });
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.photo_library_rounded,
+                                                size: 60.0,
+                                                color: kMainColor,
+                                              ),
+                                              Text(
+                                                'Gallery',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 20.0,
+                                                  color: kMainColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 40.0,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                                            setState(() {
+                                              imageFile = File(pickedImage!.path);
+                                              imagePath = pickedImage!.path;
+                                            });
+                                            Future.delayed(const Duration(milliseconds: 100), () {
+                                              Navigator.pop(context);
+                                            });
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.camera,
+                                                size: 60.0,
+                                                color: kGreyTextColor,
+                                              ),
+                                              Text(
+                                                'Camera',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 20.0,
+                                                  color: kGreyTextColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black54, width: 1),
+                              borderRadius: const BorderRadius.all(Radius.circular(120)),
+                              image: imagePath == 'No Data'
+                                  ? DecorationImage(
+                                      image: NetworkImage(widget.productModel.productPicture),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : DecorationImage(
+                                      image: FileImage(imageFile),
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white, width: 2),
+                                borderRadius: const BorderRadius.all(Radius.circular(120)),
+                                color: kMainColor,
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt_outlined,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ButtonGlobalWithoutIcon(
+                      buttontext: 'Save and Publish',
+                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                      onPressed: () async {
+                        if (validateAndSave()) {
+                          try {
+                            imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                            EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                            DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Products/$productKey");
+                            await ref.update({
+                              'productName': updatedProductModel.productName,
+                              'productCategory': updatedProductModel.productCategory,
+                              'size': updatedProductModel.size,
+                              'color': updatedProductModel.color,
+                              'weight': updatedProductModel.weight,
+                              'capacity': updatedProductModel.capacity,
+                              'type': updatedProductModel.type,
+                              'brandName': updatedProductModel.brandName,
+                              'productCode': updatedProductModel.productCode,
+                              'productStock': updatedProductModel.productStock,
+                              'productUnit': updatedProductModel.productUnit,
+                              'productSalePrice': updatedProductModel.productSalePrice,
+                              'productPurchasePrice': updatedProductModel.productPurchasePrice,
+                              'productDiscount': updatedProductModel.productDiscount,
+                              'productWholeSalePrice': updatedProductModel.productWholeSalePrice,
+                              'productDealerPrice': updatedProductModel.productDealerPrice,
+                              'productManufacturer': updatedProductModel.productManufacturer,
+                              'productPicture': updatedProductModel.productPicture,
+                            });
+                            EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                            //ref.refresh(productProvider);
+                            Future.delayed(const Duration(milliseconds: 100), () {
+                              const HomeScreen().launch(context, isNewTask: true);
+                            });
+                          } catch (e) {
+                            EasyLoading.dismiss();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                          }
+                        }
+                      },
+                      buttonTextColor: Colors.white,
+                    ),
+                    // Column(
+                    //   children: [
+                    //     const SizedBox(height: 10),
+                    //     GestureDetector(
+                    //       onTap: () {
+                    //         showDialog(
+                    //             context: context,
+                    //             builder: (BuildContext context) {
+                    //               return Dialog(
+                    //                 shape: RoundedRectangleBorder(
+                    //                   borderRadius: BorderRadius.circular(12.0),
+                    //                 ),
+                    //                 // ignore: sized_box_for_whitespace
+                    //                 child: Container(
+                    //                   height: 200.0,
+                    //                   width: MediaQuery.of(context).size.width - 80,
+                    //                   child: Center(
+                    //                     child: Row(
+                    //                       mainAxisAlignment: MainAxisAlignment.center,
+                    //                       children: [
+                    //                         GestureDetector(
+                    //                           onTap: () async {
+                    //                             pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+                    //
+                    //                             setState(() {
+                    //                               imageFile = File(pickedImage!.path);
+                    //                               imagePath = pickedImage!.path;
+                    //                             });
+                    //
+                    //                             Future.delayed(const Duration(milliseconds: 100), () {
+                    //                               Navigator.pop(context);
+                    //                             });
+                    //                           },
+                    //                           child: Column(
+                    //                             mainAxisAlignment: MainAxisAlignment.center,
+                    //                             children: [
+                    //                               const Icon(
+                    //                                 Icons.photo_library_rounded,
+                    //                                 size: 60.0,
+                    //                                 color: kMainColor,
+                    //                               ),
+                    //                               Text(
+                    //                                 'Gallery',
+                    //                                 style: GoogleFonts.poppins(
+                    //                                   fontSize: 20.0,
+                    //                                   color: kMainColor,
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                         const SizedBox(
+                    //                           width: 40.0,
+                    //                         ),
+                    //                         GestureDetector(
+                    //                           onTap: () async {
+                    //                             pickedImage = await _picker.pickImage(source: ImageSource.camera);
+                    //                             setState(() {
+                    //                               imageFile = File(pickedImage!.path);
+                    //                               imagePath = pickedImage!.path;
+                    //                             });
+                    //                             Future.delayed(const Duration(milliseconds: 100), () {
+                    //                               Navigator.pop(context);
+                    //                             });
+                    //                           },
+                    //                           child: Column(
+                    //                             mainAxisAlignment: MainAxisAlignment.center,
+                    //                             children: [
+                    //                               const Icon(
+                    //                                 Icons.camera,
+                    //                                 size: 60.0,
+                    //                                 color: kGreyTextColor,
+                    //                               ),
+                    //                               Text(
+                    //                                 'Camera',
+                    //                                 style: GoogleFonts.poppins(
+                    //                                   fontSize: 20.0,
+                    //                                   color: kGreyTextColor,
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             });
+                    //       },
+                    //       child: Stack(
+                    //         children: [
+                    //           Container(
+                    //             height: 120,
+                    //             width: 120,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(color: Colors.black54, width: 1),
+                    //               borderRadius: const BorderRadius.all(Radius.circular(120)),
+                    //               image: imagePath == 'No Data'
+                    //                   ? DecorationImage(
+                    //                       image: NetworkImage(productPicture),
+                    //                       fit: BoxFit.cover,
+                    //                     )
+                    //                   : DecorationImage(
+                    //                       image: FileImage(imageFile),
+                    //                       fit: BoxFit.cover,
+                    //                     ),
+                    //             ),
+                    //           ),
+                    //           Container(
+                    //             height: 120,
+                    //             width: 120,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(color: Colors.black54, width: 1),
+                    //               borderRadius: const BorderRadius.all(Radius.circular(120)),
+                    //               image: DecorationImage(
+                    //                 image: FileImage(imageFile),
+                    //                 fit: BoxFit.cover,
+                    //               ),
+                    //             ),
+                    //             // child: imageFile.path == 'No File' ? null : Image.file(imageFile),
+                    //           ),
+                    //           Positioned(
+                    //             bottom: 0,
+                    //             right: 0,
+                    //             child: Container(
+                    //               height: 35,
+                    //               width: 35,
+                    //               decoration: BoxDecoration(
+                    //                 border: Border.all(color: Colors.white, width: 2),
+                    //                 borderRadius: const BorderRadius.all(Radius.circular(120)),
+                    //                 color: kMainColor,
+                    //               ),
+                    //               child: const Icon(
+                    //                 Icons.camera_alt_outlined,
+                    //                 size: 20,
+                    //                 color: Colors.white,
+                    //               ),
+                    //             ),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     const SizedBox(height: 10),
+                    //   ],
+                    // ),
+                    // ButtonGlobalWithoutIcon(
+                    //   buttontext: 'Save and Publish',
+                    //   buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+                    //   onPressed: () async {
+                    //     if (validateAndSave()) {
+                    //       try {
+                    //         EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                    //
+                    //         imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                    //         // ignore: no_leading_underscores_for_local_identifiers
+                    //         final DatabaseReference _productInformationRef = FirebaseDatabase.instance
+                    //             // ignore: deprecated_member_use
+                    //             .reference()
+                    //             .child(FirebaseAuth.instance.currentUser!.uid)
+                    //             .child('Products');
+                    //         ProductModel productModel = ProductModel(
+                    //           productName,
+                    //           productCategory,
+                    //           size,
+                    //           color,
+                    //           weight,
+                    //           capacity,
+                    //           type,
+                    //           brandName,
+                    //           productCode,
+                    //           productStock,
+                    //           productUnit,
+                    //           productSalePrice,
+                    //           productPurchasePrice,
+                    //           productDiscount,
+                    //           productWholeSalePrice,
+                    //           productDealerPrice,
+                    //           productManufacturer,
+                    //           productPicture,
+                    //         );
+                    //         await _productInformationRef.push().set(productModel.toJson());
+                    //         Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
+                    //         EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                    //         ref.refresh(productProvider);
+                    //         Future.delayed(const Duration(milliseconds: 100), () {
+                    //           const Home().launch(context, isNewTask: true);
+                    //         });
+                    //       } catch (e) {
+                    //         EasyLoading.dismiss();
+                    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    //       }
+                    //     }
+                    //   },
+                    //   buttonTextColor: Colors.white,
+                    // ),
+                    // const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),
         );
       }),
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

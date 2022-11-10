@@ -211,7 +211,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                         AppTextField(
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
-                          initialValue: widget.customerModel.customerName,
+                          initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
                           decoration: const InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: 'Customer Name',
@@ -457,7 +457,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   );
 
                                   ///________Subscription_____________________________________________________
-                                  Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber',context: context);
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
 
                                   ///________Print_______________________________________________________
                                   if (isPrintEnable) {
@@ -652,6 +652,4 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     int totalDue = previousDue - due;
     ref.child(key!).update({'due': '$totalDue'});
   }
-
-
 }

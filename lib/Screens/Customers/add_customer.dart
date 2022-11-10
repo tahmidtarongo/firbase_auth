@@ -1,4 +1,3 @@
-// ignore: import_of_legacy_library_into_null_safe
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,24 +26,19 @@ class AddCustomer extends StatefulWidget {
 }
 
 class _AddCustomerState extends State<AddCustomer> {
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   String radioItem = 'Retailer';
-  String groupValue = '';
-  // ignore: prefer_typing_uninitialized_variables
-  var dialogContext;
+  String groupValue = 'Retailer';
   bool expanded = false;
-  String customerName = 'Guest';
-  String phoneNumber = '000';
-  String customerAddress = 'Not Provided';
-  String emailAddress = 'Not Provided';
+  String customerName = '';
+  late String phoneNumber;
+  String customerAddress = '';
+  String emailAddress = '';
   String dueAmount = '0';
   String profilePicture =
       'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Profile%20Picture%2Fblank-profile-picture-973460_1280.webp?alt=media&token=3578c1e0-7278-4c03-8b56-dd007a9befd3';
   final ImagePicker _picker = ImagePicker();
-  bool showProgress = false;
-  double progress = 0.0;
-  bool isPhoneAlready = false;
   XFile? pickedImage;
-  TextEditingController phoneText = TextEditingController();
   File imageFile = File('No File');
   String imagePath = 'No Data';
   Future<void> uploadFile(String filePath) async {
@@ -94,19 +88,31 @@ class _AddCustomerState extends State<AddCustomer> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      controller: phoneText,
-                      textFieldType: TextFieldType.PHONE,
-                      onChanged: (value) {
-                        setState(() {
-                          phoneNumber = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Phone Number',
-                        hintText: '01767 432556',
-                        border: OutlineInputBorder(),
+                    child: Form(
+                      key: globalKey,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value.isEmptyOrNull) {
+                            return 'Phone Number is required.';
+                          } else {
+                            for (var element in customerData.value!) {
+                              if (element.phoneNumber.removeAllWhiteSpace() == value.removeAllWhiteSpace()) {
+                                return 'Phone Number Already Used.';
+                              }
+                            }
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          phoneNumber = value!;
+                        },
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          labelText: 'Phone Number',
+                          hintText: 'Enter Your Phone Number.',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
                   ),
@@ -115,14 +121,12 @@ class _AddCustomerState extends State<AddCustomer> {
                     child: AppTextField(
                       textFieldType: TextFieldType.NAME,
                       onChanged: (value) {
-                        setState(() {
-                          customerName = value;
-                        });
+                        customerName = value;
                       },
                       decoration: const InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: 'Name',
-                        hintText: 'John Doe',
+                        hintText: 'Enter Your Name.',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -217,13 +221,6 @@ class _AddCustomerState extends State<AddCustomer> {
                       ),
                     ],
                   ),
-                  Visibility(
-                    visible: showProgress,
-                    child: const CircularProgressIndicator(
-                      color: kMainColor,
-                      strokeWidth: 5.0,
-                    ),
-                  ),
                   ExpansionPanelList(
                     expansionCallback: (int index, bool isExpanded) {
                       setState(() {
@@ -304,9 +301,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                                     ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  width: 40.0,
-                                                ),
+                                                const SizedBox(width: 40.0),
                                                 GestureDetector(
                                                   onTap: () async {
                                                     pickedImage = await _picker.pickImage(source: ImageSource.camera);
@@ -397,7 +392,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                   border: OutlineInputBorder(),
                                   floatingLabelBehavior: FloatingLabelBehavior.always,
                                   labelText: 'Email Address',
-                                  hintText: 'example@example.com',
+                                  hintText: 'Enter Your Email Address.',
                                 ),
                               ),
                             ),
@@ -412,10 +407,11 @@ class _AddCustomerState extends State<AddCustomer> {
                                   });
                                 },
                                 decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'Address',
-                                    hintText: 'Placentia, California(CA), 92870'),
+                                  border: OutlineInputBorder(),
+                                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                                  labelText: 'Address',
+                                  hintText: 'Enter Address.',
+                                ),
                               ),
                             ),
                             Padding(
@@ -432,7 +428,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                     border: OutlineInputBorder(),
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     labelText: 'Opening Balance',
-                                    hintText: 'Amount'),
+                                    hintText: 'Enter Amount.'),
                               ),
                             ),
                           ],
@@ -445,16 +441,8 @@ class _AddCustomerState extends State<AddCustomer> {
                       buttontext: 'Save',
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                       onPressed: () async {
-                        for (var element in customerData.value!) {
-                          if (element.phoneNumber == phoneNumber) {
-                            EasyLoading.showError('Phone number already exist');
-                            isPhoneAlready = true;
-                            phoneText.clear();
-                          }
-                        }
                         Future.delayed(const Duration(milliseconds: 500), () async {
-                          if (isPhoneAlready) {
-                          } else {
+                          if (validateAndSave()) {
                             try {
                               EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                               imagePath == 'No Data' ? null : await uploadFile(imagePath);
@@ -500,4 +488,12 @@ class _AddCustomerState extends State<AddCustomer> {
     );
   }
 
+  bool validateAndSave() {
+    final form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 }

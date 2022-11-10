@@ -1,4 +1,3 @@
-// ignore: import_of_legacy_library_into_null_safe
 import 'dart:convert';
 import 'dart:io';
 
@@ -19,21 +18,17 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/customer_provider.dart';
 import 'customer_list.dart';
 
-// ignore: must_be_immutable
 class EditCustomer extends StatefulWidget {
-  EditCustomer({Key? key, required this.customerModel}) : super(key: key);
-  CustomerModel customerModel;
+  const EditCustomer({Key? key, required this.customerModel}) : super(key: key);
+  final CustomerModel customerModel;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _EditCustomerState createState() => _EditCustomerState();
+  State<EditCustomer> createState() => _EditCustomerState();
 }
 
 class _EditCustomerState extends State<EditCustomer> {
   late CustomerModel updatedCustomerModel;
   String groupValue = '';
-  // ignore: prefer_typing_uninitialized_variables
-  var dialogContext;
   bool expanded = false;
   final ImagePicker _picker = ImagePicker();
   bool showProgress = false;
@@ -135,7 +130,6 @@ class _EditCustomerState extends State<EditCustomer> {
                         decoration: const InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: 'Name',
-                          hintText: 'John Doe',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -407,7 +401,6 @@ class _EditCustomerState extends State<EditCustomer> {
                                     border: OutlineInputBorder(),
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     labelText: 'Email Address',
-                                    hintText: 'example@example.com',
                                   ),
                                 ),
                               ),
@@ -425,8 +418,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                   decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'Address',
-                                      hintText: 'Placentia, California(CA), 92870'),
+                                      labelText: 'Address',),
                                 ),
                               ),
                               Padding(
