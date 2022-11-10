@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/Provider/homepage_image_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/constant.dart';
@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
+        final homePageImageProvider = ref.watch(homepageImageProvider);
 
         return Scaffold(
           backgroundColor: kMainColor,
@@ -214,51 +215,57 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     ),
                       //   ),
                       // ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              'What\'s New',
-                              style: GoogleFonts.poppins(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
+
+                      homePageImageProvider.when(data: (images) {
+                        return Container(
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'What\'s New',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                height: 180,
+                                width: 320,
+                                child: PageView.builder(
+                                  pageSnapping: true,
+                                  itemCount: images.length,
+                                  controller: pageController,
+                                  onPageChanged: (int index) {},
+                                  itemBuilder: (_, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        const PackageScreen().launch(context);
+                                      },
+                                      child: Image(
+                                        image: NetworkImage(
+                                          images[index].imageUrl,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                            ],
+                          ),
+                        );
+                      }, error: (e, stack) {
+                        return Text(e.toString());
+                      }, loading: () {
+                        return const CircularProgressIndicator();
+                      }),
+
                       // ignore: sized_box_for_whitespace
-                      Container(
-                        height: 150,
-                        width: 320,
-                        child: PageView.builder(
-                          pageSnapping: true,
-                          itemCount: sliderList.length,
-                          controller: pageController,
-                          onPageChanged: (int index) {},
-                          itemBuilder: (_, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                const PackageScreen().launch(context);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    sliderList[index]['icon'],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 30),
+
                       // Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Row(
@@ -347,7 +354,6 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                       style: const TextStyle(fontSize: 16, color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-
                     ),
                   ),
                 ],

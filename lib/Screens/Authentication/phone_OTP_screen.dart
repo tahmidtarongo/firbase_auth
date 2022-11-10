@@ -51,15 +51,17 @@ class _OTPVerifyState extends State<OTPVerify> {
                   children: [
                     Text(
                       'OTP sent to ${PhoneAuth.phoneNumber}',
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                      style: const TextStyle( color: Colors.grey),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        const PhoneAuth().launch(context, isNewTask: true);
-                      },
-                      child: const Text(
-                        'Change?',
-                        style: TextStyle(color: Colors.redAccent, fontSize: 17),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          const PhoneAuth().launch(context, isNewTask: true);
+                        },
+                        child: const Text(
+                          'Change?',
+                          style: TextStyle(color: Colors.redAccent),
+                        ),
                       ),
                     )
                   ],
