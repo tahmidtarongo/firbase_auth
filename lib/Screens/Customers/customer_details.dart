@@ -109,10 +109,10 @@ class _CustomerDetailsState extends State<CustomerDetails> {
               children: [
                 const SizedBox(height: 40),
                 Container(
-                  height: 120,
+                  padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
                   width: 120,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.circular(50.0),
                     image: DecorationImage(
                       image: NetworkImage(widget.customerModel.profilePicture),
                       fit: BoxFit.cover,
@@ -256,7 +256,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                 const SizedBox(height: 20),
                 const Text(
                   'Recent Transactions',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                 ),
                 widget.customerModel.type != 'Supplier'
                     ? providerData.when(data: (transaction) {

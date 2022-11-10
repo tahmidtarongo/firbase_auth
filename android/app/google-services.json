@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "736551413173-1g87vkd3bkfgur0kolo5i5c0p3spme95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maantechnology.maanpos",
+            "certificate_hash": "5b26e7aa598d61089f14813c42f6f4262353e9fa"
+          }
+        },
+        {
           "client_id": "736551413173-th763alo5dg7emai9pa56idu57s4m61e.apps.googleusercontent.com",
           "client_type": 3
         }

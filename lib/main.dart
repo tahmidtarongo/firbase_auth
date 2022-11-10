@@ -27,6 +27,7 @@ import 'package:mobile_pos/Screens/Sales/sales_list.dart';
 import 'package:mobile_pos/Screens/stock_list/stock_list.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/Screens/SplashScreen/splash_screen.dart';
+import 'package:mobile_pos/constant.dart';
 
 import 'Screens/Authentication/profile_setup.dart';
 import 'Screens/Due Calculation/due_calculation_contact_screen.dart';
@@ -37,6 +38,23 @@ import 'Screens/Purchase/choose_supplier_screen.dart';
 import 'Screens/Sales List/sales_list_screen.dart';
 import 'Screens/Warranty/warranty_screen.dart';
 import 'firebase_options.dart';
+
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.white
+    ..backgroundColor = kMainColor
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.white
+    ..maskColor = kMainColor.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -90,7 +108,7 @@ class MyApp extends StatelessWidget {
         '/Sales': (context) => const SalesContact(),
         '/Parties': (context) => const CustomerList(),
         '/Expense': (context) => const ExpenseList(),
-        '/Stock': (context) => const StockList(),
+        '/Stock List': (context) => const StockList(),
         '/Purchase': (context) => const PurchaseContacts(),
         '/Delivery': (context) => const DeliveryAddress(),
         '/Reports': (context) => const Reports(),

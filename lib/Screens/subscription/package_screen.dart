@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/subscription/purchase_premium_plan_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
@@ -264,12 +265,13 @@ class _PackageScreenState extends State<PackageScreen> {
                 ).visible(initialSelectedPackage != 'Lifetime'),
                 const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
                 GestureDetector(
-                  onTap: () {
-                    PurchasePremiumPlanScreen(
-                      initialSelectedPackage: initialSelectedPackage.toString(),
-                      initPackageValue: initPackageValue?.toInt() ?? 0,
-                      isCameBack: true,
-                    ).launch(context);
+                  onTap: () async{
+                    // PurchasePremiumPlanScreen(
+                    //   initialSelectedPackage: initialSelectedPackage.toString(),
+                    //   initPackageValue: initPackageValue?.toInt() ?? 0,
+                    //   isCameBack: true,
+                    // ).launch(context);
+                    await launchUrl(Uri.parse('https://wa.me/01712022529'),mode: LaunchMode.externalApplication);
                   },
                   child: Container(
                     height: 50,

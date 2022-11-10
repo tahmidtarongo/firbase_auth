@@ -87,7 +87,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                             reTransaction[index].customerName,
                                             style: const TextStyle(fontSize: 16),
                                           ),
-                                          Text('#${reTransaction[index].invoiceNumber}'),
+                                          Text('#${reTransaction[index].invoiceNumber}',style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -123,22 +123,27 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10),
-                                      Text(
-                                        'Total : $currency ${reTransaction[index].totalAmount.toString()}',
-                                        style: const TextStyle(color: Colors.grey),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
-                                        style: const TextStyle(color: Colors.grey),
-                                      ),
+
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            'Due: $currency ${reTransaction[index].dueAmount.toString()}',
-                                            style: const TextStyle(fontSize: 16),
-                                          ).visible(reTransaction[index].dueAmount!.toInt() != 0),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                style: const TextStyle(color: Colors.grey),
+                                              ),
+                                              Text(
+                                                'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                                style: const TextStyle(fontSize: 16),
+                                              ).visible(reTransaction[index].dueAmount!.toInt() != 0),
+                                            ],
+                                          ),
                                           personalData.when(data: (data) {
                                             return Row(
                                               children: [

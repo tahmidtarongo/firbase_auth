@@ -111,7 +111,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       ),
                       const Spacer(),
                       Text(
-                        widget.transitionModel.purchaseDate.substring(10, 16),
+                        DateFormat.jm().format(DateTime.parse(widget.transitionModel.purchaseDate),),
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
                     ],
@@ -132,16 +132,17 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                         ),
                         const Spacer(),
                         Text(
-                          'Unit Price',
-                          maxLines: 2,
-                          style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        Text(
                           'Quantity',
                           maxLines: 1,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                         ),
+                        const Spacer(),
+                        Text(
+                          'Unit Price',
+                          maxLines: 2,
+                          style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
+                        ),
+
                         const Spacer(),
                         Text(
                           'Total Price',
@@ -150,6 +151,10 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                         ),
                       ],
                     ),
+                  ),
+                  Divider(
+                    thickness: 1.0,
+                    color: kGreyTextColor.withOpacity(0.1),
                   ),
                   const SizedBox(height: 10.0),
                   ListView.builder(
@@ -168,16 +173,16 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                                   maxLines: 2,
                                   style: kTextStyle.copyWith(color: kGreyTextColor),
                                 ),
-                                SizedBox(width: MediaQuery.of(context).size.width / 12),
-                                Text(
-                                  '$currency ${widget.transitionModel.productList![i].productPurchasePrice}',
-                                  maxLines: 2,
-                                  style: kTextStyle.copyWith(color: kGreyTextColor),
-                                ),
                                 const Spacer(),
                                 Text(
                                   widget.transitionModel.productList![i].productStock.toString(),
                                   maxLines: 1,
+                                  style: kTextStyle.copyWith(color: kGreyTextColor),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '$currency ${widget.transitionModel.productList![i].productPurchasePrice}',
+                                  maxLines: 2,
                                   style: kTextStyle.copyWith(color: kGreyTextColor),
                                 ),
                                 const Spacer(),
