@@ -40,8 +40,8 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getConnectivity();
-    checkInternet();
+    //getConnectivity();
+    //checkInternet();
     Subscription.getUserLimitsData(context: context, wannaShowMsg: true);
   }
 

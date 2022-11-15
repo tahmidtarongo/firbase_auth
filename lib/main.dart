@@ -1,5 +1,6 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,6 @@ import 'package:mobile_pos/Screens/Expense/expense_list.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
 import 'package:mobile_pos/Screens/Loss_Profit/loss_profit_screen.dart';
 import 'package:mobile_pos/Screens/Payment/payment_options.dart';
-import 'package:mobile_pos/Screens/Products/add_product.dart';
 import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Profile/profile_screen.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_contact.dart';
@@ -63,7 +63,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAppCheck.instance.activate();
-
+  FirebaseDatabase.instance.setPersistenceEnabled(true);
   runApp(
     const ProviderScope(
       child: MyApp(),

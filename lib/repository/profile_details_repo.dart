@@ -15,6 +15,8 @@ class ProfileRepo {
         language: 'Loading...',
         phoneNumber: 'Loading...',
         pictureUrl: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_960_720.png');
+    final userRef = FirebaseDatabase.instance.ref(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
+    userRef.keepSynced(true);
     final model = await ref.child('$userId/Personal Information').get();
     var data = jsonDecode(jsonEncode(model.value));
     if (data == null) {

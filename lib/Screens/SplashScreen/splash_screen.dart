@@ -54,6 +54,8 @@ class _SplashScreenState extends State<SplashScreen> {
     bool forceUpdate = false;
     bool normalUpdate = false;
     String updatedAppVersion = '';
+    final adminPanelRef = FirebaseDatabase.instance.ref().child('Admin Panel');
+    adminPanelRef.keepSynced(true);
     await FirebaseDatabase.instance.ref().child('Admin Panel').child('App Update').orderByKey().get().then((value) {
       final updateData = jsonDecode(jsonEncode(value.value));
       forceUpdate = updateData['forceUpdateApp'];

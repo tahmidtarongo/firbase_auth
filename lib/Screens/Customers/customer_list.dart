@@ -71,15 +71,10 @@ class _CustomerListState extends State<CustomerList> {
                                   width: 50.0,
                                   child: CircleAvatar(
                                     foregroundColor: Colors.blue,
-                                    backgroundColor: Colors.white,
+                                    backgroundColor: kMainColor,
                                     radius: 70.0,
                                     child: ClipOval(
-                                      child: Image.network(
-                                        customer[index].profilePicture,
-                                        fit: BoxFit.cover,
-                                        width: 120.0,
-                                        height: 120.0,
-                                      ),
+                                      child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                                     ),
                                   ),
                                 ),

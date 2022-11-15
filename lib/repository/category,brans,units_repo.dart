@@ -19,6 +19,8 @@ class CategoryRepo {
         categoryList.add(CategoryModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final categoryRef = FirebaseDatabase.instance.ref(userId).child('Categories');
+    categoryRef.keepSynced(true);
     return categoryList;
   }
 }
@@ -33,6 +35,8 @@ class BrandsRepo {
         brandsList.add(BrandsModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final brandRef = FirebaseDatabase.instance.ref(userId).child('Brands');
+    brandRef.keepSynced(true);
     return brandsList;
   }
 }
@@ -47,6 +51,8 @@ class UnitsRepo {
         unitsList.add(UnitModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final unitRef = FirebaseDatabase.instance.ref(userId).child('Units');
+    unitRef.keepSynced(true);
     return unitsList;
   }
 }

@@ -15,6 +15,9 @@ class TransitionRepo {
         transitionList.add(TransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+
+    final transitionRef = FirebaseDatabase.instance.ref(userId).child('Sales Transition');
+    transitionRef.keepSynced(true);
     return transitionList;
   }
 }
@@ -28,6 +31,8 @@ class PurchaseTransitionRepo {
         transitionList.add(PurchaseTransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final purchaseTransitionRef = FirebaseDatabase.instance.ref(userId).child('Sales Transition');
+    purchaseTransitionRef.keepSynced(true);
     return transitionList;
   }
 }
@@ -41,6 +46,8 @@ class DueTransitionRepo {
         transitionList.add(DueTransactionModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final dueTransitionRef = FirebaseDatabase.instance.ref(userId).child('Sales Transition');
+    dueTransitionRef.keepSynced(true);
     return transitionList;
   }
 }

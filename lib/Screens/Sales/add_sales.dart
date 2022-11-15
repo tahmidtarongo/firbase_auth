@@ -582,6 +582,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                                   final userId = FirebaseAuth.instance.currentUser!.uid;
                                   DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
+                                  ref.keepSynced(true);
 
                                   dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                   dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
@@ -621,7 +622,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-
+                                  personalInformationRef.keepSynced(true);
                                   await personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                   ///________Subscription_____________________________________________________
@@ -774,10 +775,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 } else {
                                   try {
                                     EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-
+                                    print('Before Sale Transition');
                                     final userId = FirebaseAuth.instance.currentUser!.uid;
                                     DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
-
+                                    ref.keepSynced(true);
                                     dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                     dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
                                     returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
@@ -801,30 +802,32 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                                     transitionModel.totalQuantity = totalQuantity;
                                     transitionModel.lossProfit = lossProfit;
-
-                                    await ref.push().set(transitionModel.toJson());
-
+                                    print('Before Push Transition');
+                                    ref.push().set(transitionModel.toJson());
+                                    print('After Sale Transition');
                                     ///__________StockMange_________________________________________________-
-
+                                    print('Before Stock Manage');
                                     for (var element in providerData.cartItemList) {
                                       decreaseStock(element.productId, element.quantity);
                                     }
-
+                                    print('After Stock Manage');
+                                    print('Before Personal Information');
                                     ///_______invoice_Update_____________________________________________
                                     final DatabaseReference personalInformationRef =
                                         // ignore: deprecated_member_use
                                         FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-
-                                    await personalInformationRef.update({'invoiceCounter': invoice + 1});
-
+                                    personalInformationRef.keepSynced(true);
+                                    personalInformationRef.update({'invoiceCounter': invoice + 1});
+                                    print('After Personal Information');
                                     ///________Subscription_____________________________________________________
+                                    print('Before Subscription Information');
                                     Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
-
+                                    print('After Subscription Information');
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
                                     ///________Print_______________________________________________________
-
+                                    print('Before Print Information');
                                     PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
                                     if (isPrintEnable) {
                                       await printerData.getBluetooth();
@@ -939,6 +942,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         const SalesReportScreen().launch(context);
                                       });
                                     }
+                                    print('After Print Information');
                                   } catch (e) {
                                     EasyLoading.dismiss();
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -984,7 +988,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   void decreaseStock(String productCode, int quantity) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final ref = FirebaseDatabase.instance.ref('$userId/Products/');
-
+    ref.keepSynced(true);
     var data = await ref.orderByChild('productCode').equalTo(productCode).once();
     String productPath = data.snapshot.value.toString().substring(1, 21);
 
@@ -997,21 +1001,26 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    ref.keepSynced(true);
     String? key;
 
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['phoneNumber'] == phoneNumber) {
           key = element.key;
+          int previousDue = element.child('due').value.toString().toInt();
+          print(previousDue);
+          int totalDue = previousDue + due;
+          ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
-    var data1 = await ref.child('$key/due').once();
-    int previousDue = data1.snapshot.value.toString().toInt();
-
-    int totalDue = previousDue + due;
-    ref.child(key!).update({'due': '$totalDue'});
+    // var data1 = ref.child('$key/due');
+    // int previousDue = await data1.get().then((value) => value.value.toString().toInt());
+    // print(previousDue);
+    // int totalDue = previousDue + due;
+    // ref.child(key!).update({'due': '$totalDue'});
   }
 }

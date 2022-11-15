@@ -14,6 +14,8 @@ class ProductRepo {
         productList.add(ProductModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final productsRef = FirebaseDatabase.instance.ref(userId).child('Products');
+    productsRef.keepSynced(true);
     return productList;
   }
 }

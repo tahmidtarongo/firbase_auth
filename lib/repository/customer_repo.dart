@@ -14,6 +14,8 @@ class CustomerRepo {
         customerList.add(CustomerModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final customerRef = FirebaseDatabase.instance.ref(userId).child('Customers');
+    customerRef.keepSynced(true);
     return customerList;
   }
 }

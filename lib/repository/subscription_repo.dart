@@ -8,6 +8,7 @@ class SubscriptionRepo {
   static Future<SubscriptionModel> getSubscriptionData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
+    ref.keepSynced(true);
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));
     Subscription.selectedItem = SubscriptionModel.fromJson(data).subscriptionName;

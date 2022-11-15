@@ -14,6 +14,8 @@ class SalesReportRepo {
         salesReportList.add(SalesReport.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });
+    final salesReportRef = FirebaseDatabase.instance.ref(userId).child('Sales Report');
+    salesReportRef.keepSynced(true);
     return salesReportList;
   }
 }
