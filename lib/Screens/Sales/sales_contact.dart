@@ -89,21 +89,14 @@ class _SalesContactState extends State<SalesContact> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 50.0,
                                     width: 50.0,
                                     child: CircleAvatar(
                                       foregroundColor: Colors.blue,
-                                      backgroundColor: Colors.white,
+                                      backgroundColor: kMainColor,
                                       radius: 70.0,
-                                      child: ClipOval(
-                                        child: Image.network(
-                                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
-                                          fit: BoxFit.cover,
-                                          width: 120.0,
-                                          height: 120.0,
-                                        ),
-                                      ),
+                                      child: Text('G',style: TextStyle(color: Colors.white),),
                                     ),
                                   ),
                                   const SizedBox(width: 10.0),
@@ -159,18 +152,11 @@ class _SalesContactState extends State<SalesContact> {
                                               SizedBox(
                                                 height: 50.0,
                                                 width: 50.0,
-                                                child: CircleAvatar(
+                                                child:CircleAvatar(
                                                   foregroundColor: Colors.blue,
-                                                  backgroundColor: Colors.white,
+                                                  backgroundColor: kMainColor,
                                                   radius: 70.0,
-                                                  child: ClipOval(
-                                                    child: Image.network(
-                                                      customer[index].profilePicture,
-                                                      fit: BoxFit.cover,
-                                                      width: 120.0,
-                                                      height: 120.0,
-                                                    ),
-                                                  ),
+                                                  child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: TextStyle(color: Colors.white),),
                                                 ),
                                               ),
                                               const SizedBox(width: 10.0),
@@ -246,21 +232,14 @@ class _SalesContactState extends State<SalesContact> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 50.0,
                                 width: 50.0,
                                 child: CircleAvatar(
                                   foregroundColor: Colors.blue,
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: kMainColor,
                                   radius: 70.0,
-                                  child: ClipOval(
-                                    child: Image.network(
-                                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
-                                      fit: BoxFit.cover,
-                                      width: 120.0,
-                                      height: 120.0,
-                                    ),
-                                  ),
+                                  child: Text('G',style: TextStyle(color: Colors.white),),
                                 ),
                               ),
                               const SizedBox(width: 10.0),

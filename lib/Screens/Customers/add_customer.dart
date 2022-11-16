@@ -131,6 +131,23 @@ class _AddCustomerState extends State<AddCustomer> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AppTextField(
+                      textFieldType: TextFieldType.PHONE,
+                      onChanged: (value) {
+                        setState(() {
+                          dueAmount = value;
+                        });
+                      },
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          labelText: 'Opening Balance',
+                          hintText: 'Enter Amount.'),
+                    ),
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -377,7 +394,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                   )
                                 ],
                               ),
-                            ),
+                            ).visible(false),
                             const SizedBox(height: 15),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -414,23 +431,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AppTextField(
-                                textFieldType: TextFieldType.PHONE,
-                                onChanged: (value) {
-                                  setState(() {
-                                    dueAmount = value;
-                                  });
-                                },
-                                maxLines: 2,
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'Opening Balance',
-                                    hintText: 'Enter Amount.'),
-                              ),
-                            ),
+
                           ],
                         ),
                         isExpanded: expanded,
@@ -452,6 +453,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                   .reference()
                                   .child(FirebaseAuth.instance.currentUser!.uid)
                                   .child('Customers');
+                              _customerInformationRef.keepSynced(true);
                               CustomerModel customerModel = CustomerModel(
                                 customerName,
                                 phoneNumber,
@@ -461,7 +463,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                 customerAddress,
                                 dueAmount,
                               );
-                              await _customerInformationRef.push().set(customerModel.toJson());
+                              _customerInformationRef.push().set(customerModel.toJson());
 
                               ///________Subscription_____________________________________________________
                               Subscription.decreaseSubscriptionLimits(itemType: 'partiesNumber', context: context);

@@ -573,78 +573,79 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                   transitionModel.invoiceNumber = invoice.toString();
 
                                   ///________________updateInvoice___________________________________________________________
-                                  String? key;
-                                  await FirebaseDatabase.instance.ref(userId).child('Purchase Transition').orderByKey().get().then((value) {
+                                 final ref = FirebaseDatabase.instance.ref(userId).child('Purchase Transition');
+                                 ref.keepSynced(true);
+                                  ref.orderByKey().get().then((value) {
                                     for (var element in value.children) {
                                       final t = PurchaseTransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
                                       if (transitionModel.invoiceNumber == t.invoiceNumber) {
-                                        key = element.key;
+                                        ref.child(element.key.toString()).update(transitionModel.toJson());
+
+                                        ///__________StockMange_________________________________________________
+
+                                        presentProducts = transitionModel.productList!;
+
+                                        for (var pastElement in pastProducts) {
+                                          int i = 0;
+                                          for (var futureElement in presentProducts) {
+                                            if (pastElement.productCode == futureElement.productCode) {
+                                              if (pastElement.productStock.toInt() < futureElement.productStock.toInt() &&
+                                                  pastElement.productStock != futureElement.productStock) {
+                                                ProductModel m = pastElement;
+                                                m.productStock = (futureElement.productStock.toInt() - pastElement.productStock.toInt()).toString();
+                                                // ignore: iterable_contains_unrelated_type
+                                                increaseStockList.contains(pastElement.productCode) ? null : increaseStockList.add(m);
+                                              } else if (pastElement.productStock.toInt() > futureElement.productStock.toInt() &&
+                                                  pastElement.productStock.toInt() != futureElement.productStock.toInt()) {
+                                                ProductModel n = pastElement;
+                                                n.productStock = (pastElement.productStock.toInt() - futureElement.productStock.toInt()).toString();
+                                                // ignore: iterable_contains_unrelated_type
+                                                decreaseStockList2.contains(pastElement.productCode) ? null : decreaseStockList2.add(n);
+                                              }
+                                              break;
+                                            } else {
+                                              i++;
+                                              if (i == presentProducts.length) {
+                                                ProductModel n = pastElement;
+                                                decreaseStockList2.add(n);
+                                              }
+                                            }
+                                          }
+                                        }
+
+                                        ///_____________StockUpdate_______________________________________________________
+
+                                        for (var element in increaseStockList) {
+                                          increaseStock(productCode: element.productCode, productModel: element);
+                                        }
+
+                                        for (var element in decreaseStockList2) {
+                                          decreaseStock(productCode: element.productCode, productModel: element);
+                                        }
+
+                                        ///_________DueUpdate______________________________________________________
+                                        if (pastDue < transitionModel.dueAmount!) {
+                                          double due = pastDue - transitionModel.dueAmount!;
+                                          getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: false, due: due.toInt());
+                                        } else if (pastDue > transitionModel.dueAmount!) {
+                                          double due = transitionModel.dueAmount! - pastDue;
+                                          getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: due.toInt());
+                                        }
+
+                                        providerData.clearCart();
+                                        consumerRef.refresh(customerProvider);
+                                        consumerRef.refresh(productProvider);
+                                        consumerRef.refresh(purchaseReportProvider);
+                                        consumerRef.refresh(purchaseTransitionProvider);
+                                        consumerRef.refresh(profileDetailsProvider);
+                                        EasyLoading.dismiss();
+
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
                                       }
                                     }
                                   });
-                                  await FirebaseDatabase.instance.ref(userId).child('Purchase Transition').child(key!).update(transitionModel.toJson());
 
-                                  ///__________StockMange_________________________________________________
-
-                                  presentProducts = transitionModel.productList!;
-
-                                  for (var pastElement in pastProducts) {
-                                    int i = 0;
-                                    for (var futureElement in presentProducts) {
-                                      if (pastElement.productCode == futureElement.productCode) {
-                                        if (pastElement.productStock.toInt() < futureElement.productStock.toInt() &&
-                                            pastElement.productStock != futureElement.productStock) {
-                                          ProductModel m = pastElement;
-                                          m.productStock = (futureElement.productStock.toInt() - pastElement.productStock.toInt()).toString();
-                                          // ignore: iterable_contains_unrelated_type
-                                          increaseStockList.contains(pastElement.productCode) ? null : increaseStockList.add(m);
-                                        } else if (pastElement.productStock.toInt() > futureElement.productStock.toInt() &&
-                                            pastElement.productStock.toInt() != futureElement.productStock.toInt()) {
-                                          ProductModel n = pastElement;
-                                          n.productStock = (pastElement.productStock.toInt() - futureElement.productStock.toInt()).toString();
-                                          // ignore: iterable_contains_unrelated_type
-                                          decreaseStockList2.contains(pastElement.productCode) ? null : decreaseStockList2.add(n);
-                                        }
-                                        break;
-                                      } else {
-                                        i++;
-                                        if (i == presentProducts.length) {
-                                          ProductModel n = pastElement;
-                                          decreaseStockList2.add(n);
-                                        }
-                                      }
-                                    }
-                                  }
-
-                                  ///_____________StockUpdate_______________________________________________________
-
-                                  for (var element in increaseStockList) {
-                                    increaseStock(productCode: element.productCode, productModel: element);
-                                  }
-
-                                  for (var element in decreaseStockList2) {
-                                    decreaseStock(productCode: element.productCode, productModel: element);
-                                  }
-
-                                  ///_________DueUpdate______________________________________________________
-                                  if (pastDue < transitionModel.dueAmount!) {
-                                    double due = pastDue - transitionModel.dueAmount!;
-                                    getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: false, due: due.toInt());
-                                  } else if (pastDue > transitionModel.dueAmount!) {
-                                    double due = transitionModel.dueAmount! - pastDue;
-                                    getSpecificCustomersDueUpdate(phoneNumber: widget.transitionModel.customerPhone, isDuePaid: true, due: due.toInt());
-                                  }
-
-                                  providerData.clearCart();
-                                  consumerRef.refresh(customerProvider);
-                                  consumerRef.refresh(productProvider);
-                                  consumerRef.refresh(purchaseReportProvider);
-                                  consumerRef.refresh(purchaseTransitionProvider);
-                                  consumerRef.refresh(profileDetailsProvider);
-                                  EasyLoading.dismiss();
-
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pop(context);
                                 } catch (e) {
                                   EasyLoading.dismiss();
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -687,64 +688,136 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
   }
 
   void increaseStock({required String productCode, required ProductModel productModel}) async {
+
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Products/');
+    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    ref.keepSynced(true);
 
-    var data = await ref.orderByChild('productCode').equalTo(productCode).once();
-    String productPath = data.snapshot.value.toString().substring(1, 21);
-
-    var data1 = await ref.child('$productPath/productStock').once();
-    int stock = int.parse(data1.snapshot.value.toString());
-    int remainStock = stock + productModel.productStock.toInt();
-
-    ref.child(productPath).update({
-      'productSalePrice': productModel.productSalePrice,
-      'productPurchasePrice': productModel.productPurchasePrice,
-      'productWholeSalePrice': productModel.productWholeSalePrice,
-      'productDealerPrice': productModel.productDealerPrice,
-      'productStock': '$remainStock',
+    ref.orderByKey().get().then((value) {
+      for (var element in value.children) {
+        var data = jsonDecode(jsonEncode(element.value));
+        if (data['productCode'] == productCode) {
+          String? key = element.key;
+          int previousStock = element.child('productStock').value.toString().toInt();
+          print(previousStock);
+          int remainStock = previousStock + productModel.productStock.toInt();
+          ref.child(key!).update({
+            'productSalePrice': productModel.productSalePrice,
+            'productPurchasePrice': productModel.productPurchasePrice,
+            'productWholeSalePrice': productModel.productWholeSalePrice,
+            'productDealerPrice': productModel.productDealerPrice,
+            'productStock': '$remainStock',
+          });
+        }
+      }
     });
   }
+
+  // void increaseStock({required String productCode, required ProductModel productModel}) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   final ref = FirebaseDatabase.instance.ref('$userId/Products/');
+  //
+  //   var data = await ref.orderByChild('productCode').equalTo(productCode).once();
+  //   String productPath = data.snapshot.value.toString().substring(1, 21);
+  //
+  //   var data1 = await ref.child('$productPath/productStock').once();
+  //   int stock = int.parse(data1.snapshot.value.toString());
+  //   int remainStock = stock + productModel.productStock.toInt();
+  //
+  //   ref.child(productPath).update({
+  //     'productSalePrice': productModel.productSalePrice,
+  //     'productPurchasePrice': productModel.productPurchasePrice,
+  //     'productWholeSalePrice': productModel.productWholeSalePrice,
+  //     'productDealerPrice': productModel.productDealerPrice,
+  //     'productStock': '$remainStock',
+  //   });
+  // }
 
   void decreaseStock({required String productCode, required ProductModel productModel}) async {
+
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Products/');
+    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    ref.keepSynced(true);
 
-    var data = await ref.orderByChild('productCode').equalTo(productCode).once();
-    String productPath = data.snapshot.value.toString().substring(1, 21);
-
-    var data1 = await ref.child('$productPath/productStock').once();
-    int stock = int.parse(data1.snapshot.value.toString());
-    int remainStock = stock - productModel.productStock.toInt();
-
-    ref.child(productPath).update({
-      'productSalePrice': productModel.productSalePrice,
-      'productPurchasePrice': productModel.productPurchasePrice,
-      'productWholeSalePrice': productModel.productWholeSalePrice,
-      'productDealerPrice': productModel.productDealerPrice,
-      'productStock': '$remainStock',
+    ref.orderByKey().get().then((value) {
+      for (var element in value.children) {
+        var data = jsonDecode(jsonEncode(element.value));
+        if (data['productCode'] == productCode) {
+          String? key = element.key;
+          int previousStock = element.child('productStock').value.toString().toInt();
+          print(previousStock);
+          int remainStock = previousStock - productModel.productStock.toInt();
+          ref.child(key!).update({
+            'productSalePrice': productModel.productSalePrice,
+            'productPurchasePrice': productModel.productPurchasePrice,
+            'productWholeSalePrice': productModel.productWholeSalePrice,
+            'productDealerPrice': productModel.productDealerPrice,
+            'productStock': '$remainStock',
+          });
+        }
+      }
     });
   }
+
+  // void decreaseStock({required String productCode, required ProductModel productModel}) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   final ref = FirebaseDatabase.instance.ref('$userId/Products/');
+  //
+  //   var data = await ref.orderByChild('productCode').equalTo(productCode).once();
+  //   String productPath = data.snapshot.value.toString().substring(1, 21);
+  //
+  //   var data1 = await ref.child('$productPath/productStock').once();
+  //   int stock = int.parse(data1.snapshot.value.toString());
+  //   int remainStock = stock - productModel.productStock.toInt();
+  //
+  //   ref.child(productPath).update({
+  //     'productSalePrice': productModel.productSalePrice,
+  //     'productPurchasePrice': productModel.productPurchasePrice,
+  //     'productWholeSalePrice': productModel.productWholeSalePrice,
+  //     'productDealerPrice': productModel.productDealerPrice,
+  //     'productStock': '$remainStock',
+  //   });
+  // }
 
   void getSpecificCustomersDueUpdate({required String phoneNumber, required bool isDuePaid, required int due}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    ref.keepSynced(true);
     String? key;
 
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['phoneNumber'] == phoneNumber) {
           key = element.key;
+          int previousDue = element.child('due').value.toString().toInt();
+          print(previousDue);
+          int totalDue = previousDue + due;
+          ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
-    var data1 = await ref.child('$key/due').once();
-    int previousDue = data1.snapshot.value.toString().toInt();
-
-    int totalDue;
-
-    isDuePaid ? totalDue = previousDue + due : totalDue = previousDue - due;
-    ref.child(key!).update({'due': '$totalDue'});
   }
+
+  // void getSpecificCustomersDueUpdate({required String phoneNumber, required bool isDuePaid, required int due}) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+  //   String? key;
+  //
+  //   await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+  //     for (var element in value.children) {
+  //       var data = jsonDecode(jsonEncode(element.value));
+  //       if (data['phoneNumber'] == phoneNumber) {
+  //         key = element.key;
+  //       }
+  //     }
+  //   });
+  //   var data1 = await ref.child('$key/due').once();
+  //   int previousDue = data1.snapshot.value.toString().toInt();
+  //
+  //   int totalDue;
+  //
+  //   isDuePaid ? totalDue = previousDue + due : totalDue = previousDue - due;
+  //   ref.child(key!).update({'due': '$totalDue'});
+  // }
 }

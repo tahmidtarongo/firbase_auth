@@ -424,9 +424,10 @@ class _ProductCardState extends State<ProductCard> {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: NetworkImage(widget.productImage), fit: BoxFit.cover),
+                  color: kMainColor,
                   borderRadius: BorderRadius.circular(90.0),
                 ),
+                child: Center(child: Text(widget.productTitle.substring(0,1),style: TextStyle(color: Colors.white),),),
               ),
             ),
             Padding(

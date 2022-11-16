@@ -428,14 +428,14 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                   final userId = FirebaseAuth.instance.currentUser!.uid;
                                   DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Due Transaction");
-
+                                  ref.keepSynced(true);
                                   dueTransactionModel.totalDue = dueAmount;
                                   remainDueAmount <= 0 ? dueTransactionModel.isPaid = true : dueTransactionModel.isPaid = false;
                                   remainDueAmount <= 0 ? dueTransactionModel.dueAmountAfterPay = 0 : dueTransactionModel.dueAmountAfterPay = remainDueAmount;
                                   dueTransactionModel.payDueAmount = paidAmount;
                                   dueTransactionModel.paymentType = dropdownPaymentValue;
                                   dueTransactionModel.invoiceNumber = invoice.toString();
-                                  await ref.push().set(dueTransactionModel.toJson());
+                                  ref.push().set(dueTransactionModel.toJson());
 
                                   ///_____UpdateInvoice__________________________________________________
                                   updateInvoice(
@@ -447,8 +447,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-
-                                  await personalInformationRef.update({'invoiceCounter': invoice + 1});
+                                  personalInformationRef.keepSynced(true);
+                                  personalInformationRef.update({'invoiceCounter': invoice + 1});
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(
@@ -566,8 +566,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                     });
                                   }
                                 } catch (e) {
-                                  EasyLoading.dismiss();
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                  EasyLoading.showError(e.toString());
                                 }
                               } else {
                                 EasyLoading.showError('Add product first');
@@ -609,47 +608,79 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   void updateInvoice({required String type, required String invoice, required int remainDueAmount}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final ref = type == 'Supplier' ? FirebaseDatabase.instance.ref('$userId/Purchase Transition/') : FirebaseDatabase.instance.ref('$userId/Sales Transition/');
+    ref.keepSynced(true);
     String? key;
 
     type == 'Supplier'
-        ? await FirebaseDatabase.instance.ref(userId).child('Purchase Transition/').orderByKey().get().then((value) {
+        ? ref.orderByKey().get().then((value) {
             for (var element in value.children) {
               var data = jsonDecode(jsonEncode(element.value));
               if (data['invoiceNumber'] == invoice) {
                 key = element.key;
+                ref.child(element.key.toString()).update({
+                  'dueAmount': '$remainDueAmount',
+                });
               }
             }
           })
-        : await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+        : ref.orderByKey().get().then((value) {
             for (var element in value.children) {
               var data = jsonDecode(jsonEncode(element.value));
               if (data['invoiceNumber'] == invoice) {
                 key = element.key;
+                ref.child(element.key.toString()).update({
+                  'dueAmount': '$remainDueAmount',
+                });
               }
             }
           });
-    ref.child(key!).update({
-      'dueAmount': '$remainDueAmount',
-    });
+
   }
+
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    ref.keepSynced(true);
     String? key;
 
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['phoneNumber'] == phoneNumber) {
           key = element.key;
+          int previousDue = element.child('due').value.toString().toInt();
+          print(previousDue);
+          int totalDue = previousDue + due;
+          ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
-    var data1 = await ref.child('$key/due').once();
-    int previousDue = data1.snapshot.value.toString().toInt();
-
-    int totalDue = previousDue - due;
-    ref.child(key!).update({'due': '$totalDue'});
+    // var data1 = ref.child('$key/due');
+    // int previousDue = await data1.get().then((value) => value.value.toString().toInt());
+    // print(previousDue);
+    // int totalDue = previousDue + due;
+    // ref.child(key!).update({'due': '$totalDue'});
   }
+
+
+  // void getSpecificCustomers({required String phoneNumber, required int due}) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+  //   String? key;
+  //
+  //   await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+  //     for (var element in value.children) {
+  //       var data = jsonDecode(jsonEncode(element.value));
+  //       if (data['phoneNumber'] == phoneNumber) {
+  //         key = element.key;
+  //       }
+  //     }
+  //   });
+  //   var data1 = await ref.child('$key/due').once();
+  //   int previousDue = data1.snapshot.value.toString().toInt();
+  //
+  //   int totalDue = previousDue - due;
+  //   ref.child(key!).update({'due': '$totalDue'});
+  // }
 }

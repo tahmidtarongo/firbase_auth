@@ -79,14 +79,7 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                             foregroundColor: Colors.blue,
                                             backgroundColor: Colors.white,
                                             radius: 70.0,
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                customer[index].profilePicture,
-                                                fit: BoxFit.cover,
-                                                width: 120.0,
-                                                height: 120.0,
-                                              ),
-                                            ),
+                                            child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : ''),
                                           ),
                                         ),
                                         const SizedBox(width: 10.0),

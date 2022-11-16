@@ -244,11 +244,18 @@ class Subscription {
 
   static void decreaseSubscriptionLimits({required String itemType, required BuildContext context}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref('$userId/Subscription/$itemType');
-    var data = await ref.once();
-    int beforeAction = int.parse(data.snapshot.value.toString());
-    int afterAction = beforeAction - 1;
-    FirebaseDatabase.instance.ref('$userId/Subscription').update({itemType: afterAction});
-    Subscription.getUserLimitsData(context: context, wannaShowMsg: false);
+    final ref = FirebaseDatabase.instance.ref(userId).child('Subscription');
+    ref.keepSynced(true);
+    ref.child(itemType).get().then((value){
+      int beforeAction = int.parse(value.value.toString());
+      int afterAction = beforeAction - 1;
+      ref.update({itemType: afterAction});
+      Subscription.getUserLimitsData(context: context, wannaShowMsg: false);
+    });
+    // var data = await ref.once();
+    // int beforeAction = int.parse(data.snapshot.value.toString());
+    // int afterAction = beforeAction - 1;
+    // FirebaseDatabase.instance.ref('$userId/Subscription').update({itemType: afterAction});
+    // Subscription.getUserLimitsData(context: context, wannaShowMsg: false);
   }
 }

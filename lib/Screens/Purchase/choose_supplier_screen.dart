@@ -100,16 +100,9 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                               width: 50.0,
                                               child: CircleAvatar(
                                                 foregroundColor: Colors.blue,
-                                                backgroundColor: Colors.white,
+                                                backgroundColor: kMainColor,
                                                 radius: 70.0,
-                                                child: ClipOval(
-                                                  child: Image.network(
-                                                    customer[index].profilePicture,
-                                                    fit: BoxFit.cover,
-                                                    width: 120.0,
-                                                    height: 120.0,
-                                                  ),
-                                                ),
+                                                child:Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
                                               ),
                                             ),
                                             const SizedBox(width: 10.0),

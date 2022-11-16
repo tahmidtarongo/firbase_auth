@@ -338,9 +338,11 @@ class _ProductCardState extends State<ProductCard> {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: NetworkImage(widget.productImage), fit: BoxFit.cover),
+                  //image: DecorationImage(image: NetworkImage(widget.productImage), fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(90.0),
+                  color: kMainColor
                 ),
+                child: Center(child: Text(widget.productTitle.substring(0,1),style: const TextStyle(color: Colors.white),)),
               ),
             ),
             Padding(
@@ -369,7 +371,7 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   ),
                   Text(
-                    'Stock: ${widget.stock}',
+                    'Stock: ${widget.stock.toInt() - quantity}',
                     style: GoogleFonts.jost(
                       fontSize: 15.0,
                       color: kGreyTextColor,
