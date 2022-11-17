@@ -40,7 +40,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
 
   void getCustomerKey(String phoneNumber) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    ref.keepSynced(true);
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['phoneNumber'].toString() == phoneNumber) {
@@ -87,7 +89,8 @@ class _CustomerDetailsState extends State<CustomerDetails> {
             IconButton(
               onPressed: () async {
                 DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
-                await ref.remove();
+                ref.keepSynced(true);
+                ref.remove();
                 cRef.refresh(customerProvider);
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context);

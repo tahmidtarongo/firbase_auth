@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           childAspectRatio: 0.9,
-                          crossAxisSpacing: 5,
+                          crossAxisSpacing: 4,
                           mainAxisSpacing: 10,
                           crossAxisCount: 3,
                           children: List.generate(
@@ -401,7 +401,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       widget.gridItems.title.toString(),
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),

@@ -92,8 +92,9 @@ class _AddUnitsState extends State<AddUnits> {
                       showProgress = true;
                     });
                     final DatabaseReference unitInformationRef = FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Units');
+                    unitInformationRef.keepSynced(true);
                     UnitModel unitModel = UnitModel(unitsName);
-                    isAlreadyAdded ? EasyLoading.showError('Already Added') : await unitInformationRef.push().set(unitModel.toJson());
+                    isAlreadyAdded ? EasyLoading.showError('Already Added') : unitInformationRef.push().set(unitModel.toJson());
                     setState(() {
                       showProgress = false;
                       isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));

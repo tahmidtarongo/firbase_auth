@@ -10,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -56,7 +57,9 @@ class UpdateProductState extends State<UpdateProduct> {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // ignore: unused_local_variable
     List<ProductModel> productList = [];
-    await FirebaseDatabase.instance.ref(userId).child('Products').orderByKey().get().then((value) {
+    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    ref.keepSynced(true);
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['productCode'].toString() == code) {
@@ -595,10 +598,13 @@ class UpdateProductState extends State<UpdateProduct> {
                       onPressed: () async {
                         if (validateAndSave()) {
                           try {
-                            imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                            bool result = await InternetConnectionChecker().hasConnection;
+
+                             result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                             DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Products/$productKey");
-                            await ref.update({
+                            ref.keepSynced(true);
+                            ref.update({
                               'productName': updatedProductModel.productName,
                               'productCategory': updatedProductModel.productCategory,
                               'size': updatedProductModel.size,

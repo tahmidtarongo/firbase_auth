@@ -39,7 +39,9 @@ class _EditCustomerState extends State<EditCustomer> {
   late String customerKey;
   void getCustomerKey(String phoneNumber) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    ref.keepSynced(true);
+    ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
         if (data['phoneNumber'].toString() == phoneNumber) {
@@ -446,7 +448,8 @@ class _EditCustomerState extends State<EditCustomer> {
                           EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                           imagePath == 'No Data' ? null : await uploadFile(imagePath);
                           DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
-                          await ref.update({
+                          ref.keepSynced(true);
+                          ref.update({
                             'customerName': updatedCustomerModel.customerName,
                             'type': updatedCustomerModel.type,
                             'profilePicture': updatedCustomerModel.profilePicture,

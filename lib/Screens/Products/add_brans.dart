@@ -73,7 +73,7 @@ class _AddBrandsState extends State<AddBrands> {
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Apple',
+                      hintText: 'Enter Brand Name',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelText: 'Brand name',
                     ),
@@ -94,8 +94,9 @@ class _AddBrandsState extends State<AddBrands> {
                       });
                       final DatabaseReference categoryInformationRef =
                           FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Brands');
+                      categoryInformationRef.keepSynced(true);
                       BrandsModel brandModel = BrandsModel(brandName);
-                      isAlreadyAdded ? EasyLoading.showError('Already Added') : await categoryInformationRef.push().set(brandModel.toJson());
+                      isAlreadyAdded ? EasyLoading.showError('Already Added') : categoryInformationRef.push().set(brandModel.toJson());
                       setState(() {
                         showProgress = false;
                         isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));

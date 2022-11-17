@@ -176,7 +176,7 @@ class _AddCategoryState extends State<AddCategory> {
                           .reference()
                           .child(FirebaseAuth.instance.currentUser!.uid)
                           .child('Categories');
-
+                      _categoryInformationRef.keepSynced(true);
                       CategoryModel categoryModel = CategoryModel(
                         categoryName: categoryName,
                         size: sizeCheckbox,
@@ -185,7 +185,7 @@ class _AddCategoryState extends State<AddCategory> {
                         type: typeCheckbox,
                         weight: weightCheckbox,
                       );
-                      isAlreadyAdded ? EasyLoading.showError('Already Added') : await _categoryInformationRef.push().set(categoryModel.toJson());
+                      isAlreadyAdded ? EasyLoading.showError('Already Added') : _categoryInformationRef.push().set(categoryModel.toJson());
                       setState(() {
                         showProgress = false;
                         isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));

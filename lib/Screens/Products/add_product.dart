@@ -11,6 +11,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Products/category_list.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
@@ -668,13 +669,17 @@ class AddProductState extends State<AddProduct> {
                           try {
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
-                            imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                            bool result = await InternetConnectionChecker().hasConnection;
+
+                            result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+
                             // ignore: no_leading_underscores_for_local_identifiers
                             final DatabaseReference _productInformationRef = FirebaseDatabase.instance
                                 // ignore: deprecated_member_use
                                 .reference()
                                 .child(FirebaseAuth.instance.currentUser!.uid)
                                 .child('Products');
+                            _productInformationRef.keepSynced(true);
                             ProductModel productModel = ProductModel(
                               productName,
                               productCategory,
@@ -695,7 +700,7 @@ class AddProductState extends State<AddProduct> {
                               productManufacturer,
                               productPicture,
                             );
-                            await _productInformationRef.push().set(productModel.toJson());
+                            _productInformationRef.push().set(productModel.toJson());
                             Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
                             EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
                             ref.refresh(productProvider);

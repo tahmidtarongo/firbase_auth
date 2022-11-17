@@ -63,14 +63,10 @@ class _ProductListState extends State<ProductList> {
                           leading: Container(
                             height: 50,
                             width: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(90)),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    products[i].productPicture,
-                                  ),
-                                  fit: BoxFit.cover,
-                                )),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(90)),
+                                color: kMainColor),
+                            child: Center(child: Text(products[i].productName.substring(0,1).toUpperCase(),style: TextStyle(color: Colors.white),),),
                           ),
                           title: Text(products[i].productName),
                           subtitle: Text("Stock : ${products[i].productStock}"),
