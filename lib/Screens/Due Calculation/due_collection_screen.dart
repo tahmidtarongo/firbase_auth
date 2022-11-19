@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/due_transaction_provider.dart';
 import 'package:mobile_pos/Screens/Report/Screens/due_report_screen.dart';
+import 'package:mobile_pos/Screens/invoice_details/due_invoice_details.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/printer_due_provider.dart';
@@ -85,7 +86,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
       final printerData = consumerRef.watch(printerDueProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       return personalData.when(data: (data) {
-        invoice = data.invoiceCounter!.toInt();
+        invoice = data.dueInvoiceCounter!.toInt();
         return Scaffold(
           backgroundColor: kMainColor,
           appBar: AppBar(
@@ -448,7 +449,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
                                   personalInformationRef.keepSynced(true);
-                                  personalInformationRef.update({'invoiceCounter': invoice + 1});
+                                  personalInformationRef.update({'dueInvoiceCounter': invoice + 1});
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(
@@ -474,13 +475,11 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                       EasyLoading.showSuccess('Added Successfully');
                                       Future.delayed(const Duration(milliseconds: 500), () {
-                                        const DueReportScreen().launch(context);
+                                        DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                       });
                                     } else {
                                       // ignore: use_build_context_synchronously
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                        content: Text("Please Connect The Printer First"),
-                                      ));
+                                     EasyLoading.showError("Please Connect The Printer First");
                                       showDialog(
                                           context: context,
                                           builder: (_) {
@@ -512,7 +511,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.showSuccess('Added Successfully');
                                                                 Future.delayed(const Duration(milliseconds: 500), () {
-                                                                  const DueReportScreen().launch(context);
+                                                                  DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                                                 });
                                                               }
                                                             },
@@ -535,7 +534,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(transitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          const DueReportScreen().launch(context);
+                                                          DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -562,7 +561,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                     EasyLoading.showSuccess('Added Successfully');
                                     Future.delayed(const Duration(milliseconds: 500), () {
-                                      const DueReportScreen().launch(context);
+                                      DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                     });
                                   }
                                 } catch (e) {
@@ -651,7 +650,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           key = element.key;
           int previousDue = element.child('due').value.toString().toInt();
           print(previousDue);
-          int totalDue = previousDue + due;
+          int totalDue = previousDue - due;
           ref.child(key!).update({'due': '$totalDue'});
         }
       }

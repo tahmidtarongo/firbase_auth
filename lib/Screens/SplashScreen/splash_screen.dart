@@ -65,9 +65,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     int thisAppVersion = int.parse(appVersion.replaceAll('.', ''));
     int updateVersion = int.parse(updatedAppVersion.replaceAll('.', ''));
-
+    final prefs = await SharedPreferences.getInstance();
     if (normalUpdate && !forceUpdate && (updateVersion > thisAppVersion)) {
-      final prefs = await SharedPreferences.getInstance();
       isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
       showDialog(
         barrierDismissible: false,
@@ -164,6 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
         },
       );
     } else if (forceUpdate && (updateVersion > thisAppVersion)) {
+      isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -236,8 +236,10 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     } else {
       if (currentUser != null) {
+        isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
         const Home().launch(context, isNewTask: true);
       } else {
+        isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
         const OnBoard().launch(context, isNewTask: true);
       }
     }

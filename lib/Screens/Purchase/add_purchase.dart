@@ -28,6 +28,8 @@ import '../../currency.dart';
 import '../../subscription.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
+import '../invoice_details/purchase_invoice_details.dart';
+import '../invoice_details/sales_invoice_details_screen.dart';
 
 class AddPurchaseScreen extends StatefulWidget {
   const AddPurchaseScreen({Key? key, required this.customerModel}) : super(key: key);
@@ -82,7 +84,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
       final printerData = consumerRef.watch(printerPurchaseProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       return personalData.when(data: (data) {
-        invoice = data.invoiceCounter!.toInt();
+        invoice = data.purchaseInvoiceCounter!.toInt();
         return Scaffold(
           backgroundColor: kMainColor,
           appBar: AppBar(
@@ -111,7 +113,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                           child: AppTextField(
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
-                            initialValue: data.invoiceCounter.toString(),
+                            initialValue: data.purchaseInvoiceCounter.toString(),
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Inv No.',
@@ -776,7 +778,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
                                   personalInformationRef.keepSynced(true);
-                                  personalInformationRef.update({'invoiceCounter': invoice + 1});
+                                  personalInformationRef.update({'purchaseInvoiceCounter': invoice + 1});
 
                                   ///________Subscription_____________________________________________________
                                   Subscription.decreaseSubscriptionLimits(itemType: 'purchaseNumber',context: context);
@@ -791,7 +793,6 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                         PrintPurchaseTransactionModel(purchaseTransitionModel: transitionModel, personalInformationModel: data);
                                     if (connected) {
                                       await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemPurchaseList);
-                                      providerData.clearCart();
                                       consumerRef.refresh(customerProvider);
                                       consumerRef.refresh(productProvider);
                                       consumerRef.refresh(purchaseReportProvider);
@@ -800,7 +801,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
 
                                       EasyLoading.showSuccess('Added Successfully');
                                       Future.delayed(const Duration(milliseconds: 500), () {
-                                        const PurchaseReportScreen().launch(context);
+                                        PurchaseInvoiceDetails(
+                                          transitionModel: transitionModel,
+                                          personalInformationModel: data,
+                                        ).launch(context);
                                       });
                                     } else {
                                       // ignore: use_build_context_synchronously
@@ -830,7 +834,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                               if (isConnect) {
                                                                 await printerData.printTicket(
                                                                     printTransactionModel: model, productList: transitionModel.productList);
-                                                                providerData.clearCart();
+
                                                                 consumerRef.refresh(customerProvider);
                                                                 consumerRef.refresh(productProvider);
                                                                 consumerRef.refresh(purchaseReportProvider);
@@ -838,7 +842,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.showSuccess('Added Successfully');
                                                                 Future.delayed(const Duration(milliseconds: 500), () {
-                                                                  const PurchaseReportScreen().launch(context);
+                                                                  PurchaseInvoiceDetails(
+                                                                    transitionModel: transitionModel,
+                                                                    personalInformationModel: data,
+                                                                  ).launch(context);
                                                                 });
                                                               }
                                                             },
@@ -861,7 +868,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                           consumerRef.refresh(purchaseReportProvider);
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          const PurchaseReportScreen().launch(context);
+                                                          PurchaseInvoiceDetails(
+                                                            transitionModel: transitionModel,
+                                                            personalInformationModel: data,
+                                                          ).launch(context);
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -880,7 +890,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                       EasyLoading.showSuccess('Added Successfully');
                                     }
                                   } else {
-                                    providerData.clearCart();
+
                                     consumerRef.refresh(customerProvider);
                                     consumerRef.refresh(productProvider);
                                     consumerRef.refresh(purchaseReportProvider);
@@ -888,7 +898,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                     consumerRef.refresh(profileDetailsProvider);
                                     EasyLoading.showSuccess('Added Successfully');
                                     Future.delayed(const Duration(milliseconds: 500), () {
-                                      const PurchaseReportScreen().launch(context);
+                                      PurchaseInvoiceDetails(
+                                        transitionModel: transitionModel,
+                                        personalInformationModel: data,
+                                      ).launch(context);
                                     });
                                   }
                                 } catch (e) {

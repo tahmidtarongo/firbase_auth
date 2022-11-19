@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -375,7 +376,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   userProfileDetails.when(data: (details) {
-                    invoiceNumber = details.invoiceCounter!;
+
 
                     return Column(
                       children: [
@@ -487,30 +488,30 @@ class _EditProfileState extends State<EditProfile> {
                       }
                       try {
                         EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                        imagePath == 'No Data' ? null : await uploadFile(imagePath);
+                        bool result = await InternetConnectionChecker().hasConnection;
+                        result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
                         // ignore: no_leading_underscores_for_local_identifiers
                         final DatabaseReference _personalInformationRef = FirebaseDatabase.instance
                             // ignore: deprecated_member_use
                             .reference()
                             .child(FirebaseAuth.instance.currentUser!.uid)
                             .child('Personal Information');
+                        _personalInformationRef.keepSynced(true);
                         PersonalInformationModel personalInformation = PersonalInformationModel(
                           businessCategory: dropdownValue,
                           companyName: companyName,
                           phoneNumber: phoneNumber,
                           countryName: initialCountry,
-                          invoiceCounter: invoiceNumber,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
                         );
-                        await _personalInformationRef.set(personalInformation.toJson());
+                        _personalInformationRef.set(personalInformation.toJson());
                         ref.refresh(profileDetailsProvider);
                         EasyLoading.showSuccess('Updated Successfully', duration: const Duration(milliseconds: 1000));
                         // ignore: use_build_context_synchronously
                         Navigator.pushNamed(context, '/home');
                       } catch (e) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                        EasyLoading.showError(e.toString());
                       }
                       // Navigator.pushNamed(context, '/otp');
                     },

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -38,7 +39,8 @@ class _ProfileSetupState extends State<ProfileSetup> {
   String dropdownLangValue = 'English';
   String initialCountry = 'Bangladesh';
   String dropdownValue = 'Fashion Store';
-  late String companyName, phoneNumber;
+  late String companyName;
+  String phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber!;
   double progress = 0.0;
   bool showProgress = false;
   String profilePicture =
@@ -286,7 +288,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         )
                       ],
                     ),
-                  ),
+                  ).visible(false),
                   const SizedBox(height: 20.0),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -318,7 +320,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         });
                       }, // Optional
                       textFieldType: TextFieldType.NAME,
-                      decoration: const InputDecoration(labelText: 'Company & Business Name', border: OutlineInputBorder()),
+                      decoration: const InputDecoration(labelText: 'Company & Shop Name', border: OutlineInputBorder()),
                     ),
                   ),
                   Padding(
@@ -349,7 +351,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         ),
                       ),
                     ),
-                  ),
+                  ).visible(false),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: AppTextField(
@@ -365,7 +367,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                  ),
+                  ).visible(false),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
@@ -386,7 +388,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         },
                       ),
                     ),
-                  ),
+                  ).visible(false),
                   const SizedBox(height: 20.0),
                   ButtonGlobalWithoutIcon(
                     buttontext: 'Continue',
@@ -394,7 +396,10 @@ class _ProfileSetupState extends State<ProfileSetup> {
                     onPressed: () async {
                       try {
                         EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                        imagePath == 'No Data' ? null : await uploadFile(imagePath);
+
+                        bool result = await InternetConnectionChecker().hasConnection;
+                        result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+
                         // ignore: no_leading_underscores_for_local_identifiers
                         final DatabaseReference _personalInformationRef =
                             // ignore: deprecated_member_use
@@ -406,19 +411,21 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           countryName: controller.text,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
-                          invoiceCounter: 1,
+                          saleInvoiceCounter: 1,
+                          purchaseInvoiceCounter: 1,
+                          dueInvoiceCounter: 1
                         );
                         await _personalInformationRef.set(personalInformation.toJson());
 
                         SellerInfoModel sellerInfoModel = SellerInfoModel(
                           businessCategory: dropdownValue,
                           companyName: companyName,
-                          phoneNumber: PhoneAuth.phoneNumber,
+                          phoneNumber: phoneNumber,
                           countryName: controller.text,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
                           userID: FirebaseAuth.instance.currentUser!.uid,
-                          email: FirebaseAuth.instance.currentUser!.email,
+                          email: '',
                           subscriptionDate: DateTime.now().toString(),
                           subscriptionName: 'Free',
                           subscriptionMethod: 'Not Provided',
@@ -434,8 +441,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           isCameBack: false,
                         ).launch(context);
                       } catch (e) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                        EasyLoading.showError(e.toString());
                       }
                       // Navigator.pushNamed(context, '/otp');
                     },

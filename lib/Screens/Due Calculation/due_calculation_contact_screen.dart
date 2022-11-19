@@ -77,9 +77,9 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                           width: 50.0,
                                           child: CircleAvatar(
                                             foregroundColor: Colors.blue,
-                                            backgroundColor: Colors.white,
+                                            backgroundColor: kMainColor,
                                             radius: 70.0,
-                                            child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : ''),
+                                            child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: TextStyle(color: Colors.white),),
                                           ),
                                         ),
                                         const SizedBox(width: 10.0),

@@ -12,8 +12,8 @@ import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
-import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
+import 'package:mobile_pos/Screens/invoice_details/sales_invoice_details_screen.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:mobile_pos/subscription.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -84,7 +84,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       final printerData = consumerRef.watch(printerProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       return personalData.when(data: (data) {
-        invoice = data.invoiceCounter!.toInt();
+        invoice = data.saleInvoiceCounter!.toInt();
         return Scaffold(
           backgroundColor: kMainColor,
           appBar: AppBar(
@@ -113,7 +113,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           child: AppTextField(
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
-                            initialValue: data.invoiceCounter.toString(),
+                            initialValue: data.saleInvoiceCounter.toString(),
                             decoration: const InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: 'Inv No.',
@@ -819,7 +819,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         // ignore: deprecated_member_use
                                         FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
                                     personalInformationRef.keepSynced(true);
-                                    personalInformationRef.update({'invoiceCounter': invoice + 1});
+                                    personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
                                     print('After Personal Information');
                                     ///________Subscription_____________________________________________________
                                     print('Before Subscription Information');
@@ -835,7 +835,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       await printerData.getBluetooth();
                                       if (connected) {
                                         await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemList);
-                                        providerData.clearCart();
+
                                         consumerRef.refresh(customerProvider);
                                         consumerRef.refresh(productProvider);
                                         consumerRef.refresh(salesReportProvider);
@@ -844,12 +844,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                                         EasyLoading.showSuccess('Added Successfully');
                                         Future.delayed(const Duration(milliseconds: 500), () {
-                                          const SalesReportScreen().launch(context);
+                                          SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                         });
                                       } else {
                                         EasyLoading.showSuccess('Added Successfully');
                                         // ignore: use_build_context_synchronously
-                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please Connect The Printer First')));
+                                        EasyLoading.showError('Please Connect The Printer First');
 
                                         showDialog(
                                             context: context,
@@ -877,7 +877,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                 if (isConnect) {
                                                                   await printerData.printTicket(
                                                                       printTransactionModel: model, productList: transitionModel.productList);
-                                                                  providerData.clearCart();
+
                                                                   consumerRef.refresh(customerProvider);
                                                                   consumerRef.refresh(productProvider);
                                                                   consumerRef.refresh(salesReportProvider);
@@ -885,7 +885,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(profileDetailsProvider);
                                                                   EasyLoading.showSuccess('Added Successfully');
                                                                   Future.delayed(const Duration(milliseconds: 500), () {
-                                                                    const SalesReportScreen().launch(context);
+                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                                                   });
                                                                 }
                                                               },
@@ -915,7 +915,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             consumerRef.refresh(salesReportProvider);
                                                             consumerRef.refresh(transitionProvider);
                                                             consumerRef.refresh(profileDetailsProvider);
-                                                            const SalesReportScreen().launch(context);
+                                                            SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                                           },
                                                           child: const Center(
                                                             child: Text(
@@ -933,7 +933,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                             });
                                       }
                                     } else {
-                                      providerData.clearCart();
+
                                       consumerRef.refresh(customerProvider);
                                       consumerRef.refresh(productProvider);
                                       consumerRef.refresh(salesReportProvider);
@@ -941,7 +941,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       consumerRef.refresh(profileDetailsProvider);
                                       EasyLoading.showSuccess('Added Successfully');
                                       Future.delayed(const Duration(milliseconds: 500), () {
-                                        const SalesReportScreen().launch(context);
+                                        SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                       });
                                     }
                                     print('After Print Information');
