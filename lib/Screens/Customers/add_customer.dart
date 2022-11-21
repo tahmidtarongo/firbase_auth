@@ -41,6 +41,7 @@ class _AddCustomerState extends State<AddCustomer> {
   XFile? pickedImage;
   File imageFile = File('No File');
   String imagePath = 'No Data';
+
   Future<void> uploadFile(String filePath) async {
     File file = File(filePath);
     try {
@@ -431,7 +432,6 @@ class _AddCustomerState extends State<AddCustomer> {
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                         isExpanded: expanded,
@@ -455,14 +455,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                   .child('Customers');
                               _customerInformationRef.keepSynced(true);
                               CustomerModel customerModel = CustomerModel(
-                                customerName,
-                                phoneNumber,
-                                radioItem,
-                                profilePicture,
-                                emailAddress,
-                                customerAddress,
-                                dueAmount,
-                              );
+                                  customerName, phoneNumber, radioItem, profilePicture, emailAddress, customerAddress, dueAmount, dueAmount, dueAmount);
                               _customerInformationRef.push().set(customerModel.toJson());
 
                               ///________Subscription_____________________________________________________

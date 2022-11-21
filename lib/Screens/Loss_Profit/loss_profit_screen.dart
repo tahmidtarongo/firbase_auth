@@ -30,6 +30,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
   DateTime toDate = DateTime.now();
   double totalProfit = 0;
   double totalLoss = 0;
+  bool isPicked = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -90,6 +91,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                           fromDate = picked!;
                                           totalLoss = 0;
                                           totalProfit = 0;
+                                          isPicked = true;
                                         });
                                       },
                                       icon: const Icon(FeatherIcons.calendar),
@@ -121,6 +123,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                           picked!.isToday ? toDate = DateTime.now() : toDate = picked;
                                           totalLoss = 0;
                                           totalProfit = 0;
+                                          isPicked = true;
                                         });
                                       },
                                       icon: const Icon(FeatherIcons.calendar),
@@ -135,11 +138,19 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                           final reTransaction = transaction.reversed.toList();
 
                           for (var element in reTransaction) {
-                            if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
-                                (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
-                              element.lossProfit!.isNegative
-                                  ? totalLoss = totalLoss + element.lossProfit!.abs()
-                                  : totalProfit = totalProfit + element.lossProfit!;
+                            if(!isPicked){
+                              if (DateTime.parse(element.purchaseDate).month == DateTime.now().month && DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
+                                element.lossProfit!.isNegative
+                                    ? totalLoss = totalLoss + element.lossProfit!.abs()
+                                    : totalProfit = totalProfit + element.lossProfit!;
+                              }
+                            } else{
+                              if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
+                                  (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
+                                element.lossProfit!.isNegative
+                                    ? totalLoss = totalLoss + element.lossProfit!.abs()
+                                    : totalProfit = totalProfit + element.lossProfit!;
+                              }
                             }
                           }
 

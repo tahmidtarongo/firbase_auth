@@ -381,7 +381,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                         EditSaleInvoiceSaleProducts(
                           catName: null,
                           customerModel: CustomerModel(widget.transitionModel.customerName, widget.transitionModel.customerPhone,
-                              widget.transitionModel.customerType, '', '', 'customerAddress', ''),
+                              widget.transitionModel.customerType, '', '', 'customerAddress', '','',''),
                           transitionModel: widget.transitionModel,
                         ).launch(context);
                       },

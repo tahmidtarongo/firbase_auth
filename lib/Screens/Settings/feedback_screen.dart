@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
+import 'package:mobile_pos/Screens/Home/home.dart';
+import 'package:mobile_pos/model/feedback_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
@@ -25,6 +29,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Customer%20Picture%2FNo_Image_Available.jpeg?alt=media&token=3de0d45e-0e4a-4a7b-b115-9d6722d5031f';
   File imageFile = File('No File');
   String imagePath = 'No Data';
+  TextEditingController feedbackTitleController = TextEditingController();
+  TextEditingController feedbackDescriptionController = TextEditingController();
 
   Future<void> uploadFile(String filePath) async {
     File file = File(filePath);
@@ -44,7 +50,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
     }
   }
-
+  bool validateAndSave() {
+    final form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +68,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              const Padding(
+                padding: EdgeInsets.all(10.0),
                 child: Card(
                   elevation: 0.0,
                   color: kMainColor,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
                       'Feedback',
                       style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -88,6 +101,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             const SizedBox(height: 20),
                             TextFormField(
                               keyboardType: TextInputType.text,
+                              controller: feedbackTitleController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -105,6 +119,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             TextFormField(
                               keyboardType: TextInputType.text,
                               maxLines: 10,
+                              controller: feedbackDescriptionController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Description',
@@ -268,7 +283,25 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           ButtonGlobalWithoutIcon(
                               buttontext: 'Submit',
                               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                              onPressed: () {
+                              onPressed: () async{
+                               if(validateAndSave()){
+                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+
+                                 bool result = await InternetConnectionChecker().hasConnection;
+
+                                 result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+                                 var ref = FirebaseDatabase.instance.ref().child('Admin Panel').child('Feedback List');
+                                 ref.keepSynced(true);
+                                 FeedbackModel feedbackModel = FeedbackModel(
+                                   feedbackTitle: feedbackTitleController.text,
+                                   feedbackDescription: feedbackDescriptionController.text,
+                                   pictureUrl: productPicture
+                                 );
+                                 ref.push().set(feedbackModel.toJson());
+                                 EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 1000));
+                                 Home().launch(context,isNewTask: true);
+                               }
+
 
                               },
                               buttonTextColor: Colors.white)

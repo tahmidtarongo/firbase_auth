@@ -20,138 +20,199 @@ class CustomerList extends StatefulWidget {
 
 class _CustomerListState extends State<CustomerList> {
   late Color color;
+  List<String> type = ['All', 'Retailer', 'Supplier', 'Wholesaler', 'Dealer'];
+
+  String typeName = 'All';
+  String? partyName;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kMainColor,
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
+    return DefaultTabController(
+      initialIndex: 0,
+      length: type.length,
+      child: Scaffold(
         backgroundColor: kMainColor,
-        title: Text(
-          'Parties List',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: kMainColor,
+          title: Text(
+            'Parties List',
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: Colors.white),
+          elevation: 0.0,
+        ),
+        body: Container(
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TabBar(
+                  onTap: (val) {
+                    setState(() {
+                      typeName = type[val];
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  isScrollable: true,
+                  tabs: List.generate(
+                    type.length,
+                    (index) => Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        type[index],
+                        style: const TextStyle(color: kMainColor, fontSize: 18.0),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: AppTextField(
+                    textFieldType: TextFieldType.NAME,
+                    onChanged: (value) {
+                      setState(() {
+                        partyName = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: 'Party Name',
+                      hintText: 'Enter Party Name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Consumer(builder: (context, ref, __) {
+                    final providerData = ref.watch(customerProvider);
+
+                    return providerData.when(data: (customer) {
+                      return customer.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: customer.length,
+                              itemBuilder: (_, index) {
+                                customer[index].type == 'Retailer' ? color = const Color(0xFF56da87) : Colors.white;
+                                customer[index].type == 'Wholesaler' ? color = const Color(0xFF25a9e0) : Colors.white;
+                                customer[index].type == 'Dealer' ? color = const Color(0xFFff5f00) : Colors.white;
+                                customer[index].type == 'Supplier' ? color = const Color(0xFFA569BD) : Colors.white;
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    CustomerDetails(
+                                      customerModel: customer[index],
+                                    ).launch(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 50.0,
+                                          width: 50.0,
+                                          child: CircleAvatar(
+                                            foregroundColor: Colors.blue,
+                                            backgroundColor: kMainColor,
+                                            radius: 70.0,
+                                            child: ClipOval(
+                                              child: Text(
+                                                customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0, 1) : '',
+                                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10.0),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              customer[index].type,
+                                              style: GoogleFonts.poppins(
+                                                color: color,
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              '$currency ${customer[index].dueAmount}',
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Due',
+                                              style: GoogleFonts.poppins(
+                                                color: const Color(0xFFff5f00),
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
+                                        const SizedBox(width: 20),
+                                        const Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: kGreyTextColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ).visible(partyName.isEmptyOrNull ? true : customer[index].customerName.toUpperCase().contains(partyName!.toUpperCase()) ||  customer[index].phoneNumber.contains(partyName!)),
+                                ).visible(typeName == 'All' ? true : typeName == customer[index].type);
+                              })
+                          : const Padding(
+                              padding: EdgeInsets.only(top: 60),
+                              child: EmptyScreenWidget(),
+                            );
+                    }, error: (e, stack) {
+                      return Text(e.toString());
+                    }, loading: () {
+                      return const Center(child: CircularProgressIndicator());
+                    });
+                  }),
+                ),
+              ],
+            ),
           ),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-        elevation: 0.0,
-      ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Consumer(builder: (context, ref, __) {
-            final providerData = ref.watch(customerProvider);
-
-            return providerData.when(data: (customer) {
-              return customer.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: customer.length,
-                      itemBuilder: (_, index) {
-                        customer[index].type == 'Retailer' ? color = const Color(0xFF56da87) : Colors.white;
-                        customer[index].type == 'Wholesaler' ? color = const Color(0xFF25a9e0) : Colors.white;
-                        customer[index].type == 'Dealer' ? color = const Color(0xFFff5f00) : Colors.white;
-                        customer[index].type == 'Supplier' ? color = const Color(0xFFA569BD) : Colors.white;
-
-                        return GestureDetector(
-                          onTap: () {
-                            CustomerDetails(
-                              customerModel: customer[index],
-                            ).launch(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 50.0,
-                                  width: 50.0,
-                                  child: CircleAvatar(
-                                    foregroundColor: Colors.blue,
-                                    backgroundColor: kMainColor,
-                                    radius: 70.0,
-                                    child: ClipOval(
-                                      child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      customer[index].type,
-                                      style: GoogleFonts.poppins(
-                                        color: color,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '$currency ${customer[index].dueAmount}',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Due',
-                                      style: GoogleFonts.poppins(
-                                        color: const Color(0xFFff5f00),
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                  ],
-                                ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
-                                const SizedBox(width: 20),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: kGreyTextColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      })
-                  : const Padding(
-                      padding: EdgeInsets.only(top: 60),
-                      child: EmptyScreenWidget(),
-                    );
-            }, error: (e, stack) {
-              return Text(e.toString());
-            }, loading: () {
-              return const Center(child: CircularProgressIndicator());
-            });
-          }),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: ButtonGlobal(
-          iconWidget: Icons.add,
-          buttontext: 'Add Customer',
-          iconColor: Colors.white,
-          buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
-          onPressed: () {
-            const AddCustomer().launch(context);
-          },
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          child: ButtonGlobal(
+            iconWidget: Icons.add,
+            buttontext: 'Add Customer',
+            iconColor: Colors.white,
+            buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
+            onPressed: () {
+              const AddCustomer().launch(context);
+            },
+          ),
         ),
       ),
     );

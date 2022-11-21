@@ -112,15 +112,15 @@ class _LedgerScreenState extends State<LedgerScreen> {
                     SizedBox(
                       height: context.height(),
                       child: TabBarView(children: [
-                        retailersList.isNotEmpty
+                        customer.isNotEmpty
                             ? ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: retailersList.length,
+                                itemCount: customer.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       LedgerCustomerDetailsScreen(
-                                        customerModel: retailersList[index],
+                                        customerModel: customer[index],
                                       ).launch(context);
                                     },
                                     child: Padding(
@@ -132,21 +132,14 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             width: 50.0,
                                             child: CircleAvatar(
                                               foregroundColor: Colors.blue,
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: kMainColor,
                                               radius: 70.0,
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  retailersList[index].profilePicture,
-                                                  fit: BoxFit.cover,
-                                                  width: 120.0,
-                                                  height: 120.0,
-                                                ),
-                                              ),
+                                              child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
                                             ),
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            retailersList[index].customerName.isNotEmpty ? retailersList[index].customerName : retailersList[index].phoneNumber,
+                                            customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -158,7 +151,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${retailersList[index].dueAmount}',
+                                                '$currency ${customer[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -172,7 +165,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                             ],
-                                          ).visible(retailersList[index].dueAmount != '' && retailersList[index].dueAmount != '0'),
+                                          ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
                                           const SizedBox(width: 20),
                                           const Icon(
                                             Icons.arrow_forward_ios,
@@ -181,22 +174,22 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ).visible(customer[index].type == 'Retailer');
                                 },
                               )
                             : const Padding(
                                 padding: EdgeInsets.all(60),
                                 child: EmptyScreenWidget(),
                               ),
-                        wholesalerList.isNotEmpty
+                        customer.isNotEmpty
                             ? ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: wholesalerList.length,
+                                itemCount: customer.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       LedgerCustomerDetailsScreen(
-                                        customerModel: wholesalerList[index],
+                                        customerModel: customer[index],
                                       ).launch(context);
                                     },
                                     child: Padding(
@@ -208,23 +201,14 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             width: 50.0,
                                             child: CircleAvatar(
                                               foregroundColor: Colors.blue,
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: kMainColor,
                                               radius: 70.0,
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  wholesalerList[index].profilePicture,
-                                                  fit: BoxFit.cover,
-                                                  width: 120.0,
-                                                  height: 120.0,
-                                                ),
-                                              ),
+                                              child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
                                             ),
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            wholesalerList[index].customerName.isNotEmpty
-                                                ? wholesalerList[index].customerName
-                                                : wholesalerList[index].phoneNumber,
+                                            customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -236,7 +220,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${wholesalerList[index].dueAmount}',
+                                                '$currency ${customer[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -250,7 +234,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                             ],
-                                          ).visible(wholesalerList[index].dueAmount != '' && wholesalerList[index].dueAmount != '0'),
+                                          ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
                                           const SizedBox(width: 20),
                                           const Icon(
                                             Icons.arrow_forward_ios,
@@ -259,19 +243,19 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ).visible(customer[index].type == 'Wholesaler');
                                 },
                               )
                             : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),
-                        dealerList.isNotEmpty
+                        customer.isNotEmpty
                             ? ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: dealerList.length,
+                                itemCount: customer.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       LedgerCustomerDetailsScreen(
-                                        customerModel: dealerList[index],
+                                        customerModel: customer[index],
                                       ).launch(context);
                                     },
                                     child: Padding(
@@ -283,21 +267,14 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             width: 50.0,
                                             child: CircleAvatar(
                                               foregroundColor: Colors.blue,
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: kMainColor,
                                               radius: 70.0,
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  dealerList[index].profilePicture,
-                                                  fit: BoxFit.cover,
-                                                  width: 120.0,
-                                                  height: 120.0,
-                                                ),
-                                              ),
+                                              child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
                                             ),
                                           ),
                                           const SizedBox(width: 10.0),
                                           Text(
-                                            dealerList[index].customerName.isNotEmpty ? dealerList[index].customerName : dealerList[index].phoneNumber,
+                                            customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
                                             style: GoogleFonts.poppins(
                                               color: Colors.black,
                                               fontSize: 15.0,
@@ -309,7 +286,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${dealerList[index].dueAmount}',
+                                                '$currency ${customer[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -323,7 +300,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                             ],
-                                          ).visible(dealerList[index].dueAmount != '' && dealerList[index].dueAmount != '0'),
+                                          ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
                                           const SizedBox(width: 20),
                                           const Icon(
                                             Icons.arrow_forward_ios,
@@ -332,19 +309,19 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ).visible(customer[index].type == 'Dealer');
                                 },
                               )
                             : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),
-                        supplierList.isNotEmpty
+                        customer.isNotEmpty
                             ? ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: supplierList.length,
+                                itemCount: customer.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       LedgerCustomerDetailsScreen(
-                                        customerModel: supplierList[index],
+                                        customerModel: customer[index],
                                       ).launch(context);
                                     },
                                     child: Padding(
@@ -356,33 +333,18 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             width: 50.0,
                                             child: CircleAvatar(
                                               foregroundColor: Colors.blue,
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: kMainColor,
                                               radius: 70.0,
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  supplierList[index].profilePicture,
-                                                  fit: BoxFit.cover,
-                                                  width: 120.0,
-                                                  height: 120.0,
-                                                ),
-                                              ),
+                                              child: Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
                                             ),
                                           ),
                                           const SizedBox(width: 10.0),
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                supplierList[index].customerName.isNotEmpty
-                                                    ? supplierList[index].customerName
-                                                    : supplierList[index].phoneNumber,
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontSize: 15.0,
-                                                ),
-                                              ),
-                                            ],
+                                          Text(
+                                            customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 15.0,
+                                            ),
                                           ),
                                           const Spacer(),
                                           Column(
@@ -390,7 +352,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${supplierList[index].dueAmount}',
+                                                '$currency ${customer[index].dueAmount}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -404,7 +366,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                             ],
-                                          ).visible(supplierList[index].dueAmount != '' && supplierList[index].dueAmount != '0'),
+                                          ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
                                           const SizedBox(width: 20),
                                           const Icon(
                                             Icons.arrow_forward_ios,
@@ -413,7 +375,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ).visible(customer[index].type == 'Supplier');
                                 },
                               )
                             : const Padding(padding: EdgeInsets.all(60), child: EmptyScreenWidget()),

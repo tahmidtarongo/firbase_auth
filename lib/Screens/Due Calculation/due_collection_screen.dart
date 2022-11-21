@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,10 +11,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/due_transaction_provider.dart';
-import 'package:mobile_pos/Screens/Report/Screens/due_report_screen.dart';
 import 'package:mobile_pos/Screens/invoice_details/due_invoice_details.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import '../../Provider/printer_due_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
@@ -76,6 +77,12 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   // List of items in our dropdown menu
   List<String> items = ['Select Inv.'];
   int count = 0;
+
+  @override
+  void initState() {
+    dueAmount = widget.customerModel.remainedBalance.toDouble();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +208,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                           children: [
                             const Text('Due Amount: '),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
+                              '$currency$dueAmount',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],
@@ -439,11 +446,13 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   ref.push().set(dueTransactionModel.toJson());
 
                                   ///_____UpdateInvoice__________________________________________________
-                                  updateInvoice(
-                                    type: widget.customerModel.type,
-                                    invoice: selectedInvoice.toString(),
-                                    remainDueAmount: remainDueAmount.toInt(),
-                                  );
+                                  invoice != 0
+                                      ? updateInvoice(
+                                          type: widget.customerModel.type,
+                                          invoice: selectedInvoice.toString(),
+                                          remainDueAmount: remainDueAmount.toInt(),
+                                        )
+                                      : null;
 
                                   final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
@@ -453,9 +462,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(
-                                    phoneNumber: widget.customerModel.phoneNumber,
-                                    due: paidAmount.toInt(),
-                                  );
+                                      phoneNumber: widget.customerModel.phoneNumber,
+                                      due: paidAmount.toInt(),);
 
                                   ///________Subscription_____________________________________________________
                                   Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
@@ -479,7 +487,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       });
                                     } else {
                                       // ignore: use_build_context_synchronously
-                                     EasyLoading.showError("Please Connect The Printer First");
+                                      EasyLoading.showError("Please Connect The Printer First");
                                       showDialog(
                                           context: context,
                                           builder: (_) {
@@ -511,7 +519,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.showSuccess('Added Successfully');
                                                                 Future.delayed(const Duration(milliseconds: 500), () {
-                                                                  DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
+                                                                  DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
+                                                                      .launch(context);
                                                                 });
                                                               }
                                                             },
@@ -534,7 +543,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(transitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
+                                                          DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
+                                                              .launch(context);
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -633,9 +643,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
               }
             }
           });
-
   }
-
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -651,7 +659,13 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           int previousDue = element.child('due').value.toString().toInt();
           print(previousDue);
           int totalDue = previousDue - due;
-          ref.child(key!).update({'due': '$totalDue'});
+          int openingBalanceCollection = element.child('remainedBalance').value.toString().toInt();
+          print(openingBalanceCollection);
+          int remainBalance = openingBalanceCollection - due;
+          print(remainBalance);
+          selectedInvoice.isEmptyOrNull
+              ? ref.child(key!).update({'due': '$totalDue', 'remainedBalance': '$remainBalance'})
+              : ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
@@ -662,24 +676,23 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     // ref.child(key!).update({'due': '$totalDue'});
   }
 
-
-  // void getSpecificCustomers({required String phoneNumber, required int due}) async {
-  //   final userId = FirebaseAuth.instance.currentUser!.uid;
-  //   final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
-  //   String? key;
-  //
-  //   await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
-  //     for (var element in value.children) {
-  //       var data = jsonDecode(jsonEncode(element.value));
-  //       if (data['phoneNumber'] == phoneNumber) {
-  //         key = element.key;
-  //       }
-  //     }
-  //   });
-  //   var data1 = await ref.child('$key/due').once();
-  //   int previousDue = data1.snapshot.value.toString().toInt();
-  //
-  //   int totalDue = previousDue - due;
-  //   ref.child(key!).update({'due': '$totalDue'});
-  // }
+// void getSpecificCustomers({required String phoneNumber, required int due}) async {
+//   final userId = FirebaseAuth.instance.currentUser!.uid;
+//   final ref = FirebaseDatabase.instance.ref('$userId/Customers/');
+//   String? key;
+//
+//   await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+//     for (var element in value.children) {
+//       var data = jsonDecode(jsonEncode(element.value));
+//       if (data['phoneNumber'] == phoneNumber) {
+//         key = element.key;
+//       }
+//     }
+//   });
+//   var data1 = await ref.child('$key/due').once();
+//   int previousDue = data1.snapshot.value.toString().toInt();
+//
+//   int totalDue = previousDue - due;
+//   ref.child(key!).update({'due': '$totalDue'});
+// }
 }

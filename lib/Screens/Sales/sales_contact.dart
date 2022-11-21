@@ -81,6 +81,8 @@ class _SalesContactState extends State<SalesContact> {
                                 'Guest',
                                 'Guest',
                                 '0',
+                                '0',
+                                '',
                               );
                               AddSalesScreen(customerModel: guestModel).launch(context);
                               cart.clearCart();
@@ -224,6 +226,8 @@ class _SalesContactState extends State<SalesContact> {
                             'Guest',
                             'Guest',
                             '0',
+                            '0',
+                            '',
                           );
                           AddSalesScreen(customerModel: guestModel).launch(context);
                           cart.clearCart();

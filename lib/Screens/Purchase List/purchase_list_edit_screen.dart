@@ -276,7 +276,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                         EditPurchaseInvoiceSaleProducts(
                           catName: null,
                           customerModel: CustomerModel(
-                              widget.transitionModel.customerName, widget.transitionModel.customerPhone, widget.transitionModel.customerType, '', '', '', ''),
+                              widget.transitionModel.customerName, widget.transitionModel.customerPhone, widget.transitionModel.customerType, '', '', '', '','',''),
                           transitionModel: widget.transitionModel,
                         ).launch(context);
                       },

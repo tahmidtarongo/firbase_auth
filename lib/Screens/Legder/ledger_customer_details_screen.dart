@@ -450,6 +450,82 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   : Container();
                             },
                           ),
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(20),
+                                width: context.width(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Opening Balance",
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              color: widget.customerModel.remainedBalance.toInt() <= 0
+                                                  ? const Color(0xff0dbf7d).withOpacity(0.1)
+                                                  : const Color(0xFFED1A3B).withOpacity(0.1),
+                                              borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                          child: Text(
+                                            widget.customerModel.remainedBalance.toInt() <= 0 ? 'Paid' : 'Unpaid',
+                                            style: TextStyle(
+                                                color: widget.customerModel.remainedBalance.toInt() <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Total : $currency ${widget.customerModel.openingBalance.toString()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 3),
+                                                Text(
+                                                  'Paid : $currency ${widget.customerModel.openingBalance.toInt() - widget.customerModel.remainedBalance.toInt()}',
+                                                  style: const TextStyle(color: Colors.grey),
+                                                ),
+                                                const SizedBox(height: 3),
+                                                Text(
+                                                  'Due: $currency ${ widget.customerModel.remainedBalance.toString()}',
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 0.5,
+                                width: context.width(),
+                                color: Colors.grey,
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     );

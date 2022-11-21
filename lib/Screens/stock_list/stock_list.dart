@@ -23,7 +23,7 @@ class _StockListState extends State<StockList> {
   int totalStock = 0;
   double totalSalePrice = 0;
   double totalParPrice = 0;
-
+  String? productName;
   @override
   void initState() {
     getAllTotal();
@@ -61,6 +61,7 @@ class _StockListState extends State<StockList> {
                   Column(
                     children: [
                       const SizedBox(height: 10.0),
+
                       Container(
                         decoration: BoxDecoration(
                           color: kMainColor.withOpacity(0.2),
@@ -132,6 +133,24 @@ class _StockListState extends State<StockList> {
                         ],
                         rows: const [],
                       ).visible(false),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: AppTextField(
+                          textFieldType: TextFieldType.NAME,
+                          onChanged: (value) {
+                            setState(() {
+                              productName = value;
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            labelText: 'Product Name',
+                            hintText: 'Enter Product Name',
+
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
                       providerData.when(data: (product) {
                         return product.isNotEmpty
                             ? ListView.builder(
@@ -201,7 +220,7 @@ class _StockListState extends State<StockList> {
                                         ),
                                       ],
                                     ),
-                                  );
+                                  ).visible(productName.isEmptyOrNull ?true : product[index].productName.toUpperCase().contains(productName!.toUpperCase()));
                                 })
                             : const Center(
                                 child: Padding(
