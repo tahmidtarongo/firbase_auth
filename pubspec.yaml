@@ -73,6 +73,7 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   youtube_player_flutter: ^8.1.1
   launch_review: ^3.0.1
+  share_plus: ^6.3.0
 
 
 dev_dependencies:

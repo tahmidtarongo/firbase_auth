@@ -54,7 +54,43 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
 );
 
-List<String> businessCategory = ['Fashion Store', 'Electronics Store', 'Computer Store', 'Vegetable Store', 'Sweet Store', 'Meat Store'];
+List<String> businessCategory = [
+  'Shoes',
+  'Clothing',
+  'Pharmacy',
+  'Furniture',
+  'Laundry',
+  'Trading',
+  'Handicraft',
+  'Super Shop',
+  'Sunglasses',
+  'Coffee & Tea',
+  'E-Commerce',
+  'Manufacturing',
+  'Poultry & Agro',
+  'General Store',
+  'Mobile Top up',
+  'Bag & Luggage',
+  'Vehicles & Parts',
+  'Home & Kitchen',
+  'Motorbike & parts',
+  'Mobile & Gadgets',
+  'Books & Stationery',
+  'Sports & Exercise',
+  'Gift, Toys & flowers',
+  'Pet & Accessories',
+  'Internet , Dish & TV',
+  'Service & Repairing',
+  'Hardware & sanitary',
+  'Cosmetic & Jewellery',
+  'Computer & Electronic',
+  'Travel  Ticket & Rental',
+  'Grocery,  Fruits & Bakery',
+  'Saloon & Beauty Parlour',
+  'Shop Rent & Office Rent',
+  'Construction & Raw materials',
+  'Others'
+];
 List<String> language = ['English'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];

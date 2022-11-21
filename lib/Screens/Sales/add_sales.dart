@@ -69,6 +69,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     return returnAmount <= 0 ? 0 : subTotal - paidAmount;
   }
 
+  double percentage = 0;
+  TextEditingController discountAmountEditingController = TextEditingController();
+  TextEditingController discountPercentageEditingController = TextEditingController();
+
+
   late TransitionModel transitionModel = TransitionModel(
     customerName: widget.customerModel.customerName,
     customerPhone: widget.customerModel.phoneNumber,
@@ -76,7 +81,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     invoiceNumber: invoice.toString(),
     purchaseDate: DateTime.now().toString(),
   );
-
+@override
+  void initState() {
+    discountAmountEditingController.text = '0';
+    discountPercentageEditingController.text = '0';
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {
@@ -364,35 +374,116 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   'Discount',
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                SizedBox(
-                                  width: context.width() / 4,
-                                  child: TextField(
-                                    controller: paidText,
-                                    onChanged: (value) {
-                                      if (value == '') {
-                                        setState(() {
-                                          discountAmount = 0;
-                                        });
-                                      } else {
-                                        if (value.toInt() <= providerData.getTotalAmount()) {
-                                          setState(() {
-                                            discountAmount = double.parse(value);
-                                          });
-                                        } else {
-                                          paidText.clear();
-                                          setState(() {
-                                            discountAmount = 0;
-                                          });
-                                          EasyLoading.showError('Enter a valid Discount');
-                                        }
-                                      }
-                                    },
-                                    textAlign: TextAlign.right,
-                                    decoration: const InputDecoration(
-                                      hintText: '0',
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: context.width() / 4,
+                                      height: 40.0,
+                                      child: Center(
+                                        child: AppTextField(
+                                          controller: discountPercentageEditingController,
+                                          onChanged: (value) {
+                                            if (value == '') {
+                                              setState(() {
+                                                percentage = 0.0;
+                                              });
+                                            } else {
+                                              if (value.toInt() <=100 ) {
+                                                setState(() {
+                                                  discountAmount = (value.toDouble()/100) * providerData.getTotalAmount().toDouble();
+                                                  discountAmountEditingController.text = discountAmount.toString();
+                                                });
+                                              } else {
+                                                paidText.clear();
+                                                setState(() {
+                                                  discountAmount = 0;
+                                                  discountAmountEditingController.text = discountAmount.toString();
+                                                });
+                                                EasyLoading.showError('Enter a valid Discount');
+                                              }
+                                            }
+                                          },
+                                          textAlign: TextAlign.right,
+                                          decoration: InputDecoration(
+                                            contentPadding: const EdgeInsets.only(right: 6.0),
+                                            hintText: '0',
+                                            border: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            prefixIconConstraints: const BoxConstraints(maxWidth: 30.0, minWidth: 30.0),
+                                            prefixIcon: Container(
+                                              padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                                              height: 40,
+                                              decoration: const BoxDecoration(
+                                                  color: Color(0xFFff5f00),
+                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
+                                              child: const Text(
+                                                '%',
+                                                style: TextStyle(fontSize: 20.0, color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                          textFieldType: TextFieldType.PHONE,
+                                        ),
+                                      ),
                                     ),
-                                    keyboardType: TextInputType.number,
-                                  ),
+                                    const SizedBox(
+                                      width: 4.0,
+                                    ),
+                                    SizedBox(
+                                      width: context.width() / 4,
+                                      height: 40.0,
+                                      child: Center(
+                                        child: AppTextField(
+                                          controller: discountAmountEditingController,
+                                          onChanged: (value) {
+                                            if (value == '') {
+                                              setState(() {
+                                                discountAmount = 0;
+                                              });
+                                            } else {
+                                              if (value.toInt() <= providerData.getTotalAmount()) {
+                                                setState(() {
+                                                  discountAmount = double.parse(value);
+                                                  discountPercentageEditingController.text = ((discountAmount * 100) /providerData.getTotalAmount() ).toString();
+                                                });
+                                              } else {
+                                                paidText.clear();
+                                                setState(() {
+                                                  discountAmount = 0;
+                                                  discountPercentageEditingController.text = '0';
+                                                });
+                                                EasyLoading.showError('Enter a valid Discount');
+                                              }
+                                            }
+                                          },
+                                          textAlign: TextAlign.right,
+                                          decoration: InputDecoration(
+                                            contentPadding: const EdgeInsets.only(right: 6.0),
+                                            hintText: '0',
+                                            border: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
+                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
+                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
+                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
+                                            prefixIconConstraints: const BoxConstraints(maxWidth: 30.0, minWidth: 30.0),
+                                            prefixIcon: Container(
+                                              padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                                              height: 40,
+                                              decoration: const BoxDecoration(
+                                                  color: kMainColor,
+                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
+                                              child: Text(
+                                                currency,
+                                                style: const TextStyle(fontSize: 20.0, color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                          textFieldType: TextFieldType.PHONE,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -751,7 +842,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             //   EasyLoading.showError('Add Product first');
                             // }
                             const Home().launch(context);
-
                           },
                           child: Container(
                             height: 60,
@@ -762,7 +852,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: const Center(
                               child: Text(
                                 'Cancel',
-                                style: TextStyle(fontSize: 18,color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.white),
                               ),
                             ),
                           ),
@@ -807,6 +897,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     print('Before Push Transition');
                                     ref.push().set(transitionModel.toJson());
                                     print('After Sale Transition');
+
                                     ///__________StockMange_________________________________________________-
                                     print('Before Stock Manage');
                                     for (var element in providerData.cartItemList) {
@@ -814,6 +905,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     }
                                     print('After Stock Manage');
                                     print('Before Personal Information');
+
                                     ///_______invoice_Update_____________________________________________
                                     final DatabaseReference personalInformationRef =
                                         // ignore: deprecated_member_use
@@ -821,10 +913,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     personalInformationRef.keepSynced(true);
                                     personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
                                     print('After Personal Information');
+
                                     ///________Subscription_____________________________________________________
                                     print('Before Subscription Information');
                                     Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
                                     print('After Subscription Information');
+
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
@@ -885,7 +979,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(profileDetailsProvider);
                                                                   EasyLoading.showSuccess('Added Successfully');
                                                                   Future.delayed(const Duration(milliseconds: 500), () {
-                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
+                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
+                                                                        .launch(context);
                                                                   });
                                                                 }
                                                               },
@@ -915,7 +1010,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             consumerRef.refresh(salesReportProvider);
                                                             consumerRef.refresh(transitionProvider);
                                                             consumerRef.refresh(profileDetailsProvider);
-                                                            SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
+                                                            SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
+                                                                .launch(context);
                                                           },
                                                           child: const Center(
                                                             child: Text(
@@ -933,7 +1029,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                             });
                                       }
                                     } else {
-
                                       consumerRef.refresh(customerProvider);
                                       consumerRef.refresh(productProvider);
                                       consumerRef.refresh(salesReportProvider);
@@ -1003,7 +1098,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         }
       }
     });
-
 
     // var data = await ref.orderByChild('productCode').equalTo(productCode).once();
     // String productPath = data.snapshot.value.toString().substring(1, 21);

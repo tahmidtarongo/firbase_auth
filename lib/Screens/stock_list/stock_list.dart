@@ -204,7 +204,7 @@ class _StockListState extends State<StockList> {
                                               child: Text(
                                                 '$currency${product[index].productPurchasePrice}',
                                                 style: GoogleFonts.poppins(
-                                                  color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                                  color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
                                                 ),
                                               ),
                                             )),

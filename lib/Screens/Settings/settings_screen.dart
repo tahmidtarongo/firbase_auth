@@ -7,6 +7,7 @@ import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -554,6 +555,29 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       ListTile(
                         title: Text(
+                          'Printing Option',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        leading: const Icon(
+                          Icons.print,
+                          color: kMainColor,
+                        ),
+                        trailing: Switch.adaptive(
+                          value: isPrintEnable,
+                          onChanged: (bool value) async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('isPrintEnable', value);
+                            setState(() {
+                              isPrintEnable = value;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
                           'Feedback',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -563,6 +587,26 @@ class _SettingScreenState extends State<SettingScreen> {
                         onTap: () {
                           // const SubscriptionScreen().launch(context);
                           const FeedbackScreen().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Invite/Share With Friends',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.maanpos', subject: 'Download Maan POS and Grow Your Business');
                         },
                         leading: const Icon(
                           Icons.account_balance_wallet_outlined,
