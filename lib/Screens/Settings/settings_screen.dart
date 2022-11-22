@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
+import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:share_plus/share_plus.dart';
@@ -587,6 +588,27 @@ class _SettingScreenState extends State<SettingScreen> {
                         onTap: () {
                           // const SubscriptionScreen().launch(context);
                           const FeedbackScreen().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Live Chat/Support',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          // const SubscriptionScreen().launch(context);
+                          const LiveChatSupport().launch(context);
                         },
                         leading: const Icon(
                           Icons.account_balance_wallet_outlined,

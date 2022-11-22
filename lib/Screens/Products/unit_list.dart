@@ -23,6 +23,29 @@ class UnitList extends StatefulWidget {
 
 class _UnitListState extends State<UnitList> {
   String search = '';
+  List<String> unitList = [
+    'PIECES (Pcs)',
+    'BAGS (Bag)',
+    'BOX ( Box )',
+    'PACKS (Pac)',
+    'PAIRS (Prs)',
+    'LITRE (Ltr)',
+    'CANS (Can)',
+    'ROLLS (Rol)',
+    'QUINTAL (Qtl)',
+    'CARTONS (Ctn)',
+    'DOZENS (Dzn)',
+    'MILILITRE (Mr)',
+    'BOTTLES (Blt)',
+    'BUNDLES (Bdl)',
+    'GRAMMES (Gm)',
+    'KILOGRAMS (Kg)',
+    'NUMBERS (Nos)',
+    'TABLETS (Tbs)',
+    'SQUARE FEET (Sqf)',
+    'SQUARE METERS (Sqm)',
+  ];
+
   Future<List<UnitModel>> getUnits() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref();
     List<UnitModel> list = [];
@@ -144,14 +167,14 @@ class _UnitListState extends State<UnitList> {
                                     flex: 1,
                                     child: ButtonGlobalWithoutIcon(
                                       buttontext: 'Select',
-                                      buttonDecoration: kButtonDecoration.copyWith(color: kDarkWhite),
+                                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(10.0)),
                                       onPressed: () {
                                         Navigator.pop(context, title.unitName.toString());
                                         // AddProduct(
                                         //   unitsName: title.unitName,
                                         // ).launch(context);
                                       },
-                                      buttonTextColor: Colors.black,
+                                      buttonTextColor: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -161,6 +184,43 @@ class _UnitListState extends State<UnitList> {
                     },
                   ),
                 ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: unitList.length,
+                    itemBuilder: (_, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                unitList[index],
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18.0,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: ButtonGlobalWithoutIcon(
+                                buttontext: 'Select',
+                                buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(10.0)),
+                                onPressed: () {
+                                  Navigator.pop(context, unitList[index]);
+                                  // AddProduct(
+                                  //   unitsName: title.unitName,
+                                  // ).launch(context);
+                                },
+                                buttonTextColor: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    })
               ],
             ),
           ),
