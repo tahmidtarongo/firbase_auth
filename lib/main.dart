@@ -28,6 +28,7 @@ import 'package:mobile_pos/Screens/stock_list/stock_list.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/Screens/SplashScreen/splash_screen.dart';
 import 'package:mobile_pos/constant.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'Screens/Authentication/profile_setup.dart';
 import 'Screens/Due Calculation/due_calculation_contact_screen.dart';
@@ -71,8 +72,14 @@ void main() async {
   );
 }
 
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

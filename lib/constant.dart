@@ -11,6 +11,8 @@ bool connected = false;
 bool isPrintEnable = true;
 List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay', 'Due'];
 
+const String onesignalAppId = '1549acc6-6958-4c79-bea0-b8fdae3cbdce';
+
 //___________currency__________________________
 
 const String appVersion = '1.1.0';
@@ -88,6 +90,7 @@ List<String> businessCategory = [
   'Grocery,  Fruits & Bakery',
   'Saloon & Beauty Parlour',
   'Shop Rent & Office Rent',
+  'Thai Aluminium & Glass',
   'Construction & Raw materials',
   'Others'
 ];

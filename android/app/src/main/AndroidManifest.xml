@@ -57,5 +57,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+       <meta-data
+           android:name="com.onesignal.messaging.default_notification_icon"
+           android:resource="@mipmap/ic_launcher" />
     </application>
 </manifest>

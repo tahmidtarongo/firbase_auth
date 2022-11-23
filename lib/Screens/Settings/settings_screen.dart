@@ -556,29 +556,6 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       ListTile(
                         title: Text(
-                          'Printing Option',
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        leading: const Icon(
-                          Icons.print,
-                          color: kMainColor,
-                        ),
-                        trailing: Switch.adaptive(
-                          value: isPrintEnable,
-                          onChanged: (bool value) async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('isPrintEnable', value);
-                            setState(() {
-                              isPrintEnable = value;
-                            });
-                          },
-                        ),
-                      ),
-                      ListTile(
-                        title: Text(
                           'Feedback',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -590,7 +567,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           const FeedbackScreen().launch(context);
                         },
                         leading: const Icon(
-                          Icons.account_balance_wallet_outlined,
+                          Icons.rate_review,
                           color: kMainColor,
                         ),
                         trailing: const Icon(
@@ -611,7 +588,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           const LiveChatSupport().launch(context);
                         },
                         leading: const Icon(
-                          Icons.account_balance_wallet_outlined,
+                          Icons.chat,
                           color: kMainColor,
                         ),
                         trailing: const Icon(
@@ -631,7 +608,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.maanpos', subject: 'Download Maan POS and Grow Your Business');
                         },
                         leading: const Icon(
-                          Icons.account_balance_wallet_outlined,
+                          Icons.share,
                           color: kMainColor,
                         ),
                         trailing: const Icon(

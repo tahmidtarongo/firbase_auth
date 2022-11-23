@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant.dart';
 
@@ -70,20 +71,20 @@ class _LiveChatSupportState extends State<LiveChatSupport> {
                                   ),
                                 ],
                               ),
-                            ),
+                            ).onTap(() => launchUrl(Uri.parse('https://www.facebook.com/maantechnologyltd'),mode: LaunchMode.externalApplication)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Container(
                               width: 150.0,
                               height: 200.0,
-                              decoration: BoxDecoration(color: Colors.pinkAccent, borderRadius: BorderRadius.circular(10.0)),
+                              decoration: BoxDecoration(color: const Color(0xFF1DA1F2), borderRadius: BorderRadius.circular(10.0)),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    LineIcons.instagram,
+                                    LineIcons.twitter,
                                     color: Colors.white,
                                     size: 50.0,
                                   ),
@@ -91,13 +92,13 @@ class _LiveChatSupportState extends State<LiveChatSupport> {
                                     height: 6.0,
                                   ),
                                   Text(
-                                    'Follow Us On\nInstagram',
+                                    'Follow Us On\nTwitter',
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
                               ),
-                            ),
+                            ).onTap(() => launchUrl(Uri.parse('https://twitter.com/MaanTechnology'),mode: LaunchMode.externalApplication)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -126,7 +127,7 @@ class _LiveChatSupportState extends State<LiveChatSupport> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ).onTap(() => launchUrl(Uri.parse('https://www.youtube.com/@maantechnologyltd'),mode: LaunchMode.externalApplication)),
                           ),
                         ],
                       ),
@@ -138,16 +139,18 @@ class _LiveChatSupportState extends State<LiveChatSupport> {
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
-                          children: const [
+                          children: [
                             ListTile(
-                              leading: CircleAvatar(radius: 30.0,child: Icon(Icons.whatsapp,color: Colors.white,),),
-                              title: Text('Call For Emergency Support',style: TextStyle(color: Colors.grey,fontSize: 14.0),),
-                              subtitle: Text('+8801712022529',style: TextStyle(color: Colors.black,fontSize: 18.0,fontWeight: FontWeight.bold),),
+                              onTap: () => launchUrl(Uri.parse('https://wa.me/+8801712022529'),mode: LaunchMode.externalApplication),
+                              leading: const CircleAvatar(radius: 30.0,child: Icon(Icons.whatsapp,color: Colors.white,),),
+                              title: const Text('Call For Emergency Support',style: TextStyle(color: Colors.grey,fontSize: 14.0),),
+                              subtitle: const Text('+8801712022529',style: TextStyle(color: Colors.black,fontSize: 18.0,fontWeight: FontWeight.bold),),
                             ),
-                            SizedBox(height: 10.0,),
+                            const SizedBox(height: 10.0,),
                             ListTile(
-                              leading: CircleAvatar(radius: 30.0,child: Icon(Icons.messenger,color: Colors.white,),),
-                              title: Text('Live Chat Support',style: TextStyle(color: Colors.black,fontSize: 18.0,fontWeight: FontWeight.bold),),
+                              onTap: () => launchUrl(Uri.parse('https://m.me/maantechnologyltd'),mode: LaunchMode.externalApplication),
+                              leading: const CircleAvatar(radius: 30.0,child: Icon(Icons.messenger,color: Colors.white,),),
+                              title: const Text('Live Chat Support',style: TextStyle(color: Colors.black,fontSize: 18.0,fontWeight: FontWeight.bold),),
                             ),
                           ],
                         ),
