@@ -63,12 +63,11 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                             padding: const EdgeInsets.all(10),
                             child: AppTextField(
                               textFieldType: TextFieldType.NAME,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
                                 hintText: 'Search',
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color: kGreyTextColor.withOpacity(0.5),
                                 ),
                               ),
                               onChanged: (value) {

@@ -1,15 +1,13 @@
-import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
-import '../../model/product_model.dart';
 
 class StockList extends StatefulWidget {
   const StockList({Key? key}) : super(key: key);
@@ -24,9 +22,9 @@ class _StockListState extends State<StockList> {
   double totalSalePrice = 0;
   double totalParPrice = 0;
   String? productName;
+  int count = 0;
   @override
   void initState() {
-    getAllTotal();
 
     super.initState();
   }
@@ -60,100 +58,172 @@ class _StockListState extends State<StockList> {
                 children: [
                   Column(
                     children: [
-                      const SizedBox(height: 10.0),
-
-                      Container(
-                        decoration: BoxDecoration(
-                          color: kMainColor.withOpacity(0.2),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: const [
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                'Product',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                'Quantity',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                'Purchase',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              'Sale',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      DataTable(
-                        horizontalMargin: 40.0,
-                        columnSpacing: 50.0,
-                        headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
-                        columns: const <DataColumn>[
-                          DataColumn(
-                            label: Text(
-                              'Product',
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'QTY',
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Purchase',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Sale',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ],
-                        rows: const [],
-                      ).visible(false),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: AppTextField(
-                          textFieldType: TextFieldType.NAME,
-                          onChanged: (value) {
-                            setState(() {
-                              productName = value;
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            labelText: 'Product Name',
-                            hintText: 'Enter Product Name',
-
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
                       providerData.when(data: (product) {
+
+                        if(count == 0){
+                          count++;
+                          for (var element in product) {
+                            totalStock = totalStock + element.productStock.toInt();
+                            totalSalePrice = totalSalePrice + (element.productStock.toInt() * element.productSalePrice.toInt());
+                            totalParPrice = totalParPrice + (element.productStock.toInt() * element.productSalePrice.toInt());
+                          }
+                        }
                         return product.isNotEmpty
-                            ? ListView.builder(
+                            ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                height: 100,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: kMainColor.withOpacity(0.1),
+                                    border: Border.all(width: 1, color: kMainColor),
+                                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          totalStock.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        const Text(
+                                          'Total Stock',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      width: 1,
+                                      height: 60,
+                                      color: kMainColor,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                        currency + totalParPrice.toInt().toString(),
+                                          style: const TextStyle(
+                                            color: Colors.orange,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        const Text(
+                                          'Total Price',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: kMainColor.withOpacity(0.2),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(20),
+                              child: Row(
+                                children: const [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Product',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Quantity',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Purchase',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Sale',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            DataTable(
+                              horizontalMargin: 40.0,
+                              columnSpacing: 50.0,
+                              headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text(
+                                    'Product',
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'QTY',
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'Purchase',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'Sale',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                              rows: const [],
+                            ).visible(false),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: AppTextField(
+                                textFieldType: TextFieldType.NAME,
+                                onChanged: (value) {
+                                  setState(() {
+                                    productName = value;
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                                  labelText: 'Product Name',
+                                  hintText: 'Enter Product Name',
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            ListView.builder(
                                 itemCount: product.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -220,13 +290,15 @@ class _StockListState extends State<StockList> {
                                         ),
                                       ],
                                     ),
-                                  ).visible(productName.isEmptyOrNull ?true : product[index].productName.toUpperCase().contains(productName!.toUpperCase()));
-                                })
+                                  ).visible(productName.isEmptyOrNull ? true : product[index].productName.toUpperCase().contains(productName!.toUpperCase()));
+                                }),
+                          ],
+                        )
                             : const Center(
-                                child: Padding(
-                                padding: EdgeInsets.only(top: 60),
-                                child: EmptyScreenWidget(),
-                              ));
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 60),
+                              child: EmptyScreenWidget(),
+                            ));
                       }, error: (e, stack) {
                         return Text(e.toString());
                       }, loading: () {
@@ -240,66 +312,8 @@ class _StockListState extends State<StockList> {
           ),
         );
       }),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: Container(
-          color: kMainColor.withOpacity(.4),
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text(
-                  'Total',
-                  textAlign: TextAlign.start,
-                  style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  totalStock.toString(),
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: Text(
-                    '$currency${totalParPrice.toInt().toString()}',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                    ),
-                  )),
-              Text(
-                '$currency${totalSalePrice.toInt().toString()}',
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.poppins(
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
-  }
+  }}
 
-  void getAllTotal() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    // ignore: unused_local_variable
-    List<ProductModel> productList = [];
-    await FirebaseDatabase.instance.ref(userId).child('Products').orderByKey().get().then((value) {
-      for (var element in value.children) {
-        var data = jsonDecode(jsonEncode(element.value));
-        totalStock = totalStock + int.parse(data['productStock']);
-        totalSalePrice = totalSalePrice + (int.parse(data['productSalePrice']) * int.parse(data['productStock']));
-        totalParPrice = totalParPrice + (int.parse(data['productPurchasePrice']) * int.parse(data['productStock']));
 
-        // productList.add(ProductModel.fromJson(jsonDecode(jsonEncode(element.value))));
-      }
-    });
-    setState(() {});
-  }
-}
+

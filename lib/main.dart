@@ -24,16 +24,14 @@ import 'package:mobile_pos/Screens/Sales/add_promo_code.dart';
 import 'package:mobile_pos/Screens/Sales/sales_contact.dart';
 import 'package:mobile_pos/Screens/Sales/sales_details.dart';
 import 'package:mobile_pos/Screens/Sales/sales_list.dart';
-import 'package:mobile_pos/Screens/stock_list/stock_list.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/Screens/SplashScreen/splash_screen.dart';
+import 'package:mobile_pos/Screens/stock_list/stock_list.dart';
 import 'package:mobile_pos/constant.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'Screens/Authentication/profile_setup.dart';
 import 'Screens/Due Calculation/due_calculation_contact_screen.dart';
 import 'Screens/Legder/ledger_screen.dart';
-import 'Screens/Products/update_product.dart';
 import 'Screens/Purchase List/purchase_list_screen.dart';
 import 'Screens/Purchase/choose_supplier_screen.dart';
 import 'Screens/Sales List/sales_list_screen.dart';

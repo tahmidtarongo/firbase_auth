@@ -14,6 +14,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import '../../constant.dart';
 import '../Home/home_screen.dart';
 

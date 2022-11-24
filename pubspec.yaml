@@ -75,6 +75,7 @@ dependencies:
   launch_review: ^3.0.1
   share_plus: ^6.3.0
   onesignal_flutter: ^3.4.2
+  money_formatter: ^0.0.3
 
 
 dev_dependencies:

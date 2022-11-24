@@ -461,7 +461,7 @@ class _AddCustomerState extends State<AddCustomer> {
                               ///________Subscription_____________________________________________________
                               Subscription.decreaseSubscriptionLimits(itemType: 'partiesNumber', context: context);
 
-                              EasyLoading.showSuccess('Added Successfully!');
+                              EasyLoading.dismiss();
                               ref.refresh(customerProvider);
                               Future.delayed(const Duration(milliseconds: 100), () {
                                 Navigator.pop(context);

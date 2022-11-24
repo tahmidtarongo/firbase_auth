@@ -102,6 +102,7 @@ class _ProductListState extends State<ProductList> {
                           labelText: 'Product Name',
                           hintText: 'Enter Product Name',
                           border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.search)
                         ),
                       ),
                     ),

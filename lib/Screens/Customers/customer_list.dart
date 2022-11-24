@@ -90,6 +90,7 @@ class _CustomerListState extends State<CustomerList> {
                       labelText: 'Party Name',
                       hintText: 'Enter Party Name',
                       border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search)
                     ),
                   ),
                 ),

@@ -110,7 +110,69 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: fromDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'From Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            fromDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            fromDate = picked!;
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: AppTextField(
+                                    textFieldType: TextFieldType.NAME,
+                                    readOnly: true,
+                                    controller: toDateTextEditingController,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      labelText: 'To Date',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? picked = await showDatePicker(
+                                            initialDate: toDate,
+                                            firstDate: DateTime(2015, 8),
+                                            lastDate: DateTime(2101),
+                                            context: context,
+                                          );
+                                          setState(() {
+                                            toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
+                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
+                                          });
+                                        },
+                                        icon: const Icon(FeatherIcons.calendar),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20,right: 20.0),
                             child: Container(
                               height: 120,
                               width: double.infinity,
@@ -177,68 +239,6 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   subtitle: const Text('Total Sale'),
                                 ),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10, bottom: 10),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: AppTextField(
-                                    textFieldType: TextFieldType.NAME,
-                                    readOnly: true,
-                                    controller: fromDateTextEditingController,
-                                    decoration: InputDecoration(
-                                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'From Date',
-                                      border: const OutlineInputBorder(),
-                                      suffixIcon: IconButton(
-                                        onPressed: () async {
-                                          final DateTime? picked = await showDatePicker(
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2015, 8),
-                                            lastDate: DateTime(2101),
-                                            context: context,
-                                          );
-                                          setState(() {
-                                            fromDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
-                                            fromDate = picked!;
-                                          });
-                                        },
-                                        icon: const Icon(FeatherIcons.calendar),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: AppTextField(
-                                    textFieldType: TextFieldType.NAME,
-                                    readOnly: true,
-                                    controller: toDateTextEditingController,
-                                    decoration: InputDecoration(
-                                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'To Date',
-                                      border: const OutlineInputBorder(),
-                                      suffixIcon: IconButton(
-                                        onPressed: () async {
-                                          final DateTime? picked = await showDatePicker(
-                                            initialDate: toDate,
-                                            firstDate: DateTime(2015, 8),
-                                            lastDate: DateTime(2101),
-                                            context: context,
-                                          );
-                                          setState(() {
-                                            toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
-                                            picked!.isToday ? toDate = DateTime.now() : toDate = picked;
-                                          });
-                                        },
-                                        icon: const Icon(FeatherIcons.calendar),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                           ListView.builder(

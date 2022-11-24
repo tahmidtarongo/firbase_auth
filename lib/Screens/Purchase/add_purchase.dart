@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_products.dart';
-import 'package:mobile_pos/Screens/Report/Screens/purchase_report.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
@@ -29,7 +28,6 @@ import '../../subscription.dart';
 import '../Customers/Model/customer_model.dart';
 import '../Home/home.dart';
 import '../invoice_details/purchase_invoice_details.dart';
-import '../invoice_details/sales_invoice_details_screen.dart';
 
 class AddPurchaseScreen extends StatefulWidget {
   const AddPurchaseScreen({Key? key, required this.customerModel}) : super(key: key);

@@ -75,6 +75,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                         labelText: 'Invoice Number',
                         hintText: 'Enter Invoice Number',
                         border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.search)
                       ),
                     ),
                   ),

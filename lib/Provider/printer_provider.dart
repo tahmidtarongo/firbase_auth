@@ -3,6 +3,7 @@ import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import '../constant.dart';
 import '../model/add_to_cart_model.dart';
 import '../model/print_transaction_model.dart';

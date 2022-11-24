@@ -76,6 +76,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                         labelText: 'Invoice Number',
                         hintText: 'Enter Invoice Number',
                         border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.search)
                       ),
                     ),
                   ),

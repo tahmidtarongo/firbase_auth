@@ -9,7 +9,7 @@ const kPremiumPlanColor = Color(0xFF8752EE);
 const kPremiumPlanColor2 = Color(0xFFFF5F00);
 bool connected = false;
 bool isPrintEnable = true;
-List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Mobile Pay', 'Due'];
+List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Bkash', 'Nagad', 'Mobile Pay', 'Due'];
 
 const String onesignalAppId = '1549acc6-6958-4c79-bea0-b8fdae3cbdce';
 
