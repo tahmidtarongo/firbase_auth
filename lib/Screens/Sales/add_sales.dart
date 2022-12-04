@@ -83,8 +83,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   );
 @override
   void initState() {
-    discountAmountEditingController.text = '0';
-    discountPercentageEditingController.text = '0';
     super.initState();
   }
   @override
@@ -936,12 +934,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         consumerRef.refresh(transitionProvider);
                                         consumerRef.refresh(profileDetailsProvider);
 
-                                        EasyLoading.showSuccess('Added Successfully');
+                                        EasyLoading.dismiss();
                                         Future.delayed(const Duration(milliseconds: 500), () {
                                           SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                         });
                                       } else {
-                                        EasyLoading.showSuccess('Added Successfully');
+                                        EasyLoading.dismiss();
                                         // ignore: use_build_context_synchronously
                                         EasyLoading.showError('Please Connect The Printer First');
 
@@ -977,7 +975,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(salesReportProvider);
                                                                   consumerRef.refresh(transitionProvider);
                                                                   consumerRef.refresh(profileDetailsProvider);
-                                                                  EasyLoading.showSuccess('Added Successfully');
+                                                                  EasyLoading.dismiss();
                                                                   Future.delayed(const Duration(milliseconds: 500), () {
                                                                     SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
                                                                         .launch(context);
@@ -1034,7 +1032,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       consumerRef.refresh(salesReportProvider);
                                       consumerRef.refresh(transitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
-                                      EasyLoading.showSuccess('Added Successfully');
+                                      EasyLoading.dismiss();
                                       Future.delayed(const Duration(milliseconds: 500), () {
                                         SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                       });

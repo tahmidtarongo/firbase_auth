@@ -5,7 +5,7 @@ class CustomerModel {
       this.openingBalance, this.remainedBalance);
 
   CustomerModel.fromJson(Map<dynamic, dynamic> json)
-      : customerName = json['customerName'] as String,
+      : customerName = json['customerName'] ?? 'Test',
         phoneNumber = json['phoneNumber'] as String,
         type = json['type'] as String,
         profilePicture = json['profilePicture'] as String,

@@ -18,6 +18,7 @@ import '../../model/personal_information_model.dart';
 import '../../model/seller_info_model.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
+import '../Home/home.dart';
 import '../subscription/purchase_premium_plan_screen.dart';
 
 class ProfileSetup extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
 
   String dropdownLangValue = 'English';
   String initialCountry = 'Bangladesh';
-  String dropdownValue = 'Fashion Store';
+  String dropdownValue = 'Super Shop';
   late String companyName;
   String phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber!;
   double progress = 0.0;
@@ -78,7 +79,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
     for (String category in businessCategory) {
       var item = DropdownMenuItem(
         value: category,
-        child: Text(category),
+        child: Text(category,style: const TextStyle(fontWeight: FontWeight.bold),),
       );
       dropDownItems.add(item);
     }
@@ -116,14 +117,14 @@ class _ProfileSetupState extends State<ProfileSetup> {
   void freeSubscription() async {
     final DatabaseReference subscriptionRef = FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
     SubscriptionModel subscriptionModel = SubscriptionModel(
-      subscriptionName: 'Free',
+      subscriptionName: 'Year',
       subscriptionDate: DateTime.now().toString(),
-      saleNumber: Subscription.subscriptionPlansService['Free']!['Sales'].toInt(),
-      purchaseNumber: Subscription.subscriptionPlansService['Free']!['Purchase'].toInt(),
-      partiesNumber: Subscription.subscriptionPlansService['Free']!['Parties'].toInt(),
-      dueNumber: Subscription.subscriptionPlansService['Free']!['Due Collection'].toInt(),
-      duration: 30,
-      products: Subscription.subscriptionPlansService['Free']!['Products'].toInt(),
+      saleNumber: Subscription.subscriptionPlansService['Year']!['Sales'].toInt(),
+      purchaseNumber: Subscription.subscriptionPlansService['Year']!['Purchase'].toInt(),
+      partiesNumber: Subscription.subscriptionPlansService['Year']!['Parties'].toInt(),
+      dueNumber: Subscription.subscriptionPlansService['Year']!['Due Collection'].toInt(),
+      duration: 365,
+      products: Subscription.subscriptionPlansService['Year']!['Products'].toInt(),
     );
     await subscriptionRef.set(subscriptionModel.toJson());
   }
@@ -434,13 +435,15 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         await FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').push().set(sellerInfoModel.toJson());
 
                         EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 1000));
-
+                        if(mounted){
+                          const Home().launch(context);
+                        }
                         // ignore: use_build_context_synchronously
-                        const PurchasePremiumPlanScreen(
-                          initialSelectedPackage: 'Free',
-                          initPackageValue: 0,
-                          isCameBack: false,
-                        ).launch(context);
+                        // const PurchasePremiumPlanScreen(
+                        //   initialSelectedPackage: 'Free',
+                        //   initPackageValue: 0,
+                        //   isCameBack: false,
+                        // ).launch(context);
                       } catch (e) {
                         EasyLoading.showError(e.toString());
                       }

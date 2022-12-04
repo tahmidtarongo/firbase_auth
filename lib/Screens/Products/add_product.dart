@@ -15,6 +15,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
 import 'package:mobile_pos/Screens/Products/category_list.dart';
+import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Products/unit_list.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -702,10 +703,10 @@ class AddProductState extends State<AddProduct> {
                             );
                             _productInformationRef.push().set(productModel.toJson());
                             Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
-                            EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                            EasyLoading.dismiss();
                             ref.refresh(productProvider);
                             Future.delayed(const Duration(milliseconds: 100), () {
-                              const Home().launch(context, isNewTask: true);
+                              const ProductList().launch(context, isNewTask: true);
                             });
                           } catch (e) {
                             EasyLoading.dismiss();

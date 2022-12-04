@@ -15,7 +15,7 @@ const String onesignalAppId = '1549acc6-6958-4c79-bea0-b8fdae3cbdce';
 
 //___________currency__________________________
 
-const String appVersion = '1.1.0';
+const String appVersion = '1.2.0';
 const String playStoreUrl = "market://details?id=com.maantechnology.maanpos";
 
 const String paypalClientId = 'ASWARYNRARFIbKf8U4u5Bq9-8tYVszzpkfRhohErQil3izlffjVQE-L0K2M0_bobdPhj2Qyf7uHoGctI';

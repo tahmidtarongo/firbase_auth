@@ -131,7 +131,7 @@ class _BrandsListState extends State<BrandsList> {
                                     flex: 1,
                                     child: ButtonGlobalWithoutIcon(
                                       buttontext: 'Select',
-                                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(10.0)),
+                                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(50.0)),
                                       onPressed: () {
                                         Navigator.pop(context, title.brandName);
                                         // AddProduct(

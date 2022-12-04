@@ -508,7 +508,7 @@ class _EditProfileState extends State<EditProfile> {
                         );
                         _personalInformationRef.set(personalInformation.toJson());
                         ref.refresh(profileDetailsProvider);
-                        EasyLoading.showSuccess('Updated Successfully', duration: const Duration(milliseconds: 1000));
+                        EasyLoading.dismiss();
                         // ignore: use_build_context_synchronously
                         Navigator.pushNamed(context, '/home');
                       } catch (e) {

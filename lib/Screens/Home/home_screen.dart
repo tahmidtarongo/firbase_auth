@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/homepage_image_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
@@ -383,7 +384,6 @@ class _HomeGridCardsState extends State<HomeGridCards> {
             TextButton(
               onPressed: () async {
                 setState(() {});
-
                 await Subscription.subscriptionChecker(item: widget.gridItems.title)
                     ? Navigator.of(context).pushNamed('/${widget.gridItems.title}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');

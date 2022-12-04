@@ -82,7 +82,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
       final printerData = consumerRef.watch(printerPurchaseProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       return personalData.when(data: (data) {
-        invoice = data.purchaseInvoiceCounter!.toInt();
+        invoice = data.purchaseInvoiceCounter ?? 1;
         return Scaffold(
           backgroundColor: kMainColor,
           appBar: AppBar(

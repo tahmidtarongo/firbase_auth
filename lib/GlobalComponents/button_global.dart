@@ -58,14 +58,14 @@ class ButtonGlobalWithoutIcon extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+        padding: const EdgeInsets.all(10.0),
         decoration: buttonDecoration,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               buttontext,
-              style: GoogleFonts.jost(fontSize: 20.0, color: buttonTextColor),
+              style: GoogleFonts.jost(fontSize: 14.0, color: buttonTextColor),
             ),
           ],
         ),

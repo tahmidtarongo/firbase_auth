@@ -134,6 +134,24 @@ class _StockListState extends State<StockList> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: AppTextField(
+                                textFieldType: TextFieldType.NAME,
+                                onChanged: (value) {
+                                  setState(() {
+                                    productName = value;
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                                  labelText: 'Product Name',
+                                  hintText: 'Enter Product Name',
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                 color: kMainColor.withOpacity(0.2),
@@ -173,6 +191,7 @@ class _StockListState extends State<StockList> {
                                 ],
                               ),
                             ),
+
                             DataTable(
                               horizontalMargin: 40.0,
                               columnSpacing: 50.0,
@@ -205,24 +224,7 @@ class _StockListState extends State<StockList> {
                               ],
                               rows: const [],
                             ).visible(false),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: AppTextField(
-                                textFieldType: TextFieldType.NAME,
-                                onChanged: (value) {
-                                  setState(() {
-                                    productName = value;
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  labelText: 'Product Name',
-                                  hintText: 'Enter Product Name',
-                                  prefixIcon: Icon(Icons.search),
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ),
+
                             ListView.builder(
                                 itemCount: product.length,
                                 shrinkWrap: true,

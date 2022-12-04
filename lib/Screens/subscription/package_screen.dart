@@ -270,7 +270,7 @@ class _PackageScreenState extends State<PackageScreen> {
                     //   initPackageValue: initPackageValue?.toInt() ?? 0,
                     //   isCameBack: true,
                     // ).launch(context);
-                    await launchUrl(Uri.parse('https://wa.me/01712022529'),mode: LaunchMode.externalApplication);
+                    await launchUrl(Uri.parse('https://wa.me/+8801712022529'),mode: LaunchMode.externalApplication);
                   },
                   child: Container(
                     height: 50,

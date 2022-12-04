@@ -234,12 +234,17 @@ class _EditCustomerState extends State<EditCustomer> {
                       ),
                     ),
                     ExpansionPanelList(
-                      expansionCallback: (int index, bool isExpanded) {},
+                      expansionCallback: (int index, bool isExpanded) {
+                        setState(() {
+                          expanded == false ? expanded = true : expanded = false;
+                        });
+                      },
                       animationDuration: const Duration(seconds: 1),
                       elevation: 0,
                       dividerColor: Colors.white,
                       children: [
                         ExpansionPanel(
+                          canTapOnHeader: true,
                           headerBuilder: (BuildContext context, bool isExpanded) {
                             return Column(
                               mainAxisSize: MainAxisSize.min,
@@ -253,9 +258,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      expanded == false ? expanded = true : expanded = false;
-                                    });
+
                                   },
                                 ),
                               ],
@@ -456,7 +459,7 @@ class _EditCustomerState extends State<EditCustomer> {
                             'emailAddress': updatedCustomerModel.emailAddress,
                             'customerAddress': updatedCustomerModel.customerAddress,
                           });
-                          EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
+                          EasyLoading.dismiss();
                           //ref.refresh(productProvider);
                           Future.delayed(const Duration(milliseconds: 100), () {
                             cRef.refresh(customerProvider);

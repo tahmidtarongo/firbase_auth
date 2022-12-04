@@ -250,6 +250,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     dividerColor: Colors.white,
                     children: [
                       ExpansionPanel(
+                        canTapOnHeader: true,
                         headerBuilder: (BuildContext context, bool isExpanded) {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
@@ -462,7 +463,9 @@ class _AddCustomerState extends State<AddCustomer> {
                               Subscription.decreaseSubscriptionLimits(itemType: 'partiesNumber', context: context);
 
                               EasyLoading.dismiss();
+
                               ref.refresh(customerProvider);
+
                               Future.delayed(const Duration(milliseconds: 100), () {
                                 Navigator.pop(context);
                               });

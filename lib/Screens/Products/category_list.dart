@@ -170,7 +170,7 @@ class _CategoryListState extends State<CategoryList> {
                                     flex: 1,
                                     child: ButtonGlobalWithoutIcon(
                                       buttontext: 'Select',
-                                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(10.0)),
+                                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(50.0)),
                                       onPressed: () {
                                         Navigator.pop(context, get);
                                       },

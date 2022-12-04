@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -481,7 +480,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       consumerRef.refresh(transitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
 
-                                      EasyLoading.showSuccess('Added Successfully');
+                                      EasyLoading.dismiss();
                                       Future.delayed(const Duration(milliseconds: 500), () {
                                         DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                       });
@@ -517,7 +516,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                                 consumerRef.refresh(purchaseTransitionProvider);
                                                                 consumerRef.refresh(transitionProvider);
                                                                 consumerRef.refresh(profileDetailsProvider);
-                                                                EasyLoading.showSuccess('Added Successfully');
+                                                                EasyLoading.dismiss();
                                                                 Future.delayed(const Duration(milliseconds: 500), () {
                                                                   DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
                                                                       .launch(context);
@@ -560,7 +559,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                               ),
                                             );
                                           });
-                                      EasyLoading.showSuccess('Added Successfully');
+                                      EasyLoading.dismiss();
                                     }
                                   } else {
                                     consumerRef.refresh(customerProvider);
@@ -569,7 +568,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                     consumerRef.refresh(transitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
 
-                                    EasyLoading.showSuccess('Added Successfully');
+                                    EasyLoading.dismiss();
                                     Future.delayed(const Duration(milliseconds: 500), () {
                                       DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                     });

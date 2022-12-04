@@ -34,6 +34,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
   String total = 'Cart Is Empty';
   int items = 0;
   String productPrice = '0';
+  String productStock = '0';
   String sentProductPrice = '';
 
   @override
@@ -141,12 +142,16 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                         itemBuilder: (_, i) {
                           if (widget.customerModel!.type.contains('Retailer')) {
                             productPrice = products[i].productSalePrice;
+                            productStock =  products[i].productStock;
                           } else if (widget.customerModel!.type.contains('Dealer')) {
                             productPrice = products[i].productDealerPrice;
+                            productStock =  products[i].productStock;
                           } else if (widget.customerModel!.type.contains('Wholesaler')) {
                             productPrice = products[i].productWholeSalePrice;
+                            productStock =  products[i].productStock;
                           } else if (widget.customerModel!.type.contains('Supplier')) {
                             productPrice = products[i].productPurchasePrice;
+                            productStock =  products[i].productStock;
                           }
                           return GestureDetector(
                             onTap: () {
@@ -216,7 +221,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                       style: TextStyle(fontSize: 16),
                                                     ),
                                                     Text(
-                                                      products[i].productStock,
+                                                      productStock,
                                                       style: const TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.grey,

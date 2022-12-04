@@ -77,7 +77,7 @@ class _AddCategoryState extends State<AddCategory> {
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Fashion',
+                      hintText: 'Enter Category Name',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelText: 'Category name',
                     ),

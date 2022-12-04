@@ -15,6 +15,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../Home/home_screen.dart';
 
@@ -120,7 +121,7 @@ class UpdateProductState extends State<UpdateProduct> {
         ),
         centerTitle: true,
       ),
-      body: Consumer(builder: (context, ref, __) {
+      body: Consumer(builder: (context, pref, __) {
         return Container(
           alignment: Alignment.topCenter,
           decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
@@ -625,8 +626,8 @@ class UpdateProductState extends State<UpdateProduct> {
                               'productManufacturer': updatedProductModel.productManufacturer,
                               'productPicture': updatedProductModel.productPicture,
                             });
-                            EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
-                            //ref.refresh(productProvider);
+                            EasyLoading.dismiss();
+                            pref.refresh(productProvider);
                             Future.delayed(const Duration(milliseconds: 100), () {
                               const HomeScreen().launch(context, isNewTask: true);
                             });

@@ -87,14 +87,25 @@ class _CustomerDetailsState extends State<CustomerDetails> {
               ),
             ),
             IconButton(
-              onPressed: () async {
-                DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
-                ref.keepSynced(true);
-                ref.remove();
-                cRef.refresh(customerProvider);
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-              },
+              onPressed: () => showDialog(context: context, builder: (dontext) => AlertDialog(
+                title: const Text('Are you sure to delete this user?'),
+                content: const Text('The user will be deleted and all the data will be deleted from your account.Are you sure to delete this?',maxLines: 5,),
+                actions: [
+                  const Text('Cancel').onTap(() => Navigator.pop(dontext)),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: const Text('Yes, Delete Forever').onTap((){
+                      DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
+                      ref.keepSynced(true);
+                      ref.remove();
+                      cRef.refresh(customerProvider);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(dontext);
+                      Navigator.pop(context);
+                    }),
+                  ),
+                ],
+              )),
               icon: const Icon(
                 FeatherIcons.trash2,
                 color: Colors.white,
