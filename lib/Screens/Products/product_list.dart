@@ -7,7 +7,6 @@ import 'package:mobile_pos/Screens/Home/home.dart';
 import 'package:mobile_pos/Screens/Products/update_product.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../GlobalComponents/Model/category_model.dart';
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -36,6 +35,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
       final providerData = ref.watch(productProvider);
       final categoryData = ref.watch(categoryProvider);
       return categoryData.when(data: (categoryList) {
+
         for(int i = 0;i< categoryList.length;i++){
          category.contains(categoryList[i].categoryName)? null : category.add(categoryList[i].categoryName);
         }

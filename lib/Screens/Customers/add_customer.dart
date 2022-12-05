@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
+import 'package:mobile_pos/Screens/Customers/customer_list.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -465,10 +466,9 @@ class _AddCustomerState extends State<AddCustomer> {
                               EasyLoading.dismiss();
 
                               ref.refresh(customerProvider);
-
-                              Future.delayed(const Duration(milliseconds: 100), () {
-                                Navigator.pop(context);
-                              });
+                              if(mounted){
+                                const CustomerList().launch(context);
+                              }
                             } catch (e) {
                               EasyLoading.dismiss();
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));

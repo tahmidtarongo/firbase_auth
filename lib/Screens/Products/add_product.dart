@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
+import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
 import 'package:mobile_pos/Screens/Products/category_list.dart';
 import 'package:mobile_pos/Screens/Products/product_list.dart';
@@ -705,6 +706,7 @@ class AddProductState extends State<AddProduct> {
                             Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
                             EasyLoading.dismiss();
                             ref.refresh(productProvider);
+                            ref.refresh(categoryProvider);
                             Future.delayed(const Duration(milliseconds: 100), () {
                               const ProductList().launch(context, isNewTask: true);
                             });

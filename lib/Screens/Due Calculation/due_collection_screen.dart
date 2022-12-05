@@ -567,7 +567,6 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                     consumerRef.refresh(purchaseTransitionProvider);
                                     consumerRef.refresh(transitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
-
                                     EasyLoading.dismiss();
                                     Future.delayed(const Duration(milliseconds: 500), () {
                                       DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);

@@ -109,13 +109,11 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                         data: (customer) {
                           return customer.isNotEmpty
                               ? SizedBox(
-                                  height: context.height() / 2,
+                                  height: context.height() / 1.5,
                                   child: TabBarView(
                                     controller: tabController,
                                     children: [
                                       ListView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
                                           itemCount: customer.length,
                                           itemBuilder: (_, index) {
                                             customer[index].type == 'Retailer' ? color = const Color(0xFF56da87) : Colors.white;
@@ -203,8 +201,6 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                             );
                                           }),
                                       ListView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
                                           itemCount: customer.length,
                                           itemBuilder: (_, index) {
                                             customer[index].type == 'Retailer' ? color = const Color(0xFF56da87) : Colors.white;
@@ -292,8 +288,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                             ).visible(customer[index].type == 'Retailer');
                                           }),
                                       ListView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
+
                                           itemCount: customer.length,
                                           itemBuilder: (_, index) {
                                             customer[index].type == 'Retailer' ? color = const Color(0xFF56da87) : Colors.white;

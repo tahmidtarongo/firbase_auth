@@ -7,8 +7,9 @@ import '../model/homepage_image_model.dart';
 class HomePageImageRepo {
   Future<List<HomePageImageModel>> getAllHomePageImage() async {
     List<HomePageImageModel> imageList = [];
-    await FirebaseDatabase.instance.ref().child('Admin Panel').child('Homepage Image').orderByKey().get().then((value) {
-
+    final imageRef = FirebaseDatabase.instance.ref().child('Admin Panel').child('Homepage Image');
+    imageRef.keepSynced(true);
+    imageRef.orderByKey().get().then((value) {
       for (var element in value.children) {
         imageList.add(HomePageImageModel.fromJson(jsonDecode(jsonEncode(element.value))));
 

@@ -797,7 +797,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                       consumerRef.refresh(purchaseTransitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
 
-                                      EasyLoading.showSuccess('Added Successfully');
+                                      EasyLoading.dismiss();
                                       Future.delayed(const Duration(milliseconds: 500), () {
                                         PurchaseInvoiceDetails(
                                           transitionModel: transitionModel,
@@ -838,7 +838,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                                 consumerRef.refresh(purchaseReportProvider);
                                                                 consumerRef.refresh(purchaseTransitionProvider);
                                                                 consumerRef.refresh(profileDetailsProvider);
-                                                                EasyLoading.showSuccess('Added Successfully');
+                                                                EasyLoading.dismiss();
                                                                 Future.delayed(const Duration(milliseconds: 500), () {
                                                                   PurchaseInvoiceDetails(
                                                                     transitionModel: transitionModel,
@@ -885,7 +885,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                               ),
                                             );
                                           });
-                                      EasyLoading.showSuccess('Added Successfully');
+                                      EasyLoading.dismiss();
                                     }
                                   } else {
 
@@ -894,7 +894,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                     consumerRef.refresh(purchaseReportProvider);
                                     consumerRef.refresh(purchaseTransitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
-                                    EasyLoading.showSuccess('Added Successfully');
+                                    EasyLoading.dismiss();
                                     Future.delayed(const Duration(milliseconds: 500), () {
                                       PurchaseInvoiceDetails(
                                         transitionModel: transitionModel,

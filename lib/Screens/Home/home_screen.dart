@@ -10,7 +10,9 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../Provider/due_transaction_provider.dart';
 import '../../Provider/profile_provider.dart';
+import '../../Provider/transactions_provider.dart';
 import '../../subscription.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
 import '../subscription/package_screen.dart';
@@ -383,7 +385,10 @@ class _HomeGridCardsState extends State<HomeGridCards> {
           children: [
             TextButton(
               onPressed: () async {
-                setState(() {});
+                ref.refresh(customerProvider);
+                ref.refresh(dueTransactionProvider);
+                ref.refresh(purchaseTransitionProvider);
+                ref.refresh(transitionProvider);
                 await Subscription.subscriptionChecker(item: widget.gridItems.title)
                     ? Navigator.of(context).pushNamed('/${widget.gridItems.title}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');

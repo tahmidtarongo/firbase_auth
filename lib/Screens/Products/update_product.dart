@@ -15,6 +15,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../Provider/category,brans,units_provide.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../Home/home_screen.dart';
@@ -628,6 +629,7 @@ class UpdateProductState extends State<UpdateProduct> {
                             });
                             EasyLoading.dismiss();
                             pref.refresh(productProvider);
+                            pref.refresh(categoryProvider);
                             Future.delayed(const Duration(milliseconds: 100), () {
                               const HomeScreen().launch(context, isNewTask: true);
                             });
