@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../GlobalComponents/button_global.dart';
+import '../Home/home.dart';
 
 class OTPVerify extends StatefulWidget {
   const OTPVerify({Key? key}) : super(key: key);
@@ -126,13 +127,13 @@ class _OTPVerifyState extends State<OTPVerify> {
                       EasyLoading.show(status: 'Loading');
                       try {
                         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneAuth.verify, smsCode: code);
-                        await auth.signInWithCredential(credential).then((value) {
+                        await auth.signInWithCredential(credential).then((value) async{
                           if (value.additionalUserInfo!.isNewUser) {
                             EasyLoading.dismiss();
                             const ProfileSetup().launch(context);
                           } else {
                             EasyLoading.dismiss();
-                            const SuccessScreen().launch(context, isNewTask: true);
+                            await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
                           }
                         });
                       } catch (e) {

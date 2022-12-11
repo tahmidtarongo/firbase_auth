@@ -110,7 +110,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                       providerData.when(data: (products) {
                         return products.isNotEmpty
                             ? SizedBox(
-                          height: context.height()/2,
+                          height: context.height()/1.5,
                               child: TabBarView(
                           controller: tabController,
                               children:

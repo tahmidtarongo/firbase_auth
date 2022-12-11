@@ -9,7 +9,7 @@ class HomePageImageRepo {
     List<HomePageImageModel> imageList = [];
     final imageRef = FirebaseDatabase.instance.ref().child('Admin Panel').child('Homepage Image');
     imageRef.keepSynced(true);
-    imageRef.orderByKey().get().then((value) {
+    await imageRef.orderByKey().get().then((value) {
       for (var element in value.children) {
         imageList.add(HomePageImageModel.fromJson(jsonDecode(jsonEncode(element.value))));
 

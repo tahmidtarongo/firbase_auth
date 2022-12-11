@@ -22,7 +22,11 @@ import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/Model/category_model.dart';
+import '../../Provider/customer_provider.dart';
 import '../../Provider/product_provider.dart';
+import '../../Provider/profile_provider.dart';
+import '../../Provider/purchase_report_provider.dart';
+import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
 import '../../subscription.dart';
 import '../Home/home.dart';
@@ -705,8 +709,12 @@ class AddProductState extends State<AddProduct> {
                             _productInformationRef.push().set(productModel.toJson());
                             Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
                             EasyLoading.dismiss();
-                            ref.refresh(productProvider);
-                            ref.refresh(categoryProvider);
+                            _productInformationRef.onChildAdded.listen((event) {
+                              ref.refresh(productProvider);
+                              ref.refresh(categoryProvider);
+                              ref.refresh(brandsProvider);
+                            });
+
                             Future.delayed(const Duration(milliseconds: 100), () {
                               const ProductList().launch(context, isNewTask: true);
                             });

@@ -56,8 +56,8 @@ class SuccessScreen extends StatelessWidget {
           bottomNavigationBar: ButtonGlobalWithoutIcon(
               buttontext: 'Continue',
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
-              onPressed: () {
-                const Home().launch(context);
+              onPressed: () async{
+                await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
                 // Navigator.pushNamed(context, '/home');
               },
               buttonTextColor: Colors.white),

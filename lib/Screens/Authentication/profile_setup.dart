@@ -435,9 +435,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         await FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').push().set(sellerInfoModel.toJson());
 
                         EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 1000));
-                        if(mounted){
-                          const Home().launch(context);
-                        }
+                        await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
                         // ignore: use_build_context_synchronously
                         // const PurchasePremiumPlanScreen(
                         //   initialSelectedPackage: 'Free',

@@ -156,8 +156,8 @@ class _StockListState extends State<StockList> {
                               decoration: BoxDecoration(
                                 color: kMainColor.withOpacity(0.2),
                                 borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
+                                  topLeft: Radius.circular(0),
+                                  topRight: Radius.circular(0),
                                 ),
                               ),
                               padding: const EdgeInsets.all(20),

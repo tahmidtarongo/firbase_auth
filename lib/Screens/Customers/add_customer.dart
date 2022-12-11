@@ -465,7 +465,10 @@ class _AddCustomerState extends State<AddCustomer> {
 
                               EasyLoading.dismiss();
 
-                              ref.refresh(customerProvider);
+                              _customerInformationRef.onChildAdded.listen((event) {
+                                ref.refresh(customerProvider);
+                              });
+
                               if(mounted){
                                 const CustomerList().launch(context);
                               }

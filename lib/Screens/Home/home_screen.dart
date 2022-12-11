@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/homepage_image_provider.dart';
+import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/constant.dart';
@@ -12,6 +15,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../Provider/due_transaction_provider.dart';
 import '../../Provider/profile_provider.dart';
+import '../../Provider/purchase_report_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../subscription.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
@@ -51,6 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController pageController = PageController(
     initialPage: 0,
   );
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
