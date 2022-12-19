@@ -997,9 +997,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             consumerRef.refresh(salesReportProvider);
                                                             consumerRef.refresh(transitionProvider);
                                                             consumerRef.refresh(profileDetailsProvider);
-                                                            await Future.delayed(const Duration(milliseconds: 500), () {
-                                                              SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
-                                                            });
+                                                            await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                                           },
                                                           child: const Center(
                                                             child: Text(
