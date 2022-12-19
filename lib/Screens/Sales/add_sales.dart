@@ -929,9 +929,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         consumerRef.refresh(profileDetailsProvider);
 
                                         EasyLoading.dismiss();
-                                        await Future.delayed(const Duration(milliseconds: 500), () {
-                                          SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
-                                        });
+                                        await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                       } else {
                                         EasyLoading.dismiss();
                                         // ignore: use_build_context_synchronously
@@ -970,9 +968,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(transitionProvider);
                                                                   consumerRef.refresh(profileDetailsProvider);
                                                                   EasyLoading.dismiss();
-                                                                  await Future.delayed(const Duration(milliseconds: 500), () {
-                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
-                                                                  });
+                                                                  await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                                                 }
                                                               },
                                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
@@ -1027,9 +1023,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       consumerRef.refresh(transitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
                                       EasyLoading.dismiss();
-                                      await Future.delayed(const Duration(milliseconds: 500), () {
-                                        SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
-                                      });
+                                      await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                     }
                                   } catch (e) {
                                     EasyLoading.showError(e.toString());

@@ -87,8 +87,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   Widget build(BuildContext context) {
     count++;
     return Consumer(builder: (context, consumerRef, __) {
-      final customerProviderRef =
-          widget.customerModel.type == 'Supplier' ? consumerRef.watch(purchaseTransitionProvider) : consumerRef.watch(transitionProvider);
+      final customerProviderRef = widget.customerModel.type == 'Supplier' ? consumerRef.watch(purchaseTransitionProvider) : consumerRef.watch(transitionProvider);
       final printerData = consumerRef.watch(printerDueProviderNotifier);
       final personalData = consumerRef.watch(profileDetailsProvider);
       return personalData.when(data: (data) {
@@ -231,14 +230,12 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                     ///_____Total______________________________
                     Container(
-                      decoration:
-                          BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
+                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
                       child: Column(
                         children: [
                           Container(
                             padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
+                            decoration: const BoxDecoration(color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -461,8 +458,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                   ///_________DueUpdate______________________________________________________
                                   getSpecificCustomers(
-                                      phoneNumber: widget.customerModel.phoneNumber,
-                                      due: paidAmount.toInt(),);
+                                    phoneNumber: widget.customerModel.phoneNumber,
+                                    due: paidAmount.toInt(),
+                                  );
 
                                   ///________Subscription_____________________________________________________
                                   Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
@@ -470,8 +468,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   ///________Print_______________________________________________________
                                   if (isPrintEnable) {
                                     await printerData.getBluetooth();
-                                    PrintDueTransactionModel model =
-                                        PrintDueTransactionModel(dueTransactionModel: dueTransactionModel, personalInformationModel: data);
+                                    PrintDueTransactionModel model = PrintDueTransactionModel(dueTransactionModel: dueTransactionModel, personalInformationModel: data);
                                     if (connected) {
                                       await printerData.printTicket(printDueTransactionModel: model);
                                       consumerRef.refresh(customerProvider);
@@ -481,9 +478,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       consumerRef.refresh(profileDetailsProvider);
 
                                       EasyLoading.dismiss();
-                                      await Future.delayed(const Duration(milliseconds: 500), () {
-                                        DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
-                                      });
+                                      await Future.delayed(const Duration(milliseconds: 500))
+                                          .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
                                     } else {
                                       // ignore: use_build_context_synchronously
                                       EasyLoading.showError("Please Connect The Printer First");
@@ -499,8 +495,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                     children: [
                                                       ListView.builder(
                                                         shrinkWrap: true,
-                                                        itemCount:
-                                                            printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                        itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
                                                         itemBuilder: (context, index) {
                                                           return ListTile(
                                                             onTap: () async {
@@ -517,10 +512,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                                 consumerRef.refresh(transitionProvider);
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.dismiss();
-                                                                await Future.delayed(const Duration(milliseconds: 500), () {
-                                                                  DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
-                                                                      .launch(context);
-                                                                });
+                                                                await Future.delayed(const Duration(milliseconds: 500))
+                                                                    .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
                                                               }
                                                             },
                                                             title: Text('${printerData.availableBluetoothDevices[index]}'),
@@ -542,10 +535,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(transitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          await Future.delayed(const Duration(milliseconds: 500), () {
-                                                            DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
-                                                                .launch(context);
-                                                          });
+                                                          await Future.delayed(const Duration(milliseconds: 500))
+                                                              .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -570,9 +561,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                     consumerRef.refresh(transitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
                                     EasyLoading.dismiss();
-                                    await Future.delayed(const Duration(milliseconds: 500), () {
-                                      DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
-                                    });
+                                    await Future.delayed(const Duration(milliseconds: 500))
+                                        .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
                                   }
                                 } catch (e) {
                                   EasyLoading.showError(e.toString());
@@ -663,9 +653,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           print(openingBalanceCollection);
           int remainBalance = openingBalanceCollection - due;
           print(remainBalance);
-          selectedInvoice.isEmptyOrNull
-              ? ref.child(key!).update({'due': '$totalDue', 'remainedBalance': '$remainBalance'})
-              : ref.child(key!).update({'due': '$totalDue'});
+          selectedInvoice.isEmptyOrNull ? ref.child(key!).update({'due': '$totalDue', 'remainedBalance': '$remainBalance'}) : ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
