@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
     int updateVersion = int.parse(updatedAppVersion.replaceAll('.', ''));
     final prefs = await SharedPreferences.getInstance();
     if (normalUpdate && !forceUpdate && (updateVersion > thisAppVersion)) {
-      isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
+      isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
       showDialog(
         barrierDismissible: false,
         context: context,

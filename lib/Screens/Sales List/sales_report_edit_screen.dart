@@ -703,7 +703,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     final ref = FirebaseDatabase.instance.ref(userId).child('Sales Transition');
                                     ref.keepSynced(true);
                                     String? key;
-                                    ref.orderByKey().get().then((value) {
+                                    ref.orderByKey().get().then((value) async {
                                       for (var element in value.children) {
                                         final t = TransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
                                         if (transitionModel.invoiceNumber == t.invoiceNumber) {
@@ -786,7 +786,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                           EasyLoading.dismiss();
 
                                           // ignore: use_build_context_synchronously
-                                          Navigator.pop(context);
+                                          await Future.delayed(const Duration(microseconds: 100)).then((value) => Navigator.pop(context));
                                         }
                                       }
                                     });

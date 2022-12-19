@@ -481,7 +481,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       consumerRef.refresh(profileDetailsProvider);
 
                                       EasyLoading.dismiss();
-                                      Future.delayed(const Duration(milliseconds: 500), () {
+                                      await Future.delayed(const Duration(milliseconds: 500), () {
                                         DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                       });
                                     } else {
@@ -517,7 +517,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                                 consumerRef.refresh(transitionProvider);
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.dismiss();
-                                                                Future.delayed(const Duration(milliseconds: 500), () {
+                                                                await Future.delayed(const Duration(milliseconds: 500), () {
                                                                   DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
                                                                       .launch(context);
                                                                 });
@@ -536,14 +536,16 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                       ),
                                                       const SizedBox(height: 15),
                                                       GestureDetector(
-                                                        onTap: () {
+                                                        onTap: () async {
                                                           consumerRef.refresh(customerProvider);
                                                           consumerRef.refresh(dueTransactionProvider);
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(transitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
-                                                              .launch(context);
+                                                          await Future.delayed(const Duration(milliseconds: 500), () {
+                                                            DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data)
+                                                                .launch(context);
+                                                          });
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -568,7 +570,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                     consumerRef.refresh(transitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
                                     EasyLoading.dismiss();
-                                    Future.delayed(const Duration(milliseconds: 500), () {
+                                    await Future.delayed(const Duration(milliseconds: 500), () {
                                       DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context);
                                     });
                                   }

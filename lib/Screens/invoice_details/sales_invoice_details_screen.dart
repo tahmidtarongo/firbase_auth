@@ -30,6 +30,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
       final printerData = ref.watch(printerProviderNotifier);
       return SafeArea(
         child: Scaffold(
+
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -465,13 +466,19 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                         Radius.circular(30),
                       ),
                     ),
-                    child: const Center(
-                      child: Text(
-                        'Print',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.print,color: Colors.white,),
+                          Text(
+                            'Print',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

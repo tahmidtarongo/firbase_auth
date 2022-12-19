@@ -798,7 +798,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                       consumerRef.refresh(profileDetailsProvider);
 
                                       EasyLoading.dismiss();
-                                      Future.delayed(const Duration(milliseconds: 500), () {
+                                      await Future.delayed(const Duration(milliseconds: 500), () {
                                         PurchaseInvoiceDetails(
                                           transitionModel: transitionModel,
                                           personalInformationModel: data,
@@ -839,7 +839,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                                 consumerRef.refresh(purchaseTransitionProvider);
                                                                 consumerRef.refresh(profileDetailsProvider);
                                                                 EasyLoading.dismiss();
-                                                                Future.delayed(const Duration(milliseconds: 500), () {
+                                                                await Future.delayed(const Duration(milliseconds: 500), () {
                                                                   PurchaseInvoiceDetails(
                                                                     transitionModel: transitionModel,
                                                                     personalInformationModel: data,
@@ -860,16 +860,18 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                       ),
                                                       const SizedBox(height: 15),
                                                       GestureDetector(
-                                                        onTap: () {
+                                                        onTap: () async {
                                                           consumerRef.refresh(customerProvider);
                                                           consumerRef.refresh(productProvider);
                                                           consumerRef.refresh(purchaseReportProvider);
                                                           consumerRef.refresh(purchaseTransitionProvider);
                                                           consumerRef.refresh(profileDetailsProvider);
-                                                          PurchaseInvoiceDetails(
-                                                            transitionModel: transitionModel,
-                                                            personalInformationModel: data,
-                                                          ).launch(context);
+                                                          await Future.delayed(const Duration(milliseconds: 500), () {
+                                                            PurchaseInvoiceDetails(
+                                                              transitionModel: transitionModel,
+                                                              personalInformationModel: data,
+                                                            ).launch(context);
+                                                          });
                                                         },
                                                         child: const Center(
                                                           child: Text(
@@ -895,7 +897,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                     consumerRef.refresh(purchaseTransitionProvider);
                                     consumerRef.refresh(profileDetailsProvider);
                                     EasyLoading.dismiss();
-                                    Future.delayed(const Duration(milliseconds: 500), () {
+                                    await Future.delayed(const Duration(milliseconds: 500), () {
                                       PurchaseInvoiceDetails(
                                         transitionModel: transitionModel,
                                         personalInformationModel: data,

@@ -463,7 +463,7 @@ class _EditCustomerState extends State<EditCustomer> {
                           //ref.refresh(productProvider);
                           Future.delayed(const Duration(milliseconds: 100), () {
                             cRef.refresh(customerProvider);
-                            const CustomerList().launch(context, isNewTask: true);
+                            const CustomerList().launch(context);
                           });
                         } catch (e) {
                           EasyLoading.dismiss();

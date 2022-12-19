@@ -20,7 +20,7 @@ class ProductList extends StatefulWidget {
   State<ProductList> createState() => _ProductListState();
 }
 
-class _ProductListState extends State<ProductList> with TickerProviderStateMixin{
+class _ProductListState extends State<ProductList> with TickerProviderStateMixin {
   List<String> productCodeList = [];
   List<String> productNameList = [];
   String? productName;
@@ -35,9 +35,8 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
       final providerData = ref.watch(productProvider);
       final categoryData = ref.watch(categoryProvider);
       return categoryData.when(data: (categoryList) {
-
-        for(int i = 0;i< categoryList.length;i++){
-         category.contains(categoryList[i].categoryName)? null : category.add(categoryList[i].categoryName);
+        for (int i = 0; i < categoryList.length; i++) {
+          category.contains(categoryList[i].categoryName) ? null : category.add(categoryList[i].categoryName);
         }
         tabController = TabController(length: category.length, vsync: this);
         return DefaultTabController(
@@ -49,7 +48,12 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
               backgroundColor: kMainColor,
               elevation: 0,
               iconTheme: const IconThemeData(color: Colors.white),
-              leading: const Icon(Icons.arrow_back,color: Colors.white,).onTap(() => const Home().launch(context)),
+              leading: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ).onTap(() async{
+                await Future.delayed(const Duration(microseconds: 100)).then((value) => const Home().launch(context));
+              }),
               title: Text(
                 'Product List',
                 style: GoogleFonts.poppins(
@@ -59,11 +63,20 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
               centerTitle: true,
             ),
             body: WillPopScope(
-              onWillPop: () async => await const Home().launch(context),
+              onWillPop: () async {
+               await Future.delayed(const Duration(microseconds: 100)).then((value) {
+                 if(mounted){
+                   const Home().launch(context);
+                   return true;
+                 } else{
+                   return false;
+                 }
+               });
+               return false;
+              },
               child: Container(
                 alignment: Alignment.topCenter,
-                decoration:
-                    const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -81,7 +94,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
                               category[index],
-                              style: const TextStyle(color: kMainColor,fontSize: 18.0),
+                              style: const TextStyle(color: kMainColor, fontSize: 18.0),
                             ),
                           ),
                         ),
@@ -99,29 +112,29 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                             });
                           },
                           decoration: const InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            labelText: 'Product Name',
-                            hintText: 'Enter Product Name',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.search)
-                          ),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              labelText: 'Product Name',
+                              hintText: 'Enter Product Name',
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.search)),
                         ),
                       ),
                       providerData.when(data: (products) {
                         return products.isNotEmpty
                             ? SizedBox(
-                          height: context.height()/1.5,
-                              child: TabBarView(
-                          controller: tabController,
-                              children:
-                                List.generate(category.length, (index) => ListView.builder(
-
-                                    itemCount: products.length,
-                                    itemBuilder: (_, i) {
-                                      productCodeList.add(products[i].productCode.removeAllWhiteSpace().toLowerCase());
-                                      productNameList.add(products[i].productName.removeAllWhiteSpace().toLowerCase());
-                                      return SizedBox(
-                                        child: ListTile(
+                                height: products.length * 75,
+                                child: TabBarView(
+                                  controller: tabController,
+                                  children: List.generate(
+                                    category.length,
+                                    (index) => ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: products.length,
+                                      itemBuilder: (_, i) {
+                                        productCodeList.add(products[i].productCode.removeAllWhiteSpace().toLowerCase());
+                                        productNameList.add(products[i].productName.removeAllWhiteSpace().toLowerCase());
+                                        return ListTile(
                                           onTap: () {
                                             UpdateProduct(
                                               productModel: products[i],
@@ -136,7 +149,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                             child: Center(
                                               child: Text(
                                                 products[i].productName.substring(0, 1).toUpperCase(),
-                                                style: TextStyle(color: Colors.white),
+                                                style: const TextStyle(color: Colors.white),
                                               ),
                                             ),
                                           ),
@@ -146,10 +159,12 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                             "$currency ${products[i].productSalePrice}",
                                             style: const TextStyle(fontSize: 18),
                                           ),
-                                        ).visible(productName.isEmptyOrNull ? true : products[i].productName.toUpperCase().contains(productName!.toUpperCase())),
-                                      ).visible(category[index] == 'All' ? true : products[i].productCategory == category[index] );
-                                    }))),
-                            )
+                                        ).visible(productName.isEmptyOrNull ? true : products[i].productName.toUpperCase().contains(productName!.toUpperCase())).visible(category[index] == 'All' ? true : products[i].productCategory == category[index]);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
                             : const Center(
                                 child: Padding(
                                 padding: EdgeInsets.only(top: 60),

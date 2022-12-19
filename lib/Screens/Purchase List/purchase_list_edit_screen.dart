@@ -575,7 +575,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                   ///________________updateInvoice___________________________________________________________
                                  final ref = FirebaseDatabase.instance.ref(userId).child('Purchase Transition');
                                  ref.keepSynced(true);
-                                  ref.orderByKey().get().then((value) {
+                                  ref.orderByKey().get().then((value) async {
                                     for (var element in value.children) {
                                       final t = PurchaseTransitionModel.fromJson(jsonDecode(jsonEncode(element.value)));
                                       if (transitionModel.invoiceNumber == t.invoiceNumber) {
@@ -641,7 +641,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                         EasyLoading.dismiss();
 
                                         // ignore: use_build_context_synchronously
-                                        Navigator.pop(context);
+                                        await Future.delayed(const Duration(microseconds: 100)).then((value) => Navigator.pop(context));
                                       }
                                     }
                                   });

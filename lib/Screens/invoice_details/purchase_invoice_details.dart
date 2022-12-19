@@ -467,7 +467,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Icon(Icons.print,color: Colors.white,),
                           Text(
                             'Print',

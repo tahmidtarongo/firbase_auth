@@ -864,8 +864,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   EasyLoading.showError('Due is not available for guest');
                                 } else {
                                   try {
-                                    EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                                    print('Before Sale Transition');
                                     final userId = FirebaseAuth.instance.currentUser!.uid;
                                     DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
                                     ref.keepSynced(true);
@@ -892,17 +890,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                                     transitionModel.totalQuantity = totalQuantity;
                                     transitionModel.lossProfit = lossProfit;
-                                    print('Before Push Transition');
                                     ref.push().set(transitionModel.toJson());
-                                    print('After Sale Transition');
 
                                     ///__________StockMange_________________________________________________-
-                                    print('Before Stock Manage');
+
                                     for (var element in providerData.cartItemList) {
                                       decreaseStock(element.productId, element.quantity);
                                     }
-                                    print('After Stock Manage');
-                                    print('Before Personal Information');
 
                                     ///_______invoice_Update_____________________________________________
                                     final DatabaseReference personalInformationRef =
@@ -910,18 +904,18 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
                                     personalInformationRef.keepSynced(true);
                                     personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
-                                    print('After Personal Information');
+
 
                                     ///________Subscription_____________________________________________________
-                                    print('Before Subscription Information');
+
                                     Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
-                                    print('After Subscription Information');
+
 
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
                                     ///________Print_______________________________________________________
-                                    print('Before Print Information');
+
                                     PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
                                     if (isPrintEnable) {
                                       await printerData.getBluetooth();
@@ -935,7 +929,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         consumerRef.refresh(profileDetailsProvider);
 
                                         EasyLoading.dismiss();
-                                        Future.delayed(const Duration(milliseconds: 500), () {
+                                        await Future.delayed(const Duration(milliseconds: 500), () {
                                           SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                         });
                                       } else {
@@ -976,9 +970,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(transitionProvider);
                                                                   consumerRef.refresh(profileDetailsProvider);
                                                                   EasyLoading.dismiss();
-                                                                  Future.delayed(const Duration(milliseconds: 500), () {
-                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
-                                                                        .launch(context);
+                                                                  await Future.delayed(const Duration(milliseconds: 500), () {
+                                                                    SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                                                   });
                                                                 }
                                                               },
@@ -1002,14 +995,15 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                         ),
                                                         const SizedBox(height: 15),
                                                         GestureDetector(
-                                                          onTap: () {
+                                                          onTap: () async {
                                                             consumerRef.refresh(customerProvider);
                                                             consumerRef.refresh(productProvider);
                                                             consumerRef.refresh(salesReportProvider);
                                                             consumerRef.refresh(transitionProvider);
                                                             consumerRef.refresh(profileDetailsProvider);
-                                                            SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
-                                                                .launch(context);
+                                                            await Future.delayed(const Duration(milliseconds: 500), () {
+                                                              SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
+                                                            });
                                                           },
                                                           child: const Center(
                                                             child: Text(
@@ -1033,11 +1027,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       consumerRef.refresh(transitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
                                       EasyLoading.dismiss();
-                                      Future.delayed(const Duration(milliseconds: 500), () {
+                                      await Future.delayed(const Duration(milliseconds: 500), () {
                                         SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context);
                                       });
                                     }
-                                    print('After Print Information');
                                   } catch (e) {
                                     EasyLoading.showError(e.toString());
                                   }

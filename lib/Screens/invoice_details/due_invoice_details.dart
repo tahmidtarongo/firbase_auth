@@ -304,13 +304,19 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                         Radius.circular(30),
                       ),
                     ),
-                    child: const Center(
-                      child: Text(
-                        'Print',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.print,color: Colors.white,),
+                          Text(
+                            'Print',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
