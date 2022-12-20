@@ -8,7 +8,6 @@ import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
 import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
@@ -606,7 +605,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                         onTap: () {
-                          Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.maanpos', subject: 'Download Maan POS and Grow Your Business');
+                          // Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.maanpos', subject: 'Download Maan POS and Grow Your Business');
                         },
                         leading: const Icon(
                           Icons.share,

@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_pos/Functions/generate_pdf.dart';
 import 'package:mobile_pos/Provider/print_purchase_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase%20List/purchase_list_edit_screen.dart';
@@ -252,11 +253,11 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                           color: Colors.grey,
                                                         )),
                                                     IconButton(
-                                                        onPressed: () => toast('Coming Soon'),
+                                                        onPressed: () => GeneratePdf().generateDocument(reTransaction[index],data),
                                                         icon: const Icon(
                                                           FeatherIcons.share,
                                                           color: Colors.grey,
-                                                        )).visible(false),
+                                                        )),
                                                     IconButton(
                                                         onPressed: () {
                                                           cart.clearCart();
