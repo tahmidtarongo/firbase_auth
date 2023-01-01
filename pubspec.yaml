@@ -78,6 +78,8 @@ dependencies:
   pdf: ^3.8.4
   printing: ^5.9.3
   open_file: ^3.2.1
+  date_time_format: ^2.0.1
+  csv: ^5.0.1
 
 
 dev_dependencies:

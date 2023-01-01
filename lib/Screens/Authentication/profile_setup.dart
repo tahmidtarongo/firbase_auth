@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
+import 'package:mobile_pos/model/invoice_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
@@ -418,11 +419,18 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           dueInvoiceCounter: 1
                         );
                         await _personalInformationRef.set(personalInformation.toJson());
-
+                        InvoiceModel invoiceModel = InvoiceModel(
+                            phoneNumber: PhoneAuth.phoneNumber,
+                            pictureUrl: profilePicture,
+                            emailAddress: '',
+                            companyName: companyName,
+                            address: ''
+                        );
+                        await FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Invoice Settings').set(invoiceModel.toJson());
                         SellerInfoModel sellerInfoModel = SellerInfoModel(
                           businessCategory: dropdownValue,
                           companyName: companyName,
-                          phoneNumber: phoneNumber,
+                          phoneNumber: PhoneAuth.phoneNumber,
                           countryName: controller.text,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,

@@ -299,6 +299,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                     return Text(e.toString());
                   }, loading: () {
                     return const Center(child: CircularProgressIndicator());
+
                   }),
                 ],
               ),

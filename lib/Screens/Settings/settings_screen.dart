@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
+import 'package:mobile_pos/Screens/Settings/invoice_settings.dart';
 import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
@@ -531,27 +532,26 @@ class _SettingScreenState extends State<SettingScreen> {
                       //     ),
                       //   ],
                       // ),
+
                       ListTile(
                         title: Text(
-                          'Printing Option',
+                          'Invoice Settings',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
                           ),
                         ),
+                        onTap: () {
+                          // const SubscriptionScreen().launch(context);
+                          const InvoiceSettings().launch(context);
+                        },
                         leading: const Icon(
                           Icons.print,
                           color: kMainColor,
                         ),
-                        trailing: Switch.adaptive(
-                          value: isPrintEnable,
-                          onChanged: (bool value) async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('isPrintEnable', value);
-                            setState(() {
-                              isPrintEnable = value;
-                            });
-                          },
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
                         ),
                       ),
                       ListTile(
