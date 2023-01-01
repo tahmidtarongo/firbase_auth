@@ -22,14 +22,9 @@ import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../GlobalComponents/Model/category_model.dart';
-import '../../Provider/customer_provider.dart';
 import '../../Provider/product_provider.dart';
-import '../../Provider/profile_provider.dart';
-import '../../Provider/purchase_report_provider.dart';
-import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
 import '../../subscription.dart';
-import '../Home/home.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key, required this.productNameList, required this.productCodeList}) : super(key: key);
@@ -677,7 +672,11 @@ class AddProductState extends State<AddProduct> {
 
                             bool result = await InternetConnectionChecker().hasConnection;
 
-                            result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+                            result
+                                ? imagePath == 'No Data'
+                                    ? null
+                                    : await uploadFile(imagePath)
+                                : null;
 
                             // ignore: no_leading_underscores_for_local_identifiers
                             final DatabaseReference _productInformationRef = FirebaseDatabase.instance
@@ -705,6 +704,7 @@ class AddProductState extends State<AddProduct> {
                               productDealerPrice,
                               productManufacturer,
                               productPicture,
+                              [],
                             );
                             _productInformationRef.push().set(productModel.toJson());
                             Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);

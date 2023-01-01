@@ -27,89 +27,93 @@ class _AddExpenseCategoryState extends State<AddExpenseCategory> {
     return Consumer(builder: (context, ref, __) {
       final allCategory = ref.watch(expenseCategoryProvider);
       return Scaffold(
+        backgroundColor: kMainColor,
         appBar: AppBar(
+          backgroundColor: kMainColor,
           leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Image(
-                image: AssetImage('images/x.png'),
-              )),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.close),
+          ),
           title: Text(
             'Add Expense Category',
             style: GoogleFonts.poppins(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 20.0,
             ),
           ),
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
-          backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: showProgress,
-                  child: const CircularProgressIndicator(
-                    color: kMainColor,
-                    strokeWidth: 5.0,
+        body: Container(
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Visibility(
+                    visible: showProgress,
+                    child: const CircularProgressIndicator(
+                      color: kMainColor,
+                      strokeWidth: 5.0,
+                    ),
                   ),
-                ),
-                AppTextField(
-                  textFieldType: TextFieldType.NAME,
-                  onChanged: (value) {
-                    setState(() {
-                      categoryName = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Fashion',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Category name',
+                  AppTextField(
+                    textFieldType: TextFieldType.NAME,
+                    onChanged: (value) {
+                      setState(() {
+                        categoryName = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Fashion',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      labelText: 'Category name',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                ButtonGlobalWithoutIcon(
-                  buttontext: 'Save',
-                  buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
-                  onPressed: () async {
-                    bool isAlreadyAdded = false;
-                    allCategory.value?.forEach((element) {
-                      if (element.categoryName.toLowerCase().removeAllWhiteSpace().contains(
-                            categoryName.toLowerCase().removeAllWhiteSpace(),
-                          )) {
-                        isAlreadyAdded = true;
-                      }
-                    });
-                    setState(() {
-                      showProgress = true;
-                    });
-                    final DatabaseReference categoryInformationRef =
-                        FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Expense Category');
+                  const SizedBox(height: 20),
+                  ButtonGlobalWithoutIcon(
+                    buttontext: 'Save',
+                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
+                    onPressed: () async {
+                      bool isAlreadyAdded = false;
+                      allCategory.value?.forEach((element) {
+                        if (element.categoryName.toLowerCase().removeAllWhiteSpace().contains(
+                              categoryName.toLowerCase().removeAllWhiteSpace(),
+                            )) {
+                          isAlreadyAdded = true;
+                        }
+                      });
+                      setState(() {
+                        showProgress = true;
+                      });
+                      final DatabaseReference categoryInformationRef =
+                          FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Expense Category');
 
-                    ExpenseCategoryModel categoryModel = ExpenseCategoryModel(
-                      categoryName: categoryName,
-                      categoryDescription: '',
-                    );
-                    isAlreadyAdded ? EasyLoading.showError('Already Added') : await categoryInformationRef.push().set(categoryModel.toJson());
-                    setState(() {
-                      showProgress = false;
-                      isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));
-                    });
+                      ExpenseCategoryModel categoryModel = ExpenseCategoryModel(
+                        categoryName: categoryName,
+                        categoryDescription: '',
+                      );
+                      isAlreadyAdded ? EasyLoading.showError('Already Added') : await categoryInformationRef.push().set(categoryModel.toJson());
+                      setState(() {
+                        showProgress = false;
+                        isAlreadyAdded ? null : ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Saved Successfully")));
+                      });
 
-                    ref.refresh(expenseCategoryProvider);
-                    // ignore: use_build_context_synchronously
-                    isAlreadyAdded ? null : Navigator.pop(context);
-                  },
-                  buttonTextColor: Colors.white,
-                ),
-              ],
+                      ref.refresh(expenseCategoryProvider);
+                      // ignore: use_build_context_synchronously
+                      isAlreadyAdded ? null : Navigator.pop(context);
+                    },
+                    buttonTextColor: Colors.white,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

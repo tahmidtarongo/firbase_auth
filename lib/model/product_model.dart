@@ -17,46 +17,56 @@ class ProductModel {
       productDealerPrice,
       productManufacturer,
       productPicture;
+  List<String> serialNumber = [];
 
   ProductModel(
-      this.productName,
-      this.productCategory,
-      this.size,
-      this.color,
-      this.weight,
-      this.capacity,
-      this.type,
-      this.brandName,
-      this.productCode,
-      this.productStock,
-      this.productUnit,
-      this.productSalePrice,
-      this.productPurchasePrice,
-      this.productDiscount,
-      this.productWholeSalePrice,
-      this.productDealerPrice,
-      this.productManufacturer,
-      this.productPicture);
+    this.productName,
+    this.productCategory,
+    this.size,
+    this.color,
+    this.weight,
+    this.capacity,
+    this.type,
+    this.brandName,
+    this.productCode,
+    this.productStock,
+    this.productUnit,
+    this.productSalePrice,
+    this.productPurchasePrice,
+    this.productDiscount,
+    this.productWholeSalePrice,
+    this.productDealerPrice,
+    this.productManufacturer,
+    this.productPicture,
+    this.serialNumber,
+  );
 
-  ProductModel.fromJson(Map<dynamic, dynamic> json)
-      : productName = json['productName'] as String,
-        productCategory = json['productCategory'].toString(),
-        size = json['size'].toString(),
-        color = json['color'].toString(),
-        weight = json['weight'].toString(),
-        capacity = json['capacity'].toString(),
-        type = json['type'].toString(),
-        brandName = json['brandName'].toString(),
-        productCode = json['productCode'].toString(),
-        productStock = json['productStock'].toString(),
-        productUnit = json['productUnit'].toString(),
-        productSalePrice = json['productSalePrice'].toString(),
-        productPurchasePrice = json['productPurchasePrice'].toString(),
-        productDiscount = json['productDiscount'].toString(),
-        productWholeSalePrice = json['productWholeSalePrice'].toString(),
-        productDealerPrice = json['productDealerPrice'].toString(),
-        productManufacturer = json['productManufacturer'].toString(),
-        productPicture = json['productPicture'].toString();
+  ProductModel.fromJson(Map<dynamic, dynamic> json) {
+    productName = json['productName'] as String;
+    productCategory = json['productCategory'].toString();
+    size = json['size'].toString();
+    color = json['color'].toString();
+    weight = json['weight'].toString();
+    capacity = json['capacity'].toString();
+    type = json['type'].toString();
+    brandName = json['brandName'].toString();
+    productCode = json['productCode'].toString();
+    productStock = json['productStock'].toString();
+    productUnit = json['productUnit'].toString();
+    productSalePrice = json['productSalePrice'].toString();
+    productPurchasePrice = json['productPurchasePrice'].toString();
+    productDiscount = json['productDiscount'].toString();
+    productWholeSalePrice = json['productWholeSalePrice'].toString();
+    productDealerPrice = json['productDealerPrice'].toString();
+    productManufacturer = json['productManufacturer'].toString();
+    productPicture = json['productPicture'].toString();
+    if (json['serialNumber'] != null) {
+      serialNumber = <String>[];
+      json['serialNumber'].forEach((v) {
+        serialNumber.add(v);
+      });
+    }
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'productName': productName,
@@ -77,5 +87,6 @@ class ProductModel {
         'productDealerPrice': productDealerPrice,
         'productManufacturer': productManufacturer,
         'productPicture': productPicture,
+        'serialNumber': serialNumber.map((e) => e).toList(),
       };
 }
