@@ -38,7 +38,6 @@ import 'Screens/Sales List/sales_list_screen.dart';
 import 'Screens/Warranty/warranty_screen.dart';
 import 'firebase_options.dart';
 
-
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -70,13 +69,8 @@ void main() async {
   );
 }
 
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {

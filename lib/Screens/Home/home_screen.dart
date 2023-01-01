@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const Color(0xffEDFAFF),
     const Color(0xffEAFFEA),
     const Color(0xffFFF6ED),
+    const Color(0xffFFF6ED),
   ];
   List<Map<String, dynamic>> sliderList = [
     {
