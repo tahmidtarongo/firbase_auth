@@ -98,6 +98,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
     customerType: '',
     invoiceNumber: invoice.toString(),
     purchaseDate: DateTime.now().toString(),
+    vat: 0,
+    serviceCharge: 0,
   );
   DateTime selectedDate = DateTime.now();
   bool doNotCheckProducts = false;

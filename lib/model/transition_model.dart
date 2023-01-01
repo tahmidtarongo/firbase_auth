@@ -7,6 +7,8 @@ class TransitionModel {
   double? totalAmount;
   double? dueAmount;
   double? returnAmount;
+  double? serviceCharge;
+  double? vat;
   double? discountAmount;
   double? lossProfit;
   int? totalQuantity;
@@ -24,6 +26,8 @@ class TransitionModel {
     this.dueAmount,
     this.totalAmount,
     this.returnAmount,
+    this.vat,
+    this.serviceCharge,
     this.discountAmount,
     this.isPaid,
     this.paymentType,
@@ -39,6 +43,8 @@ class TransitionModel {
     customerType = json['customerType'].toString();
     purchaseDate = json['purchaseDate'].toString();
     totalAmount = double.parse(json['totalAmount'].toString());
+    serviceCharge = double.parse(json['serviceCharge'].toString());
+    vat = double.parse(json['vat'].toString());
     discountAmount = double.parse(json['discountAmount'].toString());
     lossProfit = double.parse(json['lossProfit'].toString());
     totalQuantity = json['totalQuantity'];
@@ -60,6 +66,8 @@ class TransitionModel {
         'customerType': customerType,
         'invoiceNumber': invoiceNumber,
         'purchaseDate': purchaseDate,
+        'vat': vat,
+        'serviceCharge': serviceCharge,
         'discountAmount': discountAmount,
         'lossProfit': lossProfit,
         'totalAmount': totalAmount,

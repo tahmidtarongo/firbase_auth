@@ -80,6 +80,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     customerType: widget.customerModel.type,
     invoiceNumber: invoice.toString(),
     purchaseDate: DateTime.now().toString(),
+    vat: 0,
+    serviceCharge: 0,
   );
 @override
   void initState() {
