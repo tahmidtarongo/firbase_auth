@@ -43,7 +43,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
       var url = await snapshot.ref.getDownloadURL();
 
       setState(() {
-        imagePath = url.toString();
+        productPicture = url.toString();
       });
       EasyLoading.dismiss();
     } on firebase_core.FirebaseException catch (e) {
@@ -59,12 +59,12 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));
     InvoiceModel data1 = InvoiceModel.fromJson(data);
-    setState(() {
-      phoneController.text = data1.phoneNumber;
-      emailController.text = data1.emailAddress.toString();
-      addressController.text = data1.address.toString();
-      imagePath = data1.pictureUrl.toString();
-    });
+      setState(() {
+        phoneController.text = data1.phoneNumber;
+        emailController.text = data1.emailAddress.toString();
+        addressController.text = data1.address.toString();
+        productPicture = data1.pictureUrl.toString();
+      });
   }
 
   TextEditingController phoneController = TextEditingController();
@@ -131,7 +131,6 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                     ListTile(
                         onTap: () async {
                           pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-
                           setState(() {
                             imageFile = File(pickedImage!.path);
                             imagePath = pickedImage!.path;
@@ -148,50 +147,30 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                           Icons.image,
                           color: kMainColor,
                         ),
-                        trailing: imagePath.contains('com.maantechnology.maanpos/cache/')
-                            ? Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image: FileImage(imageFile),
-                                    fit: BoxFit.cover,
-                                    height: 40.0,
-                                    width: 150.0,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Text(
-                                    'Change',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : imagePath != 'No Data'
-                                ? Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Image(
-                                        image: NetworkImage(imagePath),
-                                        fit: BoxFit.cover,
-                                        height: 40.0,
-                                        width: 150.0,
-                                      ),
-                                      const SizedBox(
-                                        width: 6.0,
-                                      ),
-                                      const Text(
-                                        'Change',
-                                        style: TextStyle(color: con.kTitleColor, fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  )
-                                : const CircularProgressIndicator()),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            imagePath != 'No Data' ? Image(
+                              image: FileImage(imageFile),
+                              fit: BoxFit.cover,
+                              height: 40.0,
+                              width: 150.0,
+                            ) : Image(
+                              image: NetworkImage(productPicture),
+                              fit: BoxFit.cover,
+                              height: 40.0,
+                              width: 150.0,
+                            ),
+                            const SizedBox(
+                              width: 6.0,
+                            ),
+                            const Text(
+                              'Change',
+                              style: TextStyle(color: con.kTitleColor, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: AppTextField(
@@ -240,7 +219,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                           address: addressController.text,
                           emailAddress: emailController.text,
                           phoneNumber: phoneController.text,
-                          pictureUrl: imagePath,
+                          pictureUrl: productPicture,
                         );
 
                         final userId = FirebaseAuth.instance.currentUser!.uid;

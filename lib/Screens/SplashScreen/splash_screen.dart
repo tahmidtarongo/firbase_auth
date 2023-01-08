@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -59,203 +60,263 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> updateNotifier() async {
-    bool forceUpdate = false;
-    bool normalUpdate = false;
-    String updatedAppVersion = '';
-    final adminPanelRef = FirebaseDatabase.instance.ref().child('Admin Panel');
-    adminPanelRef.keepSynced(true);
-    await FirebaseDatabase.instance.ref().child('Admin Panel').child('App Update').orderByKey().get().then((value) {
-      final updateData = jsonDecode(jsonEncode(value.value));
-      forceUpdate = updateData['forceUpdateApp'];
-      normalUpdate = updateData['normalUpdateApp'];
-      updatedAppVersion = updateData['updatedAppVersion'];
+    final prefs = await SharedPreferences.getInstance();
+    InAppUpdate.checkForUpdate().then((updateInfo) {
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        if (updateInfo.immediateUpdateAllowed) {
+          // Perform immediate update
+          InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+            if (appUpdateResult == AppUpdateResult.success) {
+              if (currentUser != null) {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const Home().launch(context, isNewTask: true);
+              } else {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const OnBoard().launch(context, isNewTask: true);
+              }
+            } else if(appUpdateResult == AppUpdateResult.userDeniedUpdate){
+              if(updateInfo.flexibleUpdateAllowed){
+                InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+                  if (appUpdateResult == AppUpdateResult.success) {
+                    //App Update successful
+                    InAppUpdate.completeFlexibleUpdate();
+                  }
+                });
+              }
+                if (currentUser != null) {
+                  isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                  const Home().launch(context, isNewTask: true);
+                } else {
+                  isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                  const OnBoard().launch(context, isNewTask: true);
+                }
+            } else if(appUpdateResult == AppUpdateResult.inAppUpdateFailed){
+              if (currentUser != null) {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const Home().launch(context, isNewTask: true);
+              } else {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const OnBoard().launch(context, isNewTask: true);
+              }
+            }
+          });
+        } else if (updateInfo.flexibleUpdateAllowed) {
+          //Perform flexible update
+          InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+            if (appUpdateResult == AppUpdateResult.success) {
+              //App Update successful
+              InAppUpdate.completeFlexibleUpdate();
+            } else{
+              if (currentUser != null) {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const Home().launch(context, isNewTask: true);
+              } else {
+                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                const OnBoard().launch(context, isNewTask: true);
+              }
+            }
+          });
+        }
+      } else{
+        if (currentUser != null) {
+          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+          const Home().launch(context, isNewTask: true);
+        } else {
+          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+          const OnBoard().launch(context, isNewTask: true);
+        }
+      }
     });
 
-    int thisAppVersion = int.parse(appVersion.replaceAll('.', ''));
-    int updateVersion = int.parse(updatedAppVersion.replaceAll('.', ''));
-    final prefs = await SharedPreferences.getInstance();
-    if (normalUpdate && !forceUpdate && (updateVersion > thisAppVersion)) {
-      isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            const Text(
-                              'NEW UPDATE AVAILABLE',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
-                            ),
-                            const SizedBox(height: 13),
-                            const Text(
-                              'Please update your app',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  final url = Uri.parse(playStoreUrl);
-                                  launchUrl(
-                                    url,
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                },
-                                child: Container(
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    color: kMainColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  child: const Center(
-                                      child: Text(
-                                    'Update Now',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (currentUser != null) {
-                                    const Home().launch(context);
-                                  } else {
-                                    const OnBoard().launch(context);
-                                  }
-                                },
-                                child: Container(
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    color: kMainColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  child: const Center(
-                                      child: Text(
-                                    'Remember me later',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    } else if (forceUpdate && (updateVersion > thisAppVersion)) {
-      isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            const Text(
-                              'NEW UPDATE AVAILABLE',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
-                            ),
-                            const SizedBox(height: 13),
-                            const Text(
-                              'Please update your app',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  final url = Uri.parse(playStoreUrl);
-                                  launchUrl(
-                                    url,
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                },
-                                child: Container(
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    color: kMainColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  child: const Center(
-                                      child: Text(
-                                    'Update Now',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    } else {
-      if (currentUser != null) {
-        isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
-        const Home().launch(context, isNewTask: true);
-      } else {
-        isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
-        const OnBoard().launch(context, isNewTask: true);
-      }
-    }
+    // final adminPanelRef = FirebaseDatabase.instance.ref().child('Admin Panel');
+    // adminPanelRef.keepSynced(true);
+    // print('Not done');
+    // adminPanelRef.child('App Update').orderByKey().get().then((value) {
+    //   final updateData = jsonDecode(jsonEncode(value.value));
+    //   forceUpdate = updateData['forceUpdateApp'] ?? false;
+    //   normalUpdate = updateData['normalUpdateApp'] ?? false;
+    //   updatedAppVersion = updateData['updatedAppVersion'] ?? '1.0.0';
+    // });
+    // print('done');
+    // int thisAppVersion = int.parse(appVersion.replaceAll('.', ''));
+    // int updateVersion = int.parse(updatedAppVersion.replaceAll('.', ''));
+    //
+    // if (normalUpdate && !forceUpdate && (updateVersion > thisAppVersion)) {
+    //   isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+    //   showDialog(
+    //     barrierDismissible: false,
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return WillPopScope(
+    //         onWillPop: () async => false,
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(30.0),
+    //           child: Center(
+    //             child: Container(
+    //               width: double.infinity,
+    //               decoration: const BoxDecoration(
+    //                 color: Colors.white,
+    //                 borderRadius: BorderRadius.all(Radius.circular(30)),
+    //               ),
+    //               child: Column(
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 children: [
+    //                   Padding(
+    //                     padding: const EdgeInsets.all(20),
+    //                     child: Column(
+    //                       children: [
+    //                         const SizedBox(height: 20),
+    //                         const Text(
+    //                           'NEW UPDATE AVAILABLE',
+    //                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
+    //                         ),
+    //                         const SizedBox(height: 13),
+    //                         const Text(
+    //                           'Please update your app',
+    //                           style: TextStyle(
+    //                             fontSize: 20,
+    //                           ),
+    //                         ),
+    //                         const SizedBox(height: 20),
+    //                         Padding(
+    //                           padding: const EdgeInsets.all(10.0),
+    //                           child: GestureDetector(
+    //                             onTap: () {
+    //                               final url = Uri.parse(playStoreUrl);
+    //                               launchUrl(
+    //                                 url,
+    //                                 mode: LaunchMode.externalApplication,
+    //                               );
+    //                             },
+    //                             child: Container(
+    //                               height: 50,
+    //                               decoration: const BoxDecoration(
+    //                                 color: kMainColor,
+    //                                 borderRadius: BorderRadius.all(Radius.circular(20)),
+    //                               ),
+    //                               child: const Center(
+    //                                   child: Text(
+    //                                 'Update Now',
+    //                                 style: TextStyle(color: Colors.white),
+    //                               )),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         Padding(
+    //                           padding: const EdgeInsets.all(10.0),
+    //                           child: GestureDetector(
+    //                             onTap: () {
+    //                               if (currentUser != null) {
+    //                                 const Home().launch(context);
+    //                               } else {
+    //                                 const OnBoard().launch(context);
+    //                               }
+    //                             },
+    //                             child: Container(
+    //                               height: 50,
+    //                               decoration: const BoxDecoration(
+    //                                 color: kMainColor,
+    //                                 borderRadius: BorderRadius.all(Radius.circular(20)),
+    //                               ),
+    //                               child: const Center(
+    //                                   child: Text(
+    //                                 'Remember me later',
+    //                                 style: TextStyle(color: Colors.white),
+    //                               )),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     },
+    //   );
+    // } else if (forceUpdate && (updateVersion > thisAppVersion)) {
+    //   isPrintEnable = prefs.getBool('isPrintEnable') ?? true;
+    //   showDialog(
+    //     barrierDismissible: false,
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return WillPopScope(
+    //         onWillPop: () async => false,
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(30.0),
+    //           child: Center(
+    //             child: Container(
+    //               width: double.infinity,
+    //               decoration: const BoxDecoration(
+    //                 color: Colors.white,
+    //                 borderRadius: BorderRadius.all(Radius.circular(30)),
+    //               ),
+    //               child: Column(
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 children: [
+    //                   Padding(
+    //                     padding: const EdgeInsets.all(20),
+    //                     child: Column(
+    //                       children: [
+    //                         const SizedBox(height: 20),
+    //                         const Text(
+    //                           'NEW UPDATE AVAILABLE',
+    //                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kMainColor),
+    //                         ),
+    //                         const SizedBox(height: 13),
+    //                         const Text(
+    //                           'Please update your app',
+    //                           style: TextStyle(
+    //                             fontSize: 20,
+    //                           ),
+    //                         ),
+    //                         const SizedBox(height: 20),
+    //                         Padding(
+    //                           padding: const EdgeInsets.all(10.0),
+    //                           child: GestureDetector(
+    //                             onTap: () {
+    //                               final url = Uri.parse(playStoreUrl);
+    //                               launchUrl(
+    //                                 url,
+    //                                 mode: LaunchMode.externalApplication,
+    //                               );
+    //                             },
+    //                             child: Container(
+    //                               height: 50,
+    //                               decoration: const BoxDecoration(
+    //                                 color: kMainColor,
+    //                                 borderRadius: BorderRadius.all(Radius.circular(20)),
+    //                               ),
+    //                               child: const Center(
+    //                                   child: Text(
+    //                                 'Update Now',
+    //                                 style: TextStyle(color: Colors.white),
+    //                               )),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
+
   }
 
   @override
   void initState() {
     super.initState();
+    getPermission();
     getCurrency();
     updateNotifier();
   }

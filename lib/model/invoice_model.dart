@@ -8,11 +8,11 @@ class InvoiceModel {
   });
 
   InvoiceModel.fromJson(dynamic json) {
-    phoneNumber = json['phoneNumber'];
-    companyName = json['companyName'];
-    pictureUrl = json['pictureUrl'];
-    emailAddress = json['emailAddress'];
-    address = json['address'];
+    phoneNumber = json['phoneNumber'] ?? '';
+    companyName = json['companyName'] ??'';
+    pictureUrl = json['pictureUrl']??'';
+    emailAddress = json['emailAddress']??'';
+    address = json['address']??'';
   }
   dynamic phoneNumber;
   String? companyName;

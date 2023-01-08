@@ -55,6 +55,10 @@ List<GridItems> freeIcons = [
     title: 'Expense',
     icon: 'images/expenses.png',
   ),
+  GridItems(
+    title: 'SMS',
+    icon: 'images/sms.png',
+  ),
   // GridItems(
   //   title: 'Warranty',
   //   icon: 'images/warranty.png',
