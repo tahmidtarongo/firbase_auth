@@ -54,15 +54,24 @@ class _SendSmsState extends State<SendSms> {
             title: ListTile(
               onTap: () => const MessageHistory().launch(context),
               contentPadding: EdgeInsets.zero,
-              title: Text(
-                'Send SMS',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                ),
-              ),
-              subtitle: Text(
-                'Sms left: ${user.smsBalance}',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 10.0),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Send SMS',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 8.0,right: 8.0,top: 4.0,bottom: 4.0),
+                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.1),borderRadius: BorderRadius.circular(20.0),border: Border.all(color: Colors.white)),
+                    child: Text(
+                      'Sms left: ${user.smsBalance}',
+                      style: GoogleFonts.poppins(color: Colors.white, fontSize: 10.0),
+                    ),
+                  ),
+                ],
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -87,292 +96,292 @@ class _SendSmsState extends State<SendSms> {
           body: Container(
             alignment: Alignment.topCenter,
             decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: kGreyTextColor,
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.person_rounded,
-                                  color: kGreyTextColor,
-                                ),
-                                Text(
-                                  'Customer',
-                                  style: TextStyle(color: kGreyTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: kGreyTextColor,
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.person_rounded,
-                                  color: kGreyTextColor,
-                                ),
-                                Text(
-                                  'Supplier',
-                                  style: TextStyle(color: kGreyTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: kGreyTextColor,
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.person_rounded,
-                                  color: kGreyTextColor,
-                                ),
-                                Text(
-                                  'Dealer',
-                                  style: TextStyle(color: kGreyTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: kGreyTextColor,
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.person_rounded,
-                                  color: kGreyTextColor,
-                                ),
-                                Text(
-                                  'Wholesaler',
-                                  style: TextStyle(color: kGreyTextColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ).onTap(
-                        () {
-                          const SmsCustomerList().launch(context);
-                        },
-                      ),
+            child: RefreshIndicator(
+              onRefresh: () async => await ref.refresh(profileDetailsProvider),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20.0,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppTextField(
-                      textFieldType: TextFieldType.PHONE,
-                      controller: phoneNumberController,
-                      onFieldSubmitted: (val) {
-                        setState(() {
-                          selectedNumbers.add(val);
-                          phoneNumberController.clear();
-                        });
-                      },
-                      decoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Image.asset(
-                            'images/phonebook.png',
-                            height: 50.0,
-                            width: 50.0,
-                          ).onTap(
-                            () {
-                              const ContactListScreen().launch(context);
-                            },
-                          ),
-                        ),
-                        labelText: '',
-                        hintText: 'Enter Phone number',
-                        hintStyle: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  HorizontalList(
-                      itemCount: selectedNumbers.length,
-                      itemBuilder: (_, i) {
-                        return Chip(
-                          deleteIcon: const Icon(
-                            Icons.close,
-                            size: 20.0,
-                          ),
-                          onDeleted: () {
-                            setState(() {
-                              selectedNumbers.removeAt(i);
-                            });
-                          },
-                          deleteIconColor: Colors.red,
-                          backgroundColor: kMainColor.withOpacity(0.1),
-                          label: Text(
-                            selectedNumbers[i],
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                          iconTheme: const IconThemeData(color: Colors.red),
-                        );
-                      }),
-                  Text(
-                    '${selectedNumbers.length} numbers are selected',
-                    style: const TextStyle(color: kGreyTextColor),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        AppTextField(
-                          // ignore: deprecated_member_use
-                          textFieldType: TextFieldType.MULTILINE,
-                          controller: messageContentController,
-                          onChanged: (val) {
-                            setState(() {});
-                          },
-                          minLines: 4,
-                          maxLines: 5,
-                          enabled: true,
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: '',
-                            hintText: 'Enter message content',
-                            suffixIcon: const Padding(
-                              padding: EdgeInsets.only(top: 100.0, right: 10.0),
-                              child: Text(
-                                '-Riyad Store',
-                                style: TextStyle(color: kGreyTextColor),
-                              ),
-                            ),
-                            hintStyle: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4.0,
-                        ),
-                        Row(
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
                           children: [
-                            Text(
-                              '${messageContentController.text.length} Character | 500 character/Message)',
-                              style: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: kGreyTextColor,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.person_rounded,
+                                    color: kGreyTextColor,
+                                  ),
+                                  Text(
+                                    'Customer',
+                                    style: TextStyle(color: kGreyTextColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: kGreyTextColor,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.person_rounded,
+                                    color: kGreyTextColor,
+                                  ),
+                                  Text(
+                                    'Supplier',
+                                    style: TextStyle(color: kGreyTextColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: kGreyTextColor,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.person_rounded,
+                                    color: kGreyTextColor,
+                                  ),
+                                  Text(
+                                    'Dealer',
+                                    style: TextStyle(color: kGreyTextColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: kGreyTextColor,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.person_rounded,
+                                    color: kGreyTextColor,
+                                  ),
+                                  Text(
+                                    'Wholesaler',
+                                    style: TextStyle(color: kGreyTextColor),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
+                        ).onTap(
+                          () {
+                            const SmsCustomerList().launch(context);
+                          },
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  ButtonGlobalWithoutIcon(
-                    buttontext: 'Send Message',
-                    buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(20.0)),
-                    onPressed: () async {
-                      EasyLoading.show(status: 'Sending Sms');
-                      final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
-                      for (String element in selectedNumbers) {
-                        SmsModel model = SmsModel(
-                          customerPhone: element,
-                          totalAmount: messageContentController.text,
-                          sellerId: FirebaseAuth.instance.currentUser!.uid,
-                          sellerName: user.companyName,
-                          sellerMobile: user.phoneNumber,
-                          type: 'Bulk',
-                          status: false,
-                        );
-                        await refr.push().set(model.toJson());
-                      }
-                      final DatabaseReference personalInformationRef =
-                      FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-                      await personalInformationRef.update({'smsBalance': user.smsBalance! - selectedNumbers.length});
-                      ref.refresh(profileDetailsProvider);
-                      EasyLoading.showSuccess('Sms Sent');
-                      messageContentController.clear();
-                      selectedNumbers.clear();
-                    },
-                    buttonTextColor: Colors.white,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: kMainColor),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: AppTextField(
+                        textFieldType: TextFieldType.PHONE,
+                        controller: phoneNumberController,
+                        onFieldSubmitted: (val) {
+                          setState(() {
+                            selectedNumbers.add(val);
+                            phoneNumberController.clear();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Image.asset(
+                              'images/phonebook.png',
+                              height: 50.0,
+                              width: 50.0,
+                            ).onTap(
+                              () {
+                                const ContactListScreen().launch(context);
+                              },
+                            ),
+                          ),
+                          labelText: '',
+                          hintText: 'Enter Phone number',
+                          hintStyle: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Column(
-                      children:  [
-                        const Text(
-                          'Buy SMS',
-                          style: TextStyle(color: kMainColor, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 4.0,
-                        ),
-                        Text(
-                          'SMS Left: ${user.smsBalance}',
-                          style: const TextStyle(color: Colors.redAccent),
-                        ),
-                      ],
+                    HorizontalList(
+                        itemCount: selectedNumbers.length,
+                        itemBuilder: (_, i) {
+                          return Chip(
+                            deleteIcon: const Icon(
+                              Icons.close,
+                              size: 20.0,
+                            ),
+                            onDeleted: () {
+                              setState(() {
+                                selectedNumbers.removeAt(i);
+                              });
+                            },
+                            deleteIconColor: Colors.red,
+                            backgroundColor: kMainColor.withOpacity(0.1),
+                            label: Text(
+                              selectedNumbers[i],
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            iconTheme: const IconThemeData(color: Colors.red),
+                          );
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Text(
+                        '${selectedNumbers.length} numbers are selected',
+                        style: const TextStyle(color: kGreyTextColor),
+                      )
+                    ).visible(selectedNumbers.isNotEmpty),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0,right: 10.0),
+                      child: Column(
+                        children: [
+                          AppTextField(
+                            // ignore: deprecated_member_use
+                            textFieldType: TextFieldType.MULTILINE,
+                            controller: messageContentController,
+                            onChanged: (val) {
+                              setState(() {});
+                            },
+                            minLines: 4,
+                            maxLines: 5,
+                            enabled: true,
+                            decoration: InputDecoration(
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              labelText: '',
+                              hintText: 'Enter message content',
+                              suffixIcon: const Padding(
+                                padding: EdgeInsets.only(top: 100.0, right: 10.0),
+                                child: Text(
+                                  '-Riyad Store',
+                                  style: TextStyle(color: kGreyTextColor),
+                                ),
+                              ),
+                              hintStyle: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4.0,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '${messageContentController.text.length} Character | 160 character/Message)',
+                                style: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ).onTap(() => const SmsPlanScreen().launch(context)),
-                ],
+                    ButtonGlobalWithoutIcon(
+                      buttontext: 'Send Message',
+                      buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(20.0)),
+                      onPressed: () async {
+                        EasyLoading.show(status: 'Sending Sms');
+                        final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                        for (String element in selectedNumbers) {
+                          SmsModel model = SmsModel(
+                            customerPhone: element,
+                            totalAmount: messageContentController.text,
+                            sellerId: FirebaseAuth.instance.currentUser!.uid,
+                            sellerName: user.companyName,
+                            sellerMobile: user.phoneNumber,
+                            type: 'Bulk',
+                            status: false,
+                          );
+                          await refr.push().set(model.toJson());
+                          await Future.delayed(const Duration(seconds: 2));
+                        }
+                        EasyLoading.showSuccess('Sms Sent');
+                        messageContentController.clear();
+                        selectedNumbers.clear();
+                      },
+                      buttonTextColor: Colors.white,
+                    ),
+                    Container(
+                      width: context.width()/1.3,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                        border: Border.all(color: kAlertColor),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children:  [
+                          const SizedBox(width: 10.0,),
+                          Text(
+                            'Your SMS Left: ${user.smsBalance}',
+                            style: const TextStyle(color: Colors.black,fontSize: 16.0,fontWeight: FontWeight.w600),
+                          ),
+                          Expanded(child: ButtonGlobalWithoutIcon(buttontext: 'Buy SMS', buttonDecoration: kButtonDecoration.copyWith(color: kAlertColor,borderRadius: BorderRadius.circular(20.0)), onPressed: null, buttonTextColor: Colors.white,))
+                        ],
+                      ),
+                    ).onTap(() => const SmsPlanScreen().launch(context)),
+                  ],
+                ),
               ),
             ),
           ),
