@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/Screens/SMS/upload_nid.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
@@ -73,7 +74,9 @@ class _NidVerificationState extends State<NidVerification> {
                           SizedBox(width: 4.0,),
                           Text('Add Document',style: TextStyle(color: kMainColor,decoration: TextDecoration.underline)),
                         ],
-                      ),
+                      ).onTap((){
+                        const UploadNid().launch(context);
+                      }),
                     ],
                   ),
                 ),
