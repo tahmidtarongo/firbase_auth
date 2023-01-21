@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,18 +26,9 @@ class _SendSmsState extends State<SendSms> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController messageContentController = TextEditingController();
 
-  List<Contact> contacts = [];
-
-  Future<void> getContacts() async {
-    if (await FlutterContacts.requestPermission()) {
-      List<Contact> contact = await FlutterContacts.getContacts();
-      contacts.addAll(contact);
-    }
-  }
 
   @override
   void initState() {
-    getContacts();
     super.initState();
   }
 

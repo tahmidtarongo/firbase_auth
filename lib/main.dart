@@ -19,6 +19,7 @@ import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Profile/profile_screen.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_contact.dart';
 import 'package:mobile_pos/Screens/Report/reports.dart';
+import 'package:mobile_pos/Screens/SMS/nid_verification_screen.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:mobile_pos/Screens/Sales/add_discount.dart';
 import 'package:mobile_pos/Screens/Sales/add_promo_code.dart';
@@ -92,7 +93,7 @@ class MyApp extends StatelessWidget {
         '/setupProfile': (context) => const ProfileSetup(),
         '/home': (context) => const Home(),
         '/profile': (context) => const ProfileScreen(),
-        '/SMS': (context) => const SendSms(),
+        '/SMS': (context) => const NidVerification(),
         // ignore: missing_required_param
 
         // '/AddProducts': (context) => AddProduct(),

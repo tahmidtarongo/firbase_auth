@@ -1,17 +1,15 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../GlobalComponents/button_global.dart';
 import '../../currency.dart';
 import '../Home/home.dart';
 
@@ -36,11 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void getPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.bluetoothScan,
-      Permission.bluetoothConnect,
-      Permission.notification
-    ].request();
+    await [Permission.bluetoothScan, Permission.bluetoothConnect, Permission.notification].request();
   }
 
   getCurrency() async {
@@ -63,68 +57,100 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     InAppUpdate.checkForUpdate().then((updateInfo) {
       if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-        if (updateInfo.immediateUpdateAllowed) {
-          // Perform immediate update
-          InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-            if (appUpdateResult == AppUpdateResult.success) {
-              if (currentUser != null) {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const Home().launch(context, isNewTask: true);
-              } else {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const OnBoard().launch(context, isNewTask: true);
-              }
-            } else if(appUpdateResult == AppUpdateResult.userDeniedUpdate){
-              if(updateInfo.flexibleUpdateAllowed){
-                InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
-                  if (appUpdateResult == AppUpdateResult.success) {
-                    //App Update successful
-                    InAppUpdate.completeFlexibleUpdate();
-                  }
-                });
-              }
-                if (currentUser != null) {
-                  isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                  const Home().launch(context, isNewTask: true);
-                } else {
-                  isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                  const OnBoard().launch(context, isNewTask: true);
-                }
-            } else if(appUpdateResult == AppUpdateResult.inAppUpdateFailed){
-              if (currentUser != null) {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const Home().launch(context, isNewTask: true);
-              } else {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const OnBoard().launch(context, isNewTask: true);
-              }
+
+        showConfirmDialogCustom(
+          context,
+          onAccept: (context) {
+            LaunchReview.launch();
+            if (currentUser != null) {
+              isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+              const Home().launch(context, isNewTask: true);
+            } else {
+              isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+              const OnBoard().launch(context, isNewTask: true);
             }
-          });
-        } else if (updateInfo.flexibleUpdateAllowed) {
-          //Perform flexible update
-          InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
-            if (appUpdateResult == AppUpdateResult.success) {
-              //App Update successful
-              InAppUpdate.completeFlexibleUpdate();
-            } else{
-              if (currentUser != null) {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const Home().launch(context, isNewTask: true);
-              } else {
-                isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-                const OnBoard().launch(context, isNewTask: true);
-              }
-            }
-          });
-        }
-      } else{
-        if (currentUser != null) {
-          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-          const Home().launch(context, isNewTask: true);
-        } else {
-          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-          const OnBoard().launch(context, isNewTask: true);
-        }
+          },
+          onCancel: (context) {
+
+          },
+          barrierDismissible: false,
+          title: 'Would you like to update the app?',
+          subTitle: 'Please Update the app',
+        );
+
+        showDialog(context: context, builder: (context){
+          return Dialog(
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset('images/update.png',height: 200.0,width: 200.0,),
+                  const SizedBox(height: 10.0,),
+                  const Text('New Version Available !',style: TextStyle(color: Colors.black,fontSize: 18.0,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 4.0,),
+                  const Text('Please update the app',style: TextStyle(color: kGreyTextColor),),
+                  const SizedBox(height: 10.0,),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              border: Border.all(color: Colors.redAccent)
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.close,color: Colors.redAccent,),
+                              Text('Maybe Later',style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                        ).onTap((){
+                          if (currentUser != null) {
+                            isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                            const Home().launch(context, isNewTask: true);
+                          } else {
+                            isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                            const OnBoard().launch(context, isNewTask: true);
+                          }
+                        }),
+                        Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: kMainColor
+                          ),
+                          child: Row(
+                            children: const [
+                              Text('Update Now',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                              Icon(Icons.arrow_forward_ios,color: Colors.white,),
+                            ],
+                          ),
+                        ).onTap(() {
+                          LaunchReview.launch();
+                          if (currentUser != null) {
+                            isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                            const Home().launch(context, isNewTask: true);
+                          } else {
+                            isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+                            const OnBoard().launch(context, isNewTask: true);
+                          }
+                        }),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
       }
     });
 
@@ -310,7 +336,6 @@ class _SplashScreenState extends State<SplashScreen> {
     //     },
     //   );
     // }
-
   }
 
   @override
