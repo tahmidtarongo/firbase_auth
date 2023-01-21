@@ -58,26 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
     InAppUpdate.checkForUpdate().then((updateInfo) {
       if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
 
-        showConfirmDialogCustom(
-          context,
-          onAccept: (context) {
-            LaunchReview.launch();
-            if (currentUser != null) {
-              isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-              const Home().launch(context, isNewTask: true);
-            } else {
-              isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
-              const OnBoard().launch(context, isNewTask: true);
-            }
-          },
-          onCancel: (context) {
-
-          },
-          barrierDismissible: false,
-          title: 'Would you like to update the app?',
-          subTitle: 'Please Update the app',
-        );
-
         showDialog(context: context, builder: (context){
           return Dialog(
             child: Container(
@@ -151,6 +131,14 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           );
         });
+      } else{
+        if (currentUser != null) {
+          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+          const Home().launch(context, isNewTask: true);
+        } else {
+          isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
+          const OnBoard().launch(context, isNewTask: true);
+        }
       }
     });
 
