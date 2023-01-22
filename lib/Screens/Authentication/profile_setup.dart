@@ -414,6 +414,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           countryName: controller.text,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
+                          smsBalance: 0,
                           saleInvoiceCounter: 1,
                           purchaseInvoiceCounter: 1,
                           dueInvoiceCounter: 1

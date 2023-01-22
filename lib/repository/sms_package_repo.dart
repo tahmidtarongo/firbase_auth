@@ -9,6 +9,7 @@ class SMSPackageRepo {
     List<SmsSubscriptionPlanModel> smsPackageList = [];
     await FirebaseDatabase.instance.ref().child('Admin Panel').child('Sms Package Plan').orderByKey().get().then((value) {
       for (var element in value.children) {
+        print(element.value);
         smsPackageList.add(SmsSubscriptionPlanModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
     });

@@ -1,7 +1,7 @@
 class SmsSubscriptionPlanModel {
   late String smsPackName;
-  late double smsPackPrice;
-  late double smsPackOfferPrice;
+  late dynamic smsPackPrice;
+  late dynamic smsPackOfferPrice;
   late int numberOfSMS;
   late int smsValidityInDay;
 
