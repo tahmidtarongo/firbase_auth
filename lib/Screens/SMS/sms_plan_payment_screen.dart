@@ -58,7 +58,6 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0.0,
       ),
-
     );
   }
 }
