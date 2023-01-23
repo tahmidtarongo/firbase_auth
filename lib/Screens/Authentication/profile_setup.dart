@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../constant.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/seller_info_model.dart';
+import '../../model/sms_subscription_plan_model.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 import '../Home/home.dart';
@@ -407,27 +409,6 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         final DatabaseReference _personalInformationRef =
                             // ignore: deprecated_member_use
                             FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-                        PersonalInformationModel personalInformation = PersonalInformationModel(
-                          businessCategory: dropdownValue,
-                          companyName: companyName,
-                          phoneNumber: PhoneAuth.phoneNumber,
-                          countryName: controller.text,
-                          language: dropdownLangValue,
-                          pictureUrl: profilePicture,
-                          smsBalance: 0,
-                          saleInvoiceCounter: 1,
-                          purchaseInvoiceCounter: 1,
-                          dueInvoiceCounter: 1
-                        );
-                        await _personalInformationRef.set(personalInformation.toJson());
-                        InvoiceModel invoiceModel = InvoiceModel(
-                            phoneNumber: PhoneAuth.phoneNumber,
-                            pictureUrl: profilePicture,
-                            emailAddress: '',
-                            companyName: companyName,
-                            address: ''
-                        );
-                        await FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Invoice Settings').set(invoiceModel.toJson());
                         SellerInfoModel sellerInfoModel = SellerInfoModel(
                           businessCategory: dropdownValue,
                           companyName: companyName,
@@ -441,8 +422,37 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           subscriptionName: 'Free',
                           subscriptionMethod: 'Not Provided',
                         );
-                        await FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').push().set(sellerInfoModel.toJson());
+                        final adminRef= FirebaseDatabase.instance.ref().child('Admin Panel');
+                        await adminRef.child('Seller List').push().set(sellerInfoModel.toJson());
 
+                        await adminRef.child('Sms Package Plan').orderByKey().get().then((value) async{
+                          for (var element in value.children) {
+                            var data = SmsSubscriptionPlanModel.fromJson(jsonDecode(jsonEncode(element.value)));
+                            if (data.smsPackName == 'Free') {
+                              PersonalInformationModel personalInformation = PersonalInformationModel(
+                                businessCategory: dropdownValue,
+                                companyName: companyName,
+                                phoneNumber: PhoneAuth.phoneNumber,
+                                countryName: controller.text,
+                                language: dropdownLangValue,
+                                pictureUrl: profilePicture,
+                                smsBalance: data.numberOfSMS,
+                                saleInvoiceCounter: 1,
+                                purchaseInvoiceCounter: 1,
+                                dueInvoiceCounter: 1,
+                              );
+                              await _personalInformationRef.set(personalInformation.toJson());
+                            }
+                          }
+                        });
+                        InvoiceModel invoiceModel = InvoiceModel(
+                            phoneNumber: PhoneAuth.phoneNumber,
+                            pictureUrl: profilePicture,
+                            emailAddress: '',
+                            companyName: companyName,
+                            address: ''
+                        );
+                        await FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Invoice Settings').set(invoiceModel.toJson());
                         EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 1000));
                         await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
                         // ignore: use_build_context_synchronously

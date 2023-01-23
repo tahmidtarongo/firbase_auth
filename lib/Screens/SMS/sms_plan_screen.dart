@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/sms_history_provider.dart';
+import 'package:mobile_pos/Screens/SMS/sms_plan_payment_screen.dart';
 import 'package:mobile_pos/model/sms_subscription_plan_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -10,8 +11,8 @@ import '../../constant.dart';
 import 'message_history.dart';
 
 class SmsPlanScreen extends StatefulWidget {
-  const SmsPlanScreen({Key? key}) : super(key: key);
-
+  const SmsPlanScreen({Key? key, required this.smsBalance}) : super(key: key);
+  final String smsBalance;
   @override
   State<SmsPlanScreen> createState() => _SmsPlanScreenState();
 }
@@ -30,14 +31,10 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
           onTap: () => const MessageHistory().launch(context),
           contentPadding: EdgeInsets.zero,
           title: Text(
-            'Send SMS',
+            'Buy SMS',
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
-          ),
-          subtitle: Text(
-            'Sms left: 27',
-            style: GoogleFonts.poppins(color: Colors.white, fontSize: 10.0),
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -65,7 +62,9 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
         child: ButtonGlobalWithoutIcon(
           buttontext: 'Pay with Bkash',
           buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(20.0)),
-          onPressed: null,
+          onPressed: (){
+            SmsPlanPaymentScreen(model: smsSubscriptionPlanModel).launch(context);
+          },
           buttonTextColor: Colors.white,
         ),
       ),
@@ -85,14 +84,14 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Your message remains',
                         style: TextStyle(color: Colors.black, fontSize: 16.0),
                       ),
                       Text(
-                        '50',
-                        style: TextStyle(color: Colors.black, fontSize: 16.0),
+                        widget.smsBalance,
+                        style: const TextStyle(color: Colors.black, fontSize: 16.0),
                       ),
                     ],
                   ),

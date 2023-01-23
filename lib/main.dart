@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
         '/setupProfile': (context) => const ProfileSetup(),
         '/home': (context) => const Home(),
         '/profile': (context) => const ProfileScreen(),
-        '/SMS': (context) => const NidVerification(),
+        '/SMS': (context) => const SendSms(),
         // ignore: missing_required_param
 
         // '/AddProducts': (context) => AddProduct(),

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mobile_pos/model/payment_verification_model.dart';
 import 'package:mobile_pos/model/sms_model.dart';
 
 class SmsRepo{
@@ -18,8 +19,20 @@ class SmsRepo{
         }
       }
     });
-    historyList.addAll(historyList.reversed);
+
     return historyList;
   }
-  
+
+  Future<List<PaymentVerificationModel>> getAllTransaction() async {
+    List<PaymentVerificationModel> historyList = [];
+    await FirebaseDatabase.instance.ref('Admin Panel').child('Payment Verification').orderByKey().get().then((value) {
+      for (var element in value.children) {
+        var data = PaymentVerificationModel.fromJson(jsonDecode(jsonEncode(element.value)));
+        if(data.sellerID == userId){
+          historyList.add(data);
+        }
+      }
+    });
+    return historyList;
+  }
 }

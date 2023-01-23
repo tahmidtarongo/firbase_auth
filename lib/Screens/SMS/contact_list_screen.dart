@@ -2,6 +2,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
@@ -23,6 +24,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
   }
 
   Future _fetchContacts() async {
+    await Permission.contacts.request();
     final contacts = await ContactsService.getContacts(withThumbnails: false);
     setState(() => _contacts = contacts);
   }
