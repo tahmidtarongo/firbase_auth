@@ -110,7 +110,8 @@ class _MessageHistoryState extends State<MessageHistory> {
                                             'View Details',
                                             style: TextStyle(color: kGreyTextColor, decoration: TextDecoration.underline),
                                           ),
-                                        ).onTap(() => showDialog(
+                                        ).onTap(
+                                          () => showDialog(
                                             context: context,
                                             builder: (context) {
                                               return Dialog(
@@ -191,7 +192,9 @@ class _MessageHistoryState extends State<MessageHistory> {
                                                   ),
                                                 ),
                                               );
-                                            }))
+                                            },
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -319,11 +322,11 @@ class _MessageHistoryState extends State<MessageHistory> {
                                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                                 children: [
                                                                   Text(
-                                                                    transaction[i].sellerName ?? '',
+                                                                    transaction[i].sellerName,
                                                                     style: const TextStyle(color: Colors.black),
                                                                   ),
                                                                   Text(
-                                                                    transaction[i].paymentPhoneNumber ?? '',
+                                                                    transaction[i].paymentPhoneNumber,
                                                                     style: const TextStyle(color: kGreyTextColor, fontSize: 12.0),
                                                                   ),
                                                                 ],
