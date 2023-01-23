@@ -14,6 +14,7 @@ import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:mobile_pos/Screens/invoice_details/sales_invoice_details_screen.dart';
+import 'package:mobile_pos/model/sms_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:mobile_pos/subscription.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -45,6 +46,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   double returnAmount = 0;
   double dueAmount = 0;
   double subTotal = 0;
+  bool sendSms = true;
 
   String? dropdownValue = 'Cash';
   String? selectedPaymentType;
@@ -567,6 +569,26 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Send sms?',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Switch(
+
+                                  value: sendSms, onChanged: (val){
+                                    setState(() {
+                                      sendSms = val;
+                                    });
+                                },
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -916,6 +938,23 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
+                                   if(sendSms){
+                                     SmsModel smsModel = SmsModel(
+                                       customerName: widget.customerModel.customerName,
+                                       customerPhone: widget.customerModel.phoneNumber,
+                                       sellerMobile: data.phoneNumber,
+                                       sellerName: data.companyName,
+                                       sellerId: userId,
+                                       invoiceNumber: data.saleInvoiceCounter.toString(),
+                                       totalAmount: totalSalePrice.toString(),
+                                       paidAmount: (totalSalePrice - dueAmount).toString(),
+                                       dueAmount: dueAmount.toString(),
+                                       type: 'Sale',
+                                       status: false,
+                                     );
+                                     final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                                     await refr.push().set(smsModel.toJson());
+                                   }
                                     ///________Print_______________________________________________________
 
                                     PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
