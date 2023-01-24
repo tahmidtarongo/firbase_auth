@@ -938,7 +938,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
-                                   if(sendSms){
+                                   if(sendSms && data.smsBalance! > 0){
                                      SmsModel smsModel = SmsModel(
                                        customerName: widget.customerModel.customerName,
                                        customerPhone: widget.customerModel.phoneNumber,

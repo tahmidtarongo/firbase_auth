@@ -20,6 +20,7 @@ import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/due_transaction_model.dart';
+import '../../model/sms_model.dart';
 import '../../subscription.dart';
 import '../Customers/Model/customer_model.dart';
 
@@ -39,6 +40,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   double remainDueAmount = 0;
   double subTotal = 0;
   double dueAmount = 0;
+  bool sendSms = true;
 
   double calculateSubtotal({required double total}) {
     subTotal = total - discountAmount;
@@ -464,7 +466,23 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                   ///________Subscription_____________________________________________________
                                   Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
-
+                                  if(sendSms && data.smsBalance! > 0){
+                                    SmsModel smsModel = SmsModel(
+                                      customerName: widget.customerModel.customerName,
+                                      customerPhone: widget.customerModel.phoneNumber,
+                                      sellerMobile: data.phoneNumber,
+                                      sellerName: data.companyName,
+                                      sellerId: userId,
+                                      invoiceNumber: data.saleInvoiceCounter.toString(),
+                                      totalAmount: 'We received your due payment of $paidAmount. Remaining due $dueAmount',
+                                      paidAmount: '0',
+                                      dueAmount: '0',
+                                      type: 'Bulk',
+                                      status: false,
+                                    );
+                                    final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                                    await refr.push().set(smsModel.toJson());
+                                  }
                                   ///________Print_______________________________________________________
                                   if (isPrintEnable) {
                                     await printerData.getBluetooth();
