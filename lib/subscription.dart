@@ -87,8 +87,6 @@ class Subscription {
     final prefs = await SharedPreferences.getInstance();
     final userId = FirebaseAuth.instance.currentUser!.uid;
 
-    print(userId);
-
     DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));

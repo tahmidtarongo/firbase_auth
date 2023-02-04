@@ -277,7 +277,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                     ),
                                                     Text(
                                                       '#${reTransaction[index].invoiceNumber}',
-                                                      style: TextStyle(color: Colors.black),
+                                                      style: const TextStyle(color: Colors.black),
                                                     ),
                                                   ],
                                                 ),
@@ -460,10 +460,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      children: const [
                                         Text(
                                           "Opening Balance",
-                                          style: const TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 16),
                                         ),
                                       ],
                                     ),
@@ -889,10 +889,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      children: const [
                                         Text(
                                           "Opening Balance",
-                                          style: const TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 16),
                                         ),
                                       ],
                                     ),
