@@ -245,6 +245,7 @@ class Subscription {
     final ref = FirebaseDatabase.instance.ref(userId).child('Subscription');
     ref.keepSynced(true);
     ref.child(itemType).get().then((value){
+      print(value.value);
       int beforeAction = int.parse(value.value.toString());
       int afterAction = beforeAction - 1;
       ref.update({itemType: afterAction});

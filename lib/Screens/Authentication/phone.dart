@@ -175,6 +175,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                             phoneNumber: '+$countryCode$phoneNumber',
                             verificationCompleted: (PhoneAuthCredential credential) {},
                             verificationFailed: (FirebaseAuthException e) {
+                              print(e.toString());
                               EasyLoading.showError('Phone number is not valid');
                             },
                             codeSent: (String verificationId, int? resendToken) {
