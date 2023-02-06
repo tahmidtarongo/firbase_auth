@@ -162,8 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   alignment: Alignment.topCenter,
-                  decoration:
-                      const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+                  decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
                   child: Column(
                     children: [
                       const SizedBox(

@@ -63,12 +63,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC2DS3REO61nzIYOijW4GOHmyemlQrr4QI',
-    appId: '1:453829112125:ios:a65a63d927a1f664e6d554',
-    messagingSenderId: '453829112125',
-    projectId: 'salespro-19e86',
-    storageBucket: 'salespro-19e86.appspot.com',
-    iosClientId: '453829112125-s8knjn86uhrqbp426m4vge5tj545mlc4.apps.googleusercontent.com',
-    iosBundleId: 'com.maantheme.mobilepos.mobilePos',
+    apiKey: 'AIzaSyAT1zNWpyIsMp29W0OEKcJ9NJa0b_HvDwE',
+    appId: '1:736551413173:ios:f50c8a1a94df52472fe5fc',
+    messagingSenderId: '736551413173',
+    projectId: 'maanpos',
+    storageBucket: 'maanpos.appspot.com',
+    iosBundleId: 'com.maantheme.mobilepo',
   );
 }

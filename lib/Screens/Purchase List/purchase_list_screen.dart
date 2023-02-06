@@ -72,12 +72,11 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                         });
                       },
                       decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelText: 'Invoice Number',
-                        hintText: 'Enter Invoice Number',
-                        border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.search)
-                      ),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelText: 'Invoice Number',
+                          hintText: 'Enter Invoice Number',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.search)),
                     ),
                   ),
                   providerData.when(data: (transaction) {
@@ -107,9 +106,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                reTransaction[index].customerName.isNotEmpty
-                                                    ? reTransaction[index].customerName
-                                                    : reTransaction[index].customerPhone,
+                                                reTransaction[index].customerName.isNotEmpty ? reTransaction[index].customerName : reTransaction[index].customerPhone,
                                                 style: const TextStyle(fontSize: 16),
                                               ),
                                               Text('#${reTransaction[index].invoiceNumber}'),
@@ -122,9 +119,8 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                               Container(
                                                 padding: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                    color: reTransaction[index].dueAmount! <= 0
-                                                        ? const Color(0xff0dbf7d).withOpacity(0.1)
-                                                        : const Color(0xFFED1A3B).withOpacity(0.1),
+                                                    color:
+                                                        reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d).withOpacity(0.1) : const Color(0xFFED1A3B).withOpacity(0.1),
                                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                                 child: Text(
                                                   reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
@@ -177,8 +173,8 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                         onPressed: () async {
                                                           ///________Print_______________________________________________________
                                                           await printerData.getBluetooth();
-                                                          PrintPurchaseTransactionModel model = PrintPurchaseTransactionModel(
-                                                              purchaseTransitionModel: reTransaction[index], personalInformationModel: data);
+                                                          PrintPurchaseTransactionModel model =
+                                                              PrintPurchaseTransactionModel(purchaseTransitionModel: reTransaction[index], personalInformationModel: data);
                                                           if (connected) {
                                                             await printerData.printTicket(
                                                               printTransactionModel: model,
@@ -253,7 +249,7 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                           color: Colors.grey,
                                                         )),
                                                     IconButton(
-                                                        onPressed: () => GeneratePdf().generateDocument(reTransaction[index],data),
+                                                        onPressed: () => GeneratePdf().generateDocument(reTransaction[index], data),
                                                         icon: const Icon(
                                                           FeatherIcons.share,
                                                           color: Colors.grey,
@@ -299,7 +295,6 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                     return Text(e.toString());
                   }, loading: () {
                     return const Center(child: CircularProgressIndicator());
-
                   }),
                 ],
               ),
