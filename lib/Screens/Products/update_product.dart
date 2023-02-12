@@ -51,17 +51,23 @@ class UpdateProductState extends State<UpdateProduct> {
       setState(() {
         updatedProductModel.productPicture = url.toString();
       });
+      EasyLoading.dismiss();
     } on firebase_core.FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
     }
   }
 
   void getProductKey(String code) async {
+
     final userId = FirebaseAuth.instance.currentUser!.uid;
+
     // ignore: unused_local_variable
     List<ProductModel> productList = [];
+
     final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+
     ref.keepSynced(true);
+
     ref.orderByKey().get().then((value) {
       for (var element in value.children) {
         var data = jsonDecode(jsonEncode(element.value));
@@ -631,6 +637,7 @@ class UpdateProductState extends State<UpdateProduct> {
                             pref.refresh(productProvider);
                             pref.refresh(categoryProvider);
                             Future.delayed(const Duration(milliseconds: 100), () {
+                              EasyLoading.dismiss();
                               const HomeScreen().launch(context, isNewTask: true);
                             });
                           } catch (e) {

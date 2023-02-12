@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Maansaas App Prince</string>
+	<string>MaanPOS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,6 +22,12 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select Photos To Upload</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Select Photos To Upload</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Select Photos To Upload</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

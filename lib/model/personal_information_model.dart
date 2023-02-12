@@ -10,7 +10,9 @@ class PersonalInformationModel {
     this.purchaseInvoiceCounter,
     this.dueInvoiceCounter,
     this.smsBalance,
-    this.verificationStatus
+    this.verificationStatus,
+    this.shopOpeningBalance,
+    this.remainingShopBalance,
   });
 
   PersonalInformationModel.fromJson(dynamic json) {
@@ -25,6 +27,8 @@ class PersonalInformationModel {
     dueInvoiceCounter = json['dueInvoiceCounter'];
     smsBalance = json['smsBalance'] ?? 50;
     verificationStatus = json['verificationStatus'] ?? 'pending';
+    shopOpeningBalance = json['shopOpeningBalance'];
+    remainingShopBalance = json['remainingShopBalance'];
   }
   dynamic phoneNumber;
   String? companyName;
@@ -37,7 +41,8 @@ class PersonalInformationModel {
   int? dueInvoiceCounter;
   int? smsBalance;
   String? verificationStatus;
-
+  int? shopOpeningBalance;
+  int? remainingShopBalance;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -52,6 +57,8 @@ class PersonalInformationModel {
     map['dueInvoiceCounter'] = dueInvoiceCounter;
     map['smsBalance'] = smsBalance;
     map['verificationStatus'] = verificationStatus ?? 'pending';
+    map['shopOpeningBalance'] = shopOpeningBalance;
+    map['remainingShopBalance'] = remainingShopBalance;
     return map;
   }
 }

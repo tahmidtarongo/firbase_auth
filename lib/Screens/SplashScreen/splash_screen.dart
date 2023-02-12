@@ -60,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
       isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
       const OnBoard().launch(context, isNewTask: true);
     }
-
   }
 
   @override
