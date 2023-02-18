@@ -686,190 +686,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         Expanded(
                             child: GestureDetector(
                           onTap: () async {
-                            // if (providerData.cartItemList.isNotEmpty) {
-                            //   if (widget.customerModel.type == 'Guest' && dueAmount > 0) {
-                            //     EasyLoading.showError('Due is not available for guest');
-                            //   } else {
-                            //     try {
-                            //       EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                            //
-                            //       final userId = FirebaseAuth.instance.currentUser!.uid;
-                            //       DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
-                            //       ref.keepSynced(true);
-                            //
-                            //       dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
-                            //       dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
-                            //       returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
-                            //       transitionModel.discountAmount = discountAmount;
-                            //       transitionModel.totalAmount = subTotal;
-                            //       transitionModel.productList = providerData.cartItemList;
-                            //       transitionModel.paymentType = dropdownValue;
-                            //       transitionModel.invoiceNumber = invoice.toString();
-                            //
-                            //       ///__________total LossProfit & quantity________________________________________________________________
-                            //
-                            //       int totalQuantity = 0;
-                            //       double lossProfit = 0;
-                            //       double totalPurchasePrice = 0;
-                            //       double totalSalePrice = 0;
-                            //       for (var element in transitionModel.productList!) {
-                            //         totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice) * element.quantity);
-                            //         totalSalePrice = totalSalePrice + (double.parse(element.subTotal) * element.quantity);
-                            //
-                            //         totalQuantity = totalQuantity + element.quantity;
-                            //       }
-                            //       lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(transitionModel.discountAmount.toString()));
-                            //
-                            //       transitionModel.totalQuantity = totalQuantity;
-                            //       transitionModel.lossProfit = lossProfit;
-                            //
-                            //       await ref.push().set(transitionModel.toJson());
-                            //
-                            //       ///__________StockMange_________________________________________________-
-                            //
-                            //       for (var element in providerData.cartItemList) {
-                            //         decreaseStock(element.productId, element.quantity);
-                            //       }
-                            //
-                            //       ///_______invoice_Update_____________________________________________
-                            //       final DatabaseReference personalInformationRef =
-                            //           // ignore: deprecated_member_use
-                            //           FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-                            //       personalInformationRef.keepSynced(true);
-                            //       await personalInformationRef.update({'invoiceCounter': invoice + 1});
-                            //
-                            //       ///________Subscription_____________________________________________________
-                            //       Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
-                            //
-                            //       ///_________DueUpdate______________________________________________________
-                            //       getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
-                            //       await printerData.getBluetooth();
-                            //       PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
-                            //
-                            //       ///_________printer________________________________________
-                            //       if (isPrintEnable) {
-                            //         if (connected) {
-                            //           await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemList);
-                            //           providerData.clearCart();
-                            //           consumerRef.refresh(customerProvider);
-                            //           consumerRef.refresh(productProvider);
-                            //           consumerRef.refresh(salesReportProvider);
-                            //           consumerRef.refresh(transitionProvider);
-                            //           consumerRef.refresh(profileDetailsProvider);
-                            //
-                            //           EasyLoading.showSuccess('Added Successfully');
-                            //           Future.delayed(const Duration(milliseconds: 500), () {
-                            //             const Home().launch(context);
-                            //           });
-                            //         } else {
-                            //           EasyLoading.showSuccess('Added Successfully');
-                            //           // ignore: use_build_context_synchronously
-                            //           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            //             content: Text("Please Connect The Printer First"),
-                            //           ));
-                            //           // EasyLoading.showInfo('Please Connect The Printer First');
-                            //           showDialog(
-                            //               context: context,
-                            //               builder: (_) {
-                            //                 return WillPopScope(
-                            //                   onWillPop: () async => false,
-                            //                   child: Dialog(
-                            //                     child: SizedBox(
-                            //                       child: Column(
-                            //                         mainAxisSize: MainAxisSize.min,
-                            //                         children: [
-                            //                           ListView.builder(
-                            //                             shrinkWrap: true,
-                            //                             itemCount:
-                            //                                 printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
-                            //                             itemBuilder: (context, index) {
-                            //                               return ListTile(
-                            //                                 onTap: () async {
-                            //                                   String select = printerData.availableBluetoothDevices[index];
-                            //                                   List list = select.split("#");
-                            //                                   // String name = list[0];
-                            //                                   String mac = list[1];
-                            //                                   bool isConnect = await printerData.setConnect(mac);
-                            //                                   if (isConnect) {
-                            //                                     await printerData.printTicket(
-                            //                                         printTransactionModel: model, productList: transitionModel.productList);
-                            //                                     providerData.clearCart();
-                            //                                     consumerRef.refresh(customerProvider);
-                            //                                     consumerRef.refresh(productProvider);
-                            //                                     consumerRef.refresh(salesReportProvider);
-                            //                                     consumerRef.refresh(transitionProvider);
-                            //                                     consumerRef.refresh(profileDetailsProvider);
-                            //                                     EasyLoading.showSuccess('Added Successfully');
-                            //                                     Future.delayed(const Duration(milliseconds: 500), () {
-                            //                                       const Home().launch(context);
-                            //                                     });
-                            //                                   }
-                            //                                 },
-                            //                                 title: Text('${printerData.availableBluetoothDevices[index]}'),
-                            //                                 subtitle: const Text("Click to connect"),
-                            //                               );
-                            //                             },
-                            //                           ),
-                            //                           const SizedBox(height: 10),
-                            //                           Container(
-                            //                             height: 1,
-                            //                             width: double.infinity,
-                            //                             color: Colors.grey,
-                            //                           ),
-                            //                           const SizedBox(height: 15),
-                            //                           GestureDetector(
-                            //                             onTap: () {
-                            //                               consumerRef.refresh(customerProvider);
-                            //                               consumerRef.refresh(productProvider);
-                            //                               consumerRef.refresh(salesReportProvider);
-                            //                               consumerRef.refresh(transitionProvider);
-                            //                               consumerRef.refresh(profileDetailsProvider);
-                            //                               const Home().launch(context);
-                            //                             },
-                            //                             child: const Center(
-                            //                               child: Text(
-                            //                                 'Cancel',
-                            //                                 style: TextStyle(color: kMainColor),
-                            //                               ),
-                            //                             ),
-                            //                           ),
-                            //                           const SizedBox(height: 15),
-                            //                         ],
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 );
-                            //               });
-                            //         }
-                            //       } else {
-                            //         providerData.clearCart();
-                            //         consumerRef.refresh(customerProvider);
-                            //         consumerRef.refresh(productProvider);
-                            //         consumerRef.refresh(salesReportProvider);
-                            //         consumerRef.refresh(transitionProvider);
-                            //         consumerRef.refresh(profileDetailsProvider);
-                            //         EasyLoading.showSuccess('Added Successfully');
-                            //         Future.delayed(const Duration(milliseconds: 500), () {
-                            //           const SalesReportScreen().launch(context);
-                            //         });
-                            //       }
-                            //       EasyLoading.showSuccess('Added Successfully');
-                            //       // const Home().launch(context, isNewTask: true);
-                            //     } catch (e) {
-                            //       EasyLoading.dismiss();
-                            //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                            //     }
-                            //   }
-                            // } else {
-                            //   EasyLoading.showError('Add Product first');
-                            // }
                             const Home().launch(context);
                           },
                           child: Container(
                             height: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.red,
-                              borderRadius: const BorderRadius.all(Radius.circular(30)),
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
                             ),
                             child: const Center(
                               child: Text(
@@ -932,7 +755,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                                     ///________Subscription_____________________________________________________
 
-                                    Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
+                                    //Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
 
 
                                     ///_________DueUpdate______________________________________________________
@@ -1116,21 +939,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         if (data['productCode'] == productCode) {
           String? key = element.key;
           int previousStock = element.child('productStock').value.toString().toInt();
-          print(previousStock);
           int remainStock = previousStock - quantity;
           ref.child(key!).update({'productStock': '$remainStock'});
         }
       }
     });
 
-    // var data = await ref.orderByChild('productCode').equalTo(productCode).once();
-    // String productPath = data.snapshot.value.toString().substring(1, 21);
-    //
-    // var data1 = await ref.child('$productPath/productStock').once();
-    // int stock = int.parse(data1.snapshot.value.toString());
-    // int remainStock = stock - quantity;
-    //
-    // ref.child(productPath).update({'productStock': '$remainStock'});
   }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
@@ -1145,16 +959,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         if (data['phoneNumber'] == phoneNumber) {
           key = element.key;
           int previousDue = element.child('due').value.toString().toInt();
-          print(previousDue);
           int totalDue = previousDue + due;
           ref.child(key!).update({'due': '$totalDue'});
         }
       }
     });
-    // var data1 = ref.child('$key/due');
-    // int previousDue = await data1.get().then((value) => value.value.toString().toInt());
-    // print(previousDue);
-    // int totalDue = previousDue + due;
-    // ref.child(key!).update({'due': '$totalDue'});
   }
 }
