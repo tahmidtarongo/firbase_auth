@@ -1,4 +1,4 @@
-import 'package:country_code_picker/country_code_picker.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -153,20 +153,6 @@ class _AddDeliveryState extends State<AddDelivery> {
                       ),
                       hintText: 'Bangladesh',
                       border: const OutlineInputBorder(),
-                      prefix: CountryCodePicker(
-                        padding: EdgeInsets.zero,
-                        onChanged: (CountryCode countrycode) {
-                          setState(() {
-                            initialCountry = countrycode.name!;
-                          });
-                        },
-                        initialSelection: 'BD',
-                        showOnlyCountryWhenClosed: false,
-                        showFlagMain: true,
-                        showCountryOnly: false,
-                        showDropDownButton: true,
-                        alignLeft: false,
-                      ),
                     ),
                   ),
                 ),
