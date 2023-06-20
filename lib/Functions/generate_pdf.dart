@@ -8,16 +8,15 @@ import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:printing/printing.dart';
 
 import '../model/transition_model.dart';
 
 class GeneratePdf {
   Future<void> generateDocument(PurchaseTransitionModel transactions, PersonalInformationModel personalInformation) async {
     final pw.Document doc = pw.Document();
-    final netImage = await networkImage(
-      'https://www.nfet.net/nfet.jpg',
-    );
+    // final netImage = await networkImage(
+    //   'https://www.nfet.net/nfet.jpg',
+    // );
     EasyLoading.show(status: 'Generating PDF');
     doc.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -35,7 +34,7 @@ class GeneratePdf {
                     alignment: pw.Alignment.centerRight,
                     margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
                     padding: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-                    decoration: pw.BoxDecoration(image: pw.DecorationImage(image: netImage), shape: pw.BoxShape.circle),
+                    // decoration: pw.BoxDecoration(image: pw.DecorationImage(image: netImage), shape: pw.BoxShape.circle),
                   ),
                   pw.SizedBox(width: 10.0),
                   pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
