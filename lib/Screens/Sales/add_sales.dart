@@ -588,7 +588,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 ),
                               ],
                             ),
-                          ),
+                          ).visible(false),
                         ],
                       ),
                     ),

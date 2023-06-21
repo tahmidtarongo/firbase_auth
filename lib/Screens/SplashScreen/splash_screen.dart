@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
               child: const Image(
                 image: AssetImage(
-                  'images/maan_pos.png',
+                  'images/mobi_pos.png',
                 ),
               ),
             ),
@@ -96,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Center(
                   child: Text(
-                    'Powered By Maan Technology',
+                    'Powered By MOBI POS',
                     style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 17),
                   ),
                 ),

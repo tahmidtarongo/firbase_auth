@@ -45,7 +45,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
   String initialCountry = 'Bangladesh';
   String dropdownValue = 'Super Shop';
   late String companyName;
-  String phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber!;
+  String phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber ?? '';
   double progress = 0.0;
   bool showProgress = false;
   String profilePicture =

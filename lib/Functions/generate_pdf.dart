@@ -304,10 +304,10 @@ class GeneratePdf {
             ]));
     var status = await Permission.storage.request();
     if (status.isGranted) {
-      final file = File("/storage/emulated/0/Download/${'MaanPOS-${transactions.invoiceNumber}'}.pdf");
+      final file = File("/storage/emulated/0/Download/${'MOBIPOS-${transactions.invoiceNumber}'}.pdf");
       await file.writeAsBytes(await doc.save());
       EasyLoading.showSuccess('Successful');
-      OpenFile.open("/storage/emulated/0/Download/${'MaanPOS-${transactions.invoiceNumber}'}.pdf");
+      OpenFile.open("/storage/emulated/0/Download/${'MOBIPOS-${transactions.invoiceNumber}'}.pdf");
     } else if (status.isDenied) {
       EasyLoading.dismiss();
       await Permission.storage.request();

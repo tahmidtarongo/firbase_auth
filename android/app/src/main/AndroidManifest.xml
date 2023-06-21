@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maantechnology.maanpos">
+    package="com.maantechnology.mobipos">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -11,7 +11,7 @@
 
 
    <application
-        android:label="MaanPOS"
+        android:label="MOBIPOS"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -184,6 +184,7 @@ class _AddCategoryState extends State<AddCategory> {
                         capacity: capacityCheckbox,
                         type: typeCheckbox,
                         weight: weightCheckbox,
+                        warranty: false,
                       );
                       isAlreadyAdded ? EasyLoading.showError('Already Added') : _categoryInformationRef.push().set(categoryModel.toJson());
                       setState(() {

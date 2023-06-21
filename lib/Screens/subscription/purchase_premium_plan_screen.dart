@@ -421,7 +421,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 }
                               }
                             ],
-                            note: "Payment From MaanPos app",
+                            note: "Payment From MOBIPOS app",
                             onSuccess: (Map params) async {
                               try {
                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);

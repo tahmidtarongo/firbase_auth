@@ -77,9 +77,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 20),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text('Manage your business with '),
                     Image(width: 100, image: AssetImage('images/maanpos.png')),
                   ],

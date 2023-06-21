@@ -533,27 +533,27 @@ class _SettingScreenState extends State<SettingScreen> {
                       //   ],
                       // ),
 
-                      ListTile(
-                        title: Text(
-                          'Invoice Settings',
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        onTap: () {
-                          // const SubscriptionScreen().launch(context);
-                          const InvoiceSettings().launch(context);
-                        },
-                        leading: const Icon(
-                          Icons.print,
-                          color: kMainColor,
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: kGreyTextColor,
-                        ),
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Invoice Settings',
+                      //     style: GoogleFonts.poppins(
+                      //       color: Colors.black,
+                      //       fontSize: 18.0,
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     // const SubscriptionScreen().launch(context);
+                      //     const InvoiceSettings().launch(context);
+                      //   },
+                      //   leading: const Icon(
+                      //     Icons.print,
+                      //     color: kMainColor,
+                      //   ),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios,
+                      //     color: kGreyTextColor,
+                      //   ),
+                      // ),
                       ListTile(
                         title: Text(
                           'Feedback',
@@ -575,47 +575,47 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: kGreyTextColor,
                         ),
                       ),
-                      ListTile(
-                        title: Text(
-                          'Live Chat/Support',
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        onTap: () {
-                          // const SubscriptionScreen().launch(context);
-                          const LiveChatSupport().launch(context);
-                        },
-                        leading: const Icon(
-                          Icons.chat,
-                          color: kMainColor,
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: kGreyTextColor,
-                        ),
-                      ),
-                      ListTile(
-                        title: Text(
-                          'Invite/Share With Friends',
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        onTap: () {
-                          // Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.maanpos', subject: 'Download Maan POS and Grow Your Business');
-                        },
-                        leading: const Icon(
-                          Icons.share,
-                          color: kMainColor,
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: kGreyTextColor,
-                        ),
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Live Chat/Support',
+                      //     style: GoogleFonts.poppins(
+                      //       color: Colors.black,
+                      //       fontSize: 18.0,
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     // const SubscriptionScreen().launch(context);
+                      //     const LiveChatSupport().launch(context);
+                      //   },
+                      //   leading: const Icon(
+                      //     Icons.chat,
+                      //     color: kMainColor,
+                      //   ),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios,
+                      //     color: kGreyTextColor,
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Invite/Share With Friends',
+                      //     style: GoogleFonts.poppins(
+                      //       color: Colors.black,
+                      //       fontSize: 18.0,
+                      //     ),
+                      //   ),
+                      //   onTap: () {
+                      //     // Share.share('Using Maan POS to make business easier. Download Maan POS and grow your business - https://play.google.com/store/apps/details?id=com.maantechnology.mobipos', subject: 'Download Maan POS and Grow Your Business');
+                      //   },
+                      //   leading: const Icon(
+                      //     Icons.share,
+                      //     color: kMainColor,
+                      //   ),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios,
+                      //     color: kGreyTextColor,
+                      //   ),
+                      // ),
                       ListTile(
                         title: Text(
                           'Subscription',
@@ -705,7 +705,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              'Maan POS V-$appVersion',
+                              'MOBI POS V-$appVersion',
                               style: GoogleFonts.poppins(
                                 color: kGreyTextColor,
                                 fontSize: 16.0,

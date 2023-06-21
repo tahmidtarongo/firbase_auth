@@ -214,7 +214,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                       buttontext: 'Save Changes',
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                       onPressed: () async {
-                        imagePath.contains('com.maantechnology.maanpos/cache/') ? await uploadFile(imagePath) : null;
+                        imagePath.contains('com.maantechnology.mobipos/cache/') ? await uploadFile(imagePath) : null;
                         InvoiceModel invoice = InvoiceModel(
                           address: addressController.text,
                           emailAddress: emailController.text,

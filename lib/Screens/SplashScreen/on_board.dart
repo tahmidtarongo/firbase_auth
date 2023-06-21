@@ -5,6 +5,7 @@ import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../constant.dart';
+import '../Authentication/login_form.dart';
 
 class OnBoard extends StatefulWidget {
   const OnBoard({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _OnBoardState extends State<OnBoard> {
     {
       "icon": 'images/onboard1.png',
       "title": 'Easy to use mobile pos',
-      "description": 'Maan POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
+      "description": 'MOBI POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
     },
     {
       "icon": 'images/onboard2.png',
@@ -33,11 +34,9 @@ class _OnBoardState extends State<OnBoard> {
     {
       "icon": 'images/onboard3.png',
       "title": 'All business solutions',
-      "description": 'Maan POS is a complete business solution with stock, account, sales, expense & loss/profit.',
+      "description": 'MOBI POS is a complete business solution with stock, account, sales, expense & loss/profit.',
     },
   ];
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,8 @@ class _OnBoardState extends State<OnBoard> {
             padding: const EdgeInsets.only(right: 20),
             child: TextButton(
               onPressed: () {
-                const PhoneAuth().launch(context);
+                const LoginForm().launch(context);
+                // const PhoneAuth().launch(context);
               },
               child: Text(
                 'Skip',
@@ -127,15 +127,13 @@ class _OnBoardState extends State<OnBoard> {
             padding: const EdgeInsets.only(right: 10.0, left: 10),
             child: ButtonGlobal(
               iconWidget: null,
-              buttontext: currentIndexPage == 2 ? "Use Maan POS" : buttonText,
+              buttontext: currentIndexPage == 2 ? "Use MOBI POS" : buttonText,
               iconColor: Colors.white,
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
               onPressed: () {
                 setState(
                   () {
-                    currentIndexPage < 2
-                        ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut)
-                        : const PhoneAuth().launch(context);
+                    currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const LoginForm().launch(context);
                   },
                 );
               },

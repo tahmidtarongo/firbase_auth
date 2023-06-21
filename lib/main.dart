@@ -58,7 +58,7 @@ void configLoading() {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "MaanPos",
+    name: "MOBIPOS",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAppCheck.instance.activate();

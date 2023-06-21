@@ -5,6 +5,7 @@ class CategoryModel {
   late bool weight;
   late bool capacity;
   late bool type;
+  late bool warranty;
 
   CategoryModel({
     required this.categoryName,
@@ -13,6 +14,7 @@ class CategoryModel {
     required this.capacity,
     required this.type,
     required this.weight,
+    required this.warranty,
   });
 
   CategoryModel.fromJson(Map<dynamic, dynamic> json) {
@@ -22,16 +24,18 @@ class CategoryModel {
     capacity = json['variationCapacity'] as bool;
     type = json['variationType'] as bool;
     weight = json['variationWeight'] as bool;
+    warranty = json['variationWarranty'] as bool;
   }
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-        'categoryName': categoryName,
-        'variationSize': size,
-        'variationColor': color,
-        'variationCapacity': capacity,
-        'variationType': type,
-        'variationWeight': weight,
-      };
+    'categoryName': categoryName,
+    'variationSize': size,
+    'variationColor': color,
+    'variationCapacity': capacity,
+    'variationType': type,
+    'variationWeight': weight,
+    'variationWarranty': warranty,
+  };
 }
 
 class GetCategoryAndVariationModel {

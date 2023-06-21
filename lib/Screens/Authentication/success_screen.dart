@@ -41,7 +41,7 @@ class SuccessScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  "You are successfully login into your account. Stay with MaanPos.",
+                  "You are successfully login into your account. Stay with MOBIPOS.",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

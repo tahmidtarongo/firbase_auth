@@ -1,4 +1,4 @@
-package com.maantechnology.maanpos;
+package com.maantechnology.mobipos;
 
 import io.flutter.embedding.android.FlutterActivity;
 
