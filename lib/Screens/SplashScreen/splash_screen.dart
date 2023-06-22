@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/SplashScreen/on_board.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../GlobalComponents/button_global.dart';
@@ -43,12 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       currency = '৳';
     }
-    OneSignal.shared.setAppId(onesignalAppId);
+    // OneSignal.shared.setAppId(onesignalAppId);
 
 // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-      print("Accepted permission: $accepted");
-    });
+//     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+//       print("Accepted permission: $accepted");
+//     });
   }
 
   Future<void> updateNotifier() async {

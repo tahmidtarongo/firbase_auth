@@ -19,10 +19,6 @@ class SuccessScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Consumer(builder: (context, ref, _) {
-        ref.refresh(profileDetailsProvider);
-        ref.refresh(customerProvider);
-        ref.refresh(deliveryAddressProvider);
-        ref.refresh(productProvider);
         return Scaffold(
           resizeToAvoidBottomInset: true,
           body: Column(

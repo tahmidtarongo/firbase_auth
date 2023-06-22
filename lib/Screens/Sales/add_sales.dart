@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -602,8 +604,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Text(
                               'Payment Type',
                               style: TextStyle(fontSize: 16, color: Colors.black54),
@@ -749,13 +751,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     final DatabaseReference personalInformationRef =
                                         // ignore: deprecated_member_use
                                         FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
-                                    personalInformationRef.keepSynced(true);
-                                    personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
+                                    // personalInformationRef.keepSynced(true);
+                                   await personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
 
 
                                     ///________Subscription_____________________________________________________
 
-                                    //Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
+                                    Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
 
 
                                     ///_________DueUpdate______________________________________________________
@@ -796,7 +798,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                       } else {
                                         EasyLoading.dismiss();
-                                        // ignore: use_build_context_synchronously
                                         EasyLoading.showError('Please Connect The Printer First');
 
                                         showDialog(

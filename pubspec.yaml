@@ -69,7 +69,6 @@ dependencies:
   country_picker: ^2.0.16
   flutter_countdown_timer: ^4.1.0
   youtube_player_flutter: ^8.1.1
-  onesignal_flutter: ^3.4.2
   pdf: ^3.8.4
   open_file: ^3.2.1
   date_time_format: ^2.0.1

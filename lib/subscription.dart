@@ -8,8 +8,21 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'Screens/subscription/package_screen.dart';
 import 'model/subscription_model.dart';
+import 'model/subscription_plan_model.dart';
 
 class Subscription {
+  static List<SubscriptionPlanModel> subscriptionPlan = [];
+
+  static SubscriptionModel freeSubscriptionModel = SubscriptionModel(
+    dueNumber: 0,
+    duration: 0,
+    partiesNumber: 0,
+    products: 0,
+    purchaseNumber: 0,
+    saleNumber: 0,
+    subscriptionDate: DateTime.now().toString(),
+    subscriptionName: 'Free',
+  );
   static String selectedItem = 'Year';
   static const String currency = 'USD';
 
