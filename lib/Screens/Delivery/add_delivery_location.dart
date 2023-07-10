@@ -65,7 +65,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                           labelStyle: GoogleFonts.poppins(
                             color: Colors.black,
                           ),
-                          hintText: 'Ibne',
+                          hintText: 'Enter Your Name',
                           border: const OutlineInputBorder(),
                         ),
                       ),

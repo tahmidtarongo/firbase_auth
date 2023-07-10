@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import 'package:mobile_pos/Screens/Customers/edit_customer.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../GlobalComponents/button_global.dart';
 import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';

@@ -44,7 +44,7 @@ dependencies:
   firebase_auth: ^4.2.5
   firebase_storage: ^11.0.6
   firebase_app_check: ^0.1.1+5
-  image_picker: ^0.8.5+3
+  image_picker: ^1.0.0
   flutter_barcode_scanner: ^2.0.0
   flutter_cart: ^0.0.7
   flutter_easyloading: ^3.0.5
@@ -65,7 +65,7 @@ dependencies:
   intl: ^0.18.1
   pinput: ^2.2.12
   internet_connection_checker: ^1.0.0+1
-  nb_utils: ^5.0.8
+  nb_utils: ^6.0.0
   country_picker: ^2.0.16
   flutter_countdown_timer: ^4.1.0
   youtube_player_flutter: ^8.1.1
@@ -122,3 +122,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

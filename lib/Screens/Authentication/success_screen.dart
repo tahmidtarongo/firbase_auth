@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../../Provider/customer_provider.dart';
 import '../../Provider/delivery_address_provider.dart';
 import '../../Provider/product_provider.dart';
