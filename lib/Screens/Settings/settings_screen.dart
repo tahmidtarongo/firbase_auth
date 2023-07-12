@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/Language/language.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
 import 'package:mobile_pos/Screens/Settings/invoice_settings.dart';
 import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
-
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -672,6 +672,20 @@ class _SettingScreenState extends State<SettingScreen> {
                               dropdownValue = newValue.toString();
                             });
                           },
+                        ),
+                      ),
+                       ListTile(
+                         onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>const Language()));
+                         },
+                        title: Text('Language',style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                        ),),
+                        leading: Icon(Icons.translate,color: kMainColor,),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
                         ),
                       ),
                       ListTile(
