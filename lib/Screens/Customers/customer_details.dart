@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../GlobalComponents/button_global.dart';
 import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../currency.dart';
 import '../../model/print_transaction_model.dart';
 import '../invoice_details/purchase_invoice_details.dart';
@@ -69,7 +70,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Customer Details',
+            lang.S.of(context).customerDetails,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -221,7 +222,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                 color: buttonsSelected == 'Message' ? Colors.white : Colors.black,
                               ),
                               Text(
-                                'Message',
+                                lang.S.of(context).message,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: buttonsSelected == 'Message' ? Colors.white : Colors.black,
@@ -254,7 +255,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                 color: buttonsSelected == 'Email' ? Colors.white : Colors.black,
                               ),
                               Text(
-                                'Email',
+                                lang.S.of(context).email,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: buttonsSelected == 'Email' ? Colors.white : Colors.black,
@@ -268,9 +269,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Recent Transactions',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                 Text(
+                  lang.S.of(context).recentTransactions,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 widget.customerModel.type != 'Supplier'
                     ? providerData.when(data: (transaction) {
@@ -406,14 +407,14 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                                                 : toast('Try Again');
                                                                                           },
                                                                                           title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                          subtitle: const Text("Click to connect"),
+                                                                                          subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                         );
                                                                                       },
                                                                                     ),
-                                                                                    const Padding(
+                                                                                     Padding(
                                                                                       padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                       child: Text(
-                                                                                        'Please connect your bluetooth Printer',
+                                                                                        lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                       ),
                                                                                     ),
@@ -424,9 +425,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                                       onTap: () {
                                                                                         Navigator.pop(context);
                                                                                       },
-                                                                                      child: const Center(
+                                                                                      child:  Center(
                                                                                         child: Text(
-                                                                                          'Cancel',
+                                                                                          lang.S.of(context).cacel,
                                                                                           style: TextStyle(color: kMainColor),
                                                                                         ),
                                                                                       ),
@@ -600,14 +601,14 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                                         : toast('Try Again');
                                                                                   },
                                                                                   title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                  subtitle: const Text("Click to connect"),
+                                                                                  subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                 );
                                                                               },
                                                                             ),
-                                                                            const Padding(
+                                                                             Padding(
                                                                               padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                               child: Text(
-                                                                                'Please connect your bluetooth Printer',
+                                                                                lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                               ),
                                                                             ),
@@ -618,9 +619,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                                                                               onTap: () {
                                                                                 Navigator.pop(context);
                                                                               },
-                                                                              child: const Center(
+                                                                              child:  Center(
                                                                                 child: Text(
-                                                                                  'Cancel',
+                                                                                  lang.S.of(context).cacel,
                                                                                   style: TextStyle(color: kMainColor),
                                                                                 ),
                                                                               ),
@@ -684,7 +685,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
           color: Colors.white,
           child: ButtonGlobal(
             iconWidget: null,
-            buttontext: 'View All',
+            buttontext: lang.S.of(context).viewAll,
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {},

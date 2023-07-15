@@ -7,6 +7,7 @@ import '../../Provider/customer_provider.dart';
 import '../../Provider/delivery_address_provider.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/profile_provider.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../Home/home.dart';
 
@@ -26,7 +27,7 @@ class SuccessScreen extends StatelessWidget {
               const Image(image: AssetImage('images/success.png')),
               const SizedBox(height: 40.0),
               Text(
-                'Congratulations',
+                lang.S.of(context).congratulations,
                 style: GoogleFonts.poppins(
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
@@ -36,7 +37,7 @@ class SuccessScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  "You are successfully login into your account. Stay with MOBIPOS.",
+                  lang.S.of(context).youHaveSuccefulyLogin,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -49,7 +50,7 @@ class SuccessScreen extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: ButtonGlobalWithoutIcon(
-              buttontext: 'Continue',
+              buttontext: lang.S.of(context).continu,
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
               onPressed: () async{
                 await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));

@@ -7,7 +7,7 @@ import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Customers/customer_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
@@ -45,7 +45,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Parties List',
+            lang.S.of(context).partiesList,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -201,7 +201,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                             ),
                                                           ),
                                                           Text(
-                                                            'Due',
+                                                            lang.S.of(context).due,
                                                             style: GoogleFonts.poppins(
                                                               color: const Color(0xFFff5f00),
                                                               fontSize: 15.0,
@@ -288,7 +288,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                             ),
                                                           ),
                                                           Text(
-                                                            'Due',
+                                                            lang.S.of(context).due,
                                                             style: GoogleFonts.poppins(
                                                               color: const Color(0xFFff5f00),
                                                               fontSize: 15.0,
@@ -376,7 +376,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                             ),
                                                           ),
                                                           Text(
-                                                            'Due',
+                                                            lang.S.of(context).due,
                                                             style: GoogleFonts.poppins(
                                                               color: const Color(0xFFff5f00),
                                                               fontSize: 15.0,
@@ -465,7 +465,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Due',
+                                                          lang.S.of(context).due,
                                                           style: GoogleFonts.poppins(
                                                             color: const Color(0xFFff5f00),
                                                             fontSize: 15.0,
@@ -555,7 +555,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Due',
+                                                          lang.S.of(context).due,
                                                           style: GoogleFonts.poppins(
                                                             color: const Color(0xFFff5f00),
                                                             fontSize: 15.0,
@@ -603,7 +603,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
           color: Colors.white,
           child: ButtonGlobal(
             iconWidget: Icons.add,
-            buttontext: 'Add Customer',
+            buttontext: lang.S.of(context).addCustomer,
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {

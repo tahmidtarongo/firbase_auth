@@ -5,7 +5,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/register_form.dart';
 import 'package:mobile_pos/repository/login_repo.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import 'forgot_password.dart';
 
@@ -55,10 +55,10 @@ class _LoginFormState extends State<LoginForm> {
                           const SizedBox(height: 20),
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Email',
-                              hintText: 'Enter your email address',
+                              labelText: lang.S.of(context).email,
+                              hintText: lang.S.of(context).enterYourEmailAddress,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -78,8 +78,8 @@ class _LoginFormState extends State<LoginForm> {
                             obscureText: showPassword,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
-                              labelText: 'Password',
-                              hintText: 'Please enter a password',
+                              labelText: lang.S.of(context).password,
+                              hintText: lang.S.of(context).pleaseEnterAPassword,
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -114,7 +114,7 @@ class _LoginFormState extends State<LoginForm> {
                           // Navigator.pushNamed(context, '/forgotPassword');
                         },
                         child: Text(
-                          'Forgot Password?',
+                          lang.S.of(context).forgotPasswords,
                           style: GoogleFonts.poppins(
                             color: kGreyTextColor,
                             fontSize: 15.0,
@@ -136,7 +136,7 @@ class _LoginFormState extends State<LoginForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Haven\'t any account?',
+                        lang.S.of(context).havenotAnAccounts,
                         style: GoogleFonts.poppins(color: kGreyTextColor, fontSize: 15.0),
                       ),
                       TextButton(
@@ -145,7 +145,7 @@ class _LoginFormState extends State<LoginForm> {
                           const RegisterScreen().launch(context);
                         },
                         child: Text(
-                          'Register',
+                          lang.S.of(context).register,
                           style: GoogleFonts.poppins(
                             color: kMainColor,
                             fontSize: 15.0,

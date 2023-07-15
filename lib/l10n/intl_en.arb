@@ -94,6 +94,11 @@
   "paymentType" : "Payment Type",
   "describtion" : "Description",
   "addDescription" : "Add note",
-  "image" : "Image"
+  "image" : "Image",
+  "close" : "Close",
+  "confirmPassword" : "Confirm Password",
+  "pleaseEnterAConfirmPassword" : "Please Enter A Confirm Password",
+  "alreadyHaveAnAccounts" : "Already Have An Accounts",
+  "addCustomer" : "Add Customer"
 
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import 'login_form.dart';
 
@@ -28,7 +28,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Column(
               children: [
                 Text(
-                  'Forgot password',
+                  lang.S.of(context).forgotPassword,
                   style: GoogleFonts.poppins(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Please enter your email address below to receive password Reset Link.",
+                    lang.S.of(context).pleaseEnterTheEmailAddressBelowToRecive,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -57,15 +57,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         email = value;
                       });
                     },
-                    decoration: const InputDecoration(
-                        labelText: 'Email Address',
-                        border: OutlineInputBorder(),
+                    decoration:  InputDecoration(
+                        labelText: lang.S.of(context).emailAddress,
+                        border: const OutlineInputBorder(),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         hintText: 'example@example.com'),
                   ),
                 ),
                 ButtonGlobalWithoutIcon(
-                    buttontext: 'Send Reset Link',
+                    buttontext: lang.S.of(context).sendResetLink,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                     onPressed: () async {
                       setState(() {

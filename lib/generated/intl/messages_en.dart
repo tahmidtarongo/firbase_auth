@@ -23,11 +23,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addContact": MessageLookupByLibrary.simpleMessage("Add Contact"),
+        "addCustomer": MessageLookupByLibrary.simpleMessage("Add Customer"),
         "addDelivery": MessageLookupByLibrary.simpleMessage("Add Delivery"),
         "addDescription": MessageLookupByLibrary.simpleMessage("Add note"),
         "addNewAddress":
             MessageLookupByLibrary.simpleMessage("Add New Address"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "alreadyHaveAnAccounts":
+            MessageLookupByLibrary.simpleMessage("Already Have An Accounts"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "areYourSureDeleteThisUser": MessageLookupByLibrary.simpleMessage(
             "Are you sure to delete this user?"),
@@ -41,10 +44,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkEmail": MessageLookupByLibrary.simpleMessage("Check Email"),
         "clickToConnect":
             MessageLookupByLibrary.simpleMessage("Click to connect"),
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
         "companyAddress":
             MessageLookupByLibrary.simpleMessage("Company Address"),
         "companyAndShopName":
             MessageLookupByLibrary.simpleMessage("Company & Shop Name"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "congratulations":
             MessageLookupByLibrary.simpleMessage("Congratulations"),
         "continu": MessageLookupByLibrary.simpleMessage("Continue"),
@@ -118,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseConnectYourBluttothPrinter":
             MessageLookupByLibrary.simpleMessage(
                 "Please connect your bluetooth Printer"),
+        "pleaseEnterAConfirmPassword": MessageLookupByLibrary.simpleMessage(
+            "Please Enter A Confirm Password"),
         "pleaseEnterAPassword":
             MessageLookupByLibrary.simpleMessage("Please enter a password"),
         "pleaseEnterTheEmailAddressBelowToRecive":

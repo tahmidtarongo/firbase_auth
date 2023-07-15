@@ -13,7 +13,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/seller_info_model.dart';
@@ -161,7 +161,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Setup Your Profile',
+            lang.S.of(context).setUpYourProfile,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -180,7 +180,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Update your profile to connect your doctor with better impression",
+                      lang.S.of(context).updateYourProfileToConnect,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -227,7 +227,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                                               color: kMainColor,
                                             ),
                                             Text(
-                                              'Gallery',
+                                              lang.S.of(context).gallary,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 20.0,
                                                 color: kMainColor,
@@ -259,7 +259,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                                               color: kGreyTextColor,
                                             ),
                                             Text(
-                                              'Camera',
+                                              lang.S.of(context).camera,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 20.0,
                                                 color: kGreyTextColor,
@@ -325,7 +325,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           return InputDecorator(
                             decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Business Category',
+                                labelText: lang.S.of(context).businessCategory,
                                 labelStyle: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -361,10 +361,10 @@ class _ProfileSetupState extends State<ProfileSetup> {
                             phoneNumber = value;
                           });
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'Phone Number',
-                          hintText: 'Enter Phone Number',
-                          border: OutlineInputBorder(),
+                        decoration:  InputDecoration(
+                          labelText: lang.S.of(context).phoneNumber,
+                          hintText: lang.S.of(context).enterPhoneNumber,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
@@ -375,12 +375,12 @@ class _ProfileSetupState extends State<ProfileSetup> {
                       // ignore: deprecated_member_use
                       textFieldType: TextFieldType.ADDRESS,
                       controller: controller,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: kGreyTextColor),
                         ),
-                        labelText: 'Company Address',
-                        hintText: 'Enter Full Address',
+                        labelText: lang.S.of(context).companyAddress,
+                        hintText: lang.S.of(context).enterFullAddress,
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -394,7 +394,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           return InputDecorator(
                             decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Language',
+                                labelText: lang.S.of(context).language,
                                 labelStyle: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -415,15 +415,15 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         });
                       }, // Optional
                       textFieldType: TextFieldType.PHONE,
-                      decoration: const InputDecoration(
-                        labelText:'Opening Balance ',
+                      decoration:  InputDecoration(
+                        labelText: lang.S.of(context).openingBalance,
                         border: OutlineInputBorder(),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
                   ButtonGlobalWithoutIcon(
-                    buttontext: 'Continue',
+                    buttontext: lang.S.of(context).continu,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
                       try {

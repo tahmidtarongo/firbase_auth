@@ -10,7 +10,7 @@ import 'package:mobile_pos/GlobalComponents/tab_buttons.dart';
 import 'package:mobile_pos/Screens/Delivery/Model/delivery_model.dart';
 import 'package:mobile_pos/Screens/Delivery/delivery_address_list.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/delivery_address_provider.dart';
 import '../../constant.dart';
 
@@ -31,7 +31,7 @@ class _AddDeliveryState extends State<AddDelivery> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add New Address',
+          lang.S.of(context).addNewAddress,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -85,7 +85,7 @@ class _EditCustomerState extends State<EditCustomer> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Update Contact',
+            lang.S.of(context).updateContact,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -112,10 +112,10 @@ class _EditCustomerState extends State<EditCustomer> {
                         initialValue: widget.customerModel.phoneNumber,
                         readOnly: true,
                         textFieldType: TextFieldType.PHONE,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Phone Number',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).phoneNumber,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
@@ -129,10 +129,10 @@ class _EditCustomerState extends State<EditCustomer> {
                             updatedCustomerModel.customerName = value;
                           });
                         },
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Name',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).name,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
@@ -143,7 +143,7 @@ class _EditCustomerState extends State<EditCustomer> {
                             contentPadding: EdgeInsets.zero,
                             groupValue: groupValue,
                             title: Text(
-                              'Retailer',
+                              lang.S.of(context).retailer,
                               maxLines: 1,
                               style: GoogleFonts.poppins(
                                 fontSize: 12.0,
@@ -163,7 +163,7 @@ class _EditCustomerState extends State<EditCustomer> {
                             contentPadding: EdgeInsets.zero,
                             groupValue: groupValue,
                             title: Text(
-                              'Dealer',
+                              lang.S.of(context).dealer,
                               maxLines: 1,
                               style: GoogleFonts.poppins(
                                 fontSize: 12.0,
@@ -188,7 +188,7 @@ class _EditCustomerState extends State<EditCustomer> {
                             activeColor: kMainColor,
                             groupValue: groupValue,
                             title: Text(
-                              'Wholesaler',
+                              lang.S.of(context).wholSeller,
                               maxLines: 1,
                               style: GoogleFonts.poppins(
                                 fontSize: 12.0,
@@ -209,7 +209,7 @@ class _EditCustomerState extends State<EditCustomer> {
                             activeColor: kMainColor,
                             groupValue: groupValue,
                             title: Text(
-                              'Supplier',
+                              lang.S.of(context).supplier,
                               maxLines: 1,
                               style: GoogleFonts.poppins(
                                 fontSize: 12.0,
@@ -303,7 +303,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                                           color: kMainColor,
                                                         ),
                                                         Text(
-                                                          'Gallery',
+                                                          lang.S.of(context).gallary,
                                                           style: GoogleFonts.poppins(
                                                             fontSize: 20.0,
                                                             color: kMainColor,
@@ -335,7 +335,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                                           color: kGreyTextColor,
                                                         ),
                                                         Text(
-                                                          'Camera',
+                                                          lang.S.of(context).camera,
                                                           style: GoogleFonts.poppins(
                                                             fontSize: 20.0,
                                                             color: kGreyTextColor,
@@ -402,10 +402,10 @@ class _EditCustomerState extends State<EditCustomer> {
                                       updatedCustomerModel.emailAddress = value;
                                     });
                                   },
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
+                                  decoration:  InputDecoration(
+                                    border: const OutlineInputBorder(),
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'Email Address',
+                                    labelText: lang.S.of(context).emailAddress,
                                   ),
                                 ),
                               ),
@@ -420,10 +420,10 @@ class _EditCustomerState extends State<EditCustomer> {
                                       updatedCustomerModel.customerAddress = value;
                                     });
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration:  InputDecoration(
                                       border: OutlineInputBorder(),
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'Address',),
+                                      labelText: lang.S.of(context).address,),
                                 ),
                               ),
                               Padding(

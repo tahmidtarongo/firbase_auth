@@ -4,7 +4,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/login_form.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  'Create a Free Account',
+                  lang.S.of(context).createAFreeAccounts,
                   style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 20.0),
                 ),
               ),
@@ -41,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: ButtonGlobalWithoutIcon(
-                  buttontext: 'Login',
+                  buttontext: lang.S.of(context).logIn,
                   buttonTextColor: Colors.white,
                   buttonDecoration: kButtonDecoration.copyWith(
                     color: kMainColor,
@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: Center(
                 child: ButtonGlobalWithoutIcon(
-                  buttontext: 'Register',
+                  buttontext: lang.S.of(context).register,
                   buttonTextColor: Colors.white,
                   buttonDecoration: kButtonDecoration.copyWith(
                     color: const Color(0xFF19AAF8),

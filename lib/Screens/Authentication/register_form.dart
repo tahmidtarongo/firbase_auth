@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../repository/signup_repo.dart';
 import 'login_form.dart';
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -61,10 +61,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 20),
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Email',
-                              hintText: 'Enter your email address',
+                            decoration:  InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText: lang.S.of(context).email,
+                              hintText: lang.S.of(context).enterYourEmailAddress,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -84,8 +84,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             obscureText: showPass1,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
-                              labelText: 'Password',
-                              hintText: 'Please enter a password',
+                              labelText: lang.S.of(context).password,
+                              hintText: lang.S.of(context).pleaseEnterAPassword,
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -118,8 +118,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             obscureText: showPass2,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
-                              labelText: 'Confirm Password',
-                              hintText: 'Please enter confirm password',
+                              labelText: lang.S.of(context).confirmPassword,
+                              hintText: lang.S.of(context).pleaseEnterAPassword,
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   ButtonGlobalWithoutIcon(
-                      buttontext: 'Register',
+                      buttontext: lang.S.of(context).register,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                       onPressed: () {
                         if (validateAndSave()) {
@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account?',
+                        lang.S.of(context).alreadyHaveAnAccounts,
                         style: GoogleFonts.poppins(color: kGreyTextColor, fontSize: 15.0),
                       ),
                       TextButton(
@@ -169,7 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           // Navigator.pushNamed(context, '/loginForm');
                         },
                         child: Text(
-                          'Log In',
+                          lang.S.of(context).logIn,
                           style: GoogleFonts.poppins(
                             color: kMainColor,
                             fontSize: 15.0,

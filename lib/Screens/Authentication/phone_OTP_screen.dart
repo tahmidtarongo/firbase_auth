@@ -11,7 +11,7 @@ import 'package:mobile_pos/Screens/Authentication/success_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../Home/home.dart';
 
@@ -37,7 +37,7 @@ class _OTPVerifyState extends State<OTPVerify> {
           backgroundColor: kMainColor,
           elevation: 0,
           centerTitle: true,
-          title: const Text('Verifying OTP'),
+          title:  Text(lang.S.of(context).verifyOtp),
         ),
         body: Container(
           padding: const EdgeInsets.only(left: 25, right: 25),
@@ -59,9 +59,9 @@ class _OTPVerifyState extends State<OTPVerify> {
                         onPressed: () {
                           const PhoneAuth().launch(context, isNewTask: true);
                         },
-                        child: const Text(
-                          'Change?',
-                          style: TextStyle(color: Colors.redAccent),
+                        child:  Text(
+                          lang.S.of(context).change,
+                          style: const TextStyle(color: Colors.redAccent),
                         ),
                       ),
                     )
@@ -86,9 +86,9 @@ class _OTPVerifyState extends State<OTPVerify> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    const Text(
-                      'Resend OTP : ',
-                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                     Text(
+                      lang.S.of(context).resendOtp,
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                     CountdownTimer(
                       textStyle: const TextStyle(fontSize: 17, color: Colors.black),
@@ -112,8 +112,8 @@ class _OTPVerifyState extends State<OTPVerify> {
                             EasyLoading.showError('Error');
                           }
                         },
-                        child: const Text(
-                          'Resend Code',
+                        child:  Text(
+                          lang.S.of(context).resendCode,
                         ),
                       ),
                     ),
@@ -121,7 +121,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                 ),
                 const SizedBox(height: 40),
                 ButtonGlobalWithoutIcon(
-                    buttontext: 'Verify Phone Number',
+                    buttontext: lang.S.of(context).verifyPhoneNumber,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
                       EasyLoading.show(status: 'Loading');

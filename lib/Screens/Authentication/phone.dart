@@ -9,7 +9,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/Screens/Authentication/phone_OTP_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 
 class PhoneAuth extends StatefulWidget {
@@ -77,11 +77,11 @@ class _PhoneAuthState extends State<PhoneAuth> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 20),
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Manage your business with '),
-                    Image(width: 100, image: AssetImage('images/maanpos.png')),
+                    Text(lang.S.of(context).manageYourBussinessWith),
+                    const Image(width: 100, image: AssetImage('images/maanpos.png')),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -106,8 +106,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         ),
                         // Optional. Styles the search field.
                         inputDecoration: InputDecoration(
-                          labelText: 'Search',
-                          hintText: 'Start typing to search',
+                          labelText: lang.S.of(context).search,
+                          hintText: lang.S.of(context).startTypingToSearch,
                           prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -155,9 +155,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
                           PhoneAuth.phoneNumber = '+$countryCode${value.toInt().toString()}';
                         },
                         keyboardType: TextInputType.phone,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter Your Phone Number",
+                          hintText: lang.S.of(context).enterYourPhoneNumber
+                          ,
                         ),
                       ))
                     ],
@@ -165,7 +166,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 ),
                 const SizedBox(height: 20),
                 ButtonGlobalWithoutIcon(
-                    buttontext: 'Get OTP',
+                    buttontext: lang.S.of(context).getOtp,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {
                       if (phoneNumber.length >= 8 && phoneNumber.isDigit()) {
@@ -206,8 +207,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
   showDialogBox() => showCupertinoDialog<String>(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('No Connection'),
-          content: const Text('Please check your internet connectivity'),
+          title:  Text(lang.S.of(context).noConnection),
+          content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
           actions: <Widget>[
             TextButton(
               onPressed: () async {
@@ -219,7 +220,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                   setState(() => isAlertSet = true);
                 }
               },
-              child: const Text('Try Again'),
+              child:  Text(lang.S.of(context).tryAgain),
             ),
           ],
         ),

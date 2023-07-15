@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/constant.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class CheckEMail extends StatefulWidget {
   const CheckEMail({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _CheckEMailState extends State<CheckEMail> {
                       ),
                     ),
                     Text(
-                      'You Have Got An Email',
+                      lang.S.of(context).youHaveGotAnEmail,
                       style: GoogleFonts.poppins(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
@@ -45,7 +46,7 @@ class _CheckEMailState extends State<CheckEMail> {
                       padding: const EdgeInsets.all(20.0),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        'We Have Send An Email with instructions on how to reset password to:',
+                        lang.S.of(context).weHaveSendAnEmailwithInstructions,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           fontSize: 20.0,
@@ -68,7 +69,7 @@ class _CheckEMailState extends State<CheckEMail> {
                   child: Column(
                     children: [
                       ButtonGlobalWithoutIcon(
-                        buttontext: 'Check Email',
+                        buttontext: lang.S.of(context).checkEmail,
                         buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                         onPressed: null,
                         buttonTextColor: Colors.white,
@@ -78,7 +79,7 @@ class _CheckEMailState extends State<CheckEMail> {
                           Navigator.pushNamed(context, '/otp');
                         },
                         child: Text(
-                          'Close',
+                          lang.S.of(context).close,
                           style: GoogleFonts.poppins(
                             color: kMainColor,
                           ),

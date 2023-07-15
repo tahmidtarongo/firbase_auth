@@ -14,7 +14,7 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Customers/customer_list.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
 import '../../subscription.dart';
 
@@ -68,7 +68,7 @@ class _AddCustomerState extends State<AddCustomer> {
       appBar: AppBar(
         backgroundColor: kMainColor,
         title: Text(
-          'Add Contact',
+          lang.S.of(context).addContact,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -109,10 +109,10 @@ class _AddCustomerState extends State<AddCustomer> {
                         onSaved: (value) {
                           phoneNumber = value!;
                         },
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Phone Number',
-                          hintText: 'Enter Your Phone Number.',
+                          labelText: lang.S.of(context).phoneNumber,
+                          hintText: lang.S.of(context).enterPhoneNumber,
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -125,11 +125,11 @@ class _AddCustomerState extends State<AddCustomer> {
                       onChanged: (value) {
                         customerName = value;
                       },
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Name',
-                        hintText: 'Enter Your Name.',
-                        border: OutlineInputBorder(),
+                        labelText: lang.S.of(context).name,
+                        hintText: lang.S.of(context).enterYourName,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -143,11 +143,11 @@ class _AddCustomerState extends State<AddCustomer> {
                         });
                       },
                       maxLines: 2,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                           border: OutlineInputBorder(),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Opening Balance',
-                          hintText: 'Enter Amount.'),
+                          labelText: lang.S.of(context).openingBalance,
+                          hintText: lang.S.of(context).enterAmount),
                     ),
                   ),
                   Row(
@@ -157,7 +157,7 @@ class _AddCustomerState extends State<AddCustomer> {
                           contentPadding: EdgeInsets.zero,
                           groupValue: groupValue,
                           title: Text(
-                            'Retailer',
+                            lang.S.of(context).retailer,
                             maxLines: 1,
                             style: GoogleFonts.poppins(
                               fontSize: 12.0,
@@ -177,7 +177,7 @@ class _AddCustomerState extends State<AddCustomer> {
                           contentPadding: EdgeInsets.zero,
                           groupValue: groupValue,
                           title: Text(
-                            'Dealer',
+                            lang.S.of(context).dealer,
                             maxLines: 1,
                             style: GoogleFonts.poppins(
                               fontSize: 12.0,
@@ -202,7 +202,7 @@ class _AddCustomerState extends State<AddCustomer> {
                           activeColor: kMainColor,
                           groupValue: groupValue,
                           title: Text(
-                            'Wholesaler',
+                            lang.S.of(context).wholSeller,
                             maxLines: 1,
                             style: GoogleFonts.poppins(
                               fontSize: 12.0,
@@ -223,7 +223,7 @@ class _AddCustomerState extends State<AddCustomer> {
                           activeColor: kMainColor,
                           groupValue: groupValue,
                           title: Text(
-                            'Supplier',
+                            lang.S.of(context).supplier,
                             maxLines: 1,
                             style: GoogleFonts.poppins(
                               fontSize: 12.0,
@@ -258,7 +258,7 @@ class _AddCustomerState extends State<AddCustomer> {
                             children: [
                               TextButton(
                                 child: Text(
-                                  'More Info',
+                                  lang.S.of(context).moreInfo,
                                   style: GoogleFonts.poppins(
                                     fontSize: 20.0,
                                     color: kMainColor,
@@ -312,7 +312,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                                         color: kMainColor,
                                                       ),
                                                       Text(
-                                                        'Gallery',
+                                                        lang.S.of(context).gallary,
                                                         style: GoogleFonts.poppins(
                                                           fontSize: 20.0,
                                                           color: kMainColor,
@@ -342,7 +342,7 @@ class _AddCustomerState extends State<AddCustomer> {
                                                         color: kGreyTextColor,
                                                       ),
                                                       Text(
-                                                        'Camera',
+                                                        lang.S.of(context).camera,
                                                         style: GoogleFonts.poppins(
                                                           fontSize: 20.0,
                                                           color: kGreyTextColor,
@@ -408,11 +408,11 @@ class _AddCustomerState extends State<AddCustomer> {
                                     emailAddress = value;
                                   });
                                 },
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
+                                decoration:  InputDecoration(
+                                  border: const OutlineInputBorder(),
                                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                                  labelText: 'Email Address',
-                                  hintText: 'Enter Your Email Address.',
+                                  labelText: lang.S.of(context).emailAddress,
+                                  hintText: lang.S.of(context).enterYourEmailAddress,
                                 ),
                               ),
                             ),
@@ -426,11 +426,11 @@ class _AddCustomerState extends State<AddCustomer> {
                                     customerAddress = value;
                                   });
                                 },
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   border: OutlineInputBorder(),
                                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                                  labelText: 'Address',
-                                  hintText: 'Enter Address.',
+                                  labelText: lang.S.of(context).address,
+                                  hintText: lang.S.of(context).enterAddress,
                                 ),
                               ),
                             ),
@@ -441,7 +441,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     ],
                   ),
                   ButtonGlobalWithoutIcon(
-                      buttontext: 'Save',
+                      buttontext: lang.S.of(context).save,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                       onPressed: () async {
                         Future.delayed(const Duration(milliseconds: 500), () async {

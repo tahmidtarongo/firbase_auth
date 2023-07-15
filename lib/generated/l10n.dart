@@ -1009,6 +1009,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Enter A Confirm Password`
+  String get pleaseEnterAConfirmPassword {
+    return Intl.message(
+      'Please Enter A Confirm Password',
+      name: 'pleaseEnterAConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already Have An Accounts`
+  String get alreadyHaveAnAccounts {
+    return Intl.message(
+      'Already Have An Accounts',
+      name: 'alreadyHaveAnAccounts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Customer`
+  String get addCustomer {
+    return Intl.message(
+      'Add Customer',
+      name: 'addCustomer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
