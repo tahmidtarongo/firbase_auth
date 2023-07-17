@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/invoice_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../invoice_constant.dart' as con;
 
@@ -82,8 +82,8 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
     return Scaffold(
       backgroundColor: kMainColor,
       appBar: AppBar(
-        title: const Text(
-          'Invoice Settings',
+        title:  Text(
+          lang.S.of(context).invoiceSetting,
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
@@ -105,7 +105,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                   children: [
                     ListTile(
                       title: Text(
-                        'Printing Option',
+                        lang.S.of(context).printingOption,
                         style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
@@ -137,7 +137,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                           });
                         },
                         title: Text(
-                          'Logo',
+                          lang.S.of(context).logo,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -165,9 +165,9 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                             const SizedBox(
                               width: 6.0,
                             ),
-                            const Text(
-                              'Change',
-                              style: TextStyle(color: con.kTitleColor, fontWeight: FontWeight.bold),
+                            Text(
+                              lang.S.of(context).change,
+                              style: const TextStyle(color: con.kTitleColor, fontWeight: FontWeight.bold),
                             )
                           ],
                         )),
@@ -176,11 +176,11 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                       child: AppTextField(
                         textFieldType: TextFieldType.PHONE,
                         controller: phoneController,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Phone',
-                          hintText: 'Enter Phone Number',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).phoneNumber,
+                          hintText: lang.S.of(context).enterYourPhoneNumber,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
@@ -189,11 +189,11 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                       child: AppTextField(
                         textFieldType: TextFieldType.EMAIL,
                         controller: emailController,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Email Address',
-                          hintText: 'Enter Email Address',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).emailAddress,
+                          hintText: lang.S.of(context).enterYourEmailAddress,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
@@ -202,16 +202,16 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                       child: AppTextField(
                         textFieldType: TextFieldType.MULTILINE,
                         controller: addressController,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Address',
-                          hintText: 'Enter Full Address',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).address,
+                          hintText: lang.S.of(context).enterFullAddress,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
                     ButtonGlobalWithoutIcon(
-                      buttontext: 'Save Changes',
+                      buttontext: lang.S.of(context).saveChanges,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                       onPressed: () async {
                         imagePath.contains('com.maantechnology.mobipos/cache/') ? await uploadFile(imagePath) : null;

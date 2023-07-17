@@ -10,7 +10,7 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
 import '../../Provider/add_to_cart_purchase.dart';
 
@@ -67,7 +67,7 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Products List',
+            lang.S.of(context).productList,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -171,9 +171,9 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  const Text(
-                                                    'Add Items',
-                                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                   Text(
+                                                     lang.S.of(context).addItems,
+                                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                                   ),
                                                   GestureDetector(
                                                       onTap: () {
@@ -216,8 +216,8 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
-                                                    const Text(
-                                                      'Stock',
+                                                     Text(
+                                                      lang.S.of(context).stocks,
                                                       style: TextStyle(fontSize: 16),
                                                     ),
                                                     Text(
@@ -241,10 +241,10 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                     onChanged: (value) {
                                                       tempProductModel.productStock = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Quantity',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).quantity,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -262,10 +262,10 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                     onChanged: (value) {
                                                       tempProductModel.productPurchasePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Purchase Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).purchasePrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -278,10 +278,10 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                     onChanged: (value) {
                                                       tempProductModel.productSalePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Sale Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).salePrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -299,9 +299,9 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                     onChanged: (value) {
                                                       tempProductModel.productWholeSalePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'WholeSale Price',
+                                                      labelText: lang.S.of(context).wholeSalePrice,
                                                       border: OutlineInputBorder(),
                                                     ),
                                                   ),
@@ -315,10 +315,10 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                     onChanged: (value) {
                                                       tempProductModel.productDealerPrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Dealer Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).dealerPrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -343,10 +343,10 @@ class _PurchaseProductsState extends State<PurchaseProducts> {
                                                 height: 60,
                                                 width: context.width(),
                                                 decoration: const BoxDecoration(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
-                                                child: const Center(
+                                                child:  Center(
                                                   child: Text(
-                                                    'Save',
-                                                    style: TextStyle(fontSize: 18, color: Colors.white),
+                                                    lang.S.of(context).save,
+                                                    style: const TextStyle(fontSize: 18, color: Colors.white),
                                                   ),
                                                 ),
                                               ),
@@ -476,7 +476,7 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Stock',
+                  lang.S.of(context).stocks,
                   style: GoogleFonts.jost(
                     fontSize: 18.0,
                     color: Colors.black,

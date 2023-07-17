@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -121,7 +121,7 @@ class UpdateProductState extends State<UpdateProduct> {
         backgroundColor: kMainColor,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          'Update Product',
+          lang.S.of(context).updateProduct,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -144,11 +144,11 @@ class UpdateProductState extends State<UpdateProduct> {
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
                         controller: productNameController,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          border: OutlineInputBorder(),
-                          labelText: 'Product Name',
-                          hintText: 'Enter Product Name.',
+                          border: const OutlineInputBorder(),
+                          labelText: lang.S.of(context).productName,
+                          hintText: lang.S.of(context).enterProductName,
                         ),
                         validator: (value) {
                           if (value.isEmptyOrNull) {
@@ -172,7 +172,7 @@ class UpdateProductState extends State<UpdateProduct> {
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: widget.productModel.productCategory,
-                          labelText: 'Category',
+                          labelText: lang.S.of(context).category,
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
                         ),
@@ -190,10 +190,10 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.size = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Size',
-                                hintText: 'Enter Size.',
+                                labelText: lang.S.of(context).size,
+                                hintText: lang.S.of(context).enterSize,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -207,11 +207,11 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.color = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Color',
-                                hintText: 'Enter Color.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).color,
+                                hintText: lang.S.of(context).enterColor,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -230,10 +230,10 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.weight = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Weight',
-                                hintText: 'Enter Weight.',
+                                labelText: lang.S.of(context).weight,
+                                hintText: lang.S.of(context).weight,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -247,10 +247,10 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.capacity = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Capacity',
-                                hintText: 'Enter Capacity.',
+                                labelText: lang.S.of(context).capacity,
+                                hintText: lang.S.of(context).enterCapacity,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -265,11 +265,11 @@ class UpdateProductState extends State<UpdateProduct> {
                         onSaved: (value) {
                           updatedProductModel.type = value!;
                         },
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Type',
+                          labelText: lang.S.of(context).type,
                           hintText: 'Usb C',
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ).visible(widget.productModel.type.isNotEmpty),
@@ -282,7 +282,7 @@ class UpdateProductState extends State<UpdateProduct> {
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: widget.productModel.brandName,
-                          labelText: 'Brand',
+                          labelText: lang.S.of(context).brand,
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
                         ),
@@ -301,7 +301,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 hintText: widget.productModel.productCode,
-                                labelText: 'Product Code',
+                                labelText: lang.S.of(context).productCode,
                                 border: const OutlineInputBorder(),
                               ),
                             ),
@@ -340,7 +340,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               readOnly: true,
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Stock',
+                                labelText: lang.S.of(context).stocks,
                                 hintText: widget.productModel.productStock,
                                 border: const OutlineInputBorder(),
                               ),
@@ -355,7 +355,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 hintText: widget.productModel.productUnit,
-                                labelText: 'Units',
+                                labelText: lang.S.of(context).units,
                                 border: const OutlineInputBorder(),
                                 suffixIcon: const Icon(Icons.keyboard_arrow_down),
                               ),
@@ -375,11 +375,11 @@ class UpdateProductState extends State<UpdateProduct> {
                               readOnly: true,
                               keyboardType: TextInputType.number,
                               controller: purchasePriceController,
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Purchase Price',
-                                hintText: 'Enter Purchase Price.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).purchasePrice,
+                                hintText: lang.S.of(context).enterPurchasePrice,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -391,11 +391,11 @@ class UpdateProductState extends State<UpdateProduct> {
                               readOnly: true,
                               controller: mrpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'MRP',
-                                hintText: 'Enter MRP.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).MRP,
+                                hintText: lang.S.of(context).enterMrpOrRetailerPirce,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -415,10 +415,10 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productWholeSalePrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'WholeSale Price',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).wholeSalePrice,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -432,9 +432,9 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productDealerPrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Dealer price',
+                                labelText: lang.S.of(context).dealerPrice,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -449,11 +449,11 @@ class UpdateProductState extends State<UpdateProduct> {
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Discount',
-                              hintText: 'Enter Discount.',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).discount,
+                              hintText: lang.S.of(context).enterDiscount,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         )).visible(false),
@@ -465,10 +465,10 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productManufacturer = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Manufacturer',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).menufeturer,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -512,7 +512,7 @@ class UpdateProductState extends State<UpdateProduct> {
                                                 color: kMainColor,
                                               ),
                                               Text(
-                                                'Gallery',
+                                                lang.S.of(context).gallary,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 20.0,
                                                   color: kMainColor,
@@ -544,7 +544,7 @@ class UpdateProductState extends State<UpdateProduct> {
                                                 color: kGreyTextColor,
                                               ),
                                               Text(
-                                                'Camera',
+                                                lang.S.of(context).camera,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 20.0,
                                                   color: kGreyTextColor,
@@ -602,7 +602,7 @@ class UpdateProductState extends State<UpdateProduct> {
                     ),
                     const SizedBox(height: 20),
                     ButtonGlobalWithoutIcon(
-                      buttontext: 'Save and Publish',
+                      buttontext: lang.S.of(context).saveAndPublish,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                       onPressed: () async {
                         if (validateAndSave()) {

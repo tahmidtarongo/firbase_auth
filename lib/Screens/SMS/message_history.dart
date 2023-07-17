@@ -6,7 +6,7 @@ import 'package:mobile_pos/Provider/sms_history_provider.dart';
 import 'package:mobile_pos/model/payment_verification_model.dart';
 import 'package:mobile_pos/model/sms_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class MessageHistory extends StatefulWidget {
@@ -27,7 +27,7 @@ class _MessageHistoryState extends State<MessageHistory> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Message History',
+            lang.S.of(context).messageHistory,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -45,22 +45,22 @@ class _MessageHistoryState extends State<MessageHistory> {
             return historyList.when(data: (history) {
               return Column(
                 children: [
-                  const TabBar(labelColor: Colors.black, unselectedLabelColor: kGreyTextColor, tabs: [
+                   TabBar(labelColor: Colors.black, unselectedLabelColor: kGreyTextColor, tabs: [
                     Tab(
-                      text: 'Message',
+                      text: lang.S.of(context).message,
                     ),
                     Tab(
-                      text: 'Transaction',
+                      text: lang.S.of(context).transaction,
                     ),
                   ]),
                   SizedBox(
                     height: context.height() / 1.2,
                     child: TabBarView(children: [
                       history.isEmpty
-                          ? const Center(
+                          ?  Center(
                               child: Text(
-                                'No History Found!',
-                                style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w700),
+                                lang.S.of(context).noHistoryFound,
+                                style: const TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w700),
                               ),
                             )
                           : ListView.builder(
@@ -104,11 +104,11 @@ class _MessageHistoryState extends State<MessageHistory> {
                                           history[i].sellerName ?? 'Date: 10 Jun 2022 - 10:30AM ',
                                           style: const TextStyle(color: kGreyTextColor),
                                         ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 10.0),
+                                         Padding(
+                                          padding: const EdgeInsets.only(top: 10.0),
                                           child: Text(
-                                            'View Details',
-                                            style: TextStyle(color: kGreyTextColor, decoration: TextDecoration.underline),
+                                            lang.S.of(context).viewDetails,
+                                            style: const TextStyle(color: kGreyTextColor, decoration: TextDecoration.underline),
                                           ),
                                         ).onTap(
                                           () => showDialog(
@@ -203,9 +203,9 @@ class _MessageHistoryState extends State<MessageHistory> {
                             ),
                       transactionList.when(data: (transaction) {
                         return transaction.isEmpty
-                            ? const Center(
+                            ?  Center(
                                 child: Text(
-                                  'No Transaction Found!',
+                                  lang.S.of(context).noTransactionFound,
                                   style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w700),
                                 ),
                               )
@@ -251,11 +251,11 @@ class _MessageHistoryState extends State<MessageHistory> {
                                             DateTimeFormat.format(DateTime.parse(transaction[i].verificationAttemptsDate), format: DateTimeFormats.american),
                                             style: const TextStyle(color: kGreyTextColor),
                                           ),
-                                          const Padding(
-                                            padding: EdgeInsets.only(top: 10.0),
+                                           Padding(
+                                            padding: const EdgeInsets.only(top: 10.0),
                                             child: Text(
-                                              'View Details',
-                                              style: TextStyle(color: kGreyTextColor, decoration: TextDecoration.underline),
+                                              lang.S.of(context).viewDetails,
+                                              style: const TextStyle(color: kGreyTextColor, decoration: TextDecoration.underline),
                                             ),
                                           ).onTap(() => showDialog(
                                               context: context,

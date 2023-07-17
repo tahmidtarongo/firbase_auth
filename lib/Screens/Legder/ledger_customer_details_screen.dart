@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/print_purchase_provider.dart';
 import '../../Provider/printer_provider.dart';
 import '../../Provider/profile_provider.dart';
@@ -120,7 +120,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     controller: fromDateTextEditingController,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'From Date',
+                                      labelText: lang.S.of(context).formDate,
                                       border: const OutlineInputBorder(),
                                       suffixIcon: IconButton(
                                         onPressed: () async {
@@ -148,7 +148,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     controller: toDateTextEditingController,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'To Date',
+                                      labelText: lang.S.of(context).toDate,
                                       border: const OutlineInputBorder(),
                                       suffixIcon: IconButton(
                                         onPressed: () async {
@@ -236,7 +236,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                       ),
                                     ),
                                   ]).visible(false),
-                                  subtitle: const Text('Total Sale'),
+                                  subtitle:  Text(lang.S.of(context).totalSale),
                                 ),
                               ),
                             ),
@@ -382,14 +382,14 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                                                                     : toast('Try Again');
                                                                                               },
                                                                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                              subtitle: const Text("Click to connect"),
+                                                                                              subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                             );
                                                                                           },
                                                                                         ),
-                                                                                        const Padding(
+                                                                                         Padding(
                                                                                           padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                           child: Text(
-                                                                                            'Please connect your bluetooth Printer',
+                                                                                            lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                           ),
                                                                                         ),
@@ -400,9 +400,9 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                                                           onTap: () {
                                                                                             Navigator.pop(context);
                                                                                           },
-                                                                                          child: const Center(
+                                                                                          child:  Center(
                                                                                             child: Text(
-                                                                                              'Cancel',
+                                                                                              lang.S.of(context).cacel,
                                                                                               style: TextStyle(color: kMainColor),
                                                                                             ),
                                                                                           ),
@@ -460,10 +460,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children:  [
                                         Text(
-                                          "Opening Balance",
-                                          style: TextStyle(fontSize: 16),
+                                          lang.S.of(context).openingBalance,
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                       ],
                                     ),
@@ -608,7 +608,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                       ),
                                     ),
                                   ]).visible(false),
-                                  subtitle: const Text('Total Sale'),
+                                  subtitle:  Text(lang.S.of(context).totalSale),
                                 ),
                               ),
                             ),
@@ -624,7 +624,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     controller: fromDateTextEditingController,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'From Date',
+                                      labelText: lang.S.of(context).formDate,
                                       border: const OutlineInputBorder(),
                                       suffixIcon: IconButton(
                                         onPressed: () async {
@@ -652,7 +652,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     controller: toDateTextEditingController,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'To Date',
+                                      labelText: lang.S.of(context).toDate,
                                       border: const OutlineInputBorder(),
                                       suffixIcon: IconButton(
                                         onPressed: () async {
@@ -812,14 +812,14 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                                                               : toast('Try Again');
                                                                                         },
                                                                                         title: Text('${purchasePrinterData.availableBluetoothDevices[index]}'),
-                                                                                        subtitle: const Text("Click to connect"),
+                                                                                        subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                       );
                                                                                     },
                                                                                   ),
-                                                                                  const Padding(
+                                                                                   Padding(
                                                                                     padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                     child: Text(
-                                                                                      'Please connect your bluetooth Printer',
+                                                                                      lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                     ),
                                                                                   ),
@@ -830,9 +830,9 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                                                     onTap: () {
                                                                                       Navigator.pop(context);
                                                                                     },
-                                                                                    child: const Center(
+                                                                                    child:  Center(
                                                                                       child: Text(
-                                                                                        'Cancel',
+                                                                                        lang.S.of(context).cacel,
                                                                                         style: TextStyle(color: kMainColor),
                                                                                       ),
                                                                                     ),
@@ -889,10 +889,10 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children:  [
                                         Text(
-                                          "Opening Balance",
-                                          style: TextStyle(fontSize: 16),
+                                          lang.S.of(context).openingBalance,
+                                          style: const TextStyle(fontSize: 16),
                                         ),
                                       ],
                                     ),

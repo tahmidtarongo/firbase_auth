@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Products/Model/unit_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import 'add_units.dart';
 
@@ -65,7 +65,7 @@ class _UnitListState extends State<UnitList> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Units',
+          lang.S.of(context).units,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20.0,
@@ -93,7 +93,7 @@ class _UnitListState extends State<UnitList> {
                         textFieldType: TextFieldType.NAME,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
-                          hintText: 'Search',
+                          hintText: lang.S.of(context).search,
                           prefixIcon: Icon(
                             Icons.search,
                             color: kGreyTextColor.withOpacity(0.5),
@@ -166,7 +166,7 @@ class _UnitListState extends State<UnitList> {
                                   Expanded(
                                     flex: 1,
                                     child: ButtonGlobalWithoutIcon(
-                                      buttontext: 'Select',
+                                      buttontext: lang.S.of(context).select,
                                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(50.0)),
                                       onPressed: () {
                                         Navigator.pop(context, title.unitName.toString());
@@ -206,7 +206,7 @@ class _UnitListState extends State<UnitList> {
                             Expanded(
                               flex: 1,
                               child: ButtonGlobalWithoutIcon(
-                                buttontext: 'Select',
+                                buttontext: lang.S.of(context).select,
                                 buttonDecoration: kButtonDecoration.copyWith(color: kMainColor,borderRadius: BorderRadius.circular(50.0)),
                                 onPressed: () {
                                   Navigator.pop(context, unitList[index]);

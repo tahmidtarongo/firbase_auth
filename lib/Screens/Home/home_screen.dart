@@ -11,7 +11,7 @@ import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/due_transaction_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
@@ -66,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
         final homePageImageProvider = ref.watch(homepageImageProvider);
-
         return Scaffold(
           backgroundColor: kMainColor,
           resizeToAvoidBottomInset: true,
@@ -175,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GridView.count(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          childAspectRatio: 0.9,
+                          childAspectRatio: 0.85,
                           crossAxisSpacing: 4,
                           mainAxisSpacing: 10,
                           crossAxisCount: 3,
@@ -238,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'What\'s New',
+                                  lang.S.of(context).whatsNew,
                                   style: GoogleFonts.poppins(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -257,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       height: 180,
-                                      width: 320,
+                                      width: 310,
                                       child: PageView.builder(
                                         pageSnapping: true,
                                         itemCount: images.length,

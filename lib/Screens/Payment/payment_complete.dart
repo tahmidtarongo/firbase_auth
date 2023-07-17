@@ -6,7 +6,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
 import '../../Provider/seles_report_provider.dart';
 import '../../currency.dart';
@@ -30,7 +30,7 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            'Payment Complete',
+            lang.S.of(context).paymentComplete,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -75,7 +75,7 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
                         child: Column(
                           children: [
                             Text(
-                              'Total',
+                              lang.S.of(context).total,
                               style: GoogleFonts.poppins(
                                 fontSize: 20.0,
                                 color: Colors.black,
@@ -109,7 +109,7 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
                         child: Column(
                           children: [
                             Text(
-                              'Return',
+                              lang.S.of(context).retur,
                               style: GoogleFonts.poppins(
                                 fontSize: 20.0,
                                 color: Colors.black,
@@ -144,41 +144,41 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
                   color: kGreyTextColor,
                 ),
               ),
-              const ListTile(
-                leading: Icon(
+               ListTile(
+                leading: const Icon(
                   Icons.payment,
                   color: kGreyTextColor,
                 ),
-                title: Text('Send Email'),
-                trailing: Icon(
+                title: Text(lang.S.of(context).sendEmail),
+                trailing: const Icon(
                   Icons.email,
                   color: kGreyTextColor,
                 ),
               ),
-              const ListTile(
-                leading: Icon(
+               ListTile(
+                leading: const Icon(
                   Icons.payment,
                   color: kGreyTextColor,
                 ),
-                title: Text('Send Sms'),
-                trailing: Icon(
+                title: Text(lang.S.of(context).sendSms),
+                trailing: const Icon(
                   Icons.message_outlined,
                   color: kGreyTextColor,
                 ),
               ),
-              const ListTile(
-                leading: Icon(
+               ListTile(
+                leading: const Icon(
                   Icons.payment,
                   color: kGreyTextColor,
                 ),
-                title: Text('Received the Pin'),
-                trailing: Icon(
+                title: Text(lang.S.of(context).recivedThePin),
+                trailing: const Icon(
                   Icons.local_print_shop,
                   color: kGreyTextColor,
                 ),
               ),
               ButtonGlobalWithoutIcon(
-                buttontext: 'Start New Sale',
+                buttontext: lang.S.of(context).startNewSale,
                 buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                 onPressed: () {
                   providerData.clearCart();

@@ -6,7 +6,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 // import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../../currency.dart';
 import '../Home/home.dart';
@@ -53,6 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> updateNotifier() async {
     final prefs = await SharedPreferences.getInstance();
+    isRtl = prefs.getBool('isRtl') ?? false;
+    final int? customerId = prefs.getInt('customerId');
+    await Future.delayed(const Duration(seconds: 3));
     if (currentUser != null) {
       isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
       const Home().launch(context, isNewTask: true);
@@ -73,43 +76,46 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: kMainColor,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: context.height() / 3),
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: context.height() / 4,
-              width: context.height() / 4,
-              decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
-              child: const Image(
-                image: AssetImage(
-                  'images/mobi_pos.png',
+      child: Directionality(
+        textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+        child: Scaffold(
+          backgroundColor: kMainColor,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: context.height() / 3),
+              Container(
+                padding: const EdgeInsets.all(30),
+                height: context.height() / 4,
+                width: context.height() / 4,
+                decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
+                child: const Image(
+                  image: AssetImage(
+                    'images/mobi_pos.png',
+                  ),
                 ),
               ),
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                Center(
-                  child: Text(
-                    'Powered By MOBI POS',
-                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 17),
+              const Spacer(),
+              Column(
+                children: [
+                  Center(
+                    child: Text(
+                      lang.S.of(context).powerdedByMobiPos,
+                      style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 17),
+                    ),
                   ),
-                ),
-                Center(
-                  child: Text(
-                    'V $appVersion',
-                    style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal),
+                  Center(
+                    child: Text(
+                      'V $appVersion',
+                      style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.normal),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          ],
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

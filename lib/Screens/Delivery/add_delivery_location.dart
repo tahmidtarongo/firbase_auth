@@ -61,11 +61,11 @@ class _AddDeliveryState extends State<AddDelivery> {
                         textFieldType: TextFieldType.NAME,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'First Name',
+                          labelText: lang.S.of(context).firstName,
                           labelStyle: GoogleFonts.poppins(
                             color: Colors.black,
                           ),
-                          hintText: 'Enter Your Name',
+                          hintText: lang.S.of(context).enterYourName,
                           border: const OutlineInputBorder(),
                         ),
                       ),
@@ -83,7 +83,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                         textFieldType: TextFieldType.NAME,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Last Name',
+                          labelText: lang.S.of(context).lastName,
                           labelStyle: GoogleFonts.poppins(
                             color: Colors.black,
                           ),
@@ -106,7 +106,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                   textFieldType: TextFieldType.NAME,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Email Address',
+                    labelText: lang.S.of(context).emailAddress,
                     labelStyle: GoogleFonts.poppins(
                       color: Colors.black,
                     ),
@@ -126,7 +126,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                   textFieldType: TextFieldType.NAME,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Phone Number',
+                    labelText: lang.S.of(context).phoneNumber,
                     labelStyle: GoogleFonts.poppins(
                       color: Colors.black,
                     ),
@@ -147,11 +147,11 @@ class _AddDeliveryState extends State<AddDelivery> {
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: kGreyTextColor),
                       ),
-                      labelText: 'Country',
+                      labelText: lang.S.of(context).country,
                       labelStyle: GoogleFonts.poppins(
                         color: Colors.black,
                       ),
-                      hintText: 'Bangladesh',
+                      hintText: lang.S.of(context).bangladesh,
                       border: const OutlineInputBorder(),
                     ),
                   ),
@@ -170,7 +170,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelText: 'Address',
+                      labelText: lang.S.of(context).address,
                       labelStyle: GoogleFonts.poppins(
                         color: Colors.black,
                       ),
@@ -221,7 +221,7 @@ class _AddDeliveryState extends State<AddDelivery> {
               ),
               const SizedBox(height: 15.0),
               ButtonGlobalWithoutIcon(
-                buttontext: 'Apply',
+                buttontext: lang.S.of(context).apply,
                 buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                 onPressed: () async {
                   try {

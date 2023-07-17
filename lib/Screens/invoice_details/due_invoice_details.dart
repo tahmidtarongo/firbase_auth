@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_due_provider.dart';
 // ignore: library_prefixes
 import '../../constant.dart' as mainConstant;
@@ -79,7 +79,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                   Row(
                     children: [
                       Text(
-                        'BILL To',
+                        lang.S.of(context).billTo,
                         style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
@@ -130,7 +130,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Total Due',
+                        lang.S.of(context).totalDue,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -151,7 +151,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Payment Amount',
+                        lang.S.of(context).paymentAmount,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -172,7 +172,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Remaining Due',
+                        lang.S.of(context).remainingDue,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -195,7 +195,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                   const SizedBox(height: 10.0),
                   Center(
                     child: Text(
-                      'Thank you for your Due payment',
+                      lang.S.of(context).thankYOuForYourDuePayment,
                       maxLines: 1,
                       style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
@@ -222,11 +222,11 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.close,color: Colors.white,),
+                      children:  [
+                        const Icon(Icons.close,color: Colors.white,),
                         Text(
-                          'Cancel',
-                          style: TextStyle(
+                          lang.S.of(context).cacel,
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
                           ),
@@ -269,7 +269,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                                                 isConnect ? finish(context) : toast('Try Again');
                                               },
                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                              subtitle: const Text("Click to connect"),
+                                              subtitle:  Text(lang.S.of(context).clickToConnect),
                                             );
                                           },
                                         ),
@@ -280,9 +280,9 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                                           onTap: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Center(
+                                          child:  Center(
                                             child: Text(
-                                              'Cancel',
+                                              lang.S.of(context).cacel,
                                               style: TextStyle(color: mainConstant.kMainColor),
                                             ),
                                           ),
@@ -307,11 +307,11 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.print,color: Colors.white,),
+                        children:  [
+                          const Icon(Icons.print,color: Colors.white,),
                           Text(
-                            'Print',
-                            style: TextStyle(
+                            lang.S.of(context).print,
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
                             ),

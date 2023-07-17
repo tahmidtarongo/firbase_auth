@@ -16,7 +16,7 @@ import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../Provider/print_purchase_provider.dart';
 import '../../Provider/product_provider.dart';
@@ -89,7 +89,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Add Purchase',
+              lang.S.of(context).addPurchase,
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -113,9 +113,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
                             initialValue: data.purchaseInvoiceCounter.toString(),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Inv No.',
+                              labelText: lang.S.of(context).invNo,
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -130,7 +130,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
 
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Date',
+                              labelText: lang.S.of(context).date,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -160,7 +160,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text('Due Amount: '),
+                             Text(lang.S.of(context).dueAmount),
                             Text(
                               widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
@@ -174,9 +174,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Supplier Name',
+                            labelText: lang.S.of(context).supplierName,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -205,14 +205,14 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   width: context.width() / 1.35,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    children:  [
                                       Text(
-                                        'Item Added',
-                                        style: TextStyle(fontSize: 16),
+                                        lang.S.of(context).itemAdded,
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                       Text(
-                                        'Quantity',
-                                        style: TextStyle(fontSize: 16),
+                                        lang.S.of(context).quantity,
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -324,10 +324,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
+                        child:  Center(
                             child: Text(
-                          'Add Items',
-                          style: TextStyle(color: kMainColor, fontSize: 20),
+                              lang.S.of(context).addItems,
+                          style: const TextStyle(color: kMainColor, fontSize: 20),
                         )),
                       ),
                     ),
@@ -344,9 +344,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Sub Total',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).subTotal,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   providerData.getTotalAmount().toString(),
@@ -360,9 +360,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Discount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).discount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -402,8 +402,8 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Total',
+                                 Text(
+                                  lang.S.of(context).total,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -418,9 +418,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).paidAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -449,9 +449,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Return Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).returnAMount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateReturnAmount(total: subTotal).abs().toString(),
@@ -465,9 +465,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Due Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).dueAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateDueAmount(total: subTotal).toString(),
@@ -490,10 +490,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: const [
+                          children:  [
                             Text(
-                              'Payment Type',
-                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                              lang.S.of(context).paymentType,
+                              style: const TextStyle(fontSize: 16, color: Colors.black54),
                             ),
                             SizedBox(
                               width: 5,
@@ -538,10 +538,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Description',
-                              hintText: 'Add Note',
+                              labelText: lang.S.of(context).describtion,
+                              hintText: lang.S.of(context).addNote,
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -554,15 +554,15 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                             child: Center(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(
+                                children:  [
+                                  const Icon(
                                     FeatherIcons.camera,
                                     color: Colors.grey,
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    'Image',
-                                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                                    lang.S.of(context).image,
+                                    style: const TextStyle(color: Colors.grey, fontSize: 16),
                                   )
                                 ],
                               ),
@@ -840,7 +840,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                                               }
                                                             },
                                                             title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                            subtitle: const Text("Click to connect"),
+                                                            subtitle:  Text(lang.S.of(context).clickToConnect),
                                                           );
                                                         },
                                                       ),

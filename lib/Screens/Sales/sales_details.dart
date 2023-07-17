@@ -11,7 +11,7 @@ import 'package:mobile_pos/Screens/Payment/payment_options.dart';
 import 'package:mobile_pos/Screens/Sales/Model/sales_report.dart';
 import 'package:mobile_pos/Screens/Sales/add_discount.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -42,7 +42,7 @@ class _SalesDetailsState extends State<SalesDetails> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Sales Details',
+            lang.S.of(context).saleDetails,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -163,7 +163,7 @@ class _SalesDetailsState extends State<SalesDetails> {
               child: Row(
                 children: [
                   Text(
-                    'Subtotal',
+                    lang.S.of(context).subTotal,
                     style: GoogleFonts.poppins(
                       color: kGreyTextColor,
                       fontSize: 15.0,
@@ -189,7 +189,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                 child: Row(
                   children: [
                     Text(
-                      'Discount',
+                      lang.S.of(context).discount,
                       style: GoogleFonts.poppins(
                         color: kGreyTextColor,
                         fontSize: 15.0,
@@ -216,7 +216,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                 child: Row(
                   children: [
                     Text(
-                      'Total',
+                      lang.S.of(context).total,
                       style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 20.0,
@@ -236,7 +236,7 @@ class _SalesDetailsState extends State<SalesDetails> {
             ),
             ButtonGlobal(
               iconWidget: Icons.arrow_forward,
-              buttontext: 'Continue',
+              buttontext: lang.S.of(context).continu,
               iconColor: Colors.white,
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
               onPressed: () async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class LiveChatSupport extends StatefulWidget {
@@ -21,16 +21,16 @@ class _LiveChatSupportState extends State<LiveChatSupport> {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(10.0),
+               Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Card(
                   elevation: 0.0,
                   color: kMainColor,
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      'Feedback',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      lang.S.of(context).feedBack,
+                      style: const TextStyle(color: Colors.white, fontSize: 20.0),
                     ),
                   ),
                 ),

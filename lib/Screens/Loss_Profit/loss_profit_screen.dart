@@ -8,7 +8,7 @@ import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Loss_Profit/single_loss_profit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../currency.dart';
@@ -41,7 +41,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Loss/Profit',
+            lang.S.of(context).lossOrProfit,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -76,7 +76,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                   controller: fromDateTextEditingController,
                                   decoration: InputDecoration(
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'From Date',
+                                    labelText: lang.S.of(context).formDate,
                                     border: const OutlineInputBorder(),
                                     suffixIcon: IconButton(
                                       onPressed: () async {
@@ -107,7 +107,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                   controller: toDateTextEditingController,
                                   decoration: InputDecoration(
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                                    labelText: 'To Date',
+                                    labelText: lang.S.of(context).toDate,
                                     border: const OutlineInputBorder(),
                                     suffixIcon: IconButton(
                                       onPressed: () async {
@@ -181,9 +181,9 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                const Text(
-                                                  'Profit',
-                                                  style: TextStyle(
+                                                 Text(
+                                                  lang.S.of(context).profit,
+                                                  style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
                                                   ),
@@ -207,9 +207,9 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                const Text(
-                                                  'Loss',
-                                                  style: TextStyle(
+                                                 Text(
+                                                   lang.S.of(context).loss,
+                                                  style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
                                                   ),
@@ -359,14 +359,14 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                                                     },
                                                                                                     title:
                                                                                                         Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                                    subtitle: const Text("Click to connect"),
+                                                                                                    subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                                   );
                                                                                                 },
                                                                                               ),
-                                                                                              const Padding(
+                                                                                               Padding(
                                                                                                 padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                                 child: Text(
-                                                                                                  'Please connect your bluetooth Printer',
+                                                                                                  lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                                   style: TextStyle(
                                                                                                       color: Colors.black, fontWeight: FontWeight.bold),
                                                                                                 ),
@@ -378,9 +378,9 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                                                 onTap: () {
                                                                                                   Navigator.pop(context);
                                                                                                 },
-                                                                                                child: const Center(
+                                                                                                child:  Center(
                                                                                                   child: Text(
-                                                                                                    'Cancel',
+                                                                                                    lang.S.of(context).cacel,
                                                                                                     style: TextStyle(color: kMainColor),
                                                                                                   ),
                                                                                                 ),

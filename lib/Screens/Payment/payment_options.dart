@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Payment/payment_complete.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:nb_utils/nb_utils.dart';
 
 class PaymentOptions extends StatefulWidget {
@@ -20,7 +21,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Payment',
+          lang.S.of(context).payment,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -87,7 +88,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       width: 15.0,
                     ),
                     Text(
-                      'Master Card',
+                      lang.S.of(context).masterCard,
                       style: GoogleFonts.poppins(
                         fontSize: 15.0,
                       ),
@@ -113,7 +114,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       width: 15.0,
                     ),
                     Text(
-                      'Instrument',
+                      lang.S.of(context).inistrument,
                       style: GoogleFonts.poppins(
                         fontSize: 15.0,
                       ),
@@ -139,7 +140,7 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       width: 15.0,
                     ),
                     Text(
-                      'Cash',
+                      lang.S.of(context).cash,
                       style: GoogleFonts.poppins(
                         fontSize: 15.0,
                       ),

@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 
@@ -119,20 +119,20 @@ class _PackageScreenState extends State<PackageScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Free Plan',
-                            style: TextStyle(fontSize: 18),
+                           Text(
+                             lang.S.of(context).freePlan,
+                            style: const TextStyle(fontSize: 18),
                           ),
                           const SizedBox(height: 8),
                           Row(
-                            children: const [
+                            children:  [
                               Text(
-                                'You are using ',
-                                style: TextStyle(fontSize: 14),
+                                lang.S.of(context).youAreUsing,
+                                style: const TextStyle(fontSize: 14),
                               ),
                               Text(
-                                'Free Package',
-                                style: TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
+                                lang.S.of(context).freePacakge,
+                                style: const TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -171,15 +171,15 @@ class _PackageScreenState extends State<PackageScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Premium Plan',
+                           Text(
+                             lang.S.of(context).premiumPlan,
                             style: TextStyle(fontSize: 18),
                           ),
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              const Text(
-                                'You are using ',
+                               Text(
+                                lang.S.of(context).youAreUsing,
                                 style: TextStyle(fontSize: 14),
                               ),
                               Text(
@@ -212,9 +212,9 @@ class _PackageScreenState extends State<PackageScreen> {
                   ),
                 ).visible(initialSelectedPackage != 'Free'),
                 const SizedBox(height: 20),
-                const Text(
-                  'Package Features',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                 Text(
+                  lang.S.of(context).packageFeatures,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 ListView.builder(
@@ -258,9 +258,9 @@ class _PackageScreenState extends State<PackageScreen> {
                       );
                     }),
                 const SizedBox(height: 20),
-                const Text(
-                  'For Unlimited Usages',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                 Text(
+                  lang.S.of(context).forUnlimitedUses,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ).visible(initialSelectedPackage != 'Lifetime'),
                 const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
                 GestureDetector(
@@ -278,10 +278,10 @@ class _PackageScreenState extends State<PackageScreen> {
                       color: kMainColor,
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
-                    child: const Center(
+                    child:  Center(
                       child: Text(
-                        'Update Now',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        lang.S.of(context).updateNow,
+                        style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),

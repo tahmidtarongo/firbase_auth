@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Purchase/add_purchase.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
@@ -34,7 +34,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Choose a Supplier',
+            lang.S.of(context).choseASupplier,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -138,7 +138,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Due',
+                                                  lang.S.of(context).due,
                                                   style: GoogleFonts.poppins(
                                                     color: const Color(0xFFff5f00),
                                                     fontSize: 15.0,

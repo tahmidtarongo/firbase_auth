@@ -7,6 +7,7 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_details.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class PurchaseContact extends StatefulWidget {
   const PurchaseContact({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _PurchaseContactState extends State<PurchaseContact> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Choose a Customer',
+          lang.S.of(context).choseACustomer,
           style: GoogleFonts.poppins(
             color: Colors.black,
           ),

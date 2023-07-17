@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../Authentication/login_form.dart';
 
@@ -20,26 +20,33 @@ class _OnBoardState extends State<OnBoard> {
   int currentIndexPage = 0;
   String buttonText = 'Next';
 
-  List<Map<String, dynamic>> sliderList = [
-    {
-      "icon": 'images/onboard1.png',
-      "title": 'Easy to use mobile pos',
-      "description": 'MOBI POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
-    },
-    {
-      "icon": 'images/onboard2.png',
-      "title": 'Choose your features',
-      "description": 'Features are the important part which makes Maan  POS different from traditional solutions.',
-    },
-    {
-      "icon": 'images/onboard3.png',
-      "title": 'All business solutions',
-      "description": 'MOBI POS is a complete business solution with stock, account, sales, expense & loss/profit.',
-    },
-  ];
+  List<Map<String, dynamic>> getSliderList({required BuildContext context}){
+    List<Map<String, dynamic>> sliderList = [
+      {
+        "icon": 'images/onboard1.png',
+        "title": lang.S.of(context).easyToUseMobilePos,
+        "description": lang.S.of(context).mobiPosAppIsFree,
+      },
+      {
+        "icon": 'images/onboard2.png',
+        "title": lang.S.of(context).choseYourFeature,
+        "description": lang.S.of(context).featureAreTheImportant,
+      },
+      {
+        "icon": 'images/onboard3.png',
+        "title": lang.S.of(context).allBusinessSolution,
+        "description": lang.S.of(context).mobiPosIsaCompleteBusinesSolution,
+      },
+    ];
+    return sliderList;
+  }
+
+  List<Map<String, dynamic>> sliderList = [];
+
 
   @override
   Widget build(BuildContext context) {
+   sliderList=getSliderList(context: context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -53,7 +60,7 @@ class _OnBoardState extends State<OnBoard> {
                 // const PhoneAuth().launch(context);
               },
               child: Text(
-                'Skip',
+                lang.S.of(context).skip,
                 style: GoogleFonts.jost(
                   fontSize: 20.0,
                   color: Colors.grey,
@@ -127,7 +134,7 @@ class _OnBoardState extends State<OnBoard> {
             padding: const EdgeInsets.only(right: 10.0, left: 10),
             child: ButtonGlobal(
               iconWidget: null,
-              buttontext: currentIndexPage == 2 ? "Use MOBI POS" : buttonText,
+              buttontext: currentIndexPage == 2 ? lang.S.of(context).useMobiPos : lang.S.of(context).next,
               iconColor: Colors.white,
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
               onPressed: () {

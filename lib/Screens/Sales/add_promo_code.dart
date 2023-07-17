@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class AddPromoCode extends StatefulWidget {
   const AddPromoCode({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _AddPromoCodeState extends State<AddPromoCode> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Promo Code',
+          lang.S.of(context).promoCode,
           style: GoogleFonts.poppins(
             color: Colors.black,
           ),
@@ -41,14 +42,14 @@ class _AddPromoCodeState extends State<AddPromoCode> {
               ),
             ),
             ButtonGlobalWithoutIcon(
-              buttontext: 'Submit',
+              buttontext: lang.S.of(context).submit,
               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
               onPressed: null,
               buttonTextColor: Colors.white,
             ),
             Center(
               child: Text(
-                'See All Promo Codes',
+                lang.S.of(context).seeAllPromoCode,
                 style: GoogleFonts.poppins(
                   color: kGreyTextColor,
                   fontSize: 15.0,

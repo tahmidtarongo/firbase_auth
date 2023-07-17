@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
 
@@ -36,7 +36,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
         color: Colors.white,
         child: ButtonGlobal(
           iconWidget: Icons.add,
-          buttontext: 'Continue',
+          buttontext: lang.S.of(context).continu,
           iconColor: Colors.white,
           buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
           onPressed: () {
@@ -45,7 +45,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
         ),
       ).visible(selectedNumbers.isNotEmpty),
       appBar: AppBar(
-        title: const Text('Select Contacts',style: TextStyle(color: Colors.white),),
+        title:  Text(lang.S.of(context).selectContacts,style: TextStyle(color: Colors.white),),
         iconTheme: const IconThemeData(color: Colors.white),
         automaticallyImplyLeading: false,
         backgroundColor: kMainColor,

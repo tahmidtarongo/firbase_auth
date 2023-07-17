@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/transition_model.dart';
@@ -57,7 +57,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Loss/Profit Details',
+          lang.S.of(context).lossOrProfitDetails,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20.0,
@@ -106,30 +106,30 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                   padding: const EdgeInsets.all(10),
                   color: kMainColor.withOpacity(0.2),
                   child: Row(
-                    children: const [
+                    children:  [
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Product',
+                          lang.S.of(context).product,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Quantity',
+                          lang.S.of(context).quantity,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Profit',
+                          lang.S.of(context).profit,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Text(
-                        'Loss',
+                        lang.S.of(context).loss,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -209,7 +209,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            'Total',
+                            lang.S.of(context).total,
                             textAlign: TextAlign.start,
                             style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
                           ),
@@ -256,7 +256,7 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            'Discount',
+                            lang.S.of(context).discount,
                             textAlign: TextAlign.start,
                             style: GoogleFonts.poppins(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
                           ),

@@ -12,7 +12,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
 import 'package:mobile_pos/model/feedback_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -69,16 +69,27 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(10.0),
+               Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Card(
                   elevation: 0.0,
                   color: kMainColor,
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      'Feedback',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.arrow_back,color: Colors.white,)),
+                        const Spacer(),
+                        Text(
+                          lang.S.of(context).feedBack,
+                          style: const TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                        const Spacer(),
+                      ],
                     ),
                   ),
                 ),
@@ -103,11 +114,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             TextFormField(
                               keyboardType: TextInputType.text,
                               controller: feedbackTitleController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                              decoration:  InputDecoration(
+                                border: const OutlineInputBorder(),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Title',
-                                hintText: 'Enter your feedback title',
+                                labelText: lang.S.of(context).title,
+                                hintText: lang.S.of(context).enterYourFeedBackTitle,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -121,11 +132,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               keyboardType: TextInputType.text,
                               maxLines: 10,
                               controller: feedbackDescriptionController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: 'Description',
+                                labelText: lang.S.of(context).describtion,
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                hintText: 'Enter your description here',
+                                hintText: lang.S.of(context).enterYourDescriptionHere,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -179,7 +190,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                                       color: kMainColor,
                                                     ),
                                                     Text(
-                                                      'Gallery',
+                                                      lang.S.of(context).gallary,
                                                       style: GoogleFonts.poppins(
                                                         fontSize: 20.0,
                                                         color: kMainColor,
@@ -211,7 +222,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                                       color: kGreyTextColor,
                                                     ),
                                                     Text(
-                                                      'Camera',
+                                                      lang.S.of(context).camera,
                                                       style: GoogleFonts.poppins(
                                                         fontSize: 20.0,
                                                         color: kGreyTextColor,
@@ -282,7 +293,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           ),
                           const SizedBox(height: 10),
                           ButtonGlobalWithoutIcon(
-                              buttontext: 'Submit',
+                              buttontext: lang.S.of(context).submit,
                               buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                               onPressed: () async{
                                if(validateAndSave()){

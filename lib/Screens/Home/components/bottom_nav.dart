@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/Settings/settings_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 class BottomNav extends StatefulWidget {
   const BottomNav({
     Key? key,
@@ -43,19 +43,19 @@ class _BottomNavState extends State<BottomNav> {
       selectedItemColor: kMainColor,
       // ignore: prefer_const_literals_to_create_immutables
       items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+         BottomNavigationBarItem(
+          icon: const Icon(Icons.home),
+          label: lang.S.of(context).home,
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.flare_sharp),
-          label: 'Maan',
+         BottomNavigationBarItem(
+          icon: const Icon(Icons.flare_sharp),
+          label: lang.S.of(context).maan,
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.backpack),
-          label: 'Package',
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.backpack),
+          label: lang.S.of(context).pacakge,
         ),
-        const BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        BottomNavigationBarItem(icon: const Icon(Icons.settings), label: lang.S.of(context).setting),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,

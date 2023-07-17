@@ -5,7 +5,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/GlobalComponents/tab_buttons.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class AddDiscount extends StatefulWidget {
@@ -28,7 +28,7 @@ class _AddDiscountState extends State<AddDiscount> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            'Discount',
+            lang.S.of(context).discount,
             style: GoogleFonts.poppins(
               color: Colors.black,
             ),
@@ -95,7 +95,7 @@ class _AddDiscountState extends State<AddDiscount> {
                 ),
               ),
               ButtonGlobalWithoutIcon(
-                buttontext: 'Save',
+                buttontext: lang.S.of(context).save,
                 buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                 onPressed: () {
                   providerData.addDiscount(discountType, amount.toDouble());

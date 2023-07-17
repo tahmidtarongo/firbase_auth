@@ -7,7 +7,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/login_form.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/edit_profile.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import '../../model/personal_information_model.dart';
@@ -27,7 +27,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Profile',
+          lang.S.of(context).profile,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -49,7 +49,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     width: 5.0,
                   ),
                   Text(
-                    'Edit',
+                    lang.S.of(context).edit,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                     ),
@@ -97,7 +97,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           text: details.companyName,
                         ),
                         decoration: InputDecoration(
-                            labelText: 'Name',
+                            labelText: lang.S.of(context).name,
                             border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                             hoverColor: kGreyTextColor,
                             fillColor: kGreyTextColor),
@@ -113,7 +113,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           text: details.phoneNumber,
                         ),
                         decoration: InputDecoration(
-                            labelText: 'Phone Number',
+                            labelText: lang.S.of(context).phoneNumber,
                             border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                             hoverColor: kGreyTextColor,
                             fillColor: kGreyTextColor),
@@ -129,7 +129,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           text: details.businessCategory,
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Business Category',
+                          labelText: lang.S.of(context).businessCategory,
                           border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                           hoverColor: kGreyTextColor,
                           fillColor: kGreyTextColor,
@@ -149,7 +149,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                 text: details.countryName,
                               ),
                               decoration: InputDecoration(
-                                  labelText: 'Address',
+                                  labelText: lang.S.of(context).address,
                                   border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                                   hoverColor: kGreyTextColor,
                                   fillColor: kGreyTextColor),
@@ -167,7 +167,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                 text: details.language,
                               ),
                               decoration: InputDecoration(
-                                  labelText: 'Language',
+                                  labelText: lang.S.of(context).language,
                                   border: const OutlineInputBorder().copyWith(borderSide: const BorderSide(color: kGreyTextColor)),
                                   hoverColor: kGreyTextColor,
                                   fillColor: kGreyTextColor),
@@ -179,7 +179,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     ),
                     ButtonGlobal(
                       iconWidget: Icons.arrow_forward,
-                      buttontext: 'Change Password',
+                      buttontext: lang.S.of(context).changePassword,
                       iconColor: Colors.white,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                       onPressed: () async {

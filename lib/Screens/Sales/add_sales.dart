@@ -20,7 +20,7 @@ import 'package:mobile_pos/model/sms_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:mobile_pos/subscription.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_provider.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/seles_report_provider.dart';
@@ -104,7 +104,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Add Sales',
+              lang.S.of(context).addSales,
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -128,10 +128,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
                             initialValue: data.saleInvoiceCounter.toString(),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Inv No.',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).invNo,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -143,7 +143,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             controller: dateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Date',
+                              labelText: lang.S.of(context).date,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -172,7 +172,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text('Due Amount: '),
+                            Text(lang.S.of(context).dueAmount),
                             Text(
                               widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
@@ -186,10 +186,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Customer Name',
-                            border: OutlineInputBorder(),
+                            labelText: lang.S.of(context).customerName,
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ],
@@ -217,13 +217,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   width: context.width() / 1.35,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    children:  [
                                       Text(
-                                        'Item Added',
+                                        lang.S.of(context).itemAdded,
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       Text(
-                                        'Quantity',
+                                        lang.S.of(context).quantity,
                                         style: TextStyle(fontSize: 16),
                                       ),
                                     ],
@@ -336,10 +336,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
+                        child:  Center(
                             child: Text(
-                          'Add Items',
-                          style: TextStyle(color: kMainColor, fontSize: 20),
+                              lang.S.of(context).addItems,
+                          style: const TextStyle(color: kMainColor, fontSize: 20),
                         )),
                       ),
                     ),
@@ -358,8 +358,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Sub Total',
+                                 Text(
+                                   lang.S.of(context).subTotal,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -374,9 +374,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Discount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).discount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Row(
                                   children: [
@@ -497,9 +497,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Total',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).total,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateSubtotal(total: providerData.getTotalAmount()).toString(),
@@ -513,9 +513,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  lang.S.of(context).paidAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -544,9 +544,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Return Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).returnAMount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateReturnAmount(total: subTotal).abs().toString(),
@@ -560,9 +560,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Due Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).dueAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateDueAmount(total: subTotal).toString(),
@@ -576,12 +576,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Send sms?',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).sendSmsw,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Switch(
-
                                   value: sendSms, onChanged: (val){
                                     setState(() {
                                       sendSms = val;
@@ -604,16 +603,16 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                         Row(
                           children: [
                             Text(
-                              'Payment Type',
-                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                              lang.S.of(context).paymentType,
+                              style: const TextStyle(fontSize: 16, color: Colors.black54),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.wallet,
                               color: Colors.green,
                             )
@@ -651,11 +650,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Description',
-                              hintText: 'Add Note',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).describtion,
+                              hintText: lang.S.of(context).addNote,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -667,15 +666,15 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           child: Center(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                Icon(
+                              children:  [
+                                const Icon(
                                   FeatherIcons.camera,
                                   color: Colors.grey,
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  'Image',
-                                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                                  lang.S.of(context).image,
+                                  style: const TextStyle(color: Colors.grey, fontSize: 16),
                                 )
                               ],
                             ),
@@ -696,10 +695,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               color: Colors.red,
                               borderRadius: BorderRadius.all(Radius.circular(30)),
                             ),
-                            child: const Center(
+                            child:  Center(
                               child: Text(
-                                'Cancel',
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                lang.S.of(context).cacel,
+                                style: const TextStyle(fontSize: 18, color: Colors.white),
                               ),
                             ),
                           ),
@@ -837,15 +836,15 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                 }
                                                               },
                                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                              subtitle: const Text("Click to connect"),
+                                                              subtitle: Text(lang.S.of(context).clickToConnect),
                                                             );
                                                           },
                                                         ).visible(printerData.availableBluetoothDevices.isNotEmpty),
-                                                        const Padding(
-                                                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                         Padding(
+                                                          padding: const EdgeInsets.only(top: 20, bottom: 10),
                                                           child: Text(
-                                                            'Please connect your bluetooth Printer',
-                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            lang.S.of(context).pleaseConnectYourBluttothPrinter,
+                                                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                         const SizedBox(height: 10),
@@ -864,10 +863,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             consumerRef.refresh(profileDetailsProvider);
                                                             await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                                           },
-                                                          child: const Center(
+                                                          child:  Center(
                                                             child: Text(
-                                                              'Cancel',
-                                                              style: TextStyle(color: kMainColor),
+                                                              lang.S.of(context).cacel,
+                                                              style: const TextStyle(color: kMainColor),
                                                             ),
                                                           ),
                                                         ),
@@ -902,10 +901,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 color: kMainColor,
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Save',
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                  lang.S.of(context).save,
+                                  style: const TextStyle(fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),

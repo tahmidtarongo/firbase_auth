@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
+
 class GridItems {
   final String title, icon;
 
   GridItems({required this.title, required this.icon});
 }
+
 
 List<GridItems> freeIcons = [
   GridItems(
@@ -19,7 +23,7 @@ List<GridItems> freeIcons = [
     icon: 'images/purchase1.png',
   ),
   GridItems(
-    title: 'Products',
+    title: 'Product',
     icon: 'images/product1.png',
   ),
   GridItems(
@@ -36,7 +40,7 @@ List<GridItems> freeIcons = [
     icon: 'images/reports1.png',
   ),
   GridItems(
-    title: 'Sales List',
+    title: 'Sale List',
     icon: 'images/saleslist.png',
   ),
   GridItems(

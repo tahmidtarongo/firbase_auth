@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/subscription_model.dart';
@@ -83,9 +83,9 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Purchase Premium Plan',
-                      style: TextStyle(
+                     Text(
+                       lang.S.of(context).purchasePremiumPlan,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -193,8 +193,8 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                           );
                         }),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Buy premium Plan',
+                     Text(
+                       lang.S.of(context).buyPremiumPlan,
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 20),
@@ -222,9 +222,9 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  'Monthly',
-                                  style: TextStyle(
+                                 Text(
+                                  lang.S.of(context).monthly,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
@@ -274,8 +274,8 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 15),
-                                      const Text(
-                                        'Yearly',
+                                       Text(
+                                         lang.S.of(context).yearly,
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
@@ -342,10 +342,10 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
-                                        'Lifetime\nPurchase',
+                                       Text(
+                                        lang.S.of(context).lifeTimePurchase,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                         ),
                                       ),
@@ -466,10 +466,10 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                           color: kMainColor,
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
-                        child: const Center(
+                        child:  Center(
                           child: Text(
-                            'Pay With Paypal',
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            lang.S.of(context).payWithPaypal,
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ),
                       ),

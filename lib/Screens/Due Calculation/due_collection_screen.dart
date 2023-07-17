@@ -13,7 +13,7 @@ import 'package:mobile_pos/Provider/due_transaction_provider.dart';
 import 'package:mobile_pos/Screens/invoice_details/due_invoice_details.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_due_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
@@ -99,7 +99,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Due Collection',
+              lang.S.of(context).dueCollection,
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -175,7 +175,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             controller: dateController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Date',
+                              labelText: lang.S.of(context).date,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -206,7 +206,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text('Due Amount: '),
+                             Text(lang.S.of(context).dueAmount),
                             Text(
                               '$currency$dueAmount',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
@@ -220,10 +220,10 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Customer Name',
-                            border: OutlineInputBorder(),
+                            labelText: lang.S.of(context).customerName,
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ],
@@ -241,9 +241,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Total Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).totalAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   dueAmount.toString(),
@@ -257,9 +257,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).paidAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -299,9 +299,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Due Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).dueAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateDueAmount(total: paidAmount).toString(),
@@ -324,15 +324,15 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: const [
+                          children: [
                             Text(
-                              'Payment Type',
-                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                              lang.S.of(context).paymentType,
+                              style: const TextStyle(fontSize: 16, color: Colors.black54),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.wallet,
                               color: Colors.green,
                             )
@@ -372,11 +372,11 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Description',
-                              hintText: 'Add Note',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).describtion,
+                              hintText: lang.S.of(context).addNote,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -388,15 +388,15 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                             child: Center(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(
+                                children:  [
+                                  const Icon(
                                     FeatherIcons.camera,
                                     color: Colors.grey,
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(
-                                    'Image',
-                                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                                    lang.S.of(context).image,
+                                    style: const TextStyle(color: Colors.grey, fontSize: 16),
                                   )
                                 ],
                               ),
@@ -416,9 +416,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                               color: Colors.grey.shade300,
                               borderRadius: const BorderRadius.all(Radius.circular(30)),
                             ),
-                            child: const Center(
+                            child:  Center(
                               child: Text(
-                                'Cancel',
+                                lang.S.of(context).cacel,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -535,7 +535,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                               }
                                                             },
                                                             title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                            subtitle: const Text("Click to connect"),
+                                                            subtitle:  Text(lang.S.of(context).clickToConnect),
                                                           );
                                                         },
                                                       ),
@@ -556,9 +556,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                                           await Future.delayed(const Duration(milliseconds: 500))
                                                               .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
                                                         },
-                                                        child: const Center(
+                                                        child:  Center(
                                                           child: Text(
-                                                            'Cancel',
+                                                            lang.S.of(context).cacel,
                                                             style: TextStyle(color: kMainColor),
                                                           ),
                                                         ),
@@ -595,10 +595,10 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                 color: kMainColor,
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Save',
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                  lang.S.of(context).save,
+                                  style: const TextStyle(fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),

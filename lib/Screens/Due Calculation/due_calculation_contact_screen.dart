@@ -7,6 +7,7 @@ import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class DueCalculationContactScreen extends StatefulWidget {
   const DueCalculationContactScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
       appBar: AppBar(
         backgroundColor: kMainColor,
         title: Text(
-          'Due List',
+          lang.S.of(context).dueList,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -115,7 +116,7 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                               ),
                                             ),
                                             Text(
-                                              'Due',
+                                              lang.S.of(context).due,
                                               style: GoogleFonts.poppins(
                                                 color: const Color(0xFFff5f00),
                                                 fontSize: 15.0,

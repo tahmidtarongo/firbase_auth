@@ -9,6 +9,7 @@ import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Screens/Products/Model/unit_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class AddUnits extends StatefulWidget {
   const AddUnits({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _AddUnitsState extends State<AddUnits> {
                 color: Colors.white,
               )),
           title: Text(
-            'Add Unit',
+            lang.S.of(context).addUnit,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -70,16 +71,16 @@ class _AddUnitsState extends State<AddUnits> {
                       unitsName = value;
                     });
                   },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'kg',
+                  decoration:  InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: lang.S.of(context).kg,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Unit name',
+                    labelText: lang.S.of(context).unitName,
                   ),
                 ),
                 const SizedBox(height: 20),
                 ButtonGlobalWithoutIcon(
-                  buttontext: 'Save',
+                  buttontext: lang.S.of(context).save,
                   buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                   onPressed: () async {
                     bool isAlreadyAdded = false;

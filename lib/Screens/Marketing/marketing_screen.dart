@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Marketing/edit_social_media.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class MarketingScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _MarketingScreenState extends State<MarketingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Social Marketing',
+          lang.S.of(context).socailMarketing,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -46,7 +46,7 @@ class _MarketingScreenState extends State<MarketingScreen> {
                     width: 5.0,
                   ),
                   Text(
-                    'Edit',
+                    lang.S.of(context).edit,
                     style: GoogleFonts.poppins(
                       color: kMainColor,
                     ),

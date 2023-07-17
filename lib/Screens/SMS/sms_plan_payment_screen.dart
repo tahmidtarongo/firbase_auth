@@ -8,7 +8,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/model/payment_verification_model.dart';
 import 'package:mobile_pos/model/sms_subscription_plan_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import 'message_history.dart';
@@ -40,7 +40,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
               onTap: () => const MessageHistory().launch(context),
               contentPadding: EdgeInsets.zero,
               title: Text(
-                'Complete Transaction',
+                lang.S.of(context).completeTransaction,
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                 ),
@@ -57,7 +57,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                     color: Colors.white,
                   ),
                   Text(
-                    'History',
+                    lang.S.of(context).history,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                     ),
@@ -78,9 +78,9 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Payment Instructions:',
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16.0),
+                   Text(
+                    lang.S.of(context).paymentInstructions,
+                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16.0),
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -137,11 +137,11 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: nameController,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: 'Payee Name',
-                      hintText: 'Enter Your Name.',
-                      border: OutlineInputBorder(),
+                      labelText: lang.S.of(context).payeeName,
+                      hintText: lang.S.of(context).enterYourName,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(
@@ -150,11 +150,11 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: phoneNumberController,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: 'Payee Number',
-                      hintText: 'Enter Your mobile number',
-                      border: OutlineInputBorder(),
+                      labelText: lang.S.of(context).payeeNumber,
+                      hintText: lang.S.of(context).enterYourMobileNumber,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(
@@ -163,18 +163,18 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: transactionIdController,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: 'Transaction Id',
-                      hintText: 'Enter Your Transaction Id',
-                      border: OutlineInputBorder(),
+                      labelText: lang.S.of(context).transactionId,
+                      hintText: lang.S.of(context).enterYourTransactionId,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
                   ButtonGlobalWithoutIcon(
-                    buttontext: 'Submit',
+                    buttontext: lang.S.of(context).submit,
                     buttonDecoration: kButtonDecoration.copyWith(
                       color: kMainColor,
                       borderRadius: BorderRadius.circular(30.0),

@@ -13,7 +13,7 @@ import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Screens/Sales%20List/sales_Edit_invoice_add_products.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/seles_report_provider.dart';
@@ -159,7 +159,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Edit Sales Invoice',
+              lang.S.of(context).editSalesInvoice,
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -183,10 +183,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
                             initialValue: widget.transitionModel.invoiceNumber,
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Inv No.',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).invNo,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -198,10 +198,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             initialValue: DateFormat.yMMMd().format(DateTime.parse(
                               widget.transitionModel.purchaseDate,
                             )),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Date',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).date,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -212,10 +212,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                       textFieldType: TextFieldType.NAME,
                       readOnly: true,
                       initialValue: widget.transitionModel.customerName.isNotEmpty? widget.transitionModel.customerName: widget.transitionModel.customerPhone,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Customer Name',
-                        border: OutlineInputBorder(),
+                        labelText: lang.S.of(context).customerName,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -241,14 +241,14 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                   width: context.width() / 1.35,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    children:  [
                                       Text(
-                                        'Item Added',
-                                        style: TextStyle(fontSize: 16),
+                                        lang.S.of(context).itemAdded,
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                       Text(
-                                        'Quantity',
-                                        style: TextStyle(fontSize: 16),
+                                        lang.S.of(context).quantity,
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -391,9 +391,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
+                        child:  Center(
                             child: Text(
-                          'Add Items',
+                              lang.S.of(context).addItems,
                           style: TextStyle(color: kMainColor, fontSize: 20),
                         )),
                       ),
@@ -413,8 +413,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Sub Total',
+                                 Text(
+                                  lang.S.of(context).subTotal,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -429,9 +429,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Discount',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  lang.S.of(context).discount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -471,9 +471,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Total',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).total,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateSubtotal(total: providerData.getTotalAmount()).toString(),
@@ -487,9 +487,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Previous Pay Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).previousPayAmounts,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   (double.parse(widget.transitionModel.totalAmount.toString()) -
@@ -506,9 +506,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                   lang.S.of(context).paidAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -538,8 +538,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Return Amount',
+                                 Text(
+                                   lang.S.of(context).returnAmount,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -554,9 +554,9 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Due Amount',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  lang.S.of(context).dueAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateDueAmount(total: subTotal).toString(),
@@ -579,15 +579,15 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: const [
+                          children:  [
                             Text(
-                              'Payment Type',
-                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                              lang.S.of(context).paymentType,
+                              style: const TextStyle(fontSize: 16, color: Colors.black54),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.wallet,
                               color: Colors.green,
                             )
@@ -625,11 +625,11 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Description',
-                              hintText: 'Add Note',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).describtion,
+                              hintText: lang.S.of(context).addNote,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -641,15 +641,15 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                           child: Center(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                Icon(
+                              children:  [
+                                const Icon(
                                   FeatherIcons.camera,
                                   color: Colors.grey,
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
-                                  'Image',
-                                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                                  lang.S.of(context).image,
+                                  style: const TextStyle(color: Colors.grey, fontSize: 16),
                                 )
                               ],
                             ),
@@ -670,10 +670,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                               color: Colors.grey.shade300,
                               borderRadius: const BorderRadius.all(Radius.circular(30)),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Cancel',
-                                style: TextStyle(fontSize: 18),
+                                lang.S.of(context).cacel,
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ),
                           ),
@@ -809,10 +809,10 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                 color: kMainColor,
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Save',
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                  lang.S.of(context).save,
+                                  style: const TextStyle(fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),

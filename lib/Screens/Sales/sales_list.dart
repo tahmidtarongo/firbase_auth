@@ -4,7 +4,7 @@ import 'package:mobile_pos/GlobalComponents/tab_buttons.dart';
 import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../currency.dart';
 
 class SalesScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _SalesScreenState extends State<SalesScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Sales List',
+            lang.S.of(context).salesList,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -49,7 +49,7 @@ class _SalesScreenState extends State<SalesScreen> {
                   TabButton(
                     background: kMainColor,
                     text: Colors.white,
-                    title: 'Sales',
+                    title: lang.S.of(context).sales,
                     press: () {
                       Navigator.pushNamed(context, '/SalesList');
                     },
@@ -60,7 +60,7 @@ class _SalesScreenState extends State<SalesScreen> {
                   TabButton(
                     background: kDarkWhite,
                     text: kMainColor,
-                    title: 'Paid',
+                    title: lang.S.of(context).paid,
                     press: () {
                       Navigator.pushNamed(context, '/Paid');
                     },
@@ -71,7 +71,7 @@ class _SalesScreenState extends State<SalesScreen> {
                   TabButton(
                     background: kDarkWhite,
                     text: kMainColor,
-                    title: 'Due',
+                    title: lang.S.of(context).due,
                     press: () {
                       Navigator.pushNamed(context, '/Due');
                     },
@@ -84,12 +84,12 @@ class _SalesScreenState extends State<SalesScreen> {
             ),
             DataTable(
               headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
-              columns: const <DataColumn>[
+              columns:  <DataColumn>[
                 DataColumn(
                   label: SizedBox(
                     width: 100.0,
                     child: Text(
-                      'Date',
+                      lang.S.of(context).date,
                     ),
                   ),
                 ),
@@ -97,13 +97,13 @@ class _SalesScreenState extends State<SalesScreen> {
                   label: SizedBox(
                     width: 60.0,
                     child: Text(
-                      'Payment',
+                      lang.S.of(context).payment,
                     ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Balance',
+                    lang.S.of(context).balance,
                   ),
                 ),
               ],
@@ -132,8 +132,8 @@ class _SalesScreenState extends State<SalesScreen> {
                         ],
                       ),
                     ),
-                    const DataCell(
-                      Text('Cash'),
+                     DataCell(
+                      Text(lang.S.of(context).cash),
                     ),
                      DataCell(
                       Text('$currency 3975'),

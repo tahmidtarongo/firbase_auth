@@ -9,7 +9,7 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../model/transition_model.dart';
@@ -67,7 +67,7 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Sales Details',
+            lang.S.of(context).saleDetails,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -104,7 +104,7 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                             },
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Product Code',
+                              labelText: lang.S.of(context).productCode,
                               hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
                               border: const OutlineInputBorder(),
                             ),
@@ -164,8 +164,8 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                const Text(
-                                                  'Add Items',
+                                                 Text(
+                                                   lang.S.of(context).addItems,
                                                   style: TextStyle(fontSize: 16),
                                                 ),
                                                 IconButton(
@@ -205,8 +205,8 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
-                                                    const Text(
-                                                      'Stock',
+                                                     Text(
+                                                       lang.S.of(context).stocks,
                                                       style: TextStyle(fontSize: 16),
                                                     ),
                                                     Text(
@@ -230,11 +230,11 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                     onChanged: (value) {
                                                       tempProductModel.productStock = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Quantity',
+                                                      labelText: lang.S.of(context).quantity,
                                                       hintText: '02',
-                                                      border: OutlineInputBorder(),
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -252,10 +252,10 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                     onChanged: (value) {
                                                       tempProductModel.productPurchasePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Purchase Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).purchaseList,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -268,10 +268,10 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                     onChanged: (value) {
                                                       tempProductModel.productSalePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration: InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Sale Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).salePrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -289,10 +289,10 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                     onChanged: (value) {
                                                       tempProductModel.productWholeSalePrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'WholeSale Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText:  lang.S.of(context).wholeSalePrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -305,10 +305,10 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                     onChanged: (value) {
                                                       tempProductModel.productDealerPrice = value;
                                                     },
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                                      labelText: 'Dealer Price',
-                                                      border: OutlineInputBorder(),
+                                                      labelText: lang.S.of(context).dealerPrice,
+                                                      border: const OutlineInputBorder(),
                                                     ),
                                                   ),
                                                 ),
@@ -329,10 +329,10 @@ class _EditPurchaseInvoiceSaleProductsState extends State<EditPurchaseInvoiceSal
                                                 height: 60,
                                                 width: context.width(),
                                                 decoration: const BoxDecoration(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(15))),
-                                                child: const Center(
+                                                child:  Center(
                                                   child: Text(
-                                                    'Save',
-                                                    style: TextStyle(fontSize: 18, color: Colors.white),
+                                                    lang.S.of(context).save,
+                                                    style: const TextStyle(fontSize: 18, color: Colors.white),
                                                   ),
                                                 ),
                                               ),
@@ -462,7 +462,7 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Stock',
+                  lang.S.of(context).stocks,
                   style: GoogleFonts.jost(
                     fontSize: 18.0,
                     color: Colors.black,

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../Provider/due_transaction_provider.dart';
 import '../../../Provider/printer_due_provider.dart';
 import '../../../Provider/profile_provider.dart';
@@ -43,7 +43,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Due Report',
+            lang.S.of(context).dueReports,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -76,7 +76,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                             controller: fromDateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'From Date',
+                              labelText: lang.S.of(context).formDate,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -107,7 +107,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                             controller: toDateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'To Date',
+                              labelText: lang.S.of(context).toDate,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -233,11 +233,11 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                     invoiceNumber = value;
                                   });
                                 },
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  labelText: 'Invoice Number',
-                                  hintText: 'Enter Invoice Number',
-                                  border: OutlineInputBorder(),
+                                  labelText: lang.S.of(context).invoiceNumber,
+                                  hintText: lang.S.of(context).enterInvoiceNumber,
+                                  border: const OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.search)
                                 ),
                               ),
@@ -377,14 +377,14 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                                                             : toast('Try Again');
                                                                                       },
                                                                                       title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                      subtitle: const Text("Click to connect"),
+                                                                                      subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                     );
                                                                                   },
                                                                                 ),
-                                                                                const Padding(
+                                                                                 Padding(
                                                                                   padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                   child: Text(
-                                                                                    'Please connect your bluetooth Printer',
+                                                                                    lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                   ),
                                                                                 ),
@@ -395,9 +395,9 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                                                   onTap: () {
                                                                                     Navigator.pop(context);
                                                                                   },
-                                                                                  child: const Center(
+                                                                                  child:  Center(
                                                                                     child: Text(
-                                                                                      'Cancel',
+                                                                                      lang.S.of(context).cacel,
                                                                                       style: TextStyle(color: kMainColor),
                                                                                     ),
                                                                                   ),

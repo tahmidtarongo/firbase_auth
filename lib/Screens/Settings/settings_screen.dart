@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Language/language.dart';
+import 'package:mobile_pos/Language/language_screen.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
 import 'package:mobile_pos/Screens/Settings/invoice_settings.dart';
@@ -11,6 +12,7 @@ import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
 import '../../Provider/profile_provider.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/personal_information_model.dart';
@@ -76,7 +78,6 @@ class _SettingScreenState extends State<SettingScreen> {
     return SafeArea(
       child: Consumer(builder: (context, ref, _) {
         AsyncValue<PersonalInformationModel> userProfileDetails = ref.watch(profileDetailsProvider);
-
         return Scaffold(
           backgroundColor: kMainColor,
           body: SingleChildScrollView(
@@ -146,7 +147,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     children: [
                       ListTile(
                         title: Text(
-                          'Profile',
+                          lang.S.of(context).profile,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -556,7 +557,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       // ),
                       ListTile(
                         title: Text(
-                          'Feedback',
+                          lang.S.of(context).feedBack,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -618,7 +619,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       // ),
                       ListTile(
                         title: Text(
-                          'Subscription',
+                          lang.S.of(context).subscription,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -639,7 +640,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       ListTile(
                         title: Text(
-                          'Currency',
+                          lang.S.of(context).currency,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -676,13 +677,13 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                        ListTile(
                          onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>const Language()));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>const LanguageScreen()));
                          },
-                        title: Text('Language',style: GoogleFonts.poppins(
+                        title: Text(lang.S.of(context).language,style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),),
-                        leading: Icon(Icons.translate,color: kMainColor,),
+                        leading: const Icon(Icons.translate,color: kMainColor,),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
                           color: kGreyTextColor,
@@ -690,7 +691,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       ListTile(
                         title: Text(
-                          'Log Out',
+                          lang.S.of(context).logOUt,
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,
@@ -792,7 +793,7 @@ class _NoticationSettingsState extends State<NoticationSettings> {
           ),
           Center(
             child: Text(
-              'Do Not Disturb',
+              lang.S.of(context).doNotDistrub,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 20.0,

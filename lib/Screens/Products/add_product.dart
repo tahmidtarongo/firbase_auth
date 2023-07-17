@@ -20,7 +20,7 @@ import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Products/unit_list.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
@@ -107,7 +107,7 @@ class AddProductState extends State<AddProduct> {
         backgroundColor: kMainColor,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          'Add New Product',
+          lang.S.of(context).addNewProduct,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -131,11 +131,11 @@ class AddProductState extends State<AddProduct> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          border: OutlineInputBorder(),
-                          labelText: 'Product Name',
-                          hintText: 'Enter Product Name.',
+                          border: const OutlineInputBorder(),
+                          labelText: lang.S.of(context).productName,
+                          hintText: lang.S.of(context).enterProductName,
                         ),
                         validator: (value) {
                           if (value.isEmptyOrNull) {
@@ -166,7 +166,7 @@ class AddProductState extends State<AddProduct> {
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: productCategoryHint,
-                          labelText: 'Category',
+                          labelText: lang.S.of(context).category,
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
                         ),
@@ -183,10 +183,10 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 size = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Size',
-                                hintText: 'Enter Size.',
+                                labelText: lang.S.of(context).size,
+                                hintText: lang.S.of(context).enterSize,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -199,10 +199,10 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 color = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Color',
-                                hintText: 'Enter Color.',
+                                labelText: lang.S.of(context).color,
+                                hintText: lang.S.of(context).enterColor,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -221,10 +221,10 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 weight = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Weight',
-                                hintText: 'Enter Weight.',
+                                labelText: lang.S.of(context).weight,
+                                hintText: lang.S.of(context).enterWeight,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -237,11 +237,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 capacity = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Capacity',
-                                hintText: 'Enter Capacity.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).capacity,
+                                hintText: lang.S.of(context).enterCapacity,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -254,11 +254,11 @@ class AddProductState extends State<AddProduct> {
                         onSaved: (value) {
                           type = value!;
                         },
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          labelText: 'Type',
-                          hintText: 'Enter Type.',
-                          border: OutlineInputBorder(),
+                          labelText: lang.S.of(context).type,
+                          hintText: lang.S.of(context).enterType,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ).visible(data.variations.contains('Type')),
@@ -278,7 +278,7 @@ class AddProductState extends State<AddProduct> {
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: brandNameHint,
-                          labelText: 'Brand',
+                          labelText: lang.S.of(context).brand,
                           border: const OutlineInputBorder(),
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
                         ),
@@ -305,11 +305,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productCode = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Product Code',
-                                hintText: 'Enter Product Code Or Scan',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).productCode,
+                                hintText: lang.S.of(context).enterProductCodeOrScan,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -355,11 +355,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productStock = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Stock',
-                                hintText: 'Enter Stock.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).stocks,
+                                hintText: lang.S.of(context).enterStocks,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -379,7 +379,7 @@ class AddProductState extends State<AddProduct> {
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 hintText: productUnitHint,
-                                labelText: 'Units',
+                                labelText: lang.S.of(context).units,
                                 border: const OutlineInputBorder(),
                                 suffixIcon: const Icon(Icons.keyboard_arrow_down),
                               ),
@@ -406,10 +406,10 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productPurchasePrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Purchase Price',
-                                hintText: 'Enter Purchase Price.',
+                                labelText: lang.S.of(context).purchasePrice,
+                                hintText: lang.S.of(context).enterPurchasePrice,
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -429,11 +429,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productSalePrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'MRP',
-                                hintText: 'Enter MRP/Retail Price.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).MRP,
+                                hintText: lang.S.of(context).enterMrpOrRetailerPirce,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -452,11 +452,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productWholeSalePrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'WholeSale Price',
-                                hintText: 'Enter WholeSale Price',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).wholeSalePrice,
+                                hintText: lang.S.of(context).enterWholeSalePrice,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -469,11 +469,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productDealerPrice = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Dealer price',
-                                hintText: 'Enter Dealer Price',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).dealerPrice,
+                                hintText: lang.S.of(context).enterDealerPrice,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -490,11 +490,11 @@ class AddProductState extends State<AddProduct> {
                             onSaved: (value) {
                               productDiscount = value!;
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Discount',
-                              hintText: 'Enter Discount.',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).discount,
+                              hintText: lang.S.of(context).enterDiscount,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         )).visible(false),
@@ -505,11 +505,11 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productManufacturer = value!;
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Manufacturer',
-                                hintText: 'Enter Manufacturer.',
-                                border: OutlineInputBorder(),
+                                labelText: lang.S.of(context).menufeturer,
+                                hintText: lang.S.of(context).enterManufacturer,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -558,7 +558,7 @@ class AddProductState extends State<AddProduct> {
                                                     color: kMainColor,
                                                   ),
                                                   Text(
-                                                    'Gallery',
+                                                    lang.S.of(context).gallary,
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 20.0,
                                                       color: kMainColor,
@@ -590,7 +590,7 @@ class AddProductState extends State<AddProduct> {
                                                     color: kGreyTextColor,
                                                   ),
                                                   Text(
-                                                    'Camera',
+                                                    lang.S.of(context).camera,
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 20.0,
                                                       color: kGreyTextColor,
@@ -663,7 +663,7 @@ class AddProductState extends State<AddProduct> {
                       ],
                     ),
                     ButtonGlobalWithoutIcon(
-                      buttontext: 'Save and Publish',
+                      buttontext: lang.S.of(context).saveAndPublish,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                       onPressed: () async {
                         if (validateAndSave()) {

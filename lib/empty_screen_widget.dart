@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 
 class EmptyScreenWidget extends StatelessWidget {
   const EmptyScreenWidget({Key? key}) : super(key: key);
@@ -13,9 +14,9 @@ class EmptyScreenWidget extends StatelessWidget {
         children: [
           Image.asset('images/empty_screen.png'),
           const SizedBox(height: 30),
-          const Text(
-            'No Data',
-            style: TextStyle(fontSize: 22),
+           Text(
+             lang.S.of(context).noData,
+            style: const TextStyle(fontSize: 20),
           )
         ],
       ),

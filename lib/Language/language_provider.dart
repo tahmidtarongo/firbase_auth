@@ -1,13 +1,14 @@
+import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
-class LanguageChangeProvider with ChangeNotifier{
-   Locale _currentLocale= const Locale("en");
+class LanguageChangeProvider with ChangeNotifier {
+  Locale _currentLocale = const Locale("en");
 
-   Locale get currentLocale=>_currentLocale;
+  Locale get currentLocale => _currentLocale;
 
-   void changeLocale(String locale){
-     _currentLocale=Locale(locale);
-     notifyListeners();
-   }
+  void changeLocale(String locale, String? script ) {
+    _currentLocale = Locale.fromSubtags(languageCode: locale,scriptCode: script);
+    notifyListeners();
+  }
 }

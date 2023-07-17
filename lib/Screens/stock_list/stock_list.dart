@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -34,7 +34,7 @@ class _StockListState extends State<StockList> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Current Stock',
+          lang.S.of(context).currentStock,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -94,9 +94,9 @@ class _StockListState extends State<StockList> {
                                           ),
                                         ),
                                         const SizedBox(height: 10),
-                                        const Text(
-                                          'Total Stock',
-                                          style: TextStyle(
+                                         Text(
+                                          lang.S.of(context).totalStock,
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
                                           ),
@@ -120,8 +120,8 @@ class _StockListState extends State<StockList> {
                                           ),
                                         ),
                                         const SizedBox(height: 10),
-                                        const Text(
-                                          'Total Price',
+                                         Text(
+                                           lang.S.of(context).totalPrice,
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -142,12 +142,12 @@ class _StockListState extends State<StockList> {
                                     productName = value;
                                   });
                                 },
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  labelText: 'Product Name',
-                                  hintText: 'Enter Product Name',
-                                  prefixIcon: Icon(Icons.search),
-                                  border: OutlineInputBorder(),
+                                  labelText: lang.S.of(context).productName,
+                                  hintText: lang.S.of(context).enterProductName,
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: const OutlineInputBorder(),
                                 ),
                               ),
                             ),
@@ -161,31 +161,31 @@ class _StockListState extends State<StockList> {
                               ),
                               padding: const EdgeInsets.all(20),
                               child: Row(
-                                children: const [
+                                children:  [
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'Product',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      lang.S.of(context).product,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'Quantity',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      lang.S.of(context).quantity,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'Purchase',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      lang.S.of(context).purchase,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Text(
-                                    'Sale',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    lang.S.of(context).sales,
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -195,27 +195,27 @@ class _StockListState extends State<StockList> {
                               horizontalMargin: 40.0,
                               columnSpacing: 50.0,
                               headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
-                              columns: const <DataColumn>[
+                              columns:  <DataColumn>[
                                 DataColumn(
                                   label: Text(
-                                    'Product',
+                                    lang.S.of(context).product,
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'QTY',
+                                    lang.S.of(context).qty,
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Purchase',
+                                    lang.S.of(context).purchase,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Sale',
+                                    lang.S.of(context).sales,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),

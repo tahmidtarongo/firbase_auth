@@ -8,7 +8,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Payment/payment_options.dart';
 import 'package:mobile_pos/Screens/Purchase/Model/purchase_report.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../currency.dart';
 
@@ -36,7 +36,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Purchase Details',
+          lang.S.of(context).purchaseDetails,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -101,7 +101,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             child: Row(
               children: [
                 Text(
-                  'Subtotal',
+                  lang.S.of(context).subTotal,
                   style: GoogleFonts.poppins(
                     color: kGreyTextColor,
                     fontSize: 15.0,
@@ -123,7 +123,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             child: Row(
               children: [
                 Text(
-                  'Discount',
+                  lang.S.of(context).discount,
                   style: GoogleFonts.poppins(
                     color: kGreyTextColor,
                     fontSize: 15.0,
@@ -153,7 +153,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
               child: Row(
                 children: [
                   Text(
-                    'Total',
+                    lang.S.of(context).total,
                     style: GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 15.0,
@@ -174,7 +174,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
           const Spacer(),
           ButtonGlobal(
             iconWidget: Icons.arrow_forward,
-            buttontext: 'Continue',
+            buttontext: lang.S.of(context).continu,
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
             onPressed: () async {

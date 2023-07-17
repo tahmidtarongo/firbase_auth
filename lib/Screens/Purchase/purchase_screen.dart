@@ -9,7 +9,7 @@ import 'package:mobile_pos/Screens/Products/add_category.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_details.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../../currency.dart';
 
@@ -43,7 +43,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Purchase',
+            lang.S.of(context).purchase,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -216,7 +216,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         ),
         bottomNavigationBar: ButtonGlobal(
           iconWidget: Icons.arrow_forward,
-          buttontext: 'Purchase List',
+          buttontext: lang.S.of(context).purchaseList,
           iconColor: Colors.white,
           buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
           onPressed: () {

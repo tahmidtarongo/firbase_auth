@@ -9,7 +9,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Expense/expense_category_list.dart';
 import 'package:mobile_pos/Screens/Expense/expense_list.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/all_expanse_provider.dart';
 import '../../constant.dart';
 import '../../model/expense_model.dart';
@@ -95,7 +95,7 @@ class _AddExpenseState extends State<AddExpense> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Add Expense',
+            lang.S.of(context).addExpense,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -120,12 +120,12 @@ class _AddExpenseState extends State<AddExpense> {
                         FormField(
                           builder: (FormFieldState<dynamic> field) {
                             return InputDecorator(
-                              decoration: const InputDecoration(
-                                suffixIcon: Icon(FeatherIcons.calendar, color: kGreyTextColor),
-                                enabledBorder: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.all(20),
-                                labelText: 'Expense Date',
-                                hintText: 'Enter expense date',
+                              decoration: InputDecoration(
+                                suffixIcon: const Icon(FeatherIcons.calendar, color: kGreyTextColor),
+                                enabledBorder: const OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.all(20),
+                                labelText: lang.S.of(context).expenseDate,
+                                hintText: lang.S.of(context).enterExpenseDate,
                               ),
                               child: Text(
                                 '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
@@ -178,9 +178,9 @@ class _AddExpenseState extends State<AddExpense> {
                             onSaved: (value) {
                               expanseForNameController.text = value!;
                             },
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Expense For',
+                            decoration:  InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText: lang.S.of(context).expenseFor,
                               hintText: 'Enter Name',
                             )),
                         const SizedBox(height: 20),
@@ -189,11 +189,11 @@ class _AddExpenseState extends State<AddExpense> {
                         FormField(
                           builder: (FormFieldState<dynamic> field) {
                             return InputDecorator(
-                              decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.all(8.0),
+                              decoration:  InputDecoration(
+                                  enabledBorder: const OutlineInputBorder(),
+                                  contentPadding: const EdgeInsets.all(8.0),
                                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                                  labelText: 'Payment Type'),
+                                  labelText: lang.S.of(context).paymentType),
                               child: DropdownButtonHideUnderline(child: getPaymentMethods()),
                             );
                           },
@@ -215,10 +215,10 @@ class _AddExpenseState extends State<AddExpense> {
                           onSaved: (value) {
                             expanseAmountController.text = value!;
                           },
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-                            labelText: 'Amount',
+                          decoration:  InputDecoration(
+                            border: const OutlineInputBorder(),
+                            errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                            labelText: lang.S.of(context).amount,
                             hintText: 'Enter Amount',
                           ),
                           keyboardType: TextInputType.number,
@@ -236,10 +236,10 @@ class _AddExpenseState extends State<AddExpense> {
                           onSaved: (value) {
                             expanseRefController.text = value!;
                           },
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Reference Number',
-                            hintText: 'Enter Reference Number',
+                          decoration:  InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: lang.S.of(context).referenceNumber,
+                            hintText: lang.S.of(context).enterReferenceNumber,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -257,9 +257,9 @@ class _AddExpenseState extends State<AddExpense> {
                           onSaved: (value) {
                             expanseNoteController.text = value!;
                           },
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Note',
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: lang.S.of(context).note,
                             hintText: 'Enter Note',
                           ),
                         ),

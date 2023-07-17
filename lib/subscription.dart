@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'Screens/subscription/package_screen.dart';
 import 'model/subscription_model.dart';
 import 'model/subscription_plan_model.dart';
@@ -137,8 +137,8 @@ class Subscription {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Your Package Will Expire in 5 Day',
+                     Text(
+                      lang.S.of(context).yourPackageWillExpireinDay,
                       style: TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 20),
@@ -148,8 +148,8 @@ class Subscription {
                         // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Cancel',
+                      child:  Text(
+                        lang.S.of(context).cacel,
                         style: TextStyle(color: Colors.red),
                       ),
                     ),
@@ -173,8 +173,8 @@ class Subscription {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Your Package Will Expire Today\n\nPlease Purchase again',
+                       Text(
+                        lang.S.of(context).YourPackageWillExpireTodayPleasePurchaseagain,
                         style: TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
@@ -185,14 +185,14 @@ class Subscription {
                             onPressed: () {
                               const PackageScreen().launch(context);
                             },
-                            child: const Text('Purchase'),
+                            child:  Text(lang.S.of(context).purchase),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text(
-                              'Cancel',
+                            child:  Text(
+                              lang.S.of(context).cacel,
                               style: TextStyle(color: Colors.red),
                             ),
                           ),

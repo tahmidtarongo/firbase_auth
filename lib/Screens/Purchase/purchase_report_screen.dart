@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Provider/purchase_report_provider.dart';
 import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../constant.dart';
 
 class PurchaseReportScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _PurchaseReportScreenState extends State<PurchaseReportScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Purchase Report',
+            lang.S.of(context).purchasePrice,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 20.0,
@@ -103,20 +103,20 @@ class _PurchaseReportScreenState extends State<PurchaseReportScreen> {
                     // ),
                     DataTable(
                       headingRowColor: MaterialStateColor.resolveWith((states) => kDarkWhite),
-                      columns: const <DataColumn>[
+                      columns:  <DataColumn>[
                         DataColumn(
                           label: Text(
-                            'Customer Name',
+                            lang.S.of(context).customerName,
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'QTY',
+                            lang.S.of(context).qty,
                           ),
                         ),
                         DataColumn(
                           label: Text(
-                            'Price',
+                            lang.S.of(context).price,
                           ),
                         ),
                       ],

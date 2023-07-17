@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Expense/add_expense_category.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../../Provider/expense_category_proivder.dart';
 import '../../constant.dart';
@@ -34,7 +34,7 @@ class _ExpenseCategoryListState extends State<ExpenseCategoryList> {
             icon: const Icon(Icons.close),
           ),
           title: Text(
-            'Expense Categories',
+            lang.S.of(context).expenseCategory,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -60,7 +60,7 @@ class _ExpenseCategoryListState extends State<ExpenseCategoryList> {
                         textFieldType: TextFieldType.NAME,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
-                          hintText: 'Search',
+                          hintText: lang.S.of(context).search,
                           prefixIcon: Icon(
                             Icons.search,
                             color: kGreyTextColor.withOpacity(0.5),
@@ -119,7 +119,7 @@ class _ExpenseCategoryListState extends State<ExpenseCategoryList> {
                             Expanded(
                               flex: 1,
                               child: ButtonGlobalWithoutIcon(
-                                buttontext: 'Select',
+                                buttontext: lang.S.of(context).select,
                                 buttonDecoration: kButtonDecoration.copyWith(color: kDarkWhite),
                                 onPressed: () {
                                   // const AddExpense().launch(context);

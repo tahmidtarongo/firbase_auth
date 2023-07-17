@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/expense_category_proivder.dart';
 import 'package:mobile_pos/constant.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:mobile_pos/model/expense_category_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -37,7 +38,7 @@ class _AddExpenseCategoryState extends State<AddExpenseCategory> {
             icon: const Icon(Icons.close),
           ),
           title: Text(
-            'Add Expense Category',
+            lang.S.of(context).addExpenseCategory,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -70,16 +71,16 @@ class _AddExpenseCategoryState extends State<AddExpenseCategory> {
                         categoryName = value;
                       });
                     },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Fashion',
+                    decoration:  InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: lang.S.of(context).fashion,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelText: 'Category name',
+                      labelText: lang.S.of(context).cateogryName,
                     ),
                   ),
                   const SizedBox(height: 20),
                   ButtonGlobalWithoutIcon(
-                    buttontext: 'Save',
+                    buttontext: lang.S.of(context).save,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                     onPressed: () async {
                       bool isAlreadyAdded = false;

@@ -9,7 +9,7 @@ import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Sales%20List/sales_report_edit_screen.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../currency.dart';
@@ -39,7 +39,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Sales List',
+            lang.S.of(context).salesList,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -71,12 +71,12 @@ class _SalesListScreenState extends State<SalesListScreen> {
                           invoiceNumber = value;
                         });
                       },
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelText: 'Invoice Number',
-                        hintText: 'Enter Invoice Number',
-                        border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.search)
+                        labelText: lang.S.of(context).invoiceNumber,
+                        hintText: lang.S.of(context).enterInvoiceNumber,
+                        border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.search)
                       ),
                     ),
                   ),
@@ -216,14 +216,14 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                                                           : toast('Try Again');
                                                                                     },
                                                                                     title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                    subtitle: const Text("Click to connect"),
+                                                                                    subtitle:  Text(lang.S.of(context).clickToConnect),
                                                                                   );
                                                                                 },
                                                                               ),
-                                                                              const Padding(
+                                                                               Padding(
                                                                                 padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                 child: Text(
-                                                                                  'Please connect your bluetooth Printer',
+                                                                                  lang.S.of(context).pleaseConnectYourBluttothPrinter,
                                                                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                 ),
                                                                               ),
@@ -234,9 +234,9 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                                                 onTap: () {
                                                                                   Navigator.pop(context);
                                                                                 },
-                                                                                child: const Center(
+                                                                                child:  Center(
                                                                                   child: Text(
-                                                                                    'Cancel',
+                                                                                    lang.S.of(context).cacel,
                                                                                     style: TextStyle(color: kMainColor),
                                                                                   ),
                                                                                 ),

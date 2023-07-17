@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import '../../model/personal_information_model.dart';
@@ -108,7 +108,7 @@ class _EditProfileState extends State<EditProfile> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Update Your Profile',
+          lang.S.of(context).updateYourProfile,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -135,7 +135,7 @@ class _EditProfileState extends State<EditProfile> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Update your profile to connect your customer with better impression",
+                      lang.S.of(context).updateYourProfiletoConnectTOCusomter,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -184,7 +184,7 @@ class _EditProfileState extends State<EditProfile> {
                                               color: kMainColor,
                                             ),
                                             Text(
-                                              'Gallery',
+                                              lang.S.of(context).gallary,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 20.0,
                                                 color: kMainColor,
@@ -216,7 +216,7 @@ class _EditProfileState extends State<EditProfile> {
                                               color: kGreyTextColor,
                                             ),
                                             Text(
-                                              'Camera',
+                                              lang.S.of(context).camera,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 20.0,
                                                 color: kGreyTextColor,
@@ -364,7 +364,7 @@ class _EditProfileState extends State<EditProfile> {
                           return InputDecorator(
                             decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: 'Business Category',
+                                labelText: lang.S.of(context).businessCategory,
                                 labelStyle: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -407,8 +407,8 @@ class _EditProfileState extends State<EditProfile> {
                                   phoneNumber = value;
                                 });
                               },
-                              decoration: const InputDecoration(
-                                labelText: 'Phone Number',
+                              decoration:  InputDecoration(
+                                labelText: lang.S.of(context).phoneNumber,
                                 border: OutlineInputBorder(),
                                 // prefix: CountryCodePicker(
                                 //   padding: EdgeInsets.zero,
@@ -444,7 +444,7 @@ class _EditProfileState extends State<EditProfile> {
                                 return InputDecorator(
                                   decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      labelText: 'Language',
+                                      labelText: lang.S.of(context).language,
                                       labelStyle: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 20.0,
@@ -468,7 +468,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   ButtonGlobal(
                     iconWidget: Icons.arrow_forward,
-                    buttontext: 'Update Now',
+                    buttontext: lang.S.of(context).updateNow,
                     iconColor: Colors.white,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                     onPressed: () async {

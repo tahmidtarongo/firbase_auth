@@ -5,7 +5,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/delivery_address_provider.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'add_delivery_location.dart';
 
 class DeliveryAddress extends StatefulWidget {
@@ -23,7 +23,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Delivery Address',
+          lang.S.of(context).deliveryAddress,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -37,10 +37,10 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
       body: Consumer(builder: (context, ref, __) {
         final providerData = ref.watch(deliveryAddressProvider);
         if (providerData.value!.isEmpty) {
-          return const Center(
+          return  Center(
               child: Text(
-            'No data available',
-            style: TextStyle(fontSize: 18),
+                lang.S.of(context).noDataAvailable,
+            style: const TextStyle(fontSize: 18),
           ));
         } else {
           return SingleChildScrollView(
@@ -132,7 +132,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         }
       }),
       bottomNavigationBar: ButtonGlobalWithoutIcon(
-        buttontext: 'Add Delivery',
+        buttontext: lang.S.of(context).addDelivery,
         buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
         onPressed: () {
           const AddDelivery().launch(context);

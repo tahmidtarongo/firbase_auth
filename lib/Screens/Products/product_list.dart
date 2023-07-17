@@ -6,7 +6,7 @@ import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
 import 'package:mobile_pos/Screens/Products/update_product.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -111,12 +111,12 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                               productName = value;
                             });
                           },
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.never,
-                              labelText: 'Product Name',
-                              hintText: 'Enter Product Name',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.search)),
+                              labelText: lang.S.of(context).productName,
+                              hintText: lang.S.of(context).enterProductName,
+                              border: const OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.search)),
                         ),
                       ),
                       providerData.when(data: (products) {
@@ -184,7 +184,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
               color: Colors.white,
               child: ButtonGlobal(
                 iconWidget: Icons.add,
-                buttontext: 'Add New Product',
+                buttontext: lang.S.of(context).addNewProduct,
                 iconColor: Colors.white,
                 buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
                 onPressed: () {

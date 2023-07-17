@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -14,7 +13,7 @@ import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:mobile_pos/model/nid_verification_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class UploadNid extends StatefulWidget {
@@ -75,7 +74,7 @@ class _UploadNidState extends State<UploadNid> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Add Document ID',
+            lang.S.of(context).addDocumentId,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -90,7 +89,7 @@ class _UploadNidState extends State<UploadNid> {
             color: Colors.white,
           ),
           child: ButtonGlobalWithoutIcon(
-            buttontext: 'Submit',
+            buttontext: lang.S.of(context).submit,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(30.0)),
             onPressed: () async{
               if(imagePathFront != 'No Data' && imagePathBack != 'No Data' ){
@@ -131,15 +130,15 @@ class _UploadNidState extends State<UploadNid> {
                           height: 60.0,
                           width: 60.0,
                         ),
-                        const Text(
-                          'Front side',
-                          style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600),
+                         Text(
+                           lang.S.of(context).fontSide,
+                          style: const TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(20.0),
+                         Padding(
+                          padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            'Take an identity card to check your information',
-                            style: TextStyle(
+                            lang.S.of(context).takeaNidCardToCheckYourInformation,
+                            style: const TextStyle(
                               color: kGreyTextColor,
                             ),
                             textAlign: TextAlign.center,
@@ -204,15 +203,15 @@ class _UploadNidState extends State<UploadNid> {
                           height: 60.0,
                           width: 60.0,
                         ),
-                        const Text(
-                          'Back side',
-                          style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600),
+                         Text(
+                          lang.S.of(context).backSide,
+                          style: const TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(20.0),
+                         Padding(
+                          padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            'Take an identity card to check your information',
-                            style: TextStyle(
+                            lang.S.of(context).takeaNidCardToCheckYourInformation,
+                            style: const TextStyle(
                               color: kGreyTextColor,
                             ),
                             textAlign: TextAlign.center,

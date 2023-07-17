@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../Customers/Model/customer_model.dart';
 import 'ledger_customer_details_screen.dart';
 

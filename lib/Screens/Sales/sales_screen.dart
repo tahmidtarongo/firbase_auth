@@ -9,7 +9,7 @@ import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
 import '../../currency.dart';
 import '../../model/add_to_cart_model.dart';
@@ -65,7 +65,7 @@ class _SaleProductsState extends State<SaleProducts> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            'Add Items',
+            lang.S.of(context).addItems,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -179,7 +179,7 @@ class _SaleProductsState extends State<SaleProducts> {
                             },
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Product Code',
+                              labelText: lang.S.of(context).productCode,
                               hintText: productCode == '0000' || productCode == '-1' ? 'Scan product QR code' : productCode,
                               border: const OutlineInputBorder(),
                             ),

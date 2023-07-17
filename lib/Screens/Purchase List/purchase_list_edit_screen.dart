@@ -14,7 +14,7 @@ import 'package:mobile_pos/Screens/Purchase%20List/purchase_edit_invoice_add_pro
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../Provider/product_provider.dart';
 import '../../Provider/profile_provider.dart';
@@ -127,7 +127,7 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
           appBar: AppBar(
             backgroundColor: kMainColor,
             title: Text(
-              'Edit Purchase Invoice',
+              lang.S.of(context).editPurchaseInvoice,
               style: GoogleFonts.poppins(
                 color: Colors.white,
               ),
@@ -152,10 +152,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
                             initialValue: widget.transitionModel.invoiceNumber,
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Inv No.',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).invNo,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -167,10 +167,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             initialValue: DateFormat.yMMMd().format(DateTime.parse(
                               widget.transitionModel.purchaseDate,
                             )),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Date',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).date,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -181,9 +181,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                       textFieldType: TextFieldType.NAME,
                       readOnly: true,
                       initialValue: widget.transitionModel.customerName.isNotEmpty? widget.transitionModel.customerName: widget.transitionModel.customerPhone,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Customer Name',
+                        labelText: lang.S.of(context).customerName,
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -204,10 +204,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                 color: Color(0xffEAEFFA),
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
                                 child: Text(
-                                  'Item Added',
+                                  lang.S.of(context).itemAdded,
                                   style: TextStyle(fontSize: 16),
                                 ),
                               )),
@@ -284,10 +284,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
+                        child: Center(
                             child: Text(
-                          'Add Items',
-                          style: TextStyle(color: kMainColor, fontSize: 20),
+                              lang.S.of(context).addItems,
+                          style: const TextStyle(color: kMainColor, fontSize: 20),
                         )),
                       ),
                     ),
@@ -306,8 +306,8 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Sub Total',
+                                 Text(
+                                   lang.S.of(context).subTotal,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -322,9 +322,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Discount',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  lang.S.of(context).discount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -364,9 +364,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Total',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).total,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateSubtotal(total: providerData.getTotalAmount()).toString(),
@@ -380,9 +380,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  lang.S.of(context).paidAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: context.width() / 4,
@@ -412,8 +412,8 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Return Amount',
+                                 Text(
+                                   lang.S.of(context).returnAMount,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -428,9 +428,9 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Due Amount',
-                                  style: TextStyle(fontSize: 16),
+                                 Text(
+                                  lang.S.of(context).dueAmount,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
                                   calculateDueAmount(total: subTotal).toString(),
@@ -453,15 +453,15 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: const [
+                          children:  [
                             Text(
-                              'Payment Type',
-                              style: TextStyle(fontSize: 16, color: Colors.black54),
+                              lang.S.of(context).paymentType,
+                              style: const TextStyle(fontSize: 16, color: Colors.black54),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.wallet,
                               color: Colors.green,
                             )
@@ -501,11 +501,11 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'Description',
-                              hintText: 'Add Note',
-                              border: OutlineInputBorder(),
+                              labelText: lang.S.of(context).describtion,
+                              hintText: lang.S.of(context).addNote,
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                         ),
@@ -517,15 +517,15 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                             child: Center(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(
+                                children:  [
+                                  const Icon(
                                     FeatherIcons.camera,
                                     color: Colors.grey,
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(
-                                    'Image',
-                                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                                    lang.S.of(context).image,
+                                    style: const TextStyle(color: Colors.grey, fontSize: 16),
                                   )
                                 ],
                               ),
@@ -545,10 +545,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                               color: Colors.grey.shade300,
                               borderRadius: const BorderRadius.all(Radius.circular(30)),
                             ),
-                            child: const Center(
+                            child:  Center(
                               child: Text(
-                                'Cancel',
-                                style: TextStyle(fontSize: 18),
+                                lang.S.of(context).cacel,
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ),
                           ),
@@ -660,10 +660,10 @@ class _PurchaseListEditScreenState extends State<PurchaseListEditScreen> {
                                 color: kMainColor,
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Save',
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                  lang.S.of(context).save,
+                                  style: const TextStyle(fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),

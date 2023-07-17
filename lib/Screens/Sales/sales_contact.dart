@@ -6,7 +6,7 @@ import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Sales/add_sales.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
@@ -33,7 +33,7 @@ class _SalesContactState extends State<SalesContact> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Choose a Customer',
+            lang.S.of(context).choseACustomer,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -58,7 +58,7 @@ class _SalesContactState extends State<SalesContact> {
                               textFieldType: TextFieldType.NAME,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
-                                hintText: 'Search',
+                                hintText: lang.S.of(context).search,
                                 prefixIcon: Icon(
                                   Icons.search,
                                   color: kGreyTextColor.withOpacity(0.5),
@@ -107,14 +107,14 @@ class _SalesContactState extends State<SalesContact> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Walk-in Customer',
+                                        lang.S.of(context).walkInCustomer,
                                         style: GoogleFonts.poppins(
                                           color: Colors.black,
                                           fontSize: 15.0,
                                         ),
                                       ),
                                       Text(
-                                        'Guest',
+                                        lang.S.of(context).guest,
                                         style: GoogleFonts.poppins(
                                           color: Colors.grey,
                                           fontSize: 15.0,
@@ -195,7 +195,7 @@ class _SalesContactState extends State<SalesContact> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Due',
+                                                    lang.S.of(context).due,
                                                     style: GoogleFonts.poppins(
                                                       color: const Color(0xFFff5f00),
                                                       fontSize: 15.0,
@@ -252,14 +252,14 @@ class _SalesContactState extends State<SalesContact> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Walk-in Customer',
+                                    lang.S.of(context).walkInCustomer,
                                     style: GoogleFonts.poppins(
                                       color: Colors.black,
                                       fontSize: 15.0,
                                     ),
                                   ),
                                   Text(
-                                    'Guest',
+                                    lang.S.of(context).guest,
                                     style: GoogleFonts.poppins(
                                       color: Colors.grey,
                                       fontSize: 15.0,

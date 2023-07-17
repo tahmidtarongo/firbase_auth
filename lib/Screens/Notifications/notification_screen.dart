@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Notification',
+          lang.S.of(context).notification,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -31,16 +31,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          children: const [
+          children:  [
             NotificationCard(
-              title: 'Purchase Alarm',
+              title: lang.S.of(context).purchaseAlarm,
               iconColor: Colors.orange,
               icons: Icons.alarm,
               time: 'June 23, 2021',
               description: 'Lorem ipsum dolor sit amet, consectetur adip gravi iscing elit. Ultricies gravida scelerisque arcu facilisis duis in.',
             ),
             NotificationCard(
-              title: 'Purchase Confirmed',
+              title: lang.S.of(context).purchaseConfirmed,
               iconColor: Colors.purple,
               icons: Icons.notifications_none_outlined,
               time: 'June 23, 2021',

@@ -5,7 +5,7 @@ import 'package:mobile_pos/Screens/Home/home_screen.dart';
 import 'package:mobile_pos/Screens/Report/reports.dart';
 import 'package:mobile_pos/Screens/Settings/settings_screen.dart';
 import 'package:mobile_pos/subscription.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import '../Sales/sales_contact.dart';
 
@@ -52,19 +52,19 @@ class _HomeState extends State<Home> {
         selectedItemColor: kMainColor,
         // ignore: prefer_const_literals_to_create_immutables
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(FeatherIcons.home),
-            label: 'Home',
+           BottomNavigationBarItem(
+            icon: const Icon(FeatherIcons.home),
+            label: lang.S.of(context).home,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(FeatherIcons.shoppingCart),
-            label: 'Sales',
+           BottomNavigationBarItem(
+            icon: const Icon(FeatherIcons.shoppingCart),
+            label: lang.S.of(context).sales,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(FeatherIcons.fileText),
-            label: 'Reports',
+           BottomNavigationBarItem(
+            icon: const Icon(FeatherIcons.fileText),
+            label: lang.S.of(context).reports,
           ),
-          const BottomNavigationBarItem(icon: Icon(FeatherIcons.settings), label: 'Settings'),
+          BottomNavigationBarItem(icon: const Icon(FeatherIcons.settings), label: lang.S.of(context).setting),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

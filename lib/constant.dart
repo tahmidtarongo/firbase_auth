@@ -123,3 +123,5 @@ List<String> saleStats = [
   'Monthly',
   'Yearly',
 ];
+
+bool isRtl = false;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class EditSocialmedia extends StatefulWidget {
@@ -17,7 +17,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit Social Media',
+          lang.S.of(context).editSocailMedia,
           style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: 20.0,
@@ -39,7 +39,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
               iconWidget: const Image(
                 image: AssetImage('images/fb.png'),
               ),
-              socialMediaName: 'Facebook',
+              socialMediaName: lang.S.of(context).facebok,
             ),
           ),
           Padding(
@@ -48,7 +48,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
               iconWidget: const Image(
                 image: AssetImage('images/twitter.png'),
               ),
-              socialMediaName: 'Twitter',
+              socialMediaName: lang.S.of(context).twitter,
             ),
           ),
           Padding(
@@ -57,7 +57,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
               iconWidget: const Image(
                 image: AssetImage('images/insta.png'),
               ),
-              socialMediaName: 'Instagram',
+              socialMediaName: lang.S.of(context).instragram,
             ),
           ),
           Padding(
@@ -66,7 +66,7 @@ class _EditSocialmediaState extends State<EditSocialmedia> {
               iconWidget: const Image(
                 image: AssetImage('images/linkedin.png'),
               ),
-              socialMediaName: 'LinkedIN',
+              socialMediaName: lang.S.of(context).linkedIn,
             ),
           ),
         ],
@@ -115,7 +115,7 @@ class SocialMediaEditCard extends StatelessWidget {
                 color: Colors.white,
               ),
               Text(
-                'Link',
+                lang.S.of(context).link,
                 style: GoogleFonts.poppins(fontSize: 15.0, color: Colors.white),
               ),
             ],

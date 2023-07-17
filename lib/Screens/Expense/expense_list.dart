@@ -7,7 +7,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Expense/add_erxpense.dart';
 import 'package:mobile_pos/model/expense_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/all_expanse_provider.dart';
 import '../../constant.dart';
 
@@ -44,7 +44,7 @@ class _ExpenseListState extends State<ExpenseList> {
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Expense Report',
+            lang.S.of(context).expenseReport,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -73,7 +73,7 @@ class _ExpenseListState extends State<ExpenseList> {
                             controller: fromDateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'From Date',
+                              labelText: lang.S.of(context).formDate,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -102,7 +102,7 @@ class _ExpenseListState extends State<ExpenseList> {
                             controller: toDateTextEditingController,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: 'To Date',
+                              labelText: lang.S.of(context).toDate,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 onPressed: () async {
@@ -138,20 +138,20 @@ class _ExpenseListState extends State<ExpenseList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SizedBox(
+                         SizedBox(
                           width: 170,
                           child: Text(
-                            'Expense For',
+                            lang.S.of(context).expenseFor,
                           ),
                         ),
-                        const SizedBox(
+                         SizedBox(
                           width: 100,
-                          child: Text('Date'),
+                          child: Text(lang.S.of(context).date),
                         ),
                         Container(
                           alignment: Alignment.centerRight,
                           width: 70,
-                          child: const Text('Amount'),
+                          child:  Text(lang.S.of(context).amount),
                         )
                       ],
                     ),
@@ -231,9 +231,9 @@ class _ExpenseListState extends State<ExpenseList> {
                         ),
                       );
                     } else {
-                      return const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Center(child: Text('No Data Available')),
+                      return  Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Center(child: Text(lang.S.of(context).noDataAvailable)),
                       );
                     }
                   }, error: (Object error, StackTrace? stackTrace) {
@@ -262,8 +262,8 @@ class _ExpenseListState extends State<ExpenseList> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Total Expense',
+                       Text(
+                        lang.S.of(context).totalExpense,
                       ),
                       Text('\$$totalExpense')
                     ],
@@ -272,7 +272,7 @@ class _ExpenseListState extends State<ExpenseList> {
 
                 ///________button________________________________________________
                 ButtonGlobalWithoutIcon(
-                  buttontext: 'Add Expense',
+                  buttontext: lang.S.of(context).addExpense,
                   buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
                   onPressed: () {
                     const AddExpense().launch(context);

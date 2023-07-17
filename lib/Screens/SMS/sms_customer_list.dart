@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
@@ -47,7 +47,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
         appBar: AppBar(
           backgroundColor: kMainColor,
           title: Text(
-            'Parties List',
+            lang.S.of(context).partiesList,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -203,7 +203,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                       ),
                                                     ),
                                                     Text(
-                                                      'Due',
+                                                      lang.S.of(context).due,
                                                       style: GoogleFonts.poppins(
                                                         color: const Color(0xFFff5f00),
                                                         fontSize: 15.0,
@@ -252,7 +252,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                     child: ClipOval(
                                                       child: Text(
                                                         customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0, 1) : '',
-                                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                                       ),
                                                     ),
                                                   ),
@@ -291,7 +291,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                       ),
                                                     ),
                                                     Text(
-                                                      'Due',
+                                                      lang.S.of(context).due,
                                                       style: GoogleFonts.poppins(
                                                         color: const Color(0xFFff5f00),
                                                         fontSize: 15.0,
@@ -341,7 +341,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                     child: ClipOval(
                                                       child: Text(
                                                         customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0, 1) : '',
-                                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                                       ),
                                                     ),
                                                   ),
@@ -380,7 +380,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                       ),
                                                     ),
                                                     Text(
-                                                      'Due',
+                                                      lang.S.of(context).due,
                                                       style: GoogleFonts.poppins(
                                                         color: const Color(0xFFff5f00),
                                                         fontSize: 15.0,
@@ -431,7 +431,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                   child: ClipOval(
                                                     child: Text(
                                                       customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0, 1) : '',
-                                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 ),
@@ -470,7 +470,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Due',
+                                                    lang.S.of(context).due,
                                                     style: GoogleFonts.poppins(
                                                       color: const Color(0xFFff5f00),
                                                       fontSize: 15.0,
@@ -522,7 +522,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                   child: ClipOval(
                                                     child: Text(
                                                       customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0, 1) : '',
-                                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 ),
@@ -561,7 +561,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Due',
+                                                    lang.S.of(context).due,
                                                     style: GoogleFonts.poppins(
                                                       color: const Color(0xFFff5f00),
                                                       fontSize: 15.0,
@@ -610,7 +610,7 @@ class _SmsCustomerListState extends State<SmsCustomerList> with TickerProviderSt
           color: Colors.white,
           child: ButtonGlobal(
             iconWidget: Icons.add,
-            buttontext: 'Continue',
+            buttontext: lang.S.of(context).continu,
             iconColor: Colors.white,
             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
             onPressed: () {

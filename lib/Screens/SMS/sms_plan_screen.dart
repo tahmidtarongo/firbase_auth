@@ -6,7 +6,7 @@ import 'package:mobile_pos/Provider/sms_history_provider.dart';
 import 'package:mobile_pos/Screens/SMS/sms_plan_payment_screen.dart';
 import 'package:mobile_pos/model/sms_subscription_plan_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 import 'message_history.dart';
 
@@ -31,7 +31,7 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
           onTap: () => const MessageHistory().launch(context),
           contentPadding: EdgeInsets.zero,
           title: Text(
-            'Buy SMS',
+            lang.S.of(context).buySms,
             style: GoogleFonts.poppins(
               color: Colors.white,
             ),
@@ -44,7 +44,7 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
                 color: Colors.white,
               ),
               Text(
-                'History',
+                lang.S.of(context).history,
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                 ),
@@ -60,7 +60,7 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
         padding: const EdgeInsets.all(20.0),
         color: Colors.white,
         child: ButtonGlobalWithoutIcon(
-          buttontext: 'Pay with Bkash',
+          buttontext: lang.S.of(context).payWithBkash,
           buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(20.0)),
           onPressed: (){
             SmsPlanPaymentScreen(model: smsSubscriptionPlanModel).launch(context);
@@ -85,9 +85,9 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Your message remains',
-                        style: TextStyle(color: Colors.black, fontSize: 16.0),
+                       Text(
+                         lang.S.of(context).yourMessageRemains,
+                        style: const TextStyle(color: Colors.black, fontSize: 16.0),
                       ),
                       Text(
                         widget.smsBalance,
@@ -114,9 +114,9 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
                                         package[i].numberOfSMS.toString(),
                                         style: const TextStyle(color: kMainColor, fontSize: 25.0, fontWeight: FontWeight.w600, letterSpacing: 2.0),
                                       ),
-                                      const Text(
-                                        'SMS',
-                                        style: TextStyle(color: kMainColor, fontSize: 18.0, letterSpacing: 4.0),
+                                       Text(
+                                         lang.S.of(context).sms,
+                                        style: const TextStyle(color: kMainColor, fontSize: 18.0, letterSpacing: 4.0),
                                       )
                                     ],
                                   ),

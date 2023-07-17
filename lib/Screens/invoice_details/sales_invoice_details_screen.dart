@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_provider.dart';
 // ignore: library_prefixes
 import '../../constant.dart' as mainConstant;
@@ -80,7 +80,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                   Row(
                     children: [
                       Text(
-                        'BILL To',
+                        lang.S.of(context).billTo,
                         style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
@@ -130,25 +130,25 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     child: Row(
                       children: [
                         Text(
-                          'Product',
+                          lang.S.of(context).product,
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         Text(
-                          'Quantity',
+                          lang.S.of(context).quantity,
                           maxLines: 1,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         Text(
-                          'Unit Price',
+                          lang.S.of(context).unitPirce,
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         Text(
-                          'Total Price',
+                          lang.S.of(context).totalPrice,
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                         ),
@@ -207,7 +207,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Sub Total',
+                        lang.S.of(context).subTotal,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -228,7 +228,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Total Vat',
+                        lang.S.of(context).totalVat,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -249,7 +249,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Discount',
+                        lang.S.of(context).discount,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -270,7 +270,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Delivery Charge',
+                        lang.S.of(context).deliveryCharge,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -291,7 +291,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Total Payable',
+                        lang.S.of(context).totalPayable,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       ),
@@ -312,7 +312,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Paid',
+                        lang.S.of(context).paid,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -333,7 +333,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Due',
+                        lang.S.of(context).due,
                         maxLines: 1,
                         style: kTextStyle.copyWith(color: kGreyTextColor),
                       ),
@@ -356,7 +356,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                   const SizedBox(height: 10.0),
                   Center(
                     child: Text(
-                      'Thank you for your purchase',
+                      lang.S.of(context).thankYouForYourPurchase,
                       maxLines: 1,
                       style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
@@ -383,10 +383,10 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:  [
                         Icon(Icons.close,color: Colors.white,),
                         Text(
-                          'Cancel',
+                          lang.S.of(context).cacel,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -431,7 +431,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                                 isConnect ? finish(context) : toast('Try Again');
                                               },
                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                              subtitle: const Text("Click to connect"),
+                                              subtitle:  Text(lang.S.of(context).clickToConnect),
                                             );
                                           },
                                         ),
@@ -442,9 +442,9 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                           onTap: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Center(
+                                          child:  Center(
                                             child: Text(
-                                              'Cancel',
+                                              lang.S.of(context).cacel,
                                               style: TextStyle(color: mainConstant.kMainColor),
                                             ),
                                           ),
@@ -469,10 +469,10 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children:  [
                           Icon(Icons.print,color: Colors.white,),
                           Text(
-                            'Print',
+                            lang.S.of(context).print,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,

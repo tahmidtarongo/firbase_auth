@@ -11,7 +11,7 @@ import 'package:mobile_pos/Screens/SMS/sms_plan_screen.dart';
 import 'package:mobile_pos/Screens/SMS/upload_nid.dart';
 import 'package:mobile_pos/model/sms_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import 'contact_list_screen.dart';
@@ -43,7 +43,7 @@ class _SendSmsState extends State<SendSms> {
               ? AppBar(
                   backgroundColor: kMainColor,
                   title: Text(
-                    'KYC Verification',
+                    lang.S.of(context).kycVerification,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                     ),
@@ -61,7 +61,7 @@ class _SendSmsState extends State<SendSms> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Send SMS',
+                          lang.S.of(context).sendSms,
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                           ),
@@ -84,7 +84,7 @@ class _SendSmsState extends State<SendSms> {
                           color: Colors.white,
                         ),
                         Text(
-                          'History',
+                          lang.S.of(context).history,
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                           ),
@@ -110,13 +110,13 @@ class _SendSmsState extends State<SendSms> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            const Text(
-                              'Identity Verify',
-                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                             Text(
+                               lang.S.of(context).identityVerify,
+                              style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
                             ),
-                            const Text(
-                              'You need to identity verify before buying messages',
-                              style: TextStyle(color: kGreyTextColor, fontSize: 12.0),
+                             Text(
+                              lang.S.of(context).youNeedToIdentityVerifyBeforeYouBuying,
+                              style: const TextStyle(color: kGreyTextColor, fontSize: 12.0),
                             ),
                             const SizedBox(
                               height: 20.0,
@@ -135,26 +135,26 @@ class _SendSmsState extends State<SendSms> {
                                     children: [
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
-                                        children: const [
-                                          CircleAvatar(
+                                        children:  [
+                                          const CircleAvatar(
                                             backgroundColor: kMainColor,
                                             child: Icon(LineIcons.identification_card_1),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 6.0,
                                           ),
                                           Text(
-                                            'Goverment ID',
-                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18.0),
+                                            lang.S.of(context).govermentId,
+                                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18.0),
                                           ),
                                         ],
                                       ),
                                       const SizedBox(
                                         height: 10.0,
                                       ),
-                                      const Text(
-                                        'Take a driver\'s license, national identity card or passport photo',
-                                        style: TextStyle(
+                                       Text(
+                                        lang.S.of(context).takeADriveruser,
+                                        style: const TextStyle(
                                           color: kGreyTextColor,
                                         ),
                                         textAlign: TextAlign.center,
@@ -165,15 +165,15 @@ class _SendSmsState extends State<SendSms> {
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
-                                        children: const [
-                                          Icon(
+                                        children:  [
+                                          const Icon(
                                             Icons.add_circle_outline_rounded,
                                             color: kMainColor,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 4.0,
                                           ),
-                                          Text('Add Document', style: TextStyle(color: kMainColor, decoration: TextDecoration.underline)),
+                                          Text(lang.S.of(context).addDucument, style: const TextStyle(color: kMainColor, decoration: TextDecoration.underline)),
                                         ],
                                       ).onTap(() {
                                         const UploadNid().launch(context);
@@ -211,14 +211,14 @@ class _SendSmsState extends State<SendSms> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children:  [
+                                        const Icon(
                                           Icons.person_rounded,
                                           color: kGreyTextColor,
                                         ),
                                         Text(
-                                          'Customer',
-                                          style: TextStyle(color: kGreyTextColor),
+                                          lang.S.of(context).customer,
+                                          style: const TextStyle(color: kGreyTextColor),
                                         ),
                                       ],
                                     ),
@@ -236,14 +236,14 @@ class _SendSmsState extends State<SendSms> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children:  [
+                                        const Icon(
                                           Icons.person_rounded,
                                           color: kGreyTextColor,
                                         ),
                                         Text(
-                                          'Supplier',
-                                          style: TextStyle(color: kGreyTextColor),
+                                          lang.S.of(context).supplier,
+                                          style: const TextStyle(color: kGreyTextColor),
                                         ),
                                       ],
                                     ),
@@ -259,14 +259,14 @@ class _SendSmsState extends State<SendSms> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children:  [
+                                        const Icon(
                                           Icons.person_rounded,
                                           color: kGreyTextColor,
                                         ),
                                         Text(
-                                          'Dealer',
-                                          style: TextStyle(color: kGreyTextColor),
+                                          lang.S.of(context).dealer,
+                                          style: const TextStyle(color: kGreyTextColor),
                                         ),
                                       ],
                                     ),
@@ -282,14 +282,14 @@ class _SendSmsState extends State<SendSms> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children:  [
+                                        const Icon(
                                           Icons.person_rounded,
                                           color: kGreyTextColor,
                                         ),
                                         Text(
-                                          'Wholesaler',
-                                          style: TextStyle(color: kGreyTextColor),
+                                          lang.S.of(context).wholSeller,
+                                          style: const TextStyle(color: kGreyTextColor),
                                         ),
                                       ],
                                     ),
@@ -328,7 +328,7 @@ class _SendSmsState extends State<SendSms> {
                                   ),
                                 ),
                                 labelText: '',
-                                hintText: 'Enter Phone number',
+                                hintText: lang.S.of(context).enterPhoneNumber,
                                 hintStyle: TextStyle(color: kGreyTextColor.withOpacity(0.5)),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: kGreyTextColor.withOpacity(0.2)),
@@ -387,7 +387,7 @@ class _SendSmsState extends State<SendSms> {
                                   decoration: InputDecoration(
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     labelText: '',
-                                    hintText: 'Enter message content',
+                                    hintText: lang.S.of(context).enterMessageContent,
                                     suffixIcon: const Padding(
                                       padding: EdgeInsets.only(top: 100.0, right: 10.0),
                                       child: Text(
@@ -422,7 +422,7 @@ class _SendSmsState extends State<SendSms> {
                             ),
                           ),
                           ButtonGlobalWithoutIcon(
-                            buttontext: 'Send Message',
+                            buttontext: lang.S.of(context).sendMessage,
                             buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: BorderRadius.circular(20.0)),
                             onPressed: () async {
                               EasyLoading.show(status: 'Sending Sms');
@@ -465,7 +465,7 @@ class _SendSmsState extends State<SendSms> {
                                 ),
                                 Expanded(
                                     child: ButtonGlobalWithoutIcon(
-                                  buttontext: 'Buy SMS',
+                                  buttontext: lang.S.of(context).buySms,
                                   buttonDecoration: kButtonDecoration.copyWith(color: kAlertColor, borderRadius: BorderRadius.circular(20.0)),
                                   onPressed: null,
                                   buttonTextColor: Colors.white,

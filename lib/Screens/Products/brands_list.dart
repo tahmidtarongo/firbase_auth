@@ -7,7 +7,7 @@ import 'package:mobile_pos/Screens/Products/Model/brands_model.dart';
 import 'package:mobile_pos/Screens/Products/add_brans.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
 
 // ignore: must_be_immutable
@@ -27,7 +27,7 @@ class _BrandsListState extends State<BrandsList> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Brands',
+          lang.S.of(context).brand,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20.0,
@@ -55,7 +55,7 @@ class _BrandsListState extends State<BrandsList> {
                         textFieldType: TextFieldType.NAME,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
-                          hintText: 'Search',
+                          hintText: lang.S.of(context).search,
                           prefixIcon: Icon(
                             Icons.search,
                             color: kGreyTextColor.withOpacity(0.5),

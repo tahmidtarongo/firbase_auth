@@ -4,6 +4,7 @@ import 'package:mobile_pos/Screens/Report/Screens/due_report_screen.dart';
 import 'package:mobile_pos/Screens/Report/Screens/purchase_report.dart';
 import 'package:mobile_pos/Screens/Report/Screens/sales_report_screen.dart';
 import 'package:mobile_pos/constant.dart';
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:nb_utils/nb_utils.dart';
 
 class Reports extends StatefulWidget {
@@ -21,13 +22,12 @@ class _ReportsState extends State<Reports> {
       backgroundColor: kMainColor,
       appBar: AppBar(
         title: Text(
-          'Reports',
+          lang.S.of(context).reports,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20.0,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: kMainColor,
         elevation: 0.0,
@@ -43,19 +43,19 @@ class _ReportsState extends State<Reports> {
                   const PurchaseReportScreen().launch(context);
                 },
                 iconPath: 'images/purchase.png',
-                title: 'Purchase Report'),
+                title: lang.S.of(context).purchaseRepoet),
             ReportCard(
                 pressed: () {
                   const SalesReportScreen().launch(context);
                 },
                 iconPath: 'images/sales.png',
-                title: 'Sales Report'),
+                title: lang.S.of(context).saleReports),
             ReportCard(
                 pressed: () {
                   const DueReportScreen().launch(context);
                 },
                 iconPath: 'images/duelist.png',
-                title: 'Due Report'),
+                title: lang.S.of(context).dueReports),
           ],
         ),
       ),

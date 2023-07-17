@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/SMS/send_sms_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class NidVerification extends StatefulWidget {
@@ -20,7 +20,7 @@ class _NidVerificationState extends State<NidVerification> {
       appBar: AppBar(
         backgroundColor: kMainColor,
         title: Text(
-          'KYC Verification',
+          lang.S.of(context).kycVerification,
           style: GoogleFonts.poppins(
             color: Colors.white,
           ),
@@ -36,8 +36,8 @@ class _NidVerificationState extends State<NidVerification> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            const  Text('Identity Verify',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
-            const Text('You need to identity verify before buying messages',style: TextStyle(color: kGreyTextColor,fontSize: 12.0),),
+            Text(lang.S.of(context).identityVerify,style: const TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
+            Text(lang.S.of(context).youNeedToIdentityVerifyBeforeYouBuying,style: const TextStyle(color: kGreyTextColor,fontSize: 12.0),),
             const SizedBox(height: 20.0,),
             Card(
               elevation: 2.0,
@@ -53,25 +53,25 @@ class _NidVerificationState extends State<NidVerification> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CircleAvatar(
+                        children:  [
+                          const CircleAvatar(
                             backgroundColor: kMainColor,
                             child: Icon(LineIcons.identification_card_1),
                           ),
-                          SizedBox(width: 6.0,),
-                          Text('Goverment ID',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 18.0),),
+                          const SizedBox(width: 6.0,),
+                          Text(lang.S.of(context).govermentId,style: const TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 18.0),),
 
                         ],
                       ),
                       const SizedBox(height: 10.0,),
-                      const Text('Take a driver\'s license, national identity card or passport photo',style: TextStyle(color: kGreyTextColor,),textAlign: TextAlign.center,maxLines: 2,),
+                      Text(lang.S.of(context).takeADriveruser,style: const TextStyle(color: kGreyTextColor,),textAlign: TextAlign.center,maxLines: 2,),
                       const SizedBox(height: 20.0,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.add_circle_outline_rounded,color: kMainColor,),
-                          SizedBox(width: 4.0,),
-                          Text('Add Document',style: TextStyle(color: kMainColor,decoration: TextDecoration.underline)),
+                        children:  [
+                          const Icon(Icons.add_circle_outline_rounded,color: kMainColor,),
+                          const SizedBox(width: 4.0,),
+                          Text(lang.S.of(context).addDucument,style: const TextStyle(color: kMainColor,decoration: TextDecoration.underline)),
                         ],
                       ).onTap((){
                         const SendSms().launch(context);

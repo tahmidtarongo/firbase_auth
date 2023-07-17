@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
@@ -72,7 +72,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
           backgroundColor: kMainColor,
           appBar: AppBar(
             title: Text(
-              'Ledger',
+              lang.S.of(context).ledger,
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 20.0,
@@ -92,21 +92,21 @@ class _LedgerScreenState extends State<LedgerScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TabBar(
+                     TabBar(
                       indicatorColor: Colors.blueAccent,
                       labelColor: kMainColor,
                       tabs: [
                         Tab(
-                          text: 'Retailer',
+                          text: lang.S.of(context).retailer,
                         ),
                         Tab(
-                          text: 'Wholesaler',
+                          text: lang.S.of(context).wholSeller,
                         ),
                         Tab(
-                          text: 'Dealer',
+                          text: lang.S.of(context).dealer,
                         ),
                         Tab(
-                          text: 'Supplier',
+                          text: lang.S.of(context).supplier,
                         ),
                       ],
                     ),
@@ -159,7 +159,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Due',
+                                                lang.S.of(context).due,
                                                 style: GoogleFonts.poppins(
                                                   color: const Color(0xFFff5f00),
                                                   fontSize: 15.0,
@@ -228,7 +228,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Due',
+                                                lang.S.of(context).due,
                                                 style: GoogleFonts.poppins(
                                                   color: const Color(0xFFff5f00),
                                                   fontSize: 15.0,
@@ -294,7 +294,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Due',
+                                                lang.S.of(context).due,
                                                 style: GoogleFonts.poppins(
                                                   color: const Color(0xFFff5f00),
                                                   fontSize: 15.0,
@@ -360,7 +360,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Due',
+                                                lang.S.of(context).due,
                                                 style: GoogleFonts.poppins(
                                                   color: const Color(0xFFff5f00),
                                                   fontSize: 15.0,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
 
 class WarrantyScreen extends StatefulWidget {
@@ -17,8 +17,8 @@ class _WarrantyScreenState extends State<WarrantyScreen> {
     return Scaffold(
       backgroundColor: kMainColor,
       appBar: AppBar(
-        title: const Text(
-          'Sales List',
+        title:  Text(
+          lang.S.of(context).salesList,
           style: TextStyle(
             color: Colors.white,
             fontSize: 20.0,
@@ -40,7 +40,7 @@ class _WarrantyScreenState extends State<WarrantyScreen> {
                 textFieldType: TextFieldType.NAME,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
-                  hintText: 'Search',
+                  hintText: lang.S.of(context).search,
                   prefixIcon: Icon(
                     Icons.search,
                     color: kGreyTextColor.withOpacity(0.5),
