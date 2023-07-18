@@ -51,7 +51,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     text: Colors.white,
                     title: lang.S.of(context).sales,
                     press: () {
-                      Navigator.pushNamed(context, '/SalesList');
+                      Navigator.pushNamed(context, '/Sale List');
                     },
                   ),
                   const SizedBox(

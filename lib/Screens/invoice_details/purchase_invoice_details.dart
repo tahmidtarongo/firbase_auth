@@ -44,7 +44,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       width: 50.0,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('images/logoPos.png'),
+                          image: AssetImage('images/mobi_pos.png'),
                         ),
                       ),
                     ),

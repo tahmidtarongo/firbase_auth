@@ -414,7 +414,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startNewSale": MessageLookupByLibrary.simpleMessage("Start New Sale"),
         "startTypingToSearch":
             MessageLookupByLibrary.simpleMessage("Start typing to search"),
-        "stockList": MessageLookupByLibrary.simpleMessage("StockList"),
+        "stockList": MessageLookupByLibrary.simpleMessage("Stock List"),
         "stocks": MessageLookupByLibrary.simpleMessage("Stocks"),
         "subTotal": MessageLookupByLibrary.simpleMessage("Sub Total"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),

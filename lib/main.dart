@@ -115,8 +115,8 @@ class MyApp extends StatelessWidget {
                     // '/AddProducts': (context) => AddProduct(),
                     // '/UpdateProducts': (context) => const UpdateProduct(),
 
-                    '/Products': (context) => const ProductList(),
-                    '/SalesList': (context) => const SalesScreen(),
+                    '/Product': (context) => const ProductList(),
+                    '/Sale List': (context) => const SalesListScreen(),
                     // ignore: missing_required_param
                     '/SalesDetails': (context) => SalesDetails(),
                     // ignore: prefer_const_constructors
@@ -130,8 +130,7 @@ class MyApp extends StatelessWidget {
                     '/Purchase': (context) => const PurchaseContacts(),
                     '/Delivery': (context) => const DeliveryAddress(),
                     '/Reports': (context) => const Reports(),
-                    '/Due List': (context) =>
-                        const DueCalculationContactScreen(),
+                    '/Due List': (context) => const DueCalculationContactScreen(),
                     '/PaymentOptions': (context) => const PaymentOptions(),
                     '/Sales List': (context) => const SalesListScreen(),
                     '/Purchase List': (context) => const PurchaseListScreen(),

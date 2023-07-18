@@ -9,6 +9,7 @@ import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
 import 'package:mobile_pos/Screens/Settings/invoice_settings.dart';
 import 'package:mobile_pos/Screens/Settings/live_chat_support_screen.dart';
+import 'package:mobile_pos/Screens/SplashScreen/splash_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:restart_app/restart_app.dart';
 import '../../Provider/profile_provider.dart';
@@ -701,7 +702,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           EasyLoading.show(status: 'Log out');
                           await _signOut();
                           Future.delayed(const Duration(milliseconds: 1000), () {
-                            Restart.restartApp();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const SplashScreen()));
+                            // Restart.restartApp();
                             // const SignInScreen().launch(context);
                           });
                           // Phoenix.rebirth(context);

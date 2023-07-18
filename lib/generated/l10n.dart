@@ -70,10 +70,10 @@ class S {
     );
   }
 
-  /// `StockList`
+  /// `Stock List`
   String get stockList {
     return Intl.message(
-      'StockList',
+      'Stock List',
       name: 'stockList',
       desc: '',
       args: [],

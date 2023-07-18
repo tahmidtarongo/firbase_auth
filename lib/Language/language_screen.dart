@@ -54,7 +54,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        border: Border.all(color: kBorderColorTextField, width: 0.5),),
+                        border: Border.all(color: kBorderColorTextField, width: 0.7),),
                         // boxShadow: const [BoxShadow(color: kDarkWhite, offset: Offset(5, 5), spreadRadius: 2.0, blurRadius: 10.0)]),
                     child: ListTile(
                       horizontalTitleGap: 5,

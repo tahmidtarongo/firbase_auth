@@ -54,7 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> updateNotifier() async {
     final prefs = await SharedPreferences.getInstance();
     isRtl = prefs.getBool('isRtl') ?? false;
-    final int? customerId = prefs.getInt('customerId');
     await Future.delayed(const Duration(seconds: 3));
     if (currentUser != null) {
       isPrintEnable = prefs.getBool('isPrintEnable') ?? false;

@@ -138,21 +138,11 @@ class _ExpenseListState extends State<ExpenseList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         SizedBox(
-                          width: 170,
-                          child: Text(
-                            lang.S.of(context).expenseFor,
-                          ),
-                        ),
-                         SizedBox(
-                          width: 100,
-                          child: Text(lang.S.of(context).date),
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          width: 70,
-                          child:  Text(lang.S.of(context).amount),
-                        )
+                         Text(
+                           lang.S.of(context).expenseFor,
+                         ),
+                         Text(lang.S.of(context).date),
+                        Text(lang.S.of(context).amount)
                       ],
                     ),
                   ),

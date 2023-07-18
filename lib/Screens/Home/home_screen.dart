@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    freeIcons=getFreeIcons(context: context);
     return SafeArea(
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
@@ -390,12 +391,13 @@ class _HomeGridCardsState extends State<HomeGridCards> {
           children: [
             TextButton(
               onPressed: () async {
+                print(widget.gridItems.title);
                 ref.refresh(customerProvider);
                 ref.refresh(dueTransactionProvider);
                 ref.refresh(purchaseTransitionProvider);
                 ref.refresh(transitionProvider);
                 await Subscription.subscriptionChecker(item: widget.gridItems.title)
-                    ? Navigator.of(context).pushNamed('/${widget.gridItems.title}')
+                    ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');
               },
               child: Column(
