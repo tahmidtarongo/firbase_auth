@@ -42,10 +42,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('images/logoandname.png'),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
+                  Image.asset('images/sblogo.png',height: 150,width: 150,),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Form(
@@ -56,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             decoration:  InputDecoration(
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               labelText: lang.S.of(context).email,
                               hintText: lang.S.of(context).enterYourEmailAddress,
                             ),

@@ -11,7 +11,7 @@
 
 
    <application
-        android:label="MOBIPOS"
+        android:label="Acnoo POS"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

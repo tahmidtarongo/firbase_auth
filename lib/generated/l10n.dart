@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Powered By MOBI POS`
+  /// `Powered By Smart Biashara`
   String get powerdedByMobiPos {
     return Intl.message(
-      'Powered By MOBI POS',
+      'Powered By Smart Biashara',
       name: 'powerdedByMobiPos',
       desc: '',
       args: [],
@@ -3240,10 +3240,10 @@ class S {
     );
   }
 
-  /// `MOBI POS app is free, easy to use. In fact, it's one of the best  POS systems around the world.`
+  /// `Smart Biashara  app is free, easy to use. In fact, it's one of the best  POS systems around the world.`
   String get mobiPosAppIsFree {
     return Intl.message(
-      'MOBI POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
+      'Smart Biashara  app is free, easy to use. In fact, it\'s one of the best  POS systems around the world.',
       name: 'mobiPosAppIsFree',
       desc: '',
       args: [],
@@ -3260,10 +3260,10 @@ class S {
     );
   }
 
-  /// `Features are the important part which makes Maan  POS different from traditional solutions.`
+  /// `Features are the important part which makes Smart Biashara  different from traditional solutions.`
   String get featureAreTheImportant {
     return Intl.message(
-      'Features are the important part which makes Maan  POS different from traditional solutions.',
+      'Features are the important part which makes Smart Biashara  different from traditional solutions.',
       name: 'featureAreTheImportant',
       desc: '',
       args: [],
@@ -3280,10 +3280,10 @@ class S {
     );
   }
 
-  /// `MOBI POS is a complete business solution with stock, account, sales, expense & loss/profit.`
+  /// `Smart Biashara  is a complete business solution with stock, account, sales, expense & loss/profit.`
   String get mobiPosIsaCompleteBusinesSolution {
     return Intl.message(
-      'MOBI POS is a complete business solution with stock, account, sales, expense & loss/profit.',
+      'Smart Biashara  is a complete business solution with stock, account, sales, expense & loss/profit.',
       name: 'mobiPosIsaCompleteBusinesSolution',
       desc: '',
       args: [],
@@ -3320,10 +3320,10 @@ class S {
     );
   }
 
-  /// `Use MOBI POS`
+  /// `Use Smart Biashara`
   String get useMobiPos {
     return Intl.message(
-      'Use MOBI POS',
+      'Use Smart Biashara',
       name: 'useMobiPos',
       desc: '',
       args: [],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // const kMainColor = Color(0xFF3F8CFF);
-const kMainColor = Color(0xff3949AB);
+// const kMainColor = Color(0xff3949AB);
+const kMainColor = Color(0xff04A65A);
 const kGreyTextColor = Color(0xFF828282);
 const kBorderColorTextField = Color(0xFFC2C2C2);
 const kDarkWhite = Color(0xFFF1F7F7);

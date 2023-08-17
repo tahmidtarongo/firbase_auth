@@ -210,7 +210,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "facebok": MessageLookupByLibrary.simpleMessage("Facebook"),
         "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
         "featureAreTheImportant": MessageLookupByLibrary.simpleMessage(
-            "Features are the important part which makes Maan  POS different from traditional solutions."),
+            "Features are the important part which makes Smart Biashara  different from traditional solutions."),
         "feedBack": MessageLookupByLibrary.simpleMessage("FeedBack"),
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "fontSide": MessageLookupByLibrary.simpleMessage("Font Side"),
@@ -268,9 +268,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "messageHistory":
             MessageLookupByLibrary.simpleMessage("Message History"),
         "mobiPosAppIsFree": MessageLookupByLibrary.simpleMessage(
-            "MOBI POS app is free, easy to use. In fact, it\'s one of the best  POS systems around the world."),
+            "Smart Biashara  app is free, easy to use. In fact, it\'s one of the best  POS systems around the world."),
         "mobiPosIsaCompleteBusinesSolution": MessageLookupByLibrary.simpleMessage(
-            "MOBI POS is a complete business solution with stock, account, sales, expense & loss/profit."),
+            "Smart Biashara  is a complete business solution with stock, account, sales, expense & loss/profit."),
         "monthly": MessageLookupByLibrary.simpleMessage("Monthly"),
         "moreInfo": MessageLookupByLibrary.simpleMessage("More Info"),
         "name": MessageLookupByLibrary.simpleMessage("Enter Your Name."),
@@ -329,7 +329,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Please enter your email address below to receive password Reset Link."),
         "powerdedByMobiPos":
-            MessageLookupByLibrary.simpleMessage("Powered By MOBI POS"),
+            MessageLookupByLibrary.simpleMessage("Powered By Smart Biashara"),
         "premiumPlan": MessageLookupByLibrary.simpleMessage("Premium plan"),
         "previousPayAmounts":
             MessageLookupByLibrary.simpleMessage("Previous Pay Amounts"),
@@ -463,7 +463,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Update your profile to connect your customer with better impression"),
         "upplier": MessageLookupByLibrary.simpleMessage("Supplier"),
-        "useMobiPos": MessageLookupByLibrary.simpleMessage("Use MOBI POS"),
+        "useMobiPos":
+            MessageLookupByLibrary.simpleMessage("Use Smart Biashara"),
         "verifyOtp": MessageLookupByLibrary.simpleMessage("Verifying OTP"),
         "verifyPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Verify Phone Number"),
