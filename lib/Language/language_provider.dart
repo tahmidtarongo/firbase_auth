@@ -7,8 +7,8 @@ class LanguageChangeProvider with ChangeNotifier {
 
   Locale get currentLocale => _currentLocale;
 
-  void changeLocale(String locale, String? script ) {
-    _currentLocale = Locale.fromSubtags(languageCode: locale,scriptCode: script);
+  void changeLocale(String locale) {
+    _currentLocale = Locale(locale);
     notifyListeners();
   }
 }

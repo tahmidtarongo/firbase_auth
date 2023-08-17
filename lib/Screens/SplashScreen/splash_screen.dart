@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> updateNotifier() async {
     final prefs = await SharedPreferences.getInstance();
     isRtl = prefs.getBool('isRtl') ?? false;
-    await Future.delayed(const Duration(seconds: 20));
+    await Future.delayed(const Duration(seconds: 3));
     if (currentUser != null) {
       isPrintEnable = prefs.getBool('isPrintEnable') ?? false;
       const Home().launch(context, isNewTask: true);
@@ -90,8 +90,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: context.height() / 4,
                 decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(360))),
                 child: const Image(
+                  height: 400,
+                  width: 400,
                   image: AssetImage(
-                    'images/sblogo.png',
+                    'images/sb.png',
                   ),
                 ),
               ),

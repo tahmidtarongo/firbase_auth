@@ -62,7 +62,7 @@ void configLoading() {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "MOBIPOS",
+    name: "Smart Biashara",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAppCheck.instance.activate();
@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                     GlobalCupertinoLocalizations.delegate,
                   ],
                   supportedLocales: S.delegate.supportedLocales,
-                  title: 'SalesPro',
+                  title: 'smart biashara',
                   initialRoute: '/',
                   builder: EasyLoading.init(),
                   routes: {

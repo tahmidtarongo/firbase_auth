@@ -684,7 +684,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: Colors.black,
                           fontSize: 18.0,
                         ),),
-                        leading: const Icon(Icons.translate,color: kMainColor,),
+                         leading: Image.asset('images/en.png'),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
                           color: kGreyTextColor,
@@ -722,7 +722,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              'MOBI POS V-$appVersion',
+                              'Smart Biashara V-$appVersion',
                               style: GoogleFonts.poppins(
                                 color: kGreyTextColor,
                                 fontSize: 16.0,

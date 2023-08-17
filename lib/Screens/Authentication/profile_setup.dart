@@ -346,7 +346,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         });
                       }, // Optional
                       textFieldType: TextFieldType.NAME,
-                      decoration: const InputDecoration(labelText: 'Company & Shop Name', border: OutlineInputBorder()),
+                      decoration:  InputDecoration(labelText: lang.S.of(context).companyAndShopName, border: OutlineInputBorder()),
                     ),
                   ),
                   Padding(
