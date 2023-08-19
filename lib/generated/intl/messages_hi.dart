@@ -375,7 +375,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendMessage": MessageLookupByLibrary.simpleMessage("संदेश भेजें"),
         "sendResetLink":
             MessageLookupByLibrary.simpleMessage("रीसेट लिंक भेजें"),
-        "sendSms": MessageLookupByLibrary.simpleMessage("SMS भेजें?"),
+        "sendSms": MessageLookupByLibrary.simpleMessage("एसएमएस भेजें"),
         "setUpYourProfile":
             MessageLookupByLibrary.simpleMessage("अपनी प्रोफ़ाइल सेट करें"),
         "setting": MessageLookupByLibrary.simpleMessage("सेटिंग्स"),
@@ -467,7 +467,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youHaveGotAnEmail":
             MessageLookupByLibrary.simpleMessage("आपके पास एक ईमेल है"),
         "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
-            "आप सफलतापूर्वक अपने खाते में लॉग इन हो गए हैं। MOBIPOS के साथ रहें।"),
+            "आप सफलतापूर्वक अपने खाते में लॉग इन हो गए हैं। Smart Biashara  के साथ रहें।"),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage(
                 "खरीदारी करने से पहले आपको पहचान सत्यापित करनी होगी"),

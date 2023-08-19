@@ -396,8 +396,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yesDeleteForever": MessageLookupByLibrary.simpleMessage("是的，永久删除"),
         "youAreUsing": MessageLookupByLibrary.simpleMessage("您正在使用"),
         "youHaveGotAnEmail": MessageLookupByLibrary.simpleMessage("您收到一封电子邮件"),
-        "youHaveSuccefulyLogin":
-            MessageLookupByLibrary.simpleMessage("您已成功登录您的账户。请使用MOBIPOS。"),
+        "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
+            "您已成功登录您的账户。请使用Smart Biashara 。"),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage("在购买短信之前，您需要进行身份验证"),
         "yourMessageRemains": MessageLookupByLibrary.simpleMessage("您的消息剩余"),

@@ -527,7 +527,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youHaveGotAnEmail": MessageLookupByLibrary.simpleMessage(
             "Has recibido un correo electrónico"),
         "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
-            "Has iniciado sesión correctamente en tu cuenta. Mantente con MOBIPOS."),
+            "Has iniciado sesión correctamente en tu cuenta. Mantente con Smart Biashara ."),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage(
                 "Necesitas verificar tu identidad antes de comprar por SMS"),

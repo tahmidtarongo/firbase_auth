@@ -495,7 +495,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youHaveGotAnEmail":
             MessageLookupByLibrary.simpleMessage("আপনি একটি ইমেল পেয়েছেন"),
         "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
-            "আপনি সফলভাবে আপনার অ্যাকাউন্টে লগইন করেছেন৷ MOBIPOS এর সাথে থাকুন"),
+            "আপনি সফলভাবে আপনার অ্যাকাউন্টে লগইন করেছেন৷ Smart Biashara  এর সাথে থাকুন"),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage(
                 "আপনি ক্রয় করার আগে পরিচয় যাচাই করতে আপনার প্রয়োজন"),

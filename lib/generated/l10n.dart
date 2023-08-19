@@ -560,10 +560,10 @@ class S {
     );
   }
 
-  /// `You are successfully login into your account. Stay with MOBIPOS.`
+  /// `You are successfully login into your account. Stay with Smart Biashara .`
   String get youHaveSuccefulyLogin {
     return Intl.message(
-      'You are successfully login into your account. Stay with MOBIPOS.',
+      'You are successfully login into your account. Stay with Smart Biashara .',
       name: 'youHaveSuccefulyLogin',
       desc: '',
       args: [],
@@ -3509,12 +3509,28 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
       Locale.fromSubtags(languageCode: 'en'),
       Locale.fromSubtags(languageCode: 'ar'),
       Locale.fromSubtags(languageCode: 'bn'),
+      Locale.fromSubtags(languageCode: 'bs'),
+      Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'el'),
       Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'fi'),
       Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'he'),
       Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'hu'),
+      Locale.fromSubtags(languageCode: 'id'),
+      Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'ko'),
+      Locale.fromSubtags(languageCode: 'ms'),
+      Locale.fromSubtags(languageCode: 'pl'),
+      Locale.fromSubtags(languageCode: 'pt'),
+      Locale.fromSubtags(languageCode: 'ro'),
+      Locale.fromSubtags(languageCode: 'th'),
       Locale.fromSubtags(languageCode: 'tr'),
+      Locale.fromSubtags(languageCode: 'uk'),
+      Locale.fromSubtags(languageCode: 'vi'),
       Locale.fromSubtags(languageCode: 'zh'),
-      Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
     ];
   }
 

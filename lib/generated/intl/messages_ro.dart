@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a ro locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,7 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'ro';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -26,60 +26,63 @@ class MessageLookup extends MessageLookupByLibrary {
         "YourPackageWillExpireTodayPleasePurchaseagain":
             MessageLookupByLibrary.simpleMessage(
                 "Your Package Will Expire Today\n\nPlease Purchase again"),
-        "addBrand": MessageLookupByLibrary.simpleMessage("Add Brand"),
-        "addCategory": MessageLookupByLibrary.simpleMessage("Add Category"),
-        "addContact": MessageLookupByLibrary.simpleMessage("Add Contact"),
-        "addCustomer": MessageLookupByLibrary.simpleMessage("Add Customer"),
-        "addDelivery": MessageLookupByLibrary.simpleMessage("Add Delivery"),
-        "addDescription": MessageLookupByLibrary.simpleMessage("Add note"),
+        "addBrand": MessageLookupByLibrary.simpleMessage("Adăugați marcă"),
+        "addCategory":
+            MessageLookupByLibrary.simpleMessage("Adăugați categorie"),
+        "addContact": MessageLookupByLibrary.simpleMessage("Adăugați contact"),
+        "addCustomer": MessageLookupByLibrary.simpleMessage("Adăugați client"),
+        "addDelivery": MessageLookupByLibrary.simpleMessage("Adăugați livrare"),
+        "addDescription": MessageLookupByLibrary.simpleMessage("Adăugați notă"),
         "addDocumentId":
             MessageLookupByLibrary.simpleMessage("Add Document Id"),
         "addDucument": MessageLookupByLibrary.simpleMessage("Add Document"),
-        "addExpense": MessageLookupByLibrary.simpleMessage("Add Expense"),
-        "addExpenseCategory":
-            MessageLookupByLibrary.simpleMessage("Add Expense Category"),
+        "addExpense":
+            MessageLookupByLibrary.simpleMessage("Adăugați cheltuială"),
+        "addExpenseCategory": MessageLookupByLibrary.simpleMessage(
+            "Adăugați categorie de cheltuieli"),
         "addItems": MessageLookupByLibrary.simpleMessage("Add Items"),
         "addNewAddress":
-            MessageLookupByLibrary.simpleMessage("Add New Address"),
+            MessageLookupByLibrary.simpleMessage("Adăugați o adresă nouă"),
         "addNewProduct":
-            MessageLookupByLibrary.simpleMessage("Add New Product"),
-        "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
+            MessageLookupByLibrary.simpleMessage("Adăugați un produs nou"),
+        "addNote": MessageLookupByLibrary.simpleMessage("Adăugați notă"),
         "addPurchase": MessageLookupByLibrary.simpleMessage("Add Purchase"),
         "addSales": MessageLookupByLibrary.simpleMessage("Add Sales"),
         "addUnit": MessageLookupByLibrary.simpleMessage("Add Unit"),
-        "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "address": MessageLookupByLibrary.simpleMessage("Adresă"),
         "allBusinessSolution":
             MessageLookupByLibrary.simpleMessage("All business solutions"),
         "alreadyHaveAnAccounts":
-            MessageLookupByLibrary.simpleMessage("Already Have An Accounts"),
-        "amount": MessageLookupByLibrary.simpleMessage("Amount"),
-        "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+            MessageLookupByLibrary.simpleMessage("Deja aveți un cont"),
+        "amount": MessageLookupByLibrary.simpleMessage("Sumă"),
+        "apply": MessageLookupByLibrary.simpleMessage("Aplicați"),
         "areYourSureDeleteThisUser": MessageLookupByLibrary.simpleMessage(
-            "Are you sure to delete this user?"),
+            "Sunteți sigur că doriți să ștergeți acest utilizator?"),
         "backSide": MessageLookupByLibrary.simpleMessage("Back side"),
         "backToHome": MessageLookupByLibrary.simpleMessage("Back To Home"),
         "balance": MessageLookupByLibrary.simpleMessage("Balance"),
         "bangladesh": MessageLookupByLibrary.simpleMessage("Bangladesh"),
-        "billTo": MessageLookupByLibrary.simpleMessage("Bill To"),
-        "brand": MessageLookupByLibrary.simpleMessage("Brand"),
-        "brandName": MessageLookupByLibrary.simpleMessage("Brand Name"),
+        "billTo": MessageLookupByLibrary.simpleMessage("De plată către"),
+        "brand": MessageLookupByLibrary.simpleMessage("Marcă"),
+        "brandName": MessageLookupByLibrary.simpleMessage("Nume marcă"),
         "businessCategory":
-            MessageLookupByLibrary.simpleMessage("Business Category"),
+            MessageLookupByLibrary.simpleMessage("Categorie de afaceri"),
         "buyPremiumPlan":
             MessageLookupByLibrary.simpleMessage("Buy Premium Plan"),
         "buySms": MessageLookupByLibrary.simpleMessage("Buy Sms"),
-        "cacel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "call": MessageLookupByLibrary.simpleMessage("Call"),
+        "cacel": MessageLookupByLibrary.simpleMessage("Anulare"),
+        "call": MessageLookupByLibrary.simpleMessage("Apel"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
-        "capacity": MessageLookupByLibrary.simpleMessage("Capacity"),
-        "cash": MessageLookupByLibrary.simpleMessage("Cash"),
+        "capacity": MessageLookupByLibrary.simpleMessage("Capacitate"),
+        "cash": MessageLookupByLibrary.simpleMessage("Numerar"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
-        "category": MessageLookupByLibrary.simpleMessage("Category"),
-        "cateogryName": MessageLookupByLibrary.simpleMessage("Category Name"),
-        "change": MessageLookupByLibrary.simpleMessage("Change?"),
+        "category": MessageLookupByLibrary.simpleMessage("Categorie"),
+        "cateogryName": MessageLookupByLibrary.simpleMessage("Nume categorie"),
+        "change": MessageLookupByLibrary.simpleMessage("Schimbare?"),
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Change Password"),
-        "checkEmail": MessageLookupByLibrary.simpleMessage("Check Email"),
+        "checkEmail":
+            MessageLookupByLibrary.simpleMessage("Verificați emailul"),
         "choseACustomer":
             MessageLookupByLibrary.simpleMessage("Chose a Customer"),
         "choseASupplier":
@@ -88,75 +91,78 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose your features"),
         "clarence": MessageLookupByLibrary.simpleMessage("Clarence"),
         "clickToConnect":
-            MessageLookupByLibrary.simpleMessage("Click to connect"),
-        "close": MessageLookupByLibrary.simpleMessage("Close"),
-        "color": MessageLookupByLibrary.simpleMessage("Color"),
+            MessageLookupByLibrary.simpleMessage("Apăsați pentru a conecta"),
+        "close": MessageLookupByLibrary.simpleMessage("Închideți"),
+        "color": MessageLookupByLibrary.simpleMessage("Culoare"),
         "companyAddress":
-            MessageLookupByLibrary.simpleMessage("Company Address"),
-        "companyAndShopName":
-            MessageLookupByLibrary.simpleMessage("Company & Shop Name"),
+            MessageLookupByLibrary.simpleMessage("Adresa companiei"),
+        "companyAndShopName": MessageLookupByLibrary.simpleMessage(
+            "Numele companiei și magazinului"),
         "completeTransaction":
             MessageLookupByLibrary.simpleMessage("Complete Transaction"),
         "confirmPassword":
-            MessageLookupByLibrary.simpleMessage("Confirm Password"),
-        "congratulations":
-            MessageLookupByLibrary.simpleMessage("Congratulations"),
+            MessageLookupByLibrary.simpleMessage("Confirmare parolă"),
+        "congratulations": MessageLookupByLibrary.simpleMessage("Felicitări"),
         "contactUs": MessageLookupByLibrary.simpleMessage("Contact Us"),
-        "continu": MessageLookupByLibrary.simpleMessage("Continue"),
-        "country": MessageLookupByLibrary.simpleMessage("Country"),
+        "continu": MessageLookupByLibrary.simpleMessage("Continuați"),
+        "country": MessageLookupByLibrary.simpleMessage("Țară"),
         "createAFreeAccounts":
-            MessageLookupByLibrary.simpleMessage("Create a Free Account"),
+            MessageLookupByLibrary.simpleMessage("Creați un cont gratuit"),
         "currency": MessageLookupByLibrary.simpleMessage("Currency"),
         "currentStock": MessageLookupByLibrary.simpleMessage("Current Stock"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customerDetails":
-            MessageLookupByLibrary.simpleMessage("Customer Details"),
-        "customerName": MessageLookupByLibrary.simpleMessage("Customer Name"),
+            MessageLookupByLibrary.simpleMessage("Detalii client"),
+        "customerName": MessageLookupByLibrary.simpleMessage("Nume client"),
         "dailyTransaciton":
             MessageLookupByLibrary.simpleMessage("Daily Transaction"),
-        "date": MessageLookupByLibrary.simpleMessage("Date"),
-        "dealer": MessageLookupByLibrary.simpleMessage("Dealer"),
+        "date": MessageLookupByLibrary.simpleMessage("Dată"),
+        "dealer": MessageLookupByLibrary.simpleMessage("Distribuitor"),
         "dealerPrice": MessageLookupByLibrary.simpleMessage("Dealer Price"),
         "deliveryAddress":
-            MessageLookupByLibrary.simpleMessage("Delivery Address"),
+            MessageLookupByLibrary.simpleMessage("Adresă de livrare"),
         "deliveryCharge":
-            MessageLookupByLibrary.simpleMessage("Delivery Charge"),
-        "describtion": MessageLookupByLibrary.simpleMessage("Description"),
-        "discount": MessageLookupByLibrary.simpleMessage("Discount"),
+            MessageLookupByLibrary.simpleMessage("Taxă de livrare"),
+        "describtion": MessageLookupByLibrary.simpleMessage("Descriere"),
+        "discount": MessageLookupByLibrary.simpleMessage("Reducere"),
         "doNotDistrub": MessageLookupByLibrary.simpleMessage("Do not disturb"),
-        "due": MessageLookupByLibrary.simpleMessage("Due"),
-        "dueAmount": MessageLookupByLibrary.simpleMessage("Due Amount: "),
-        "dueCollection": MessageLookupByLibrary.simpleMessage("Due Collection"),
-        "dueList": MessageLookupByLibrary.simpleMessage("Due List"),
+        "due": MessageLookupByLibrary.simpleMessage("Datorie"),
+        "dueAmount": MessageLookupByLibrary.simpleMessage("Suma datorată: "),
+        "dueCollection":
+            MessageLookupByLibrary.simpleMessage("Colectare datorii"),
+        "dueList": MessageLookupByLibrary.simpleMessage("Listă datorii"),
         "dueReports": MessageLookupByLibrary.simpleMessage("Due Report"),
         "easyToUseMobilePos":
             MessageLookupByLibrary.simpleMessage("Easy to use mobile pos"),
-        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "edit": MessageLookupByLibrary.simpleMessage("Editare"),
         "editPurchaseInvoice":
             MessageLookupByLibrary.simpleMessage("Edit Purchase Invoice"),
         "editSalesInvoice":
             MessageLookupByLibrary.simpleMessage("Edit Sales Invoice"),
         "editSocailMedia":
-            MessageLookupByLibrary.simpleMessage("Edit Social Media"),
+            MessageLookupByLibrary.simpleMessage("Editare rețele sociale"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
-        "emailAddress": MessageLookupByLibrary.simpleMessage("Email Address"),
+        "emailAddress": MessageLookupByLibrary.simpleMessage("Adresă de email"),
         "endDate": MessageLookupByLibrary.simpleMessage("End Date"),
-        "enterAddress": MessageLookupByLibrary.simpleMessage("Enter Address"),
-        "enterAmount": MessageLookupByLibrary.simpleMessage("Enter Amount."),
+        "enterAddress":
+            MessageLookupByLibrary.simpleMessage("Introduceți adresa"),
+        "enterAmount": MessageLookupByLibrary.simpleMessage("Introduceți suma"),
         "enterBrandName":
-            MessageLookupByLibrary.simpleMessage("Enter Brand Name"),
-        "enterCapacity": MessageLookupByLibrary.simpleMessage("Enter Capacity"),
-        "enterCategoryName":
-            MessageLookupByLibrary.simpleMessage("Enter Category Name"),
-        "enterColor": MessageLookupByLibrary.simpleMessage("Enter Color"),
+            MessageLookupByLibrary.simpleMessage("Introduceți numele mărcii"),
+        "enterCapacity":
+            MessageLookupByLibrary.simpleMessage("Introduceți capacitatea"),
+        "enterCategoryName": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numele categoriei"),
+        "enterColor":
+            MessageLookupByLibrary.simpleMessage("Introduceți culoarea"),
         "enterDealerPrice":
             MessageLookupByLibrary.simpleMessage("Enter Dealer Price"),
         "enterDiscount":
             MessageLookupByLibrary.simpleMessage("Enter Discount."),
-        "enterExpenseDate":
-            MessageLookupByLibrary.simpleMessage("Enter Expense Date"),
+        "enterExpenseDate": MessageLookupByLibrary.simpleMessage(
+            "Introduceți data cheltuielii"),
         "enterFullAddress":
-            MessageLookupByLibrary.simpleMessage("Enter Full Address"),
+            MessageLookupByLibrary.simpleMessage("Introduceți adresa completă"),
         "enterInvoiceNumber":
             MessageLookupByLibrary.simpleMessage("Enter Invoice Number"),
         "enterManufacturer":
@@ -165,75 +171,79 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter Message Content"),
         "enterMrpOrRetailerPirce":
             MessageLookupByLibrary.simpleMessage("Enter MRP/Retailer Price"),
-        "enterName": MessageLookupByLibrary.simpleMessage("Enter Name"),
-        "enterNote": MessageLookupByLibrary.simpleMessage("Enter Note"),
+        "enterName": MessageLookupByLibrary.simpleMessage("Introduceți numele"),
+        "enterNote": MessageLookupByLibrary.simpleMessage("Introduceți nota"),
         "enterPartyName":
-            MessageLookupByLibrary.simpleMessage("Enter Party Name"),
-        "enterPhoneNumber":
-            MessageLookupByLibrary.simpleMessage("Enter Phone Number"),
-        "enterProductCodeOrScan":
-            MessageLookupByLibrary.simpleMessage("Enter Product Code Or Scan"),
-        "enterProductName":
-            MessageLookupByLibrary.simpleMessage("Enter Product Name"),
+            MessageLookupByLibrary.simpleMessage("Introduceți numele părții"),
+        "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numărul de telefon"),
+        "enterProductCodeOrScan": MessageLookupByLibrary.simpleMessage(
+            "Introduceți codul produsului sau scanați"),
+        "enterProductName": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numele produsului"),
         "enterPurchasePrice":
             MessageLookupByLibrary.simpleMessage("Enter Purchase Price."),
-        "enterReferenceNumber":
-            MessageLookupByLibrary.simpleMessage("Enter Reference Number"),
-        "enterSize": MessageLookupByLibrary.simpleMessage("Enter Size"),
-        "enterStocks": MessageLookupByLibrary.simpleMessage("Enter Stocks."),
-        "enterType": MessageLookupByLibrary.simpleMessage("Enter Type"),
-        "enterWeight": MessageLookupByLibrary.simpleMessage("Enter Weight"),
+        "enterReferenceNumber": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numărul de referință"),
+        "enterSize":
+            MessageLookupByLibrary.simpleMessage("Introduceți mărimea"),
+        "enterStocks":
+            MessageLookupByLibrary.simpleMessage("Introduceți stocurile"),
+        "enterType": MessageLookupByLibrary.simpleMessage("Introduceți tipul"),
+        "enterWeight":
+            MessageLookupByLibrary.simpleMessage("Introduceți greutatea"),
         "enterWholeSalePrice":
             MessageLookupByLibrary.simpleMessage("Enter Wholesale Price"),
         "enterYourDescriptionHere":
             MessageLookupByLibrary.simpleMessage("Enter your description here"),
-        "enterYourEmailAddress":
-            MessageLookupByLibrary.simpleMessage("Enter Your Email Address"),
+        "enterYourEmailAddress": MessageLookupByLibrary.simpleMessage(
+            "Introduceți adresa dvs. de email"),
         "enterYourFeedBackTitle":
             MessageLookupByLibrary.simpleMessage("Enter Your Feedback Tittle"),
         "enterYourMobileNumber":
             MessageLookupByLibrary.simpleMessage("Enter your mobile number"),
         "enterYourName":
-            MessageLookupByLibrary.simpleMessage("Enter Your Name"),
-        "enterYourNumber":
-            MessageLookupByLibrary.simpleMessage("Enter your phone number"),
-        "enterYourPhoneNumber":
-            MessageLookupByLibrary.simpleMessage("Enter Your Phone Number"),
+            MessageLookupByLibrary.simpleMessage("Introduceți numele dvs."),
+        "enterYourNumber": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numărul dvs. de telefon"),
+        "enterYourPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Introduceți numărul dvs. de telefon"),
         "enterYourTransactionId":
             MessageLookupByLibrary.simpleMessage("Enter your transaction id"),
-        "expense": MessageLookupByLibrary.simpleMessage("Expense"),
+        "expense": MessageLookupByLibrary.simpleMessage("Cheltuieli"),
         "expenseCategory":
-            MessageLookupByLibrary.simpleMessage("Expense Category"),
-        "expenseDate": MessageLookupByLibrary.simpleMessage("Expense Date"),
-        "expenseFor": MessageLookupByLibrary.simpleMessage("Expense For"),
-        "expenseReport": MessageLookupByLibrary.simpleMessage("Expense Report"),
+            MessageLookupByLibrary.simpleMessage("Categorie cheltuieli"),
+        "expenseDate": MessageLookupByLibrary.simpleMessage("Data cheltuielii"),
+        "expenseFor": MessageLookupByLibrary.simpleMessage("Cheltuială pentru"),
+        "expenseReport":
+            MessageLookupByLibrary.simpleMessage("Raport cheltuieli"),
         "facebok": MessageLookupByLibrary.simpleMessage("Facebook"),
-        "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
+        "fashion": MessageLookupByLibrary.simpleMessage("Modă"),
         "featureAreTheImportant": MessageLookupByLibrary.simpleMessage(
             "Features are the important part which makes Smart Biashara  different from traditional solutions."),
         "feedBack": MessageLookupByLibrary.simpleMessage("FeedBack"),
-        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "firstName": MessageLookupByLibrary.simpleMessage("Prenume"),
         "fontSide": MessageLookupByLibrary.simpleMessage("Font Side"),
         "forUnlimitedUses":
             MessageLookupByLibrary.simpleMessage("For unlimited usages"),
         "forgotPassword":
-            MessageLookupByLibrary.simpleMessage("Forgot password"),
+            MessageLookupByLibrary.simpleMessage("Ați uitat parola"),
         "forgotPasswords":
-            MessageLookupByLibrary.simpleMessage("Forgot Password?"),
-        "formDate": MessageLookupByLibrary.simpleMessage("From Date"),
+            MessageLookupByLibrary.simpleMessage("Ați uitat parola?"),
+        "formDate": MessageLookupByLibrary.simpleMessage("De la dată"),
         "freePacakge": MessageLookupByLibrary.simpleMessage("Free Package"),
         "freePlan": MessageLookupByLibrary.simpleMessage("Free Plan"),
-        "gallary": MessageLookupByLibrary.simpleMessage("Gallery"),
-        "getOtp": MessageLookupByLibrary.simpleMessage("Get Otp"),
+        "gallary": MessageLookupByLibrary.simpleMessage("Galerie"),
+        "getOtp": MessageLookupByLibrary.simpleMessage("Obțineți OTP"),
         "govermentId": MessageLookupByLibrary.simpleMessage("Government Id"),
         "guest": MessageLookupByLibrary.simpleMessage("Guest"),
         "havenotAnAccounts":
-            MessageLookupByLibrary.simpleMessage("Haven\'t any account?"),
+            MessageLookupByLibrary.simpleMessage("Nu aveți un cont?"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
-        "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "home": MessageLookupByLibrary.simpleMessage("Acasă"),
         "identityVerify":
             MessageLookupByLibrary.simpleMessage("Identity Verify"),
-        "image": MessageLookupByLibrary.simpleMessage("Image"),
+        "image": MessageLookupByLibrary.simpleMessage("Imagine"),
         "inistrument": MessageLookupByLibrary.simpleMessage("Instrument"),
         "instragram": MessageLookupByLibrary.simpleMessage("Instagram"),
         "invNo": MessageLookupByLibrary.simpleMessage("Inv No."),
@@ -244,27 +254,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "kg": MessageLookupByLibrary.simpleMessage("Kg"),
         "kycVerification":
             MessageLookupByLibrary.simpleMessage("KYC Verification"),
-        "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
-        "ledger": MessageLookupByLibrary.simpleMessage("Ledger"),
+        "language": MessageLookupByLibrary.simpleMessage("Limba"),
+        "lastName": MessageLookupByLibrary.simpleMessage("Nume de familie"),
+        "ledger": MessageLookupByLibrary.simpleMessage("Jurnal"),
         "lifeTimePurchase":
             MessageLookupByLibrary.simpleMessage("Lifetime\nPurchase"),
         "link": MessageLookupByLibrary.simpleMessage("Link"),
         "linkedIn": MessageLookupByLibrary.simpleMessage("LinkedIn"),
-        "logIn": MessageLookupByLibrary.simpleMessage("LogIn"),
+        "logIn": MessageLookupByLibrary.simpleMessage("Autentificare"),
         "logOUt": MessageLookupByLibrary.simpleMessage("Log Out"),
-        "login": MessageLookupByLibrary.simpleMessage("Log In"),
+        "login": MessageLookupByLibrary.simpleMessage("Autentificare"),
         "logo": MessageLookupByLibrary.simpleMessage("Logo"),
-        "loss": MessageLookupByLibrary.simpleMessage("Loss"),
-        "lossOrProfit": MessageLookupByLibrary.simpleMessage("Loss/Profit"),
+        "loss": MessageLookupByLibrary.simpleMessage("Pierdere"),
+        "lossOrProfit": MessageLookupByLibrary.simpleMessage("Pierdere/Profit"),
         "lossOrProfitDetails":
-            MessageLookupByLibrary.simpleMessage("Loss/Profit Details"),
+            MessageLookupByLibrary.simpleMessage("Detalii pierdere/profit"),
         "maan": MessageLookupByLibrary.simpleMessage("Maan"),
         "manageYourBussinessWith":
-            MessageLookupByLibrary.simpleMessage("Manage your business with "),
-        "masterCard": MessageLookupByLibrary.simpleMessage("Master card"),
+            MessageLookupByLibrary.simpleMessage("Gestionați-vă afacerea cu"),
+        "masterCard": MessageLookupByLibrary.simpleMessage("Card Master"),
         "menufeturer": MessageLookupByLibrary.simpleMessage("Manufacturer"),
-        "message": MessageLookupByLibrary.simpleMessage("Message"),
+        "message": MessageLookupByLibrary.simpleMessage("Mesaj"),
         "messageHistory":
             MessageLookupByLibrary.simpleMessage("Message History"),
         "mobiPosAppIsFree": MessageLookupByLibrary.simpleMessage(
@@ -272,154 +282,158 @@ class MessageLookup extends MessageLookupByLibrary {
         "mobiPosIsaCompleteBusinesSolution": MessageLookupByLibrary.simpleMessage(
             "Smart Biashara  is a complete business solution with stock, account, sales, expense & loss/profit."),
         "monthly": MessageLookupByLibrary.simpleMessage("Monthly"),
-        "moreInfo": MessageLookupByLibrary.simpleMessage("More Info"),
-        "name": MessageLookupByLibrary.simpleMessage("Enter Your Name."),
+        "moreInfo":
+            MessageLookupByLibrary.simpleMessage("Mai multe informații"),
+        "name": MessageLookupByLibrary.simpleMessage("Introduceți numele dvs."),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
-        "noConnection": MessageLookupByLibrary.simpleMessage("No Connection"),
+        "noConnection": MessageLookupByLibrary.simpleMessage("Fără conexiune"),
         "noData": MessageLookupByLibrary.simpleMessage("No Data"),
         "noDataAvailable":
-            MessageLookupByLibrary.simpleMessage("No data available"),
+            MessageLookupByLibrary.simpleMessage("Nu sunt date disponibile"),
         "noHistoryFound":
             MessageLookupByLibrary.simpleMessage("No History Found!"),
         "noTransactionFound":
             MessageLookupByLibrary.simpleMessage("No Transaction Found!"),
         "noUserFoundForThatEmail": MessageLookupByLibrary.simpleMessage(
-            "No user found for that email."),
-        "note": MessageLookupByLibrary.simpleMessage("Note"),
-        "notification": MessageLookupByLibrary.simpleMessage("Notification"),
+            "Nu s-a găsit niciun utilizator pentru acea adresă de email."),
+        "note": MessageLookupByLibrary.simpleMessage("Notă"),
+        "notification": MessageLookupByLibrary.simpleMessage("Notificare"),
         "openingBalance":
-            MessageLookupByLibrary.simpleMessage("Opening Balance "),
-        "otp": MessageLookupByLibrary.simpleMessage("Close"),
-        "pacakge": MessageLookupByLibrary.simpleMessage("Package"),
+            MessageLookupByLibrary.simpleMessage("Sold de deschidere"),
+        "otp": MessageLookupByLibrary.simpleMessage("Închide"),
+        "pacakge": MessageLookupByLibrary.simpleMessage("Pachet"),
         "packageFeatures":
             MessageLookupByLibrary.simpleMessage("Package Features"),
-        "paid": MessageLookupByLibrary.simpleMessage("Paid"),
-        "paidAmount": MessageLookupByLibrary.simpleMessage("Paid Amount"),
-        "parties": MessageLookupByLibrary.simpleMessage("Parties"),
-        "partiesList": MessageLookupByLibrary.simpleMessage("Parties List"),
-        "partyName": MessageLookupByLibrary.simpleMessage("Party Name"),
-        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "paid": MessageLookupByLibrary.simpleMessage("Plătit"),
+        "paidAmount": MessageLookupByLibrary.simpleMessage("Suma plătită"),
+        "parties": MessageLookupByLibrary.simpleMessage("Părți"),
+        "partiesList": MessageLookupByLibrary.simpleMessage("Listă părți"),
+        "partyName": MessageLookupByLibrary.simpleMessage("Nume parte"),
+        "password": MessageLookupByLibrary.simpleMessage("Parolă"),
         "payWithBkash": MessageLookupByLibrary.simpleMessage("Pay with bkash"),
         "payWithPaypal":
             MessageLookupByLibrary.simpleMessage("Pay with Paypal"),
         "payeeName": MessageLookupByLibrary.simpleMessage("Payee Name"),
         "payeeNumber": MessageLookupByLibrary.simpleMessage("Payee Number"),
-        "payment": MessageLookupByLibrary.simpleMessage("Payment"),
-        "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment Amount"),
+        "payment": MessageLookupByLibrary.simpleMessage("Plată"),
+        "paymentAmount": MessageLookupByLibrary.simpleMessage("Sumă plată"),
         "paymentComplete":
-            MessageLookupByLibrary.simpleMessage("Payment Complete"),
+            MessageLookupByLibrary.simpleMessage("Plată finalizată"),
         "paymentInstructions":
             MessageLookupByLibrary.simpleMessage("Payment Instruction:"),
-        "paymentType": MessageLookupByLibrary.simpleMessage("Payment Type"),
-        "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
+        "paymentType": MessageLookupByLibrary.simpleMessage("Tipul plății"),
+        "phoneNumber": MessageLookupByLibrary.simpleMessage("Număr de telefon"),
         "pickEndDate": MessageLookupByLibrary.simpleMessage("Pick End Date"),
         "pickStartDate":
             MessageLookupByLibrary.simpleMessage("Pick Start Date"),
         "pleaseCheckYourInternetConnectivity":
             MessageLookupByLibrary.simpleMessage(
-                "Please check your internet connectivity"),
+                "Vă rugăm să verificați conectivitatea la internet"),
         "pleaseConnectYourBluttothPrinter":
             MessageLookupByLibrary.simpleMessage(
-                "Please connect your bluetooth Printer"),
+                "Vă rugăm să conectați imprimanta Bluetooth"),
         "pleaseEnterAConfirmPassword": MessageLookupByLibrary.simpleMessage(
-            "Please Enter A Confirm Password"),
-        "pleaseEnterAPassword":
-            MessageLookupByLibrary.simpleMessage("Please enter a password"),
+            "Vă rugăm să introduceți o parolă de confirmare"),
+        "pleaseEnterAPassword": MessageLookupByLibrary.simpleMessage(
+            "Vă rugăm să introduceți o parolă"),
         "pleaseEnterTheEmailAddressBelowToRecive":
             MessageLookupByLibrary.simpleMessage(
-                "Please enter your email address below to receive password Reset Link."),
+                "Vă rugăm să introduceți adresa dvs. de email mai jos pentru a primi linkul de resetare a parolei."),
         "powerdedByMobiPos":
-            MessageLookupByLibrary.simpleMessage("Powered By Smart Biashara"),
+            MessageLookupByLibrary.simpleMessage("Realizat cu Smart Biashara"),
         "premiumPlan": MessageLookupByLibrary.simpleMessage("Premium plan"),
         "previousPayAmounts":
             MessageLookupByLibrary.simpleMessage("Previous Pay Amounts"),
         "price": MessageLookupByLibrary.simpleMessage("price"),
-        "print": MessageLookupByLibrary.simpleMessage("Print"),
+        "print": MessageLookupByLibrary.simpleMessage("Imprimare"),
         "printingOption":
             MessageLookupByLibrary.simpleMessage("Printing Option"),
-        "product": MessageLookupByLibrary.simpleMessage("Product"),
-        "productCode": MessageLookupByLibrary.simpleMessage("Product Code"),
+        "product": MessageLookupByLibrary.simpleMessage("Produs"),
+        "productCode": MessageLookupByLibrary.simpleMessage("Cod produs"),
         "productList": MessageLookupByLibrary.simpleMessage("Product List"),
-        "productName": MessageLookupByLibrary.simpleMessage("Product Name"),
+        "productName": MessageLookupByLibrary.simpleMessage("Nume produs"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "profit": MessageLookupByLibrary.simpleMessage("Profit"),
         "promo": MessageLookupByLibrary.simpleMessage("promo"),
         "promoCode": MessageLookupByLibrary.simpleMessage("Promo Code"),
         "purchase": MessageLookupByLibrary.simpleMessage("Purchase"),
-        "purchaseAlarm": MessageLookupByLibrary.simpleMessage("Purchase Alarm"),
+        "purchaseAlarm":
+            MessageLookupByLibrary.simpleMessage("Alarmă de achiziții"),
         "purchaseConfirmed":
-            MessageLookupByLibrary.simpleMessage("Purchase Confirmed"),
+            MessageLookupByLibrary.simpleMessage("Achiziție confirmată"),
         "purchaseDetails":
             MessageLookupByLibrary.simpleMessage("Purchase Details"),
         "purchaseList": MessageLookupByLibrary.simpleMessage("Purchase List"),
         "purchasePremiumPlan":
             MessageLookupByLibrary.simpleMessage("Purchase Premium Plan"),
-        "purchasePrice": MessageLookupByLibrary.simpleMessage("Purchase Price"),
+        "purchasePrice": MessageLookupByLibrary.simpleMessage("Preț achiziție"),
         "purchaseRepoet":
             MessageLookupByLibrary.simpleMessage("Purchase Report"),
         "purchaseReports":
             MessageLookupByLibrary.simpleMessage("Purchase Price"),
         "qty": MessageLookupByLibrary.simpleMessage("Qty"),
-        "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
+        "quantity": MessageLookupByLibrary.simpleMessage("Cantitate"),
         "recentTransactions":
-            MessageLookupByLibrary.simpleMessage("Recent Transactions"),
+            MessageLookupByLibrary.simpleMessage("Tranzacții recente"),
         "recivedThePin":
-            MessageLookupByLibrary.simpleMessage("Received The pin"),
+            MessageLookupByLibrary.simpleMessage("Ați primit PIN-ul"),
         "referenceNumber":
-            MessageLookupByLibrary.simpleMessage("Reference Number"),
-        "register": MessageLookupByLibrary.simpleMessage("Register"),
-        "remainingDue": MessageLookupByLibrary.simpleMessage("Remaining Due"),
-        "reports": MessageLookupByLibrary.simpleMessage("Reports"),
-        "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
-        "resendOtp": MessageLookupByLibrary.simpleMessage("Resend OTP : "),
-        "retailer": MessageLookupByLibrary.simpleMessage("Retailer"),
-        "retur": MessageLookupByLibrary.simpleMessage("Return"),
+            MessageLookupByLibrary.simpleMessage("Număr de referință"),
+        "register": MessageLookupByLibrary.simpleMessage("Înregistrare"),
+        "remainingDue": MessageLookupByLibrary.simpleMessage("Datorie rămasă"),
+        "reports": MessageLookupByLibrary.simpleMessage("Rapoarte"),
+        "resendCode": MessageLookupByLibrary.simpleMessage("Retrimiteți codul"),
+        "resendOtp": MessageLookupByLibrary.simpleMessage("Retrimiteți OTP: "),
+        "retailer":
+            MessageLookupByLibrary.simpleMessage("Comerciant cu amănuntul"),
+        "retur": MessageLookupByLibrary.simpleMessage("Returnare"),
         "returnAMount": MessageLookupByLibrary.simpleMessage("Return Amount"),
         "returnAmount": MessageLookupByLibrary.simpleMessage("Return Amount"),
         "saleDetails": MessageLookupByLibrary.simpleMessage("Sale Details"),
         "salePrice": MessageLookupByLibrary.simpleMessage("Sale Price"),
         "saleReports": MessageLookupByLibrary.simpleMessage("Sale Report"),
-        "sales": MessageLookupByLibrary.simpleMessage("Sales"),
+        "sales": MessageLookupByLibrary.simpleMessage("Vânzări"),
         "salesList": MessageLookupByLibrary.simpleMessage("Sales List"),
-        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "save": MessageLookupByLibrary.simpleMessage("Salvați"),
         "saveAndPublish":
             MessageLookupByLibrary.simpleMessage("Save and Publish"),
         "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
-        "search": MessageLookupByLibrary.simpleMessage("Search"),
+        "search": MessageLookupByLibrary.simpleMessage("Căutare"),
         "seeAllPromoCode":
             MessageLookupByLibrary.simpleMessage("See all promo codes"),
-        "select": MessageLookupByLibrary.simpleMessage("Select"),
+        "select": MessageLookupByLibrary.simpleMessage("Selectați"),
         "selectContacts":
             MessageLookupByLibrary.simpleMessage("Select Contacts"),
         "selectvariations":
-            MessageLookupByLibrary.simpleMessage("Select Variation: "),
+            MessageLookupByLibrary.simpleMessage("Selectați variații:"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
-        "sendEmail": MessageLookupByLibrary.simpleMessage("Send Email"),
+        "sendEmail": MessageLookupByLibrary.simpleMessage("Trimiteți email"),
         "sendMessage": MessageLookupByLibrary.simpleMessage("Send Message"),
-        "sendResetLink":
-            MessageLookupByLibrary.simpleMessage("Send Reset Link"),
-        "sendSms": MessageLookupByLibrary.simpleMessage("Send Sms"),
+        "sendResetLink": MessageLookupByLibrary.simpleMessage(
+            "Trimiteți linkul de resetare"),
+        "sendSms": MessageLookupByLibrary.simpleMessage("Trimiteți SMS"),
         "sendSmsw": MessageLookupByLibrary.simpleMessage("Send sms?"),
         "sendYOurEmail":
             MessageLookupByLibrary.simpleMessage("Send Your Email"),
         "setUpYourProfile":
-            MessageLookupByLibrary.simpleMessage("Setup Your Profile"),
-        "setting": MessageLookupByLibrary.simpleMessage("Setting"),
-        "size": MessageLookupByLibrary.simpleMessage("Size"),
+            MessageLookupByLibrary.simpleMessage("Configurați-vă profilul"),
+        "setting": MessageLookupByLibrary.simpleMessage("Setări"),
+        "size": MessageLookupByLibrary.simpleMessage("Mărime"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "sms": MessageLookupByLibrary.simpleMessage("Sms"),
         "socailMarketing":
-            MessageLookupByLibrary.simpleMessage("Social Marketing"),
+            MessageLookupByLibrary.simpleMessage("Marketing social"),
         "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
-        "startNewSale": MessageLookupByLibrary.simpleMessage("Start New Sale"),
-        "startTypingToSearch":
-            MessageLookupByLibrary.simpleMessage("Start typing to search"),
-        "stockList": MessageLookupByLibrary.simpleMessage("Stock List"),
-        "stocks": MessageLookupByLibrary.simpleMessage("Stocks"),
-        "subTotal": MessageLookupByLibrary.simpleMessage("Sub Total"),
+        "startNewSale":
+            MessageLookupByLibrary.simpleMessage("Începeți o vânzare nouă"),
+        "startTypingToSearch": MessageLookupByLibrary.simpleMessage(
+            "Începeți să tastați pentru a căuta"),
+        "stockList": MessageLookupByLibrary.simpleMessage("Listă de stoc"),
+        "stocks": MessageLookupByLibrary.simpleMessage("Stocuri"),
+        "subTotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "subscription": MessageLookupByLibrary.simpleMessage("Subscription"),
-        "supplier": MessageLookupByLibrary.simpleMessage("Supplier"),
+        "supplier": MessageLookupByLibrary.simpleMessage("Furnizor"),
         "supplierName": MessageLookupByLibrary.simpleMessage("Supplier Name"),
         "takeADriveruser": MessageLookupByLibrary.simpleMessage(
             "Take a driver\'s license, national identity card or passport photo"),
@@ -427,71 +441,73 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Take an identity card to check your information"),
         "thankYOuForYourDuePayment": MessageLookupByLibrary.simpleMessage(
-            "Thank You For Your DUe Payment"),
-        "thankYouForYourPurchase":
-            MessageLookupByLibrary.simpleMessage("Thank You for your purchase"),
+            "Vă mulțumim pentru plata datoriei"),
+        "thankYouForYourPurchase": MessageLookupByLibrary.simpleMessage(
+            "Vă mulțumim pentru achiziția dvs."),
         "theUserWillBe": MessageLookupByLibrary.simpleMessage(
-            "The user will be deleted and all the data will be deleted from your account.Are you sure to delete this?"),
+            "Utilizatorul va fi șters și toate datele vor fi șterse din contul dvs. Sunteți sigur că doriți să ștergeți acest lucru?"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
-        "toDate": MessageLookupByLibrary.simpleMessage("To Date"),
+        "toDate": MessageLookupByLibrary.simpleMessage("Până la dată"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
-        "totalAmount": MessageLookupByLibrary.simpleMessage("Total Amount"),
-        "totalDue": MessageLookupByLibrary.simpleMessage("Total Due"),
-        "totalExpense": MessageLookupByLibrary.simpleMessage("Total Expense"),
-        "totalPayable": MessageLookupByLibrary.simpleMessage("Total Payable"),
-        "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
-        "totalSale": MessageLookupByLibrary.simpleMessage("Total Sale"),
+        "totalAmount": MessageLookupByLibrary.simpleMessage("Suma totală"),
+        "totalDue": MessageLookupByLibrary.simpleMessage("Total datorii"),
+        "totalExpense":
+            MessageLookupByLibrary.simpleMessage("Total cheltuieli"),
+        "totalPayable": MessageLookupByLibrary.simpleMessage("Total de plată"),
+        "totalPrice": MessageLookupByLibrary.simpleMessage("Preț total"),
+        "totalSale": MessageLookupByLibrary.simpleMessage("Total vânzări"),
         "totalStock": MessageLookupByLibrary.simpleMessage("Total Stocks"),
-        "totalVat": MessageLookupByLibrary.simpleMessage("Total Vat"),
+        "totalVat": MessageLookupByLibrary.simpleMessage("Total TVA"),
         "totals": MessageLookupByLibrary.simpleMessage("Total: "),
         "transaction": MessageLookupByLibrary.simpleMessage("Transaction"),
         "transactionId": MessageLookupByLibrary.simpleMessage("Transaction Id"),
-        "tryAgain": MessageLookupByLibrary.simpleMessage("Try Again"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Încercați din nou"),
         "twitter": MessageLookupByLibrary.simpleMessage("Twitter"),
-        "type": MessageLookupByLibrary.simpleMessage("Type"),
+        "type": MessageLookupByLibrary.simpleMessage("Tip"),
         "unitName": MessageLookupByLibrary.simpleMessage("Unit Name"),
-        "unitPirce": MessageLookupByLibrary.simpleMessage("Unit Price"),
-        "units": MessageLookupByLibrary.simpleMessage("Units"),
-        "updateContact": MessageLookupByLibrary.simpleMessage("Update Contact"),
+        "unitPirce": MessageLookupByLibrary.simpleMessage("Preț unitar"),
+        "units": MessageLookupByLibrary.simpleMessage("Unități"),
+        "updateContact":
+            MessageLookupByLibrary.simpleMessage("Actualizați contactul"),
         "updateNow": MessageLookupByLibrary.simpleMessage("Update Now"),
         "updateProduct": MessageLookupByLibrary.simpleMessage("Update Product"),
         "updateYourProfile":
             MessageLookupByLibrary.simpleMessage("Update Your Profile"),
         "updateYourProfileToConnect": MessageLookupByLibrary.simpleMessage(
-            "Update your profile to connect your doctor with better impression"),
+            "Actualizați-vă profilul pentru a vă conecta medicul cu o impresie mai bună"),
         "updateYourProfiletoConnectTOCusomter":
             MessageLookupByLibrary.simpleMessage(
                 "Update your profile to connect your customer with better impression"),
-        "upplier": MessageLookupByLibrary.simpleMessage("Supplier"),
         "useMobiPos":
             MessageLookupByLibrary.simpleMessage("Use Smart Biashara"),
-        "verifyOtp": MessageLookupByLibrary.simpleMessage("Verifying OTP"),
-        "verifyPhoneNumber":
-            MessageLookupByLibrary.simpleMessage("Verify Phone Number"),
-        "viewAll": MessageLookupByLibrary.simpleMessage("View All"),
+        "verifyOtp": MessageLookupByLibrary.simpleMessage("Verificare OTP"),
+        "verifyPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Verificați numărul de telefon"),
+        "viewAll": MessageLookupByLibrary.simpleMessage("Vizualizați toate"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "walkInCustomer":
             MessageLookupByLibrary.simpleMessage("Walk-in customer"),
         "weHaveSendAnEmailwithInstructions": MessageLookupByLibrary.simpleMessage(
-            "We Have Send An Email with instructions on how to reset password to:"),
-        "weight": MessageLookupByLibrary.simpleMessage("Weight"),
-        "whatsNew": MessageLookupByLibrary.simpleMessage("What\'s New"),
-        "wholSeller": MessageLookupByLibrary.simpleMessage("Wholesaler"),
+            "Am trimis un email cu instrucțiuni privind resetarea parolei către:"),
+        "weight": MessageLookupByLibrary.simpleMessage("Greutate"),
+        "whatsNew": MessageLookupByLibrary.simpleMessage("Ce e nou"),
+        "wholSeller":
+            MessageLookupByLibrary.simpleMessage("Comerciant en-gros"),
         "wholeSalePrice":
             MessageLookupByLibrary.simpleMessage("WholeSale Price"),
         "writeYourMessageHere":
             MessageLookupByLibrary.simpleMessage("Write your message here"),
         "wrongPasswordProvidedforThatUser":
             MessageLookupByLibrary.simpleMessage(
-                "Wrong password provided for that user."),
+                "Parola greșită furnizată pentru acel utilizator."),
         "yearly": MessageLookupByLibrary.simpleMessage("Yearly"),
         "yesDeleteForever":
-            MessageLookupByLibrary.simpleMessage("Yes, Delete Forever"),
+            MessageLookupByLibrary.simpleMessage("Da, Ștergeți definitiv"),
         "youAreUsing": MessageLookupByLibrary.simpleMessage("You are using"),
         "youHaveGotAnEmail":
-            MessageLookupByLibrary.simpleMessage("You Have Got An Email"),
+            MessageLookupByLibrary.simpleMessage("Ați primit un email"),
         "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
-            "You are successfully login into your account. Stay with Smart Biashara ."),
+            "Ați fost autentificat cu succes în contul dvs. Rămâneți cu Smart Biashara ."),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage(
                 "You need to identity verify before your buying sms"),

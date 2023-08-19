@@ -498,7 +498,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youHaveGotAnEmail":
             MessageLookupByLibrary.simpleMessage("Bir E-Posta Aldınız"),
         "youHaveSuccefulyLogin": MessageLookupByLibrary.simpleMessage(
-            "Hesabınıza başarıyla giriş yaptınız. MOBIPOS ile kalın."),
+            "Hesabınıza başarıyla giriş yaptınız. Smart Biashara  ile kalın."),
         "youNeedToIdentityVerifyBeforeYouBuying":
             MessageLookupByLibrary.simpleMessage(
                 "Satın almadan önce kimlik doğrulaması yapmanız gerekiyor"),
