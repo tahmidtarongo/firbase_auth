@@ -278,7 +278,7 @@
   "saveChanges": "परिवर्तन सहेजें",
   "subscription": "सदस्यता",
   "currency": "मुद्रा",
-  "logOut": "लॉग आउट",
+  "logOUt": "लॉग आउट",
   "doNotDisturb": "चिंता न करें",
   "contactUs": "हमसे संपर्क करें",
   "writeYourMessageHere": "अपना संदेश यहाँ लिखें",
@@ -341,5 +341,9 @@
   "payWithPaypal": "PayPal के साथ भुगतान करें",
   "noData": "कोई डेटा नहीं",
   "yourPackageWillExpireinDay": "आपका पैकेज 5 दिनों में समाप्त हो जाएगा",
-  "YourPackageWillExpireTodayPleasePurchaseagain": "आपका पैकेज आज समाप्त हो जाएगा\n\nकृपया फिर से खरीदें"
+  "YourPackageWillExpireTodayPleasePurchaseagain": "आपका पैकेज आज समाप्त हो जाएगा\n\nकृपया फिर से खरीदें",
+  "choseACustomer" : "एक ग्राहक को चुना",
+  "choseASupplier" : "एक सप्लायर चुना",
+  "purchaseRepoet" : "खरीद रिपोर्ट",
+  "logOut" : "लॉग आउट"
 }

@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Expense/expense_category_list.dart';
 import 'package:mobile_pos/Screens/Expense/expense_list.dart';
@@ -40,6 +41,17 @@ class _AddExpenseState extends State<AddExpense> {
     'Snacks',
   ];
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   String selectedPaymentType = 'Cash';
   DropdownButton<String> getPaymentMethods() {
     List<DropdownMenuItem<String>> dropDownItems = [];
@@ -64,17 +76,6 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   void initState() {
     super.initState();
-  }
-
-  DateTime selectedDate = DateTime.now();
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -128,7 +129,7 @@ class _AddExpenseState extends State<AddExpense> {
                                 hintText: lang.S.of(context).enterExpenseDate,
                               ),
                               child: Text(
-                                '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}',
                               ),
                             );
                           },

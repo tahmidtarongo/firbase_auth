@@ -78,6 +78,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "change": MessageLookupByLibrary.simpleMessage("बदलें?"),
         "changePassword": MessageLookupByLibrary.simpleMessage("पासवर्ड बदलें"),
         "checkEmail": MessageLookupByLibrary.simpleMessage("ईमेल देखें"),
+        "choseACustomer":
+            MessageLookupByLibrary.simpleMessage("एक ग्राहक को चुना"),
+        "choseASupplier":
+            MessageLookupByLibrary.simpleMessage("एक सप्लायर चुना"),
         "choseYourFeature":
             MessageLookupByLibrary.simpleMessage("अपनी विशेषताओं का चयन करें"),
         "clarence": MessageLookupByLibrary.simpleMessage("क्लैरेंस"),
@@ -232,6 +236,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "link": MessageLookupByLibrary.simpleMessage("लिंक"),
         "linkedIn": MessageLookupByLibrary.simpleMessage("लिंक्डइन"),
         "logIn": MessageLookupByLibrary.simpleMessage("लॉग इन करें"),
+        "logOUt": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
         "login": MessageLookupByLibrary.simpleMessage("लॉग इन करें"),
         "logo": MessageLookupByLibrary.simpleMessage("लोगो"),
         "loss": MessageLookupByLibrary.simpleMessage("नुकसान"),
@@ -337,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "purchasePremiumPlan":
             MessageLookupByLibrary.simpleMessage("प्रीमियम प्लान खरीदें"),
         "purchasePrice": MessageLookupByLibrary.simpleMessage("खरीद मूल्य"),
+        "purchaseRepoet": MessageLookupByLibrary.simpleMessage("खरीद रिपोर्ट"),
         "purchaseReports": MessageLookupByLibrary.simpleMessage("खरीद रिपोर्ट"),
         "qty": MessageLookupByLibrary.simpleMessage("मात्रा"),
         "quantity": MessageLookupByLibrary.simpleMessage("मात्रा"),
