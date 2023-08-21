@@ -1,4 +1,4 @@
-package com.maantechnology.mobipos;
+package com.smartbiashara.app;
 
 import io.flutter.embedding.android.FlutterActivity;
 

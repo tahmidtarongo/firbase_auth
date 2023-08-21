@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "1064093072328",
-    "firebase_url": "https://mobi-pos-663fb-default-rtdb.firebaseio.com",
-    "project_id": "mobi-pos-663fb",
-    "storage_bucket": "mobi-pos-663fb.appspot.com"
+    "project_number": "225271280538",
+    "firebase_url": "https://smart-biashara-default-rtdb.firebaseio.com",
+    "project_id": "smart-biashara",
+    "storage_bucket": "smart-biashara.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064093072328:android:7e41c4beb63223cd879efd",
+        "mobilesdk_app_id": "1:225271280538:android:c4df70d8c0b071acb08023",
         "android_client_info": {
-          "package_name": "com.maantechnology.mobipos"
+          "package_name": "com.smartbiashara.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1064093072328-bqjmoqtcab6mgmvctqgtspb2k1botoqa.apps.googleusercontent.com",
+          "client_id": "225271280538-61sn83hcgnugmckr0pvnl2adi0btvequ.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCnlgWmY6I6rIOX8hFzxB-p2FQzMUZJXuw"
+          "current_key": "AIzaSyAH9AZUgcnh2krvrZjHkhL1Jse7jN4VdZA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1064093072328-bqjmoqtcab6mgmvctqgtspb2k1botoqa.apps.googleusercontent.com",
+              "client_id": "225271280538-61sn83hcgnugmckr0pvnl2adi0btvequ.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
