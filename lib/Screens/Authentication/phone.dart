@@ -11,6 +11,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
+import 'login_form.dart';
 
 class PhoneAuth extends StatefulWidget {
   const PhoneAuth({Key? key}) : super(key: key);
@@ -26,9 +27,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   String phoneNumber = '';
   late StreamSubscription subscription;
-  String countryFlag = '🇧🇩';
-  String countryName = 'Bangladesh';
-  String countryCode = '880';
+  String countryFlag = '🇹🇿';
+  String countryName = 'Tanzania';
+  String countryCode = '255';
   bool isDeviceConnected = false;
   bool isAlertSet = false;
 
@@ -75,13 +76,18 @@ class _PhoneAuthState extends State<PhoneAuth> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(lang.S.of(context).manageYourBussinessWith),
-                    const Image(width: 100, image: AssetImage('images/maanpos.png')),
+                    const Text(
+                      'Smart Biashara',
+                      style: TextStyle(color: kMainColor, fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    // const Image(width: 100, image: AssetImage('images/sb.png')),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -89,7 +95,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                   onTap: () {
                     showCountryPicker(
                       context: context,
-                      favorite: <String>['BD'],
+                      favorite: <String>['TZ'],
                       showPhoneCode: true,
                       onSelect: (Country country) {
                         setState(() {
@@ -155,16 +161,30 @@ class _PhoneAuthState extends State<PhoneAuth> {
                           PhoneAuth.phoneNumber = '+$countryCode${value.toInt().toString()}';
                         },
                         keyboardType: TextInputType.phone,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: lang.S.of(context).enterYourPhoneNumber
-                          ,
+                          hintText: lang.S.of(context).enterYourPhoneNumber,
                         ),
                       ))
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginForm(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Sign in with email',
+                    style: TextStyle(
+                      color: kMainColor,
+                    ),
+                  ),
+                ),
                 ButtonGlobalWithoutIcon(
                     buttontext: lang.S.of(context).getOtp,
                     buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
@@ -195,7 +215,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     },
                     buttonTextColor: Colors.white),
                 const SizedBox(height: 30),
-                Image(height: context.width() / 1.4, width: context.width() / 1.4, image: const AssetImage('images/otp_screen_image.png'))
+                Center(child: Image(height: context.width() / 1.4, width: context.width() / 1.4, image: const AssetImage('images/otp_screen_image.png')))
               ],
             ),
           ),
@@ -207,7 +227,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
   showDialogBox() => showCupertinoDialog<String>(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title:  Text(lang.S.of(context).noConnection),
+          title: Text(lang.S.of(context).noConnection),
           content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
           actions: <Widget>[
             TextButton(
@@ -220,7 +240,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                   setState(() => isAlertSet = true);
                 }
               },
-              child:  Text(lang.S.of(context).tryAgain),
+              child: Text(lang.S.of(context).tryAgain),
             ),
           ],
         ),

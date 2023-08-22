@@ -56,8 +56,8 @@ class _OnBoardState extends State<OnBoard> {
             padding: const EdgeInsets.only(right: 20),
             child: TextButton(
               onPressed: () {
-                const LoginForm().launch(context);
-                // const PhoneAuth().launch(context);
+                // const LoginForm().launch(context);
+                const PhoneAuth().launch(context);
               },
               child: Text(
                 lang.S.of(context).skip,
@@ -140,7 +140,8 @@ class _OnBoardState extends State<OnBoard> {
               onPressed: () {
                 setState(
                   () {
-                    currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const LoginForm().launch(context);
+                    // currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const LoginForm().launch(context);
+                    currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const PhoneAuth().launch(context);
                   },
                 );
               },

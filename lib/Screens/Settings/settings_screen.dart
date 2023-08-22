@@ -29,7 +29,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  String? dropdownValue = '৳ (Taka)';
+  String? dropdownValue = 'Tsh (TZ Shillings)';
 
   bool expanded = false;
   bool expandedHelp = false;
