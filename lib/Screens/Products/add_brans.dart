@@ -11,6 +11,8 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 
+import '../../currency.dart';
+
 class AddBrands extends StatefulWidget {
   const AddBrands({Key? key}) : super(key: key);
 
@@ -94,7 +96,7 @@ class _AddBrandsState extends State<AddBrands> {
                         showProgress = true;
                       });
                       final DatabaseReference categoryInformationRef =
-                          FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Brands');
+                          FirebaseDatabase.instance.ref().child(constUserId).child('Brands');
                       categoryInformationRef.keepSynced(true);
                       BrandsModel brandModel = BrandsModel(brandName);
                       isAlreadyAdded ? EasyLoading.showError('Already Added') : categoryInformationRef.push().set(brandModel.toJson());

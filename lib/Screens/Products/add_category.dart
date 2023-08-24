@@ -11,6 +11,8 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 
+import '../../currency.dart';
+
 class AddCategory extends StatefulWidget {
   const AddCategory({Key? key}) : super(key: key);
 
@@ -175,7 +177,7 @@ class _AddCategoryState extends State<AddCategory> {
                       final DatabaseReference _categoryInformationRef = FirebaseDatabase.instance
                           // ignore: deprecated_member_use
                           .reference()
-                          .child(FirebaseAuth.instance.currentUser!.uid)
+                          .child(constUserId)
                           .child('Categories');
                       _categoryInformationRef.keepSynced(true);
                       CategoryModel categoryModel = CategoryModel(

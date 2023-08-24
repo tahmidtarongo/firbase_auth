@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import 'contact_list_screen.dart';
 
 class SendSms extends StatefulWidget {
@@ -431,7 +432,7 @@ class _SendSmsState extends State<SendSms> {
                                 SmsModel model = SmsModel(
                                   customerPhone: element,
                                   totalAmount: messageContentController.text,
-                                  sellerId: FirebaseAuth.instance.currentUser!.uid,
+                                  sellerId: constUserId,
                                   sellerName: user.companyName,
                                   sellerMobile: user.phoneNumber,
                                   type: 'Bulk',

@@ -184,7 +184,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                 final DatabaseReference _purchaseReportRef = FirebaseDatabase.instance
                     // ignore: deprecated_member_use
                     .reference()
-                    .child(FirebaseAuth.instance.currentUser!.uid)
+                    .child(constUserId)
                     .child('Purchase Report');
                 PurchaseReport purchaseReport = PurchaseReport(customer, cart.getTotalAmount().toString(), cart.getCartItemCount().toString());
                 await _purchaseReportRef.push().set(purchaseReport.toJson());

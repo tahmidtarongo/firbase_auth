@@ -16,6 +16,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
+import '../../currency.dart';
 import '../../subscription.dart';
 
 class AddCustomer extends StatefulWidget {
@@ -453,7 +454,7 @@ class _AddCustomerState extends State<AddCustomer> {
                               final DatabaseReference _customerInformationRef = FirebaseDatabase.instance
                                   // ignore: deprecated_member_use
                                   .reference()
-                                  .child(FirebaseAuth.instance.currentUser!.uid)
+                                  .child(constUserId)
                                   .child('Customers');
                               _customerInformationRef.keepSynced(true);
                               CustomerModel customerModel = CustomerModel(

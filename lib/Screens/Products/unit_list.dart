@@ -10,6 +10,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
+import '../../currency.dart';
 import 'add_units.dart';
 
 // ignore: must_be_immutable
@@ -49,7 +50,7 @@ class _UnitListState extends State<UnitList> {
   Future<List<UnitModel>> getUnits() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref();
     List<UnitModel> list = [];
-    final model = await ref.child('${FirebaseAuth.instance.currentUser!.uid}/Units').get();
+    final model = await ref.child('$constUserId/Units').get();
 
     var data = jsonDecode(jsonEncode(model.value));
     if (data == null) {
@@ -144,7 +145,7 @@ class _UnitListState extends State<UnitList> {
                     physics: const NeverScrollableScrollPhysics(),
                     query:
                         // ignore: deprecated_member_use
-                        FirebaseDatabase.instance.reference().child(FirebaseAuth.instance.currentUser!.uid).child('Units'),
+                        FirebaseDatabase.instance.reference().child(constUserId).child('Units'),
                     itemBuilder: (context, snapshot, animation, index) {
                       final json = snapshot.value as Map<dynamic, dynamic>;
                       final title = UnitModel.fromJson(json);

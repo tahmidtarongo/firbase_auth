@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +32,6 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
       final printerData = ref.watch(printerProviderNotifier);
       return SafeArea(
         child: Scaffold(
-
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -117,6 +118,19 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                           DateTime.parse(widget.transitionModel.purchaseDate),
                         ),
                         style: kTextStyle.copyWith(color: kGreyTextColor),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '',
+                        style: kTextStyle.copyWith(color: kTitleColor),
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Seller: ${widget.transitionModel.sellerName.isEmptyOrNull ? 'Admin' : widget.transitionModel.sellerName}',
+                        style: kTextStyle.copyWith(color: kTitleColor),
                       ),
                     ],
                   ),
@@ -383,8 +397,11 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
-                        Icon(Icons.close,color: Colors.white,),
+                      children: [
+                        Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
                         Text(
                           lang.S.of(context).cacel,
                           style: TextStyle(
@@ -399,8 +416,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                 GestureDetector(
                   onTap: () async {
                     await printerData.getBluetooth();
-                    PrintTransactionModel model =
-                        PrintTransactionModel(transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
+                    PrintTransactionModel model = PrintTransactionModel(transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
                     mainConstant.connected
                         ? printerData.printTicket(
                             printTransactionModel: model,
@@ -431,7 +447,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                                 isConnect ? finish(context) : toast('Try Again');
                                               },
                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                              subtitle:  Text(lang.S.of(context).clickToConnect),
+                                              subtitle: Text(lang.S.of(context).clickToConnect),
                                             );
                                           },
                                         ),
@@ -442,7 +458,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                           onTap: () {
                                             Navigator.pop(context);
                                           },
-                                          child:  Center(
+                                          child: Center(
                                             child: Text(
                                               lang.S.of(context).cacel,
                                               style: TextStyle(color: mainConstant.kMainColor),
@@ -469,8 +485,11 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
-                          Icon(Icons.print,color: Colors.white,),
+                        children: [
+                          Icon(
+                            Icons.print,
+                            color: Colors.white,
+                          ),
                           Text(
                             lang.S.of(context).print,
                             style: TextStyle(

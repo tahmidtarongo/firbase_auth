@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/delivery_address_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 
 class AddDelivery extends StatefulWidget {
   const AddDelivery({Key? key}) : super(key: key);
@@ -230,7 +231,7 @@ class _AddDeliveryState extends State<AddDelivery> {
                     final DatabaseReference _deliveryInformationRef = FirebaseDatabase.instance
                         // ignore: deprecated_member_use
                         .reference()
-                        .child(FirebaseAuth.instance.currentUser!.uid)
+                        .child(constUserId)
                         .child('Delivery Addresses');
                     DeliveryModel deliveryModel = DeliveryModel(firstName, lastname, emailAddress, phoneNumber, initialCountry, addressLocation, addressType);
                     await _deliveryInformationRef.push().set(deliveryModel.toJson());

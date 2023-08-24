@@ -19,6 +19,7 @@ import '../../Provider/product_provider.dart';
 import '../../Provider/seles_report_provider.dart';
 import '../../Provider/transactions_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/add_to_cart_model.dart';
 import '../Customers/Model/customer_model.dart';
 
@@ -689,8 +690,6 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                   try {
                                     EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
-                                    final userId = FirebaseAuth.instance.currentUser!.uid;
-
                                     dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                     dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
                                     returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
@@ -702,7 +701,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
                                     transitionModel.invoiceNumber = invoice.toString();
 
                                     ///________________updateInvoice___________________________________________________________
-                                    final ref = FirebaseDatabase.instance.ref(userId).child('Sales Transition');
+                                    final ref = FirebaseDatabase.instance.ref(constUserId).child('Sales Transition');
                                     ref.keepSynced(true);
                                     String? key;
                                     ref.orderByKey().get().then((value) async {
@@ -837,8 +836,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   }
 
   void decreaseStock(String productCode, int quantity) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
     ref.keepSynced(true);
 
     ref.orderByKey().get().then((value) {
@@ -867,8 +865,7 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   }
 
   void increaseStock(String productCode, int quantity) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
     ref.keepSynced(true);
 
     ref.orderByKey().get().then((value) {
@@ -906,8 +903,8 @@ class _SalesReportEditScreenState extends State<SalesReportEditScreen> {
   // }
 
   void getSpecificCustomersDueUpdate({required String phoneNumber, required bool isDuePaid, required int due}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     String? key;
 

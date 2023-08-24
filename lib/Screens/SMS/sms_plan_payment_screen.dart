@@ -78,7 +78,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(
+                  Text(
                     lang.S.of(context).paymentInstructions,
                     style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16.0),
                   ),
@@ -137,7 +137,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: nameController,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: lang.S.of(context).payeeName,
                       hintText: lang.S.of(context).enterYourName,
@@ -150,7 +150,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: phoneNumberController,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: lang.S.of(context).payeeNumber,
                       hintText: lang.S.of(context).enterYourMobileNumber,
@@ -163,7 +163,7 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: transactionIdController,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: lang.S.of(context).transactionId,
                       hintText: lang.S.of(context).enterYourTransactionId,
@@ -179,9 +179,21 @@ class _SmsPlanPaymentScreenState extends State<SmsPlanPaymentScreen> {
                       color: kMainColor,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () async{
+                    onPressed: () async {
                       EasyLoading.show(status: 'Loading');
-                      PaymentVerificationModel payment = PaymentVerificationModel(sellerName: user.companyName.toString(), sellerPhone: user.phoneNumber.toString(), sellerID: FirebaseAuth.instance.currentUser!.uid, shopName: user.companyName.toString(), paymentPhoneNumber: phoneNumberController.text, transactionId: transactionIdController.text, paymentRef: 'SMS Plan', paidAmount: widget.model.smsPackOfferPrice, verificationStatus: 'pending', verificationAttemptsDate: DateTime.now().toString(), smsSubscriptionPlanModel: widget.model,);
+                      PaymentVerificationModel payment = PaymentVerificationModel(
+                        sellerName: user.companyName.toString(),
+                        sellerPhone: user.phoneNumber.toString(),
+                        sellerID: FirebaseAuth.instance.currentUser!.uid,
+                        shopName: user.companyName.toString(),
+                        paymentPhoneNumber: phoneNumberController.text,
+                        transactionId: transactionIdController.text,
+                        paymentRef: 'SMS Plan',
+                        paidAmount: widget.model.smsPackOfferPrice,
+                        verificationStatus: 'pending',
+                        verificationAttemptsDate: DateTime.now().toString(),
+                        smsSubscriptionPlanModel: widget.model,
+                      );
                       final dbRef = FirebaseDatabase.instance.ref().child('Admin Panel').child('Payment Verification');
                       await dbRef.push().set(payment.toJson());
                       EasyLoading.showSuccess('Successful');

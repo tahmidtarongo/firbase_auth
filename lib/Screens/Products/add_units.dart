@@ -11,6 +11,8 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 
+import '../../currency.dart';
+
 class AddUnits extends StatefulWidget {
   const AddUnits({Key? key}) : super(key: key);
 
@@ -92,7 +94,7 @@ class _AddUnitsState extends State<AddUnits> {
                     setState(() {
                       showProgress = true;
                     });
-                    final DatabaseReference unitInformationRef = FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Units');
+                    final DatabaseReference unitInformationRef = FirebaseDatabase.instance.ref().child(constUserId).child('Units');
                     unitInformationRef.keepSynced(true);
                     UnitModel unitModel = UnitModel(unitsName);
                     isAlreadyAdded ? EasyLoading.showError('Already Added') : unitInformationRef.push().set(unitModel.toJson());

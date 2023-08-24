@@ -18,6 +18,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/category,brans,units_provide.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../Home/home_screen.dart';
 
 class UpdateProduct extends StatefulWidget {
@@ -59,12 +60,11 @@ class UpdateProductState extends State<UpdateProduct> {
 
   void getProductKey(String code) async {
 
-    final userId = FirebaseAuth.instance.currentUser!.uid;
 
     // ignore: unused_local_variable
     List<ProductModel> productList = [];
 
-    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
 
     ref.keepSynced(true);
 
@@ -611,7 +611,7 @@ class UpdateProductState extends State<UpdateProduct> {
 
                              result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                            DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Products/$productKey");
+                            DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Products/$productKey");
                             ref.keepSynced(true);
                             ref.update({
                               'productName': updatedProductModel.productName,

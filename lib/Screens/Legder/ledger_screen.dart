@@ -30,9 +30,8 @@ class _LedgerScreenState extends State<LedgerScreen> {
   double totalSale = 0;
 
   Future<void> customerData() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
     List<CustomerModel> customerList = [];
-    await FirebaseDatabase.instance.ref(userId).child('Customers').orderByKey().get().then((value) {
+    await FirebaseDatabase.instance.ref(constUserId).child('Customers').orderByKey().get().then((value) {
       for (var element in value.children) {
         customerList.add(CustomerModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }

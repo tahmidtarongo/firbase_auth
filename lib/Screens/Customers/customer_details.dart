@@ -38,8 +38,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
   String buttonsSelected = '';
 
   void getCustomerKey(String phoneNumber) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     ref.orderByKey().get().then((value) {
       for (var element in value.children) {
@@ -94,7 +93,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: const Text('Yes, Delete Forever').onTap((){
-                      DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
+                      DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Customers/$customerKey");
                       ref.keepSynced(true);
                       ref.remove();
                       cRef.refresh(customerProvider);

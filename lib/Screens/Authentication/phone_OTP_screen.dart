@@ -133,7 +133,13 @@ class _OTPVerifyState extends State<OTPVerify> {
                             const ProfileSetup().launch(context);
                           } else {
                             EasyLoading.dismiss();
-                            await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
+                            Future.delayed(const Duration(milliseconds: 500), () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>  SuccessScreen(email: 'phone',)),
+                              );
+                            });
+                            // await Future.delayed(const Duration(seconds: 1)).then((value) => const Home().launch(context));
                           }
                         });
                       } catch (e) {

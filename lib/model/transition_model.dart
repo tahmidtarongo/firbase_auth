@@ -16,6 +16,7 @@ class TransitionModel {
   bool? isPaid;
   String? paymentType;
   List<AddToCartModel>? productList;
+  String? sellerName;
 
   TransitionModel({
     required this.customerName,
@@ -34,6 +35,7 @@ class TransitionModel {
     this.productList,
     this.lossProfit,
     this.totalQuantity,
+    this.sellerName,
   });
 
   TransitionModel.fromJson(Map<dynamic, dynamic> json) {
@@ -51,6 +53,7 @@ class TransitionModel {
     dueAmount = double.parse(json['dueAmount'].toString());
     returnAmount = double.parse(json['returnAmount'].toString());
     isPaid = json['isPaid'];
+    sellerName = json['sellerName'];
     paymentType = json['paymentType'].toString();
     if (json['productList'] != null) {
       productList = <AddToCartModel>[];
@@ -73,6 +76,7 @@ class TransitionModel {
         'totalAmount': totalAmount,
         'dueAmount': dueAmount,
         'returnAmount': returnAmount,
+        'sellerName': sellerName,
         'totalQuantity': totalQuantity,
         'isPaid': isPaid,
         'paymentType': paymentType,

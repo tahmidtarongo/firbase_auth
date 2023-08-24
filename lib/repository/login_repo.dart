@@ -21,7 +21,10 @@ class LogInRepo extends ChangeNotifier {
         Future.delayed(const Duration(milliseconds: 500), () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const SuccessScreen()),
+            MaterialPageRoute(
+                builder: (context) => SuccessScreen(
+                      email: email,
+                    )),
           );
         });
       }

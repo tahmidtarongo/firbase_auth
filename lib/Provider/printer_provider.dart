@@ -69,6 +69,8 @@ class Printer extends ChangeNotifier {
         styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
     bytes += generator.text('Name: ${printTransactionModel.transitionModel?.customerName ?? 'Guest'}', styles: const PosStyles(align: PosAlign.left));
     bytes += generator.text('mobile: ${printTransactionModel.transitionModel?.customerPhone ?? 'Not Provided'}',
+        styles: const PosStyles(align: PosAlign.left));
+    bytes += generator.text('Sales By: ${printTransactionModel.transitionModel?.sellerName ?? 'Admin'}',
         styles: const PosStyles(align: PosAlign.left), linesAfter: 1);
 
     bytes += generator.row([

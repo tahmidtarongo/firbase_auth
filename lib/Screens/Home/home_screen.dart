@@ -1,5 +1,8 @@
 // ignore_for_file: unused_result
 
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +18,8 @@ import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/due_transaction_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
+import '../../currency.dart';
+import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
 import '../subscription/package_screen.dart';
@@ -28,6 +33,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool checkPermission({required String item}) {
+    if (item == 'Sales' && finalUserRoleModel.salePermission) {
+      return true;
+    } else if (item == 'Parties' && finalUserRoleModel.partiesPermission) {
+      return true;
+    } else if (item == 'Purchase' && finalUserRoleModel.purchasePermission) {
+      return true;
+    } else if (item == 'Products' && finalUserRoleModel.productPermission) {
+      return true;
+    } else if (item == 'Due List' && finalUserRoleModel.dueListPermission) {
+      return true;
+    } else if (item == 'Stock' && finalUserRoleModel.stockPermission) {
+      return true;
+    } else if (item == 'Reports' && finalUserRoleModel.reportsPermission) {
+      return true;
+    } else if (item == 'Sales List' && finalUserRoleModel.salesListPermission) {
+      return true;
+    } else if (item == 'Purchase List' && finalUserRoleModel.purchaseListPermission) {
+      return true;
+    } else if (item == 'Loss/Profit' && finalUserRoleModel.lossProfitPermission) {
+      return true;
+    } else if (item == 'Expense' && finalUserRoleModel.addExpensePermission) {
+      return true;
+    }
+    return false;
+  }
   List<Color> color = [
     const Color(0xffEDFAFF),
     const Color(0xffFFF6ED),
@@ -82,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              const ProfileDetails().launch(context);
+                              isSubUser ? null : const ProfileDetails().launch(context);
                             },
                             child: Container(
                               height: 50,
@@ -99,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                details.companyName ?? '',
+                                isSubUser ? '${details.companyName ?? ''} [$subUserTitle]' : details.companyName ?? '',
                                 style: GoogleFonts.poppins(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w600,
@@ -380,6 +411,68 @@ class HomeGridCards extends StatefulWidget {
 }
 
 class _HomeGridCardsState extends State<HomeGridCards> {
+  Future<bool> subscriptionChecker({
+    required String item,
+  }) async {
+    final DatabaseReference subscriptionRef = FirebaseDatabase.instance.ref().child(constUserId).child('Subscription');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Subscription');
+    ref.keepSynced(true);
+    subscriptionRef.keepSynced(true);
+
+    bool boolValue = true;
+
+    await ref.get().then((value) async {
+      final dataModel = SubscriptionModel.fromJson(jsonDecode(jsonEncode(value.value)));
+      final remainTime = DateTime.parse(dataModel.subscriptionDate).difference(DateTime.now());
+      for (var element in Subscription.subscriptionPlan) {
+        if (dataModel.subscriptionName == element.subscriptionName) {
+          if (remainTime.inHours.abs() > element.duration * 24) {
+            Subscription.freeSubscriptionModel.subscriptionDate = DateTime.now().toString();
+            subscriptionRef.set(Subscription.freeSubscriptionModel.toJson());
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('isFiveDayRemainderShown', true);
+          } else if (item == 'Sales' && dataModel.saleNumber <= 0 && dataModel.saleNumber != -202) {
+            boolValue = false;
+          } else if (item == 'Parties' && dataModel.partiesNumber <= 0 && dataModel.partiesNumber != -202) {
+            boolValue = false;
+          } else if (item == 'Purchase' && dataModel.purchaseNumber <= 0 && dataModel.purchaseNumber != -202) {
+            boolValue = false;
+          } else if (item == 'Products' && dataModel.products <= 0 && dataModel.products != -202) {
+            boolValue = false;
+          } else if (item == 'Due List' && dataModel.dueNumber <= 0 && dataModel.dueNumber != -202) {
+            boolValue = false;
+          }
+        }
+      }
+    });
+    return boolValue;
+  }
+  bool checkPermission({required String item}) {
+    if (item == 'Sales' && finalUserRoleModel.salePermission) {
+      return true;
+    } else if (item == 'Parties' && finalUserRoleModel.partiesPermission) {
+      return true;
+    } else if (item == 'Purchase' && finalUserRoleModel.purchasePermission) {
+      return true;
+    } else if (item == 'Products' && finalUserRoleModel.productPermission) {
+      return true;
+    } else if (item == 'Due List' && finalUserRoleModel.dueListPermission) {
+      return true;
+    } else if (item == 'Stock' && finalUserRoleModel.stockPermission) {
+      return true;
+    } else if (item == 'Reports' && finalUserRoleModel.reportsPermission) {
+      return true;
+    } else if (item == 'Sales List' && finalUserRoleModel.salesListPermission) {
+      return true;
+    } else if (item == 'Purchase List' && finalUserRoleModel.purchaseListPermission) {
+      return true;
+    } else if (item == 'Loss/Profit' && finalUserRoleModel.lossProfitPermission) {
+      return true;
+    } else if (item == 'Expense' && finalUserRoleModel.addExpensePermission) {
+      return true;
+    }
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
@@ -396,7 +489,13 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                 ref.refresh(dueTransactionProvider);
                 ref.refresh(purchaseTransitionProvider);
                 ref.refresh(transitionProvider);
-                await Subscription.subscriptionChecker(item: widget.gridItems.title)
+                isSubUser
+                    ? checkPermission(item: widget.gridItems.title)
+                    ? await subscriptionChecker(item: widget.gridItems.title)
+                    ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
+                    : EasyLoading.showError('Update your plan first,\nyour limit is over.')
+                    : EasyLoading.showError('Sorry, you have no permission to access this service')
+                    :await Subscription.subscriptionChecker(item: widget.gridItems.title)
                     ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
                     : EasyLoading.showError('Update your plan first,\nyour limit is over.');
               },

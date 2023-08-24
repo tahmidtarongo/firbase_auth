@@ -9,6 +9,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
+import '../../currency.dart';
 
 // ignore: must_be_immutable
 class BrandsList extends StatefulWidget {
@@ -107,7 +108,7 @@ class _BrandsListState extends State<BrandsList> {
                     query: FirebaseDatabase.instance
                         // ignore: deprecated_member_use
                         .reference()
-                        .child(FirebaseAuth.instance.currentUser!.uid)
+                        .child(constUserId)
                         .child('Brands'),
                     itemBuilder: (context, snapshot, animation, index) {
                       final json = snapshot.value as Map<dynamic, dynamic>;

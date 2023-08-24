@@ -11,6 +11,8 @@ import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:mobile_pos/model/expense_category_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../currency.dart';
+
 class AddExpenseCategory extends StatefulWidget {
   const AddExpenseCategory({Key? key}) : super(key: key);
 
@@ -95,7 +97,7 @@ class _AddExpenseCategoryState extends State<AddExpenseCategory> {
                         showProgress = true;
                       });
                       final DatabaseReference categoryInformationRef =
-                          FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Expense Category');
+                          FirebaseDatabase.instance.ref().child(constUserId).child('Expense Category');
 
                       ExpenseCategoryModel categoryModel = ExpenseCategoryModel(
                         categoryName: categoryName,

@@ -751,8 +751,8 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                 try {
                                   EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
-                                  final userId = FirebaseAuth.instance.currentUser!.uid;
-                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Purchase Transition");
+
+                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Purchase Transition");
                                   ref.keepSynced(true);
                                   dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                   dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
@@ -773,7 +773,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   ///_______invoice_Update_____________________________________________
                                   final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
-                                      FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
+                                      FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
                                   personalInformationRef.keepSynced(true);
                                   personalInformationRef.update({'purchaseInvoiceCounter': invoice + 1});
 
@@ -932,8 +932,8 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
   }
 
   void increaseStock({required String productCode, required ProductModel productModel}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
     ref.keepSynced(true);
 
     ref.orderByKey().get().then((value) {
@@ -957,8 +957,8 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
   }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     String? key;
 

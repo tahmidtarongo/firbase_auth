@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/all_expanse_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/expense_model.dart';
 
 // ignore: must_be_immutable
@@ -285,7 +286,7 @@ class _AddExpenseState extends State<AddExpense> {
                               try {
                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                                 final DatabaseReference productInformationRef =
-                                    FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Expense');
+                                    FirebaseDatabase.instance.ref().child(constUserId).child('Expense');
                                 await productInformationRef.push().set(expense.toJson());
                                 EasyLoading.showSuccess('Added Successfully', duration: const Duration(milliseconds: 500));
 

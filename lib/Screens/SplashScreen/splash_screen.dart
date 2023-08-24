@@ -63,6 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const OnBoard().launch(context, isNewTask: true);
     }
   }
+  final CurrentUserData currentUserData = CurrentUserData();
 
   @override
   void initState() {
@@ -70,6 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
     getPermission();
     getCurrency();
     updateNotifier();
+    currentUserData.getUserData();
   }
 
   @override

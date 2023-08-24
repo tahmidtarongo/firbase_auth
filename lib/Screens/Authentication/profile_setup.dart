@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,6 +17,7 @@ import 'package:mobile_pos/Screens/Authentication/phone.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/seller_info_model.dart';
 import '../../model/subscription_plan_model.dart';
@@ -30,10 +33,12 @@ class ProfileSetup extends StatefulWidget {
 }
 
 class _ProfileSetupState extends State<ProfileSetup> {
+  final CurrentUserData currentUserData = CurrentUserData();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    currentUserData.putUserData(userId: FirebaseAuth.instance.currentUser!.uid, subUser: false, title: '', email: '');
 
     freeSubscription();
   }
@@ -80,7 +85,10 @@ class _ProfileSetupState extends State<ProfileSetup> {
     for (String category in businessCategory) {
       var item = DropdownMenuItem(
         value: category,
-        child: Text(category,style: const TextStyle(fontWeight: FontWeight.bold),),
+        child: Text(
+          category,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
       );
       dropDownItems.add(item);
     }
@@ -151,7 +159,6 @@ class _ProfileSetupState extends State<ProfileSetup> {
 
     await subscriptionRef.set(Subscription.freeSubscriptionModel.toJson());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +353,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         });
                       }, // Optional
                       textFieldType: TextFieldType.NAME,
-                      decoration:  InputDecoration(labelText: lang.S.of(context).companyAndShopName, border: OutlineInputBorder()),
+                      decoration: InputDecoration(labelText: lang.S.of(context).companyAndShopName, border: const OutlineInputBorder()),
                     ),
                   ),
                   Padding(
@@ -361,7 +368,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                             phoneNumber = value;
                           });
                         },
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           labelText: lang.S.of(context).phoneNumber,
                           hintText: lang.S.of(context).enterPhoneNumber,
                           border: const OutlineInputBorder(),
@@ -375,13 +382,13 @@ class _ProfileSetupState extends State<ProfileSetup> {
                       // ignore: deprecated_member_use
                       textFieldType: TextFieldType.ADDRESS,
                       controller: controller,
-                      decoration:  InputDecoration(
-                        focusedBorder: OutlineInputBorder(
+                      decoration: InputDecoration(
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: kGreyTextColor),
                         ),
                         labelText: lang.S.of(context).companyAddress,
                         hintText: lang.S.of(context).enterFullAddress,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -415,9 +422,9 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         });
                       }, // Optional
                       textFieldType: TextFieldType.PHONE,
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         labelText: lang.S.of(context).openingBalance,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -430,7 +437,11 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
                         bool result = await InternetConnectionChecker().hasConnection;
-                        result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+                        result
+                            ? imagePath == 'No Data'
+                                ? null
+                                : await uploadFile(imagePath)
+                            : null;
 
                         // ignore: no_leading_underscores_for_local_identifiers
                         final DatabaseReference _personalInformationRef =
@@ -465,7 +476,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           subscriptionName: 'Free',
                           subscriptionMethod: 'Not Provided',
                         );
-                        final adminRef= FirebaseDatabase.instance.ref().child('Admin Panel');
+                        final adminRef = FirebaseDatabase.instance.ref().child('Admin Panel');
                         await adminRef.child('Seller List').push().set(sellerInfoModel.toJson());
 
                         // await adminRef.child('Sms Package Plan').orderByKey().get().then((value) async{

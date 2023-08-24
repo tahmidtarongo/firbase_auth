@@ -9,6 +9,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
+import '../../currency.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
 
@@ -44,8 +45,7 @@ class _PackageScreenState extends State<PackageScreen> {
   ];
   void checkSubscriptionData() async {
     EasyLoading.show(status: 'Loading');
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Subscription');
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));
     Subscription.selectedItem = SubscriptionModel.fromJson(data).subscriptionName;
@@ -119,13 +119,13 @@ class _PackageScreenState extends State<PackageScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Text(
-                             lang.S.of(context).freePlan,
+                          Text(
+                            lang.S.of(context).freePlan,
                             style: const TextStyle(fontSize: 18),
                           ),
                           const SizedBox(height: 8),
                           Row(
-                            children:  [
+                            children: [
                               Text(
                                 lang.S.of(context).youAreUsing,
                                 style: const TextStyle(fontSize: 14),
@@ -171,14 +171,14 @@ class _PackageScreenState extends State<PackageScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Text(
-                             lang.S.of(context).premiumPlan,
+                          Text(
+                            lang.S.of(context).premiumPlan,
                             style: TextStyle(fontSize: 18),
                           ),
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                               Text(
+                              Text(
                                 lang.S.of(context).youAreUsing,
                                 style: TextStyle(fontSize: 14),
                               ),
@@ -212,7 +212,7 @@ class _PackageScreenState extends State<PackageScreen> {
                   ),
                 ).visible(initialSelectedPackage != 'Free'),
                 const SizedBox(height: 20),
-                 Text(
+                Text(
                   lang.S.of(context).packageFeatures,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -258,19 +258,19 @@ class _PackageScreenState extends State<PackageScreen> {
                       );
                     }),
                 const SizedBox(height: 20),
-                 Text(
+                Text(
                   lang.S.of(context).forUnlimitedUses,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ).visible(initialSelectedPackage != 'Lifetime'),
                 const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
                 GestureDetector(
-                  onTap: () async{
+                  onTap: () async {
                     // PurchasePremiumPlanScreen(
                     //   initialSelectedPackage: initialSelectedPackage.toString(),
                     //   initPackageValue: initPackageValue?.toInt() ?? 0,
                     //   isCameBack: true,
                     // ).launch(context);
-                    await launchUrl(Uri.parse('https://wa.me/+8801712022529'),mode: LaunchMode.externalApplication);
+                    await launchUrl(Uri.parse('https://wa.me/+8801712022529'), mode: LaunchMode.externalApplication);
                   },
                   child: Container(
                     height: 50,
@@ -278,14 +278,14 @@ class _PackageScreenState extends State<PackageScreen> {
                       color: kMainColor,
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
-                    child:  Center(
+                    child: Center(
                       child: Text(
                         lang.S.of(context).updateNow,
                         style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
-                ).visible(initialSelectedPackage != 'Lifetime'),
+                ).visible(initialSelectedPackage != 'Lifetime' && !isSubUser),
               ],
             ),
           ),

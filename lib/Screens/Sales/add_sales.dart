@@ -77,7 +77,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   TextEditingController discountAmountEditingController = TextEditingController();
   TextEditingController discountPercentageEditingController = TextEditingController();
 
-
   late TransitionModel transitionModel = TransitionModel(
     customerName: widget.customerModel.customerName,
     customerPhone: widget.customerModel.phoneNumber,
@@ -87,10 +86,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     vat: 0,
     serviceCharge: 0,
   );
-@override
+  @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {
@@ -128,7 +128,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             textFieldType: TextFieldType.NAME,
                             readOnly: true,
                             initialValue: data.saleInvoiceCounter.toString(),
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: lang.S.of(context).invNo,
                               border: const OutlineInputBorder(),
@@ -186,7 +186,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           textFieldType: TextFieldType.NAME,
                           readOnly: true,
                           initialValue: widget.customerModel.customerName.isNotEmpty ? widget.customerModel.customerName : widget.customerModel.phoneNumber,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: lang.S.of(context).customerName,
                             border: const OutlineInputBorder(),
@@ -217,7 +217,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   width: context.width() / 1.35,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children:  [
+                                    children: [
                                       Text(
                                         lang.S.of(context).itemAdded,
                                         style: TextStyle(fontSize: 16),
@@ -336,9 +336,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(color: kMainColor.withOpacity(0.1), borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child:  Center(
+                        child: Center(
                             child: Text(
-                              lang.S.of(context).addItems,
+                          lang.S.of(context).addItems,
                           style: const TextStyle(color: kMainColor, fontSize: 20),
                         )),
                       ),
@@ -347,19 +347,17 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
                     ///_____Total______________________________
                     Container(
-                      decoration:
-                          BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
+                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: Colors.grey.shade300, width: 1)),
                       child: Column(
                         children: [
                           Container(
                             padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
+                            decoration: const BoxDecoration(color: Color(0xffEAEFFA), borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
-                                   lang.S.of(context).subTotal,
+                                Text(
+                                  lang.S.of(context).subTotal,
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -374,7 +372,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
+                                Text(
                                   lang.S.of(context).discount,
                                   style: const TextStyle(fontSize: 16),
                                 ),
@@ -392,9 +390,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                 percentage = 0.0;
                                               });
                                             } else {
-                                              if (value.toInt() <=100 ) {
+                                              if (value.toInt() <= 100) {
                                                 setState(() {
-                                                  discountAmount = (value.toDouble()/100) * providerData.getTotalAmount().toDouble();
+                                                  discountAmount = (value.toDouble() / 100) * providerData.getTotalAmount().toDouble();
                                                   discountAmountEditingController.text = discountAmount.toString();
                                                 });
                                               } else {
@@ -411,17 +409,16 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                           decoration: InputDecoration(
                                             contentPadding: const EdgeInsets.only(right: 6.0),
                                             hintText: '0',
-                                            border: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
-                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
-                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
-                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            border: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: Color(0xFFff5f00))),
+                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: Color(0xFFff5f00))),
                                             prefixIconConstraints: const BoxConstraints(maxWidth: 30.0, minWidth: 30.0),
                                             prefixIcon: Container(
                                               padding: const EdgeInsets.only(top: 8.0, left: 8.0),
                                               height: 40,
                                               decoration: const BoxDecoration(
-                                                  color: Color(0xFFff5f00),
-                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
+                                                  color: Color(0xFFff5f00), borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
                                               child: const Text(
                                                 '%',
                                                 style: TextStyle(fontSize: 20.0, color: Colors.white),
@@ -450,7 +447,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                               if (value.toInt() <= providerData.getTotalAmount()) {
                                                 setState(() {
                                                   discountAmount = double.parse(value);
-                                                  discountPercentageEditingController.text = ((discountAmount * 100) /providerData.getTotalAmount() ).toString();
+                                                  discountPercentageEditingController.text = ((discountAmount * 100) / providerData.getTotalAmount()).toString();
                                                 });
                                               } else {
                                                 paidText.clear();
@@ -466,17 +463,16 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                           decoration: InputDecoration(
                                             contentPadding: const EdgeInsets.only(right: 6.0),
                                             hintText: '0',
-                                            border: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
-                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
-                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
-                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0,borderSide: BorderSide(color: kMainColor)),
+                                            border: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: kMainColor)),
+                                            enabledBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: kMainColor)),
+                                            disabledBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: kMainColor)),
+                                            focusedBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: kMainColor)),
                                             prefixIconConstraints: const BoxConstraints(maxWidth: 30.0, minWidth: 30.0),
                                             prefixIcon: Container(
                                               padding: const EdgeInsets.only(top: 8.0, left: 8.0),
                                               height: 40,
                                               decoration: const BoxDecoration(
-                                                  color: kMainColor,
-                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
+                                                  color: kMainColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
                                               child: Text(
                                                 currency,
                                                 style: const TextStyle(fontSize: 20.0, color: Colors.white),
@@ -497,7 +493,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
+                                Text(
                                   lang.S.of(context).total,
                                   style: const TextStyle(fontSize: 16),
                                 ),
@@ -544,8 +540,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
-                                   lang.S.of(context).returnAMount,
+                                Text(
+                                  lang.S.of(context).returnAMount,
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -560,8 +556,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
-                                   lang.S.of(context).dueAmount,
+                                Text(
+                                  lang.S.of(context).dueAmount,
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
@@ -576,16 +572,17 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
+                                Text(
                                   lang.S.of(context).sendSmsw,
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Switch(
-                                  value: sendSms, onChanged: (val){
+                                  value: sendSms,
+                                  onChanged: (val) {
                                     setState(() {
                                       sendSms = val;
                                     });
-                                },
+                                  },
                                 ),
                               ],
                             ),
@@ -603,7 +600,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Row(
+                        Row(
                           children: [
                             Text(
                               lang.S.of(context).paymentType,
@@ -650,7 +647,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: lang.S.of(context).describtion,
                               hintText: lang.S.of(context).addNote,
@@ -666,7 +663,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           child: Center(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              children:  [
+                              children: [
                                 const Icon(
                                   FeatherIcons.camera,
                                   color: Colors.grey,
@@ -695,7 +692,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               color: Colors.red,
                               borderRadius: BorderRadius.all(Radius.circular(30)),
                             ),
-                            child:  Center(
+                            child: Center(
                               child: Text(
                                 lang.S.of(context).cacel,
                                 style: const TextStyle(fontSize: 18, color: Colors.white),
@@ -712,8 +709,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   EasyLoading.showError('Due is not available for guest');
                                 } else {
                                   try {
-                                    final userId = FirebaseAuth.instance.currentUser!.uid;
-                                    DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Sales Transition");
+                                    DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Sales Transition");
                                     ref.keepSynced(true);
                                     dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
                                     dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
@@ -722,6 +718,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     transitionModel.totalAmount = subTotal;
                                     transitionModel.productList = providerData.cartItemList;
                                     transitionModel.paymentType = dropdownValue;
+                                    isSubUser ? transitionModel.sellerName = subUserTitle : null;
                                     transitionModel.invoiceNumber = invoice.toString();
 
                                     int totalQuantity = 0;
@@ -749,36 +746,35 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     ///_______invoice_Update_____________________________________________
                                     final DatabaseReference personalInformationRef =
                                         // ignore: deprecated_member_use
-                                        FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
+                                        FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
                                     // personalInformationRef.keepSynced(true);
-                                   await personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
-
+                                    await personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
 
                                     ///________Subscription_____________________________________________________
 
                                     Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
 
-
                                     ///_________DueUpdate______________________________________________________
                                     getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
-                                   if(sendSms && data.smsBalance! > 0){
-                                     SmsModel smsModel = SmsModel(
-                                       customerName: widget.customerModel.customerName,
-                                       customerPhone: widget.customerModel.phoneNumber,
-                                       sellerMobile: data.phoneNumber,
-                                       sellerName: data.companyName,
-                                       sellerId: userId,
-                                       invoiceNumber: data.saleInvoiceCounter.toString(),
-                                       totalAmount: totalSalePrice.toString(),
-                                       paidAmount: (totalSalePrice - dueAmount).toString(),
-                                       dueAmount: dueAmount.toString(),
-                                       type: 'Sale',
-                                       status: false,
-                                     );
-                                     final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
-                                     await refr.push().set(smsModel.toJson());
-                                   }
+                                    if (sendSms && data.smsBalance! > 0) {
+                                      SmsModel smsModel = SmsModel(
+                                        customerName: widget.customerModel.customerName,
+                                        customerPhone: widget.customerModel.phoneNumber,
+                                        sellerMobile: data.phoneNumber,
+                                        sellerName: data.companyName,
+                                        sellerId: constUserId,
+                                        invoiceNumber: data.saleInvoiceCounter.toString(),
+                                        totalAmount: totalSalePrice.toString(),
+                                        paidAmount: (totalSalePrice - dueAmount).toString(),
+                                        dueAmount: dueAmount.toString(),
+                                        type: 'Sale',
+                                        status: false,
+                                      );
+                                      final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                                      await refr.push().set(smsModel.toJson());
+                                    }
+
                                     ///________Print_______________________________________________________
 
                                     PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
@@ -794,7 +790,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                         consumerRef.refresh(profileDetailsProvider);
 
                                         EasyLoading.dismiss();
-                                        await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                        await Future.delayed(const Duration(milliseconds: 500))
+                                            .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                       } else {
                                         EasyLoading.dismiss();
                                         EasyLoading.showError('Please Connect The Printer First');
@@ -811,9 +808,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                       children: [
                                                         ListView.builder(
                                                           shrinkWrap: true,
-                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty
-                                                              ? printerData.availableBluetoothDevices.length
-                                                              : 0,
+                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
                                                           itemBuilder: (context, index) {
                                                             return ListTile(
                                                               onTap: () async {
@@ -823,8 +818,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                 String mac = list[1];
                                                                 bool isConnect = await printerData.setConnect(mac);
                                                                 if (isConnect) {
-                                                                  await printerData.printTicket(
-                                                                      printTransactionModel: model, productList: transitionModel.productList);
+                                                                  await printerData.printTicket(printTransactionModel: model, productList: transitionModel.productList);
 
                                                                   consumerRef.refresh(customerProvider);
                                                                   consumerRef.refresh(productProvider);
@@ -832,7 +826,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                                   consumerRef.refresh(transitionProvider);
                                                                   consumerRef.refresh(profileDetailsProvider);
                                                                   EasyLoading.dismiss();
-                                                                  await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                                                  await Future.delayed(const Duration(milliseconds: 500)).then((value) =>
+                                                                      SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                                                 }
                                                               },
                                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
@@ -840,7 +835,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             );
                                                           },
                                                         ).visible(printerData.availableBluetoothDevices.isNotEmpty),
-                                                         Padding(
+                                                        Padding(
                                                           padding: const EdgeInsets.only(top: 20, bottom: 10),
                                                           child: Text(
                                                             lang.S.of(context).pleaseConnectYourBluttothPrinter,
@@ -861,9 +856,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                             consumerRef.refresh(salesReportProvider);
                                                             consumerRef.refresh(transitionProvider);
                                                             consumerRef.refresh(profileDetailsProvider);
-                                                            await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                                            await Future.delayed(const Duration(milliseconds: 500)).then(
+                                                                (value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                                           },
-                                                          child:  Center(
+                                                          child: Center(
                                                             child: Text(
                                                               lang.S.of(context).cacel,
                                                               style: const TextStyle(color: kMainColor),
@@ -885,7 +881,8 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       consumerRef.refresh(transitionProvider);
                                       consumerRef.refresh(profileDetailsProvider);
                                       EasyLoading.dismiss();
-                                      await Future.delayed(const Duration(milliseconds: 500)).then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                      await Future.delayed(const Duration(milliseconds: 500))
+                                          .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
                                     }
                                   } catch (e) {
                                     EasyLoading.showError(e.toString());
@@ -901,7 +898,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 color: kMainColor,
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child:  Center(
+                              child: Center(
                                 child: Text(
                                   lang.S.of(context).save,
                                   style: const TextStyle(fontSize: 18, color: Colors.white),
@@ -929,8 +926,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   }
 
   void decreaseStock(String productCode, int quantity) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Products');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
     ref.keepSynced(true);
 
     ref.orderByKey().get().then((value) {
@@ -944,12 +940,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         }
       }
     });
-
   }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     String? key;
 

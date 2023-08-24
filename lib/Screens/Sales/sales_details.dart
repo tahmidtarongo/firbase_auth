@@ -245,7 +245,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                   final DatabaseReference salesReportRef = FirebaseDatabase.instance
                       // ignore: deprecated_member_use
                       .reference()
-                      .child(FirebaseAuth.instance.currentUser!.uid)
+                      .child(constUserId)
                       .child('Sales Report');
                   SalesReport salesReport = SalesReport(customer, providerData.getTotalAmount().toString(), providerData.cartItemList.length.toString());
                   await salesReportRef.push().set(salesReport.toJson());

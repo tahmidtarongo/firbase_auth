@@ -18,6 +18,7 @@ import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/personal_information_model.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
+import '../User Roles/user_role_screen.dart';
 import '../subscription/package_screen.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -639,6 +640,27 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: kGreyTextColor,
                         ),
                       ),
+                      ///___________user_role___________________________________________________________
+                      ListTile(
+                        title: Text(
+                          'User Role',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {
+                          const UserRoleScreen().launch(context);
+                        },
+                        leading: const Icon(
+                          Icons.supervised_user_circle_sharp,
+                          color: kMainColor,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: kGreyTextColor,
+                        ),
+                      ).visible(!isSubUser),
                       ListTile(
                         title: Text(
                           lang.S.of(context).currency,

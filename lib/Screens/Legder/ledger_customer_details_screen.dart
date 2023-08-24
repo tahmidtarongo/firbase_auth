@@ -39,9 +39,8 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
   DateTime toDate = DateTime.now();
 
   Future<void> getTotalSale() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
     List<TransitionModel> transitionList = [];
-    await FirebaseDatabase.instance.ref(userId).child('Sales Transition').orderByKey().get().then((value) {
+    await FirebaseDatabase.instance.ref(constUserId).child('Sales Transition').orderByKey().get().then((value) {
       for (var element in value.children) {
         transitionList.add(TransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }
@@ -54,9 +53,8 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
   }
 
   Future<void> getTotalPurchase() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
     List<dynamic> transitionList = [];
-    await FirebaseDatabase.instance.ref(userId).child('Purchase Transition').orderByKey().get().then((value) {
+    await FirebaseDatabase.instance.ref(constUserId).child('Purchase Transition').orderByKey().get().then((value) {
       for (var element in value.children) {
         transitionList.add(PurchaseTransitionModel.fromJson(jsonDecode(jsonEncode(element.value))));
       }

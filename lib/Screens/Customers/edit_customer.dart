@@ -16,6 +16,7 @@ import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/customer_provider.dart';
+import '../../currency.dart';
 import 'customer_list.dart';
 
 class EditCustomer extends StatefulWidget {
@@ -38,8 +39,7 @@ class _EditCustomerState extends State<EditCustomer> {
   String imagePath = 'No Data';
   late String customerKey;
   void getCustomerKey(String phoneNumber) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     ref.orderByKey().get().then((value) {
       for (var element in value.children) {
@@ -450,7 +450,7 @@ class _EditCustomerState extends State<EditCustomer> {
                         try {
                           EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                           imagePath == 'No Data' ? null : await uploadFile(imagePath);
-                          DatabaseReference ref = FirebaseDatabase.instance.ref("${FirebaseAuth.instance.currentUser!.uid}/Customers/$customerKey");
+                          DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Customers/$customerKey");
                           ref.keepSynced(true);
                           ref.update({
                             'customerName': updatedCustomerModel.customerName,

@@ -15,6 +15,7 @@ import 'package:mobile_pos/model/nid_verification_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
+import '../../currency.dart';
 
 class UploadNid extends StatefulWidget {
   const UploadNid({Key? key}) : super(key: key);
@@ -95,7 +96,7 @@ class _UploadNidState extends State<UploadNid> {
               if(imagePathFront != 'No Data' && imagePathBack != 'No Data' ){
                 await uploadFrontFile(imagePathFront);
                 await uploadBackFile(imagePathBack);
-                NIDVerificationModel model = NIDVerificationModel(sellerName: data.companyName.toString(), sellerPhone: data.phoneNumber.toString(), sellerID: FirebaseAuth.instance.currentUser!.uid.toString(), shopName: data.companyName.toString(), nidBackPart: backNidUrl, nidFrontPart: frontNidUrl, verificationStatus: 'pending', verificationAttemptsDate: DateTime.now().toString());
+                NIDVerificationModel model = NIDVerificationModel(sellerName: data.companyName.toString(), sellerPhone: data.phoneNumber.toString(), sellerID: constUserId, shopName: data.companyName.toString(), nidBackPart: backNidUrl, nidFrontPart: frontNidUrl, verificationStatus: 'pending', verificationAttemptsDate: DateTime.now().toString());
                 final dbRef = FirebaseDatabase.instance.ref().child('Admin Panel').child('NID Verification');
                 await dbRef.push().set(model.toJson());
                 EasyLoading.showSuccess('Upload Successful');

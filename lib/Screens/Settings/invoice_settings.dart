@@ -15,6 +15,7 @@ import 'package:mobile_pos/model/invoice_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../invoice_constant.dart' as con;
 
 class InvoiceSettings extends StatefulWidget {
@@ -53,8 +54,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
   }
 
   Future<void> getSettingsData() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Invoice Settings');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Invoice Settings');
     ref.keepSynced(true);
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));
@@ -222,8 +222,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                           pictureUrl: productPicture,
                         );
 
-                        final userId = FirebaseAuth.instance.currentUser!.uid;
-                        DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Invoice Settings');
+                        DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Invoice Settings');
 
                         ref.set(invoice.toJson());
                         EasyLoading.showSuccess('Updated');

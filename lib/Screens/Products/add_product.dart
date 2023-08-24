@@ -24,6 +24,7 @@ import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/Model/category_model.dart';
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../subscription.dart';
 
 class AddProduct extends StatefulWidget {
@@ -682,7 +683,7 @@ class AddProductState extends State<AddProduct> {
                             final DatabaseReference _productInformationRef = FirebaseDatabase.instance
                                 // ignore: deprecated_member_use
                                 .reference()
-                                .child(FirebaseAuth.instance.currentUser!.uid)
+                                .child(constUserId)
                                 .child('Products');
                             _productInformationRef.keepSynced(true);
                             ProductModel productModel = ProductModel(

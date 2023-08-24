@@ -430,7 +430,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 await prefs.setBool('isFiveDayRemainderShown', true);
 
                                 final DatabaseReference subscriptionRef =
-                                    FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
+                                    FirebaseDatabase.instance.ref().child(constUserId).child('Subscription');
 
                                 SubscriptionModel subscriptionModel = SubscriptionModel(
                                   subscriptionName: Subscription.selectedItem,

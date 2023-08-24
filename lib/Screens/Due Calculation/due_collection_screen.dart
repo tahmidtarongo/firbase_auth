@@ -431,9 +431,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                               if (paidAmount >= 0) {
                                 try {
                                   EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-
-                                  final userId = FirebaseAuth.instance.currentUser!.uid;
-                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$userId/Due Transaction");
+                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Due Transaction");
                                   ref.keepSynced(true);
                                   dueTransactionModel.totalDue = dueAmount;
                                   remainDueAmount <= 0 ? dueTransactionModel.isPaid = true : dueTransactionModel.isPaid = false;
@@ -454,7 +452,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
                                   final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
-                                      FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Personal Information');
+                                      FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
                                   personalInformationRef.keepSynced(true);
                                   personalInformationRef.update({'dueInvoiceCounter': invoice + 1});
 
@@ -472,7 +470,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                       customerPhone: widget.customerModel.phoneNumber,
                                       sellerMobile: data.phoneNumber,
                                       sellerName: data.companyName,
-                                      sellerId: userId,
+                                      sellerId: constUserId,
                                       invoiceNumber: data.saleInvoiceCounter.toString(),
                                       totalAmount: 'We received your due payment of $paidAmount. Remaining due $dueAmount',
                                       paidAmount: '0',
@@ -623,8 +621,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   }
 
   void updateInvoice({required String type, required String invoice, required int remainDueAmount}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = type == 'Supplier' ? FirebaseDatabase.instance.ref('$userId/Purchase Transition/') : FirebaseDatabase.instance.ref('$userId/Sales Transition/');
+
+    final ref = type == 'Supplier' ? FirebaseDatabase.instance.ref('$constUserId/Purchase Transition/') : FirebaseDatabase.instance.ref('$constUserId/Sales Transition/');
     ref.keepSynced(true);
     String? key;
 
@@ -654,8 +652,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   }
 
   void getSpecificCustomers({required String phoneNumber, required int due}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Customers');
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Customers');
     ref.keepSynced(true);
     String? key;
 

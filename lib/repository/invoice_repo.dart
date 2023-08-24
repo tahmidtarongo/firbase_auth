@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mobile_pos/model/invoice_model.dart';
 
+import '../currency.dart';
+
 class InvoiceRepo{
 
   static Future<InvoiceModel> getInvoiceSettings() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Invoice Settings');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Invoice Settings');
     ref.keepSynced(true);
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));

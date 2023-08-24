@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'Screens/subscription/package_screen.dart';
+import 'currency.dart';
 import 'model/subscription_model.dart';
 import 'model/subscription_plan_model.dart';
 
@@ -98,9 +99,8 @@ class Subscription {
 
   static Future<void> getUserLimitsData({required BuildContext context, required bool wannaShowMsg}) async {
     final prefs = await SharedPreferences.getInstance();
-    final userId = FirebaseAuth.instance.currentUser!.uid;
 
-    DatabaseReference ref = FirebaseDatabase.instance.ref('$userId/Subscription');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('$constUserId/Subscription');
     final model = await ref.get();
     var data = jsonDecode(jsonEncode(model.value));
     selectedItem = SubscriptionModel.fromJson(data).subscriptionName;
@@ -212,7 +212,7 @@ class Subscription {
   static Future<bool> subscriptionChecker({
     required String item,
   }) async {
-    final DatabaseReference subscriptionRef = FirebaseDatabase.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child('Subscription');
+    final DatabaseReference subscriptionRef = FirebaseDatabase.instance.ref().child(constUserId).child('Subscription');
 
     if (subscriptionName == 'Free') {
       if (remainingTime.inHours.abs() > 720) {
@@ -254,8 +254,8 @@ class Subscription {
   }
 
   static void decreaseSubscriptionLimits({required String itemType, required BuildContext context}) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final ref = FirebaseDatabase.instance.ref(userId).child('Subscription');
+
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Subscription');
     ref.keepSynced(true);
     ref.child(itemType).get().then((value){
       print(value.value);
