@@ -58,112 +58,112 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                 }
                 return hasAnyDur
                     ? Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: AppTextField(
-                              textFieldType: TextFieldType.NAME,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Search',
-                                prefixIcon: Icon(
-                                  Icons.search,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: AppTextField(
+                        textFieldType: TextFieldType.NAME,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Search',
+                          prefixIcon: Icon(
+                            Icons.search,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            searchCustomer = value;
+                          });
+                        },
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: customer.length,
+                      itemBuilder: (_, index) {
+                        customer[index].type == 'Supplier' ? color = const Color(0xFFA569BD) : Colors.white;
+                        customer[index].type == 'Supplier' ? counter++ : null;
+                        return customer[index].customerName.contains(searchCustomer) && customer[index].type.contains('Supplier')
+                            ? GestureDetector(
+                          onTap: () {
+                            AddPurchaseScreen(customerModel: customer[index]).launch(context);
+                            cart.clearCart();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 50.0,
+                                  width: 50.0,
+                                  child: CircleAvatar(
+                                    foregroundColor: Colors.blue,
+                                    backgroundColor: kMainColor,
+                                    radius: 70.0,
+                                    child:Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
+                                  ),
                                 ),
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  searchCustomer = value;
-                                });
-                              },
+                                const SizedBox(width: 10.0),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      customer[index].type,
+                                      style: GoogleFonts.poppins(
+                                        color: color,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '$currency ${customer[index].dueAmount}',
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      lang.S.of(context).due,
+                                      style: GoogleFonts.poppins(
+                                        color: const Color(0xFFff5f00),
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ],
+                                ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
+                                const SizedBox(width: 20),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: kGreyTextColor,
+                                ),
+                              ],
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: customer.length,
-                            itemBuilder: (_, index) {
-                              customer[index].type == 'Supplier' ? color = const Color(0xFFA569BD) : Colors.white;
-                              customer[index].type == 'Supplier' ? counter++ : null;
-                              return customer[index].customerName.contains(searchCustomer) && customer[index].type.contains('Supplier')
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        AddPurchaseScreen(customerModel: customer[index]).launch(context);
-                                        cart.clearCart();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              height: 50.0,
-                                              width: 50.0,
-                                              child: CircleAvatar(
-                                                foregroundColor: Colors.blue,
-                                                backgroundColor: kMainColor,
-                                                radius: 70.0,
-                                                child:Text(customer[index].customerName.isNotEmpty ? customer[index].customerName.substring(0,1) : '',style: const TextStyle(color: Colors.white),),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10.0),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  customer[index].customerName.isNotEmpty ? customer[index].customerName : customer[index].phoneNumber,
-                                                  style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 15.0,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  customer[index].type,
-                                                  style: GoogleFonts.poppins(
-                                                    color: color,
-                                                    fontSize: 15.0,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  '$currency ${customer[index].dueAmount}',
-                                                  style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 15.0,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  lang.S.of(context).due,
-                                                  style: GoogleFonts.poppins(
-                                                    color: const Color(0xFFff5f00),
-                                                    fontSize: 15.0,
-                                                  ),
-                                                ),
-                                              ],
-                                            ).visible(customer[index].dueAmount != '' && customer[index].dueAmount != '0'),
-                                            const SizedBox(width: 20),
-                                            const Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: kGreyTextColor,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : Container();
-                            },
-                          ),
-                        ],
-                      )
+                        )
+                            : Container();
+                      },
+                    ),
+                  ],
+                )
                     : const Padding(
-                        padding: EdgeInsets.only(top: 60),
-                        child: EmptyScreenWidget(),
-                      );
+                  padding: EdgeInsets.only(top: 60),
+                  child: EmptyScreenWidget(),
+                );
               }, error: (e, stack) {
                 return Text(e.toString());
               }, loading: () {

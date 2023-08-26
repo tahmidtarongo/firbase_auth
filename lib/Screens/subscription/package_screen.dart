@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/Screens/subscription/purchase_premium_plan_screen.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -264,13 +265,10 @@ class _PackageScreenState extends State<PackageScreen> {
                 ).visible(initialSelectedPackage != 'Lifetime'),
                 const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
                 GestureDetector(
-                  onTap: () async {
-                    // PurchasePremiumPlanScreen(
-                    //   initialSelectedPackage: initialSelectedPackage.toString(),
-                    //   initPackageValue: initPackageValue?.toInt() ?? 0,
-                    //   isCameBack: true,
-                    // ).launch(context);
-                    await launchUrl(Uri.parse('https://wa.me/+8801712022529'), mode: LaunchMode.externalApplication);
+                  onTap: () {
+                     const PurchasePremiumPlanScreen(
+                      isCameBack: true, initialSelectedPackage: 'Yearly', initPackageValue: 0,
+                    ).launch(context);
                   },
                   child: Container(
                     height: 50,

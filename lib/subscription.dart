@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'Screens/subscription/package_screen.dart';
+
 import 'currency.dart';
 import 'model/subscription_model.dart';
 import 'model/subscription_plan_model.dart';

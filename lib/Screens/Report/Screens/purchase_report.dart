@@ -7,6 +7,7 @@ import 'package:mobile_pos/Provider/print_purchase_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
+import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../../currency.dart';
@@ -417,10 +418,16 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
+                                                            onPressed: () => GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context),
+                                                            icon: const Icon(
+                                                              Icons.picture_as_pdf,
+                                                              color: Colors.grey,
+                                                            )),
+                                                        IconButton(
                                                             onPressed: () => toast('Coming Soon'),
                                                             icon: const Icon(
                                                               FeatherIcons.share,
-                                                              color: Colors.grey,
+                                                              color: Colors.black,
                                                             )).visible(false),
                                                       ],
                                                     );

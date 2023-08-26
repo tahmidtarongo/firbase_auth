@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
+import 'package:mobile_pos/Provider/purchase_report_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -56,6 +58,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
         ),
         body: Consumer(builder: (context, ref, __) {
           final providerData = ref.watch(transitionProvider);
+          final purchaseProviderData=ref.watch(purchaseTransitionProvider);
           final profile = ref.watch(profileDetailsProvider);
           final printerData = ref.watch(printerProviderNotifier);
           final personalData = ref.watch(profileDetailsProvider);
@@ -117,7 +120,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                     lastDate: DateTime(2101),
                                     context: context,
                                   );
-
                                   setState(() {
                                     toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
                                     picked!.isToday ? toDate = DateTime.now() : toDate = picked;
@@ -407,11 +409,11 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                     color: Colors.grey,
                                                                   )),
                                                               IconButton(
-                                                                  onPressed: () => toast('Coming Soon'),
+                                                                  onPressed: () => GeneratePdf().generateSaleDocument(reTransaction[index], data, context),
                                                                   icon: const Icon(
-                                                                    FeatherIcons.share,
+                                                                    Icons.picture_as_pdf,
                                                                     color: Colors.grey,
-                                                                  )).visible(false),
+                                                                  )),
                                                             ],
                                                           );
                                                         }, error: (e, stack) {

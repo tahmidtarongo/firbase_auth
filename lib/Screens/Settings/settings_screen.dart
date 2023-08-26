@@ -167,6 +167,29 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: kGreyTextColor,
                         ),
                       ),
+                      ListTile(
+                        title: Text(
+                          'Printing Option',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        leading: const Icon(
+                          Icons.print,
+                          color: kMainColor,
+                        ),
+                        trailing: Switch.adaptive(
+                          value: isPrintEnable,
+                          onChanged: (bool value) async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('isPrintEnable', value);
+                            setState(() {
+                              isPrintEnable = value;
+                            });
+                          },
+                        ),
+                      ),
                       // ListTile(
                       //   onTap: () => EasyLoading.showError('Coming Soon'),
                       //   title: Text(
@@ -689,7 +712,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               currency = '\$';
                               await prefs.setString('currency', currency);
                             } else {
-                              currency = newValue.toString().substring(0, 1);
+                              currency = "Tsh";
                               await prefs.setString('currency', currency);
                             }
                             setState(() {

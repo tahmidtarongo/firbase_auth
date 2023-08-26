@@ -176,7 +176,7 @@ class _ExpenseListState extends State<ExpenseList> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             SizedBox(
-                                              width: 170,
+                                              width: 130,
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -197,14 +197,14 @@ class _ExpenseListState extends State<ExpenseList> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 100,
+
                                               child: Text(
                                                 DateFormat.yMMMd().format(DateTime.parse(data[index].expenseDate)),
                                               ),
                                             ),
                                             Container(
                                               alignment: Alignment.centerRight,
-                                              width: 70,
+
                                               child: Text(data[index].amount),
                                             )
                                           ],

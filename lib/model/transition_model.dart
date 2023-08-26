@@ -12,7 +12,6 @@ class TransitionModel {
   double? discountAmount;
   double? lossProfit;
   int? totalQuantity;
-
   bool? isPaid;
   String? paymentType;
   List<AddToCartModel>? productList;

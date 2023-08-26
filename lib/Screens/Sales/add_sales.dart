@@ -421,7 +421,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                                   color: Color(0xFFff5f00), borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
                                               child: const Text(
                                                 '%',
-                                                style: TextStyle(fontSize: 20.0, color: Colors.white),
+                                                style: TextStyle(fontSize: 18.0, color: Colors.white),
                                               ),
                                             ),
                                           ),
@@ -469,13 +469,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                             focusedBorder: const OutlineInputBorder(gapPadding: 0.0, borderSide: BorderSide(color: kMainColor)),
                                             prefixIconConstraints: const BoxConstraints(maxWidth: 30.0, minWidth: 30.0),
                                             prefixIcon: Container(
-                                              padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                                              alignment: Alignment.center,
                                               height: 40,
                                               decoration: const BoxDecoration(
                                                   color: kMainColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(4.0), bottomLeft: Radius.circular(4.0))),
                                               child: Text(
                                                 currency,
-                                                style: const TextStyle(fontSize: 20.0, color: Colors.white),
+                                                style: const TextStyle(fontSize: 14.0, color: Colors.white),
                                               ),
                                             ),
                                           ),

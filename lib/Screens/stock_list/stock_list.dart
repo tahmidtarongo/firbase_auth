@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
+import 'dart:io';
 import '../../empty_screen_widget.dart';
 
 class StockList extends StatefulWidget {
@@ -27,6 +29,8 @@ class _StockListState extends State<StockList> {
 
     super.initState();
   }
+
+  NumberFormat decimalFormat = NumberFormat.decimalPattern('en_US');
 
   @override
   Widget build(BuildContext context) {
@@ -151,148 +155,183 @@ class _StockListState extends State<StockList> {
                                 ),
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: kMainColor.withOpacity(0.2),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0),
-                                ),
-                              ),
-                              padding: const EdgeInsets.all(20),
-                              child: Row(
-                                children:  [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //     color: kMainColor.withOpacity(0.2),
+                            //     borderRadius: const BorderRadius.only(
+                            //       topLeft: Radius.circular(0),
+                            //       topRight: Radius.circular(0),
+                            //     ),
+                            //   ),
+                            //   padding: const EdgeInsets.all(20),
+                            //   child: Row(
+                            //     children:  [
+                            //       Expanded(
+                            //         flex: 2,
+                            //         child: Text(
+                            //           lang.S.of(context).product,
+                            //           style: const TextStyle(fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 2,
+                            //         child: Text(
+                            //           lang.S.of(context).quantity,
+                            //           style: const TextStyle(fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ),
+                            //       Expanded(
+                            //         flex: 2,
+                            //         child: Text(
+                            //           lang.S.of(context).purchase,
+                            //           style: const TextStyle(fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ),
+                            //       Text(
+                            //         lang.S.of(context).sales,
+                            //         style: const TextStyle(fontWeight: FontWeight.bold),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            const SizedBox(height: 10,),
+
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
+                                border: TableBorder.all(color: kBorderColorTextField,width: 0.5),
+                                columns:  <DataColumn>[
+                                  DataColumn(
+                                    label: Text(
                                       lang.S.of(context).product,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      lang.S.of(context).quantity,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                  DataColumn(
+                                    label: Text(
+                                      lang.S.of(context).qty,
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
+                                  DataColumn(
+                                    label: Text(
                                       lang.S.of(context).purchase,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
                                     ),
                                   ),
-                                  Text(
-                                    lang.S.of(context).sales,
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  DataColumn(
+                                    label: Text(
+                                      lang.S.of(context).sales,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
                                   ),
                                 ],
+                                rows: List.generate(
+                                  product.length,
+                                      (index) => DataRow(cells: [
+                                    DataCell(Padding(
+                                      padding: product.last == product[index]
+                                          ? const EdgeInsets.only(top: 4)
+                                          : const EdgeInsets.only(top: 4),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            product[index].productName,
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFonts.poppins(
+                                              color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            product[index].brandName,
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFonts.poppins(
+                                              color: product[index].productStock.toInt() < 20 ? Colors.red : kGreyTextColor,
+                                              fontSize: 12.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      product[index].productStock,
+                                      style: GoogleFonts.poppins(
+                                        color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                      ),
+                                    ),),
+                                    DataCell(Text(
+                                      '$currency${product[index].productPurchasePrice}',
+                                      style: GoogleFonts.poppins(
+                                        color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
+                                      ),
+                                    ),),
+                                    DataCell(Text(
+                                      '$currency ${product[index].productSalePrice}' ,
+                                      style: GoogleFonts.poppins(
+                                        color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                                      ),
+                                    )),
+                                  ]),
+                                ),
                               ),
                             ),
 
-                            DataTable(
-                              horizontalMargin: 40.0,
-                              columnSpacing: 50.0,
-                              headingRowColor: MaterialStateColor.resolveWith((states) => kMainColor.withOpacity(0.2)),
-                              columns:  <DataColumn>[
-                                DataColumn(
-                                  label: Text(
-                                    lang.S.of(context).product,
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    lang.S.of(context).qty,
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    lang.S.of(context).purchase,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    lang.S.of(context).sales,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                              rows: const [],
-                            ).visible(false),
-
-                            ListView.builder(
-                                itemCount: product.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                product[index].productName,
-                                                textAlign: TextAlign.start,
-                                                style: GoogleFonts.poppins(
-                                                  color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
-                                                  fontSize: 16.0,
-                                                ),
-                                              ),
-                                              Text(
-                                                product[index].brandName,
-                                                textAlign: TextAlign.start,
-                                                style: GoogleFonts.poppins(
-                                                  color: product[index].productStock.toInt() < 20 ? Colors.red : kGreyTextColor,
-                                                  fontSize: 12.0,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Center(
-                                            child: Text(
-                                              product[index].productStock,
-                                              style: GoogleFonts.poppins(
-                                                color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                            flex: 2,
-                                            child: Center(
-                                              child: Text(
-                                                '$currency${product[index].productPurchasePrice}',
-                                                style: GoogleFonts.poppins(
-                                                  color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
-                                                ),
-                                              ),
-                                            )),
-                                        Expanded(
-                                          child: Center(
-                                            child: Text(
-                                              '$currency${product[index].productSalePrice}',
-                                              style: GoogleFonts.poppins(
-                                                color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ).visible(productName.isEmptyOrNull ? true : product[index].productName.toUpperCase().contains(productName!.toUpperCase()));
-                                }),
+                            // ListView.builder(
+                            //     itemCount: product.length,
+                            //     shrinkWrap: true,
+                            //     physics: const NeverScrollableScrollPhysics(),
+                            //     itemBuilder: (context, index) {
+                            //       return Padding(
+                            //         padding: const EdgeInsets.all(10.0),
+                            //         child: Row(
+                            //           children: [
+                            //             Column(
+                            //               mainAxisAlignment: MainAxisAlignment.start,
+                            //               crossAxisAlignment: CrossAxisAlignment.start,
+                            //               children: [
+                            //                 Text(
+                            //                   product[index].productName,
+                            //                   textAlign: TextAlign.start,
+                            //                   style: GoogleFonts.poppins(
+                            //                     color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                            //                     fontSize: 16.0,
+                            //                   ),
+                            //                 ),
+                            //                 Text(
+                            //                   product[index].brandName,
+                            //                   textAlign: TextAlign.start,
+                            //                   style: GoogleFonts.poppins(
+                            //                     color: product[index].productStock.toInt() < 20 ? Colors.red : kGreyTextColor,
+                            //                     fontSize: 12.0,
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //             Text(
+                            //               product[index].productStock,
+                            //               style: GoogleFonts.poppins(
+                            //                 color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                            //               ),
+                            //             ),
+                            //             Text(
+                            //               '$currency${product[index].productPurchasePrice}',
+                            //               style: GoogleFonts.poppins(
+                            //                 color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
+                            //               ),
+                            //             ),
+                            //             Text(
+                            //               '$currency${product[index].productSalePrice}',
+                            //               style: GoogleFonts.poppins(
+                            //                 color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ).visible(productName.isEmptyOrNull ? true : product[index].productName.toUpperCase().contains(productName!.toUpperCase()));
+                            //     }),
                           ],
                         )
                             : const Center(

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
+import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/due_transaction_provider.dart';
 import '../../../Provider/printer_due_provider.dart';
 import '../../../Provider/profile_provider.dart';
@@ -413,6 +414,12 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                             },
                                                             icon: const Icon(
                                                               FeatherIcons.printer,
+                                                              color: Colors.grey,
+                                                            )),
+                                                        IconButton(
+                                                            onPressed: () => GeneratePdf().generateDueDocument(reTransaction[index], data, context),
+                                                            icon: const Icon(
+                                                              Icons.picture_as_pdf,
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(

@@ -145,12 +145,11 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                           leading: Container(
                                             height: 50,
                                             width: 50,
-                                            decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(90)), color: kMainColor),
-                                            child: Center(
-                                              child: Text(
-                                                products[i].productName.substring(0, 1).toUpperCase(),
-                                                style: const TextStyle(color: Colors.white),
-                                              ),
+                                            decoration:  BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(products[i].productPicture))
                                             ),
                                           ),
                                           title: Text(products[i].productName),

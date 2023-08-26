@@ -248,12 +248,12 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                           FeatherIcons.printer,
                                                           color: Colors.grey,
                                                         )),
-                                                    IconButton(
-                                                        onPressed: () => GeneratePdf().generateDocument(reTransaction[index], data),
-                                                        icon: const Icon(
-                                                          FeatherIcons.share,
-                                                          color: Colors.grey,
-                                                        )),
+                                                    // IconButton(
+                                                    //     onPressed: () => GeneratePdf().generateDocument(reTransaction[index], data),
+                                                    //     icon: const Icon(
+                                                    //       FeatherIcons.share,
+                                                    //       color: Colors.grey,
+                                                    //     )),
                                                     IconButton(
                                                         onPressed: () {
                                                           cart.clearCart();
