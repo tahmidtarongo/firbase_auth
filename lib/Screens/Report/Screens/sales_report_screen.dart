@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,12 +10,17 @@ import 'package:mobile_pos/Provider/purchase_report_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:share/share.dart';
 import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
+import 'package:pdf/widgets.dart' as pw;
+import 'dart:io';
 import '../../../currency.dart';
 import '../../../empty_screen_widget.dart';
+import '../../../model/personal_information_model.dart';
+import '../../../model/transition_model.dart';
 import '../../Home/home.dart';
 import '../../invoice_details/sales_invoice_details_screen.dart';
 
@@ -34,6 +41,33 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   double totalSell = 0;
   bool isPicked = false;
   int count = 0;
+
+   Future<void> sharePDF() async {
+    final pw.Document doc = pw.Document();
+    const downloadsFolderPath = '/storage/emulated/0/Download/';
+    Directory dir = Directory(downloadsFolderPath);
+    final pdfPath = GeneratePdf();
+    final byteData = await doc.save();
+
+      Share.shareFiles(
+      [pdfPath.toString()],
+      text: 'Check out this PDF file!',
+      subject: 'Sharing PDF File',
+      mimeTypes: ['application/pdf'],
+      sharePositionOrigin: const Rect.fromLTWH(0, 0, 10, 10), // You can adjust this position
+    );
+  }
+
+  // Future<void> shareInvoicePDF() async {
+  //   final pdf = GeneratePdf();
+  //   final pdfBytes = pdf.save();
+  //   await Share.shareFiles(
+  //     [pdfBytes.buffer.asUint8List()],
+  //     text: 'Sharing Invoice PDF',
+  //     subject: 'Invoice PDF',
+  //     mimeTypes: ['application/pdf'],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -414,6 +448,12 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                     Icons.picture_as_pdf,
                                                                     color: Colors.grey,
                                                                   )),
+                                                              // IconButton(
+                                                              //     onPressed: ()=>Share,
+                                                              //     icon: const Icon(
+                                                              //       Icons.share,
+                                                              //       color: Colors.grey,
+                                                              //     )),
                                                             ],
                                                           );
                                                         }, error: (e, stack) {

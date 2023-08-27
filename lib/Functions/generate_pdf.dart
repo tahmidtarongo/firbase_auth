@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:mobile_pos/model/due_transaction_model.dart';
+import 'package:mobile_pos/model/due_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../Screens/Pdf/pdf_view.dart';
-import '../model/personal_information_model.dart';
 import 'package:pdf/pdf.dart';
+import '../model/personal_information_model.dart';
 import '../model/transition_model.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -247,7 +248,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Acnoo', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Bangladesh & Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -382,8 +383,7 @@ class GeneratePdf {
     if (Platform.isIOS) {
       EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-
+      final file = File('${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -410,8 +410,7 @@ class GeneratePdf {
         EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-
+        final file = File('${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
         final byteData = await doc.save();
         try {
           await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -702,7 +701,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Bangladesh & Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -849,7 +848,7 @@ class GeneratePdf {
     if (Platform.isIOS) {
       EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+      final file = File('${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
       final byteData = await doc.save();
       try {
@@ -877,7 +876,7 @@ class GeneratePdf {
         EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+        final file = File('${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
         final byteData = await doc.save();
         try {
@@ -1131,7 +1130,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Bangladesh & Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -1291,7 +1290,7 @@ class GeneratePdf {
         EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+        final file = File('${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
         final byteData = await doc.save();
         try {
@@ -1300,7 +1299,7 @@ class GeneratePdf {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+              builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart Biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
             ),
           );
           // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
