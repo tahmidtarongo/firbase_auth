@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
@@ -135,13 +136,6 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                         productCodeList.add(products[i].productCode.removeAllWhiteSpace().toLowerCase());
                                         productNameList.add(products[i].productName.removeAllWhiteSpace().toLowerCase());
                                         return ListTile(
-                                          onTap: () {
-                                            UpdateProduct(
-                                              productModel: products[i],
-                                              productCodeList: productCodeList,
-                                              productNameList: productNameList,
-                                            ).launch(context);
-                                          },
                                           leading: Container(
                                             height: 50,
                                             width: 50,
@@ -154,9 +148,78 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                           ),
                                           title: Text(products[i].productName),
                                           subtitle: Text("Stock : ${products[i].productStock}"),
-                                          trailing: Text(
-                                            "$currency ${products[i].productSalePrice}",
-                                            style: const TextStyle(fontSize: 18),
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "$currency ${products[i].productSalePrice}",
+                                                style: const TextStyle(fontSize: 18),
+                                              ),
+                                              SizedBox(
+                                                width: 30,
+                                                child: PopupMenuButton(
+                                                  padding: EdgeInsets.zero,
+                                                  itemBuilder: (BuildContext bc) => [
+                                                    PopupMenuItem(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          UpdateProduct(
+                                                            productModel: products[i],
+                                                            productCodeList: productCodeList,
+                                                            productNameList: productNameList,
+                                                          ).launch(context);
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            const Icon(FeatherIcons.edit3, size: 18.0, color: Colors.black),
+                                                            const SizedBox(width: 4.0),
+                                                            Text(
+                                                              'Edit',
+                                                              style: TextStyle(color: Colors.black),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: GestureDetector(
+                                                        onTap: (){
+                                                          setState(() {
+                                                            products.removeAt(index);
+                                                          });
+                                                          finish(context);
+                                                        },
+                                                        child: const Row(
+                                                          children: [
+                                                            Icon(Icons.delete, size: 18.0, color: Colors.black),
+                                                            SizedBox(width: 4.0),
+                                                            Text(
+                                                              'Delete',
+                                                              style: TextStyle(color: Colors.black),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    
+                                                  ],
+                                                  onSelected: (value) {
+                                                    Navigator.pushNamed(context, '$value');
+                                                  },
+                                                  child: Center(
+                                                    child: Container(
+                                                        height: 18,
+                                                        width: 18,
+                                                        alignment: Alignment.centerRight,
+                                                        child: const Icon(
+                                                          Icons.more_vert_sharp,
+                                                          size: 20,
+                                                          color: Colors.black,
+                                                        )),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ).visible(productName.isEmptyOrNull ? true : products[i].productName.toUpperCase().contains(productName!.toUpperCase())).visible(category[index] == 'All' ? true : products[i].productCategory == category[index]);
                                       },

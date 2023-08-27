@@ -45,7 +45,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
 
   String dropdownLangValue = 'English';
   String initialCountry = 'Bangladesh';
-  String dropdownValue = 'Super Shop';
+  String dropdownValue = 'Bag & Luggage';
   late String companyName;
   String phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber ?? '';
   double progress = 0.0;
@@ -423,7 +423,14 @@ class _ProfileSetupState extends State<ProfileSetup> {
                       }, // Optional
                       textFieldType: TextFieldType.PHONE,
                       decoration: InputDecoration(
+                        prefixIcon: Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          width: 30,
+                          child: Text(currency),
+                        ),
                         labelText: lang.S.of(context).openingBalance,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: const OutlineInputBorder(),
                       ),
                     ),

@@ -61,6 +61,14 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
     'Unlimited Usage',
     'Free Data Backup',
   ];
+  List<String> desciption=[
+    'Stay at the forefront of technological advancements without any extra costs. Our SmartBiashara POS Unlimited Upgrade ensures that you always have the latest tools and features at your fingertips, guaranteeing your business remains cutting-edge.',
+    ' We understand the importance of seamless operations. That\'s why our round-the-clock support is available to assist you, whether it\'s a quick query or a comprehensive concern. Connect with us anytime, anywhere via call or WhatsApp to experience unrivaled customer service.',
+    ' Unlock the full potential of SmartBiashara POS with personalized training sessions led by our expert team. From the basics to advanced techniques, we ensure you\'re well-versed in utilizing every facet of the system to optimize your business processes.',
+    ' Make a lasting impression on your customers with branded invoices. Our Unlimited Upgrade offers the unique advantage of customizing your invoices, adding a professional touch that reinforces your brand identity and fosters customer loyalty.',
+    ' The name says it all. With SmartBiashara POS Unlimited, there\'s no cap on your usage. Whether you\'re processing a handful of transactions or experiencing a rush of customers, you can operate with confidence, knowing you\'re not constrained by limits.',
+    ' Safeguard your business data effortlessly. Our SmartBiashara POS Unlimited Upgrade includes free data backup, ensuring your valuable information is protected against any unforeseen events. Focus on what truly matters - your business growth.'
+  ];
 
   @override
   void initState() {
@@ -155,12 +163,12 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                           ),
                                           const SizedBox(height: 15),
-                                          const Padding(
+                                           Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Natoque aliquet et, cur eget. Tellus sapien odio aliq.',
+                                                desciption[i],
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 16)),
+                                                style: const TextStyle(fontSize: 16)),
                                           ),
                                           const SizedBox(height: 20),
                                         ],
@@ -421,7 +429,7 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 }
                               }
                             ],
-                            note: "Payment From MOBIPOS app",
+                            note: "Payment From Smart Biashara app",
                             onSuccess: (Map params) async {
                               try {
                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);
