@@ -104,7 +104,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("کشور"),
         "createAFreeAccounts": MessageLookupByLibrary.simpleMessage(
             "حساب کاربری رایگان ایجاد کنید"),
-        "currency": MessageLookupByLibrary.simpleMessage("واحد پولی"),
         "currentStock": MessageLookupByLibrary.simpleMessage("موجودی فعلی"),
         "customer": MessageLookupByLibrary.simpleMessage("مشتری"),
         "customerDetails": MessageLookupByLibrary.simpleMessage("جزئیات مشتری"),

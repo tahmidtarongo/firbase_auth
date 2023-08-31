@@ -115,7 +115,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("Ország"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("Ingyenes fiók létrehozása"),
-        "currency": MessageLookupByLibrary.simpleMessage("Valuta"),
         "currentStock":
             MessageLookupByLibrary.simpleMessage("Jelenlegi Készlet"),
         "customer": MessageLookupByLibrary.simpleMessage("Ügyfél"),

@@ -112,7 +112,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("Land"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("Skapa ett gratis konto"),
-        "currency": MessageLookupByLibrary.simpleMessage("Valuta"),
         "currentStock":
             MessageLookupByLibrary.simpleMessage("Aktuell Lagerbeholding"),
         "customer": MessageLookupByLibrary.simpleMessage("Kund"),

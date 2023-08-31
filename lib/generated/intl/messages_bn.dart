@@ -106,7 +106,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("দেশ"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("অস্ত্রোপচার"),
-        "currency": MessageLookupByLibrary.simpleMessage("মুদ্রা"),
         "currentStock": MessageLookupByLibrary.simpleMessage("বর্তমান স্টক"),
         "customer": MessageLookupByLibrary.simpleMessage("গ্রাহক"),
         "customerDetails":

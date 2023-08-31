@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_pos/Language/language.dart';
 import 'package:mobile_pos/Language/language_screen.dart';
 import 'package:mobile_pos/Screens/Profile%20Screen/profile_details.dart';
 import 'package:mobile_pos/Screens/Settings/feedback_screen.dart';
@@ -15,6 +14,7 @@ import 'package:restart_app/restart_app.dart';
 import '../../Provider/profile_provider.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
+import '../../currency.dart';
 import '../../currency.dart';
 import '../../model/personal_information_model.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
@@ -686,7 +686,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       ).visible(!isSubUser),
                       ListTile(
                         title: Text(
-                          lang.S.of(context).currency,
+                          'Currency',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 18.0,

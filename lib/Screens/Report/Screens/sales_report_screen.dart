@@ -1,15 +1,15 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
-import 'package:mobile_pos/Provider/purchase_report_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
@@ -42,21 +42,21 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   bool isPicked = false;
   int count = 0;
 
-   Future<void> sharePDF() async {
-    final pw.Document doc = pw.Document();
-    const downloadsFolderPath = '/storage/emulated/0/Download/';
-    Directory dir = Directory(downloadsFolderPath);
-    final pdfPath = GeneratePdf();
-    final byteData = await doc.save();
-
-      Share.shareFiles(
-      [pdfPath.toString()],
-      text: 'Check out this PDF file!',
-      subject: 'Sharing PDF File',
-      mimeTypes: ['application/pdf'],
-      sharePositionOrigin: const Rect.fromLTWH(0, 0, 10, 10), // You can adjust this position
-    );
-  }
+  //  Future<void> sharePDF() async {
+  //   final pw.Document doc = pw.Document();
+  //   const downloadsFolderPath = '/storage/emulated/0/Download/';
+  //   Directory dir = Directory(downloadsFolderPath);
+  //   final pdfPath = GeneratePdf();
+  //   final byteData = await doc.save();
+  //
+  //     Share.shareFiles(
+  //     [pdfPath.toString()],
+  //     text: 'Check out this PDF file!',
+  //     subject: 'Sharing PDF File',
+  //     mimeTypes: ['application/pdf'],
+  //     sharePositionOrigin: const Rect.fromLTWH(0, 0, 10, 10), // You can adjust this position
+  //   );
+  // }
 
   // Future<void> shareInvoicePDF() async {
   //   final pdf = GeneratePdf();
@@ -68,6 +68,48 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   //     mimeTypes: ['application/pdf'],
   //   );
   // }
+
+// Future<void> sharePdf()async{
+//   var dir = await getApplicationDocumentsDirectory();
+//   File file = File('${dir.path}/${GeneratePdf()}.pdf');
+//
+//   if (!await file.exists()) {
+//   await file.create(recursive: true);
+//   file.writeAsStringSync("test for share documents file");
+//   }
+//
+//   ShareExtend.share(file.path, "file");
+//
+// }
+
+
+  Future<pw.Document> generatePDF() async {
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build: (context) {
+          return pw.Center(
+            child: pw.Text('${GeneratePdf()}'),
+          );
+        },
+      ),
+    );
+
+    return pdf;
+  }
+  Future<void> shareGeneratedPDF(BuildContext context) async {
+    final pdf = await generatePDF();
+    final pdfBytes = await pdf.save();
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File('${tempDir.path}/generated.pdf');
+    await tempFile.writeAsBytes(pdfBytes);
+
+    await Share.shareFiles(
+      [tempFile.path],
+      text: 'Sharing PDF',
+      subject: 'Generated PDF',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +134,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
         ),
         body: Consumer(builder: (context, ref, __) {
           final providerData = ref.watch(transitionProvider);
-          final purchaseProviderData=ref.watch(purchaseTransitionProvider);
           final profile = ref.watch(profileDetailsProvider);
           final printerData = ref.watch(printerProviderNotifier);
           final personalData = ref.watch(profileDetailsProvider);
@@ -449,7 +490,11 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                     color: Colors.grey,
                                                                   )),
                                                               // IconButton(
-                                                              //     onPressed: ()=>Share,
+                                                              //     onPressed: () {
+                                                              //       shareGeneratedPDF(context);
+                                                              //       print(shareGeneratedPDF(context));
+                                                              //
+                                                              //     },
                                                               //     icon: const Icon(
                                                               //       Icons.share,
                                                               //       color: Colors.grey,

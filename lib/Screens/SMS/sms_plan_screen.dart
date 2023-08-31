@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/sms_history_provider.dart';
 import 'package:mobile_pos/Screens/SMS/sms_plan_payment_screen.dart';
+import 'package:mobile_pos/currency.dart';
 import 'package:mobile_pos/model/sms_subscription_plan_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -136,14 +137,14 @@ class _SmsPlanScreenState extends State<SmsPlanScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            '৳${package[i].smsPackOfferPrice.toString()}',
+                                            '$currency${package[i].smsPackOfferPrice.toString()}',
                                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18.0),
                                           ),
                                           const SizedBox(
                                             width: 4.0,
                                           ),
                                           Text(
-                                            '৳${package[i].smsPackPrice.toString()}',
+                                            '$currency${package[i].smsPackPrice.toString()}',
                                             style: TextStyle(color: kGreyTextColor.withOpacity(0.5), decoration: TextDecoration.lineThrough),
                                           ),
                                           const SizedBox(

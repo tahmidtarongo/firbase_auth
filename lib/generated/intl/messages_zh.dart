@@ -88,7 +88,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "continu": MessageLookupByLibrary.simpleMessage("继续"),
         "country": MessageLookupByLibrary.simpleMessage("国家"),
         "createAFreeAccounts": MessageLookupByLibrary.simpleMessage("创建免费账户"),
-        "currency": MessageLookupByLibrary.simpleMessage("货币"),
         "currentStock": MessageLookupByLibrary.simpleMessage("当前库存"),
         "customer": MessageLookupByLibrary.simpleMessage("客户"),
         "customerDetails": MessageLookupByLibrary.simpleMessage("客户详细信息"),

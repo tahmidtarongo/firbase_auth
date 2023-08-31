@@ -2850,16 +2850,6 @@ class S {
     );
   }
 
-  /// `Currency`
-  String get currency {
-    return Intl.message(
-      'Currency',
-      name: 'currency',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Log Out`
   String get logOUt {
     return Intl.message(

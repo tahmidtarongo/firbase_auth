@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // const kMainColor = Color(0xFF3F8CFF);
 // const kMainColor = Color(0xff3949AB);
@@ -6,10 +8,17 @@ const kMainColor = Color(0xff04A65A);
 const kGreyTextColor = Color(0xFF828282);
 const kBorderColorTextField = Color(0xFFC2C2C2);
 const kDarkWhite = Color(0xFFF1F7F7);
+const kTitleColor = Color(0xFF000000);
 const kAlertColor = Color(0xFFFF8C34);
 const kPremiumPlanColor = Color(0xFF8752EE);
 const kPremiumPlanColor2 = Color(0xFFFF5F00);
 List<String> selectedNumbers = [];
+
+
+final kTextStyle = GoogleFonts.manrope(
+  color: Colors.white,
+);
+
 bool connected = false;
 bool isPrintEnable = true;
 List<String> paymentsTypeList = ['Cash', 'Card', 'Check', 'Bkash', 'Nagad', 'Mobile Pay', 'Due'];
@@ -30,6 +39,13 @@ const kButtonDecoration = BoxDecoration(
     Radius.circular(5),
   ),
 );
+
+Future<String> getUserID() async {
+  final prefs = await SharedPreferences.getInstance();
+  final String? uid = prefs.getString('userId');
+
+  return uid ?? '';
+}
 
 const kInputDecoration = InputDecoration(
   hintStyle: TextStyle(color: kBorderColorTextField),

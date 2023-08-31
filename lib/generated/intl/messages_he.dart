@@ -93,7 +93,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("מדינה"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("צור חשבון חינם"),
-        "currency": MessageLookupByLibrary.simpleMessage("מטבע"),
         "currentStock": MessageLookupByLibrary.simpleMessage("מלאי נוכחי"),
         "customer": MessageLookupByLibrary.simpleMessage("לקוח"),
         "customerDetails": MessageLookupByLibrary.simpleMessage("פרטי לקוח"),

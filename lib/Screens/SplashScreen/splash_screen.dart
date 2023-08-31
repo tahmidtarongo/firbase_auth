@@ -35,21 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await [Permission.bluetoothScan, Permission.bluetoothConnect, Permission.notification].request();
   }
 
-  getCurrency() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? data = prefs.getString('currency');
-    if (!data.isEmptyOrNull) {
-      currency = data!;
-    } else {
-      currency = '৳';
-    }
-    // OneSignal.shared.setAppId(onesignalAppId);
-
-// The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-//     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-//       print("Accepted permission: $accepted");
-//     });
-  }
 
   Future<void> updateNotifier() async {
     final prefs = await SharedPreferences.getInstance();
@@ -69,7 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getPermission();
-    getCurrency();
     updateNotifier();
     currentUserData.getUserData();
   }

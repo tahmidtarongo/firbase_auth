@@ -106,7 +106,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("Країна"),
         "createAFreeAccounts": MessageLookupByLibrary.simpleMessage(
             "Створити безкоштовний обліковий запис"),
-        "currency": MessageLookupByLibrary.simpleMessage("Валюта"),
         "currentStock": MessageLookupByLibrary.simpleMessage("Поточний запас"),
         "customer": MessageLookupByLibrary.simpleMessage("Клієнт"),
         "customerDetails":

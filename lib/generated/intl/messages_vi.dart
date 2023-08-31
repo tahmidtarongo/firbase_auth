@@ -105,7 +105,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("Quốc gia"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("Tạo tài khoản miễn phí"),
-        "currency": MessageLookupByLibrary.simpleMessage("Tiền tệ"),
         "currentStock":
             MessageLookupByLibrary.simpleMessage("Tồn kho hiện tại"),
         "customer": MessageLookupByLibrary.simpleMessage("Khách hàng"),

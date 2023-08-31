@@ -5,19 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/user_role_model.dart';
 
-String currency = localCurrency;
-String localCurrency = 'Tsh';
-// List<String> items = [
-//   '৳ (Taka)',
-//   '\$ (US Dollar)',
-//   "₹ (Rupee)",
-//   "€ (Euro)",
-//   "₽ (Ruble)",
-//   "£ (UK Pound)",
-//   "R (Rial)",
-// ];
+String currency = 'Tsh';
+// String localCurrency = 'Tsh';
 
-List<String> items = ['\$ (US Dollar)', 'Tsh (TZ Shillings)'];
+List<String> items = [
+  'Tsh (TZ Shillings)',
+  '\$ (US Dollar)',
+  ];
 
 String constUserId = '';
 bool isSubUser = false;

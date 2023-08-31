@@ -102,7 +102,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("ປະເທດ"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("ສ້າງບັນຊີຟຣີ"),
-        "currency": MessageLookupByLibrary.simpleMessage("ເງິນຕາ"),
         "currentStock":
             MessageLookupByLibrary.simpleMessage("ສະຕັອກປະຈຳຕົວອອກ"),
         "customer": MessageLookupByLibrary.simpleMessage("ລູກຄ້າ"),

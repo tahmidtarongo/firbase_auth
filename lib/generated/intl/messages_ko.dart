@@ -91,7 +91,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("국가"),
         "createAFreeAccounts":
             MessageLookupByLibrary.simpleMessage("무료 계정 만들기"),
-        "currency": MessageLookupByLibrary.simpleMessage("통화"),
         "currentStock": MessageLookupByLibrary.simpleMessage("현재 재고"),
         "customer": MessageLookupByLibrary.simpleMessage("고객"),
         "customerDetails": MessageLookupByLibrary.simpleMessage("고객 세부 정보"),

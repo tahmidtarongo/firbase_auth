@@ -26,7 +26,6 @@ class Subscription {
     subscriptionName: 'Free',
   );
   static String selectedItem = 'Year';
-  static const String currency = 'USD';
 
   static bool isExpiringInFiveDays = false;
   static bool isExpiringInOneDays = false;
