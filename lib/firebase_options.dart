@@ -55,10 +55,10 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAT1zNWpyIsMp29W0OEKcJ9NJa0b_HvDwE',
-    appId: '1:736551413173:android:813f40f50fcb6b022fe5fc',
+    apiKey: 'AIzaSyCW3kjb1pewFkMDqa6Mz5fh35npMhY-iXY',
+    appId: '1:225271280538:ios:80f0bd197fa251f5b08023',
     messagingSenderId: '736551413173',
-    projectId: 'maanpos',
+    projectId: 'smart-biashara',
     storageBucket: 'maanpos.appspot.com',
   );
 
