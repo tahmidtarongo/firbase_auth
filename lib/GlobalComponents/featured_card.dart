@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screens/Products/product_data.dart';
+import 'package:mobile_pos/const_commas.dart';
 
 import '../constant.dart';
 import '../currency.dart';
@@ -57,7 +58,7 @@ class _FeaturedCardState extends State<FeaturedCard> {
                   Row(
                     children: [
                       Text(
-                        '$currency${widget.product.price.toString()}',
+                        '$currency${myFormat.format(int.tryParse(widget.product.price.toString())??0)}',
                         style: const TextStyle(color: kGreyTextColor, fontSize: 15.0),
                       ),
                       const Spacer(),

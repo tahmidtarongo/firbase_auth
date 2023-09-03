@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/due_transaction_provider.dart';
 import 'package:mobile_pos/Screens/invoice_details/due_invoice_details.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -208,7 +209,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                           children: [
                              Text(lang.S.of(context).dueAmount),
                             Text(
-                              '$currency$dueAmount',
+                              '$currency${myFormat.format(int.tryParse('$dueAmount')??0)}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

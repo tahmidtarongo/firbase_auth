@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/print_purchase_provider.dart';
@@ -193,7 +194,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     ),
                                   ),
                                   title: Text(
-                                    "$currency${totalSale.toInt().toString()}",
+                                    "$currency${myFormat.format(int.tryParse(totalSale.toInt().toString())??0)}",
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -323,17 +324,17 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               Text(
-                                                                'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                                'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
                                                                 style: const TextStyle(color: Colors.grey),
                                                               ),
                                                               const SizedBox(height: 3),
                                                               Text(
-                                                                'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                                'Paid : $currency ${myFormat.format(int.tryParse('${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}')??0)}',
                                                                 style: const TextStyle(color: Colors.grey),
                                                               ),
                                                               const SizedBox(height: 3),
                                                               Text(
-                                                                'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                                                'Due: $currency ${myFormat.format(int.tryParse(reTransaction[index].dueAmount.toString())??0)}',
                                                                 style: const TextStyle(fontSize: 16),
                                                               ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                             ],
@@ -495,17 +496,17 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Total : $currency ${widget.customerModel.openingBalance.toString()}',
+                                                  'Total : $currency ${myFormat.format(int.tryParse(widget.customerModel.openingBalance.toString())??0)}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  'Paid : $currency ${widget.customerModel.openingBalance.toInt() - widget.customerModel.remainedBalance.toInt()}',
+                                                  'Paid : $currency ${myFormat.format(int.tryParse('${widget.customerModel.openingBalance.toInt() - widget.customerModel.remainedBalance.toInt()}')??0)}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  'Due: $currency ${ widget.customerModel.remainedBalance.toString()}',
+                                                  'Due: $currency ${myFormat.format(int.tryParse(widget.customerModel.remainedBalance.toString())??0)}',
                                                   style: const TextStyle(fontSize: 16),
                                                 ),
                                               ],
@@ -565,7 +566,7 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                     ),
                                   ),
                                   title: Text(
-                                    "$currency${totalSale.toInt().toString()}",
+                                    "$currency${myFormat.format(int.tryParse(totalSale.toInt().toString())??0)}",
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -752,17 +753,17 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                            'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
                                                             style: const TextStyle(color: Colors.grey),
                                                           ),
                                                           const SizedBox(height: 3),
                                                           Text(
-                                                            'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                            'Paid : $currency ${myFormat.format(int.tryParse('${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}')??0)}',
                                                             style: const TextStyle(color: Colors.grey),
                                                           ),
                                                           const SizedBox(height: 3),
                                                           Text(
-                                                            'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                                            'Due: $currency ${myFormat.format(int.tryParse(reTransaction[index].dueAmount.toString())??0)}',
                                                             style: const TextStyle(fontSize: 16),
                                                           ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                         ],
@@ -924,17 +925,17 @@ class _LedgerCustomerDetailsScreenState extends State<LedgerCustomerDetailsScree
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Total : $currency ${widget.customerModel.openingBalance.toString()}',
+                                                  'Total : $currency ${myFormat.format(int.tryParse(widget.customerModel.openingBalance.toString())??0)}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  'Paid : $currency ${widget.customerModel.openingBalance.toInt() - widget.customerModel.remainedBalance.toInt()}',
+                                                  'Paid : $currency ${myFormat.format(int.tryParse('${widget.customerModel.openingBalance.toInt() - widget.customerModel.remainedBalance.toInt()}')??0)}',
                                                   style: const TextStyle(color: Colors.grey),
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  'Due: $currency ${ widget.customerModel.remainedBalance.toString()}',
+                                                  'Due: $currency ${myFormat.format(int.tryParse(widget.customerModel.remainedBalance.toString())??0)}',
                                                   style: const TextStyle(fontSize: 16),
                                                 ),
                                               ],

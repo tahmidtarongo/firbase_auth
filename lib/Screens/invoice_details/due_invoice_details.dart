@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_due_provider.dart';
@@ -138,7 +139,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.totalDue}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalDue}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -159,7 +160,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.payDueAmount}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.payDueAmount}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -180,7 +181,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.dueAmountAfterPay}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.dueAmountAfterPay}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

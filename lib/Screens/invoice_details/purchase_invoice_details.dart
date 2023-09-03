@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/print_purchase_provider.dart';
@@ -213,7 +214,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.totalAmount!.toDouble() + widget.transitionModel.discountAmount!.toDouble()}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalAmount!.toDouble() + widget.transitionModel.discountAmount!.toDouble()}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -255,7 +256,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.discountAmount}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.discountAmount}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -297,7 +298,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.totalAmount}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalAmount}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -318,7 +319,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble()}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble()}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -339,7 +340,7 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${widget.transitionModel.dueAmount}',
+                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.dueAmount}')??0)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

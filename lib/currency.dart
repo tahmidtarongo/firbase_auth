@@ -6,12 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'model/user_role_model.dart';
 
 String currency = 'Tsh';
+
 // String localCurrency = 'Tsh';
 
-List<String> items = [
-  'Tsh (TZ Shillings)',
-  '\$ (US Dollar)',
-  ];
+// List<String> items = [
+//   'Tsh (TZ Shillings)',
+//   '\$ (US Dollar)',
+//   ];
 
 String constUserId = '';
 bool isSubUser = false;

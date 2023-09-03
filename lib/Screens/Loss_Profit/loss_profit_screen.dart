@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Loss_Profit/single_loss_profit_screen.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -299,16 +300,16 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                             children: [
                                                               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                                                 Text(
-                                                                  'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                                  'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
                                                                   style: const TextStyle(color: Colors.grey),
                                                                 ),
                                                                 const SizedBox(height: 5),
                                                                 Text(
-                                                                  'Profit : $currency ${reTransaction[index].lossProfit}',
+                                                                  'Profit : $currency ${myFormat.format(int.tryParse('${reTransaction[index].lossProfit}')??0)}',
                                                                   style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                                                 ).visible(!reTransaction[index].lossProfit!.isNegative),
                                                                 Text(
-                                                                  'Loss: $currency ${reTransaction[index].lossProfit!.abs()}',
+                                                                  'Loss: $currency ${myFormat.format(int.tryParse('${reTransaction[index].lossProfit!.abs()}')??0)}',
                                                                   style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                                                                 ).visible(reTransaction[index].lossProfit!.isNegative),
                                                               ]),

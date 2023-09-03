@@ -46,28 +46,28 @@ class _SettingScreenState extends State<SettingScreen> {
     // TODO: implement initState
     super.initState();
     printerIsEnable();
-    getCurrency();
+    // getCurrency();
   }
 
-  getCurrency() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? data = prefs.getString('currency');
-
-    if (!data.isEmptyOrNull) {
-      for (var element in items) {
-        if (element.substring(0, 2).contains(data!)) {
-          setState(() {
-            dropdownValue = element;
-          });
-          break;
-        }
-      }
-    } else {
-      setState(() {
-        dropdownValue = items[0];
-      });
-    }
-  }
+  // getCurrency() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   String? data = prefs.getString('currency');
+  //
+  //   if (!data.isEmptyOrNull) {
+  //     for (var element in items) {
+  //       if (element.substring(0, 2).contains(data!)) {
+  //         setState(() {
+  //           dropdownValue = element;
+  //         });
+  //         break;
+  //       }
+  //     }
+  //   } else {
+  //     setState(() {
+  //       dropdownValue = items[0];
+  //     });
+  //   }
+  // }
 
   void printerIsEnable() async {
     final prefs = await SharedPreferences.getInstance();
@@ -684,43 +684,43 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: kGreyTextColor,
                         ),
                       ).visible(!isSubUser),
-                      ListTile(
-                        title: Text(
-                          'Currency',
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        leading: const Icon(
-                          Icons.currency_exchange,
-                          color: kMainColor,
-                        ),
-                        trailing: DropdownButton(
-                          underline: const SizedBox(),
-                          value: dropdownValue,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: items.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) async {
-                            final prefs = await SharedPreferences.getInstance();
-                            if (newValue == '\$ (US Dollar)') {
-                              currency = '\$';
-                              await prefs.setString('currency', currency);
-                            } else {
-                              currency = "Tsh";
-                              await prefs.setString('currency', currency);
-                            }
-                            setState(() {
-                              dropdownValue = newValue.toString();
-                            });
-                          },
-                        ),
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Currency',
+                      //     style: GoogleFonts.poppins(
+                      //       color: Colors.black,
+                      //       fontSize: 18.0,
+                      //     ),
+                      //   ),
+                      //   leading: const Icon(
+                      //     Icons.currency_exchange,
+                      //     color: kMainColor,
+                      //   ),
+                      //   trailing: DropdownButton(
+                      //     underline: const SizedBox(),
+                      //     value: dropdownValue,
+                      //     icon: const Icon(Icons.keyboard_arrow_down),
+                      //     items: items.map((String items) {
+                      //       return DropdownMenuItem(
+                      //         value: items,
+                      //         child: Text(items),
+                      //       );
+                      //     }).toList(),
+                      //     onChanged: (newValue) async {
+                      //       final prefs = await SharedPreferences.getInstance();
+                      //       if (newValue == '\$ (US Dollar)') {
+                      //         currency = '\$';
+                      //         await prefs.setString('currency', currency);
+                      //       } else {
+                      //         currency = "Tsh";
+                      //         await prefs.setString('currency', currency);
+                      //       }
+                      //       setState(() {
+                      //         dropdownValue = newValue.toString();
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
                        ListTile(
                          onTap: (){
                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const LanguageScreen()));

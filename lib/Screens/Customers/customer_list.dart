@@ -5,6 +5,7 @@ import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Customers/customer_details.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -194,7 +195,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                         crossAxisAlignment: CrossAxisAlignment.end,
                                                         children: [
                                                           Text(
-                                                            '$currency ${customer[index].dueAmount}',
+                                                            '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                             style: GoogleFonts.poppins(
                                                               color: Colors.black,
                                                               fontSize: 15.0,
@@ -281,7 +282,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                         crossAxisAlignment: CrossAxisAlignment.end,
                                                         children: [
                                                           Text(
-                                                            '$currency ${customer[index].dueAmount}',
+                                                            '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                             style: GoogleFonts.poppins(
                                                               color: Colors.black,
                                                               fontSize: 15.0,
@@ -369,7 +370,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                         crossAxisAlignment: CrossAxisAlignment.end,
                                                         children: [
                                                           Text(
-                                                            '$currency ${customer[index].dueAmount}',
+                                                            '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                             style: GoogleFonts.poppins(
                                                               color: Colors.black,
                                                               fontSize: 15.0,
@@ -458,7 +459,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         Text(
-                                                          '$currency ${customer[index].dueAmount}',
+                                                          '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                           style: GoogleFonts.poppins(
                                                             color: Colors.black,
                                                             fontSize: 15.0,
@@ -548,7 +549,7 @@ class _CustomerListState extends State<CustomerList> with SingleTickerProviderSt
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         Text(
-                                                          '$currency ${customer[index].dueAmount}',
+                                                          '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                           style: GoogleFonts.poppins(
                                                             color: Colors.black,
                                                             fontSize: 15.0,

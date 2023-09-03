@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Due%20Calculation/due_collection_screen.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/customer_provider.dart';
 import '../../constant.dart';
@@ -109,7 +110,7 @@ class _DueCalculationContactScreenState extends State<DueCalculationContactScree
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              '$currency ${customer[index].dueAmount}',
+                                              '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                               style: GoogleFonts.poppins(
                                                 color: Colors.black,
                                                 fontSize: 15.0,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Purchase/add_purchase.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart_purchase.dart';
@@ -131,7 +132,7 @@ class _PurchaseContactsState extends State<PurchaseContacts> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '$currency ${customer[index].dueAmount}',
+                                      '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                       style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 15.0,

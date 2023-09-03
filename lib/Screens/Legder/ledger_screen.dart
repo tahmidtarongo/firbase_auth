@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -151,7 +152,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${customer[index].dueAmount}',
+                                                '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -220,7 +221,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${customer[index].dueAmount}',
+                                                '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -286,7 +287,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${customer[index].dueAmount}',
+                                                '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,
@@ -352,7 +353,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '$currency ${customer[index].dueAmount}',
+                                                '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontSize: 15.0,

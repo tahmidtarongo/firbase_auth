@@ -255,10 +255,9 @@ class Printer extends ChangeNotifier {
     bytes += generator.text(printTransactionModel.transitionModel!.purchaseDate, styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
 
     bytes += generator.text('Note: Goods once sold will not be taken back or exchanged.',
-        styles: const PosStyles(align: PosAlign.center, bold: false), linesAfter: 1);
-
+    styles: const PosStyles(align: PosAlign.center, bold: false), linesAfter: 1);
     bytes += generator.qrcode('https://maantechnology.com', size: QRSize.Size4);
-    bytes += generator.text('Developed By: Maan Technology', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text('Developed By: Smart Biashara', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
     bytes += generator.cut();
     return bytes;
   }

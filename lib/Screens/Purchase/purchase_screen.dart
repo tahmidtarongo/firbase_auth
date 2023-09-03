@@ -8,6 +8,7 @@ import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Products/add_category.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_details.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
@@ -103,7 +104,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         flex: 2,
                         child: Center(
                           child: Text(
-                            'Total: $currency$total',
+                            'Total: $currency${myFormat.format(int.tryParse(total)??0)}',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16.0,

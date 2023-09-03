@@ -16,6 +16,7 @@ import 'package:mobile_pos/Provider/profile_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Sales/sales_screen.dart';
 import 'package:mobile_pos/Screens/invoice_details/sales_invoice_details_screen.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/sms_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
 import 'package:mobile_pos/subscription.dart';
@@ -174,7 +175,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           children: [
                             Text(lang.S.of(context).dueAmount),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
+                              myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0) == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

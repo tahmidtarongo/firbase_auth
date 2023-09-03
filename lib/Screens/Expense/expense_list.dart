@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Expense/add_erxpense.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/currency.dart';
 import 'package:mobile_pos/model/expense_model.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -199,7 +200,7 @@ class _ExpenseListState extends State<ExpenseList> {
                                 ),
                               ),),
                               DataCell(Text(
-                                '$currency${data[index].amount}',
+                                '$currency${myFormat.format(int.tryParse(data[index].amount)??0)}',
                                 style: GoogleFonts.poppins(
                                 ),
                               ),),
@@ -304,7 +305,7 @@ class _ExpenseListState extends State<ExpenseList> {
                        Text(
                         lang.S.of(context).totalExpense,
                       ),
-                      Text('$currency$totalExpense')
+                      Text('$currency${myFormat.format(int.tryParse('$totalExpense')??0)}')
                     ],
                   ),
                 ),

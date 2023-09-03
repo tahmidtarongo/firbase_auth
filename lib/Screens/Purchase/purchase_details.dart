@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Payment/payment_options.dart';
 import 'package:mobile_pos/Screens/Purchase/Model/purchase_report.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../constant.dart';
@@ -81,7 +82,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                     ),
                     const Spacer(),
                     Text(
-                      '$currency${cart.cartItem[index].unitPrice.toString()}',
+                      '$currency${myFormat.format(int.tryParse(cart.cartItem[index].unitPrice.toString())??0)}',
                       style: GoogleFonts.poppins(
                         color: kGreyTextColor,
                         fontSize: 15.0,

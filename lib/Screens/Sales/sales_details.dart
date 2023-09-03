@@ -10,6 +10,7 @@ import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Payment/payment_options.dart';
 import 'package:mobile_pos/Screens/Sales/Model/sales_report.dart';
 import 'package:mobile_pos/Screens/Sales/add_discount.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/add_to_cart.dart';
@@ -141,7 +142,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                       Positioned(
                         right: 0,
                         child: Text(
-                          '$currency${providerData.cartItemList[index].subTotal.toString()}',
+                          '$currency${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal.toString())??0)}',
                           style: GoogleFonts.poppins(
                             color: kGreyTextColor,
                             fontSize: 15.0,

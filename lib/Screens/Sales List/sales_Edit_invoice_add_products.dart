@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../Provider/add_to_cart.dart';
@@ -274,7 +275,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const Spacer(),
             Text(
-              '$currency${widget.productPrice}',
+              '$currency${myFormat.format(int.tryParse(widget.productPrice)??0)}',
               style: GoogleFonts.jost(
                 fontSize: 20.0,
                 color: Colors.black,

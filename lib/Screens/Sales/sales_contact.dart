@@ -5,6 +5,7 @@ import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Screens/Customers/Model/customer_model.dart';
 import 'package:mobile_pos/Screens/Customers/add_customer.dart';
 import 'package:mobile_pos/Screens/Sales/add_sales.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/customer_provider.dart';
@@ -188,7 +189,7 @@ class _SalesContactState extends State<SalesContact> {
                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    '$currency ${customer[index].dueAmount}',
+                                                    '$currency ${myFormat.format(int.tryParse(customer[index].dueAmount)??0)}',
                                                     style: GoogleFonts.poppins(
                                                       color: Colors.black,
                                                       fontSize: 15.0,

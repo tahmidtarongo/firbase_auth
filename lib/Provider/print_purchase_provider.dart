@@ -260,7 +260,7 @@ class PrinterPurchase extends ChangeNotifier {
         styles: const PosStyles(align: PosAlign.center, bold: false), linesAfter: 1);
 
     bytes += generator.qrcode('https://maantechnology.com', size: QRSize.Size4);
-    bytes += generator.text('Developed By: Maan Technology', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
+    bytes += generator.text('Developed By: Smart', styles: const PosStyles(align: PosAlign.center), linesAfter: 1);
     bytes += generator.cut();
     return bytes;
   }

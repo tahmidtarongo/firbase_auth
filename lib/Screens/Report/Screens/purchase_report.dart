@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/print_purchase_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../Functions/generate_pdf.dart';
@@ -180,7 +181,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                       ),
                                     ),
                                     title: Text(
-                                      "$currency${totalPurchase.toString()}",
+                                      "$currency${myFormat.format(int.tryParse(totalPurchase.toString())??0)}",
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -321,17 +322,17 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                 children: [
                                                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                                     Text(
-                                                      'Total : $currency ${reTransaction[index].totalAmount.toString()}',
+                                                      'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
                                                       style: const TextStyle(color: Colors.grey),
                                                     ),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                      'Paid : $currency ${reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble()}',
+                                                      'Paid : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble())??0)}',
                                                       style: const TextStyle(color: Colors.grey),
                                                     ),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                      'Due: $currency ${reTransaction[index].dueAmount.toString()}',
+                                                      'Due: $currency ${myFormat.format(int.tryParse(reTransaction[index].dueAmount.toString())??0)}',
                                                       style: const TextStyle(fontSize: 16),
                                                     ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                   ]),

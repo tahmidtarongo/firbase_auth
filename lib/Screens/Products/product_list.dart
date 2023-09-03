@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Provider/product_provider.dart';
 import 'package:mobile_pos/Screens/Home/home.dart';
@@ -13,6 +14,7 @@ import '../../constant.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import 'add_product.dart';
+import '../../const_commas.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
   int count = 0;
   List<String> category = ['All'];
   TabController? tabController;
+
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +155,8 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                "$currency ${products[i].productSalePrice}",
+                                                "$currency ${myFormat.format(int.tryParse(products[i].productSalePrice)??0)}",
+                                                // "$currency ${products[i].productSalePrice}",
                                                 style: const TextStyle(fontSize: 18),
                                               ),
                                               SizedBox(
