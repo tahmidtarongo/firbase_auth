@@ -175,7 +175,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           children: [
                             Text(lang.S.of(context).dueAmount),
                             Text(
-                              myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0) == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
+                              myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0) == '' ? '$currency 0' : '$currency${myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0)}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],
@@ -242,7 +242,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemList[index].productName.toString()),
                                     subtitle: Text(
-                                        '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'),
+                                        '${providerData.cartItemList[index].quantity} X ${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal)??0)} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -362,7 +362,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  providerData.getTotalAmount().toString(),
+                                    providerData.getTotalAmount().toString(),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

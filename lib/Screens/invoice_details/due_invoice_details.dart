@@ -139,7 +139,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalDue}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.totalDue)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -160,7 +160,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.payDueAmount}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.payDueAmount)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -181,7 +181,7 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.dueAmountAfterPay}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.dueAmountAfterPay)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

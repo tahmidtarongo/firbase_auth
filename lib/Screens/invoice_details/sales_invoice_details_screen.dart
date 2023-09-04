@@ -272,7 +272,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.discountAmount}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.discountAmount)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -314,7 +314,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalAmount}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.totalAmount)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -335,7 +335,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble()}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.totalAmount! - widget.transitionModel.dueAmount!.toDouble())}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
@@ -356,7 +356,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                       SizedBox(
                         width: 120,
                         child: Text(
-                          '$currency ${myFormat.format(int.tryParse('${widget.transitionModel.dueAmount}')??0)}',
+                          '$currency ${myFormat.format(widget.transitionModel.dueAmount)}',
                           maxLines: 2,
                           style: kTextStyle.copyWith(color: kTitleColor, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,

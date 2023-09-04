@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/Screens/Purchase/purchase_products.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:mobile_pos/model/transition_model.dart';
@@ -162,7 +163,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                           children: [
                              Text(lang.S.of(context).dueAmount),
                             Text(
-                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${widget.customerModel.dueAmount}',
+                              widget.customerModel.dueAmount == '' ? '$currency 0' : '$currency${myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0)}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

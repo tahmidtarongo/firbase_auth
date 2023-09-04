@@ -305,7 +305,7 @@ class _ExpenseListState extends State<ExpenseList> {
                        Text(
                         lang.S.of(context).totalExpense,
                       ),
-                      Text('$currency${myFormat.format(int.tryParse('$totalExpense')??0)}')
+                      Text('$currency${myFormat.format(totalExpense)}')
                     ],
                   ),
                 ),

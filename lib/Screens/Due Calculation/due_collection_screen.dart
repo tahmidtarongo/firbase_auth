@@ -209,7 +209,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                           children: [
                              Text(lang.S.of(context).dueAmount),
                             Text(
-                              '$currency${myFormat.format(int.tryParse('$dueAmount')??0)}',
+                              '$currency${myFormat.format(dueAmount)}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],

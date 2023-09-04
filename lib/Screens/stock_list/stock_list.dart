@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/product_provider.dart';
@@ -91,7 +92,7 @@ class _StockListState extends State<StockList> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          totalStock.toString(),
+                                           myFormat.format(totalStock),
                                           style: const TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,
@@ -117,7 +118,7 @@ class _StockListState extends State<StockList> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                        currency + totalParPrice.toInt().toString(),
+                                        currency + myFormat.format(totalParPrice),
                                           style: const TextStyle(
                                             color: Colors.orange,
                                             fontSize: 20,
@@ -195,7 +196,6 @@ class _StockListState extends State<StockList> {
                             //   ),
                             // ),
                             const SizedBox(height: 10,),
-
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
@@ -257,19 +257,19 @@ class _StockListState extends State<StockList> {
                                       ),
                                     )),
                                     DataCell(Text(
-                                      product[index].productStock,
+                                      myFormat.format(int.tryParse(product[index].productStock)??0),
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                       ),
                                     ),),
                                     DataCell(Text(
-                                      '$currency${product[index].productPurchasePrice}',
+                                      '$currency${myFormat.format(int.tryParse(product[index].productPurchasePrice)??0)}',
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
                                       ),
                                     ),),
                                     DataCell(Text(
-                                      '$currency ${product[index].productSalePrice}' ,
+                                      '$currency ${myFormat.format(int.tryParse(product[index].productSalePrice)??0)}' ,
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                       ),

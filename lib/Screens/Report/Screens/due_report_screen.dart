@@ -180,7 +180,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                       ),
                                     ),
                                     title: Text(
-                                      "$currency${myFormat.format(int.tryParse(totalDue.toString())??0)}",
+                                      "$currency${myFormat.format(totalDue)}",
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -323,17 +323,17 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalDue.toString())??0)}',
+                                                        'Total : $currency ${myFormat.format(reTransaction[index].totalDue)}',
                                                         style: const TextStyle(color: Colors.grey),
                                                       ),
                                                       const SizedBox(height: 3),
                                                       Text(
-                                                        'Paid : $currency ${myFormat.format(int.tryParse('${reTransaction[index].totalDue!.toDouble() - reTransaction[index].dueAmountAfterPay!.toDouble()}')??0)}',
+                                                        'Paid : $currency ${myFormat.format(reTransaction[index].totalDue!.toDouble() - reTransaction[index].dueAmountAfterPay!.toDouble())}',
                                                         style: const TextStyle(color: Colors.grey),
                                                       ),
                                                       const SizedBox(height: 3),
                                                       Text(
-                                                        'Due: $currency ${myFormat.format(int.tryParse(reTransaction[index].dueAmountAfterPay.toString())??0)}',
+                                                        'Due: $currency ${myFormat.format(reTransaction[index].dueAmountAfterPay)}',
                                                         style: const TextStyle(fontSize: 16),
                                                       ).visible(reTransaction[index].dueAmountAfterPay!.toInt() != 0),
                                                     ],

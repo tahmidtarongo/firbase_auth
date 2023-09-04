@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:mobile_pos/Screens/subscription/payment_page.dart';
+import 'package:mobile_pos/subscript.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -246,100 +248,244 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
+                              // SizedBox(
+                              //   height: 210,
+                              //   child: ListView.builder(
+                              //     physics: const ClampingScrollPhysics(),
+                              //     shrinkWrap: true,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemCount: data.length,
+                              //     itemBuilder: (BuildContext context, int index) {
+                              //       return Padding(
+                              //         padding: const EdgeInsets.only(right: 10),
+                              //         child: Column(
+                              //           children: [
+                              //             SizedBox(
+                              //               width: 150,
+                              //               child: Stack(
+                              //                 alignment: Alignment.bottomCenter,
+                              //                 children: [
+                              //                   GestureDetector(
+                              //                     onTap:(){
+                              //                       setState(() {
+                              //                       });
+                              //                     },
+                              //                     child: Container(
+                              //                       height: 210,
+                              //                       width: 150,
+                              //                       decoration: BoxDecoration(
+                              //                         color: currentSubscriptionPlan.subscriptionName == data[index].subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                              //                         borderRadius: const BorderRadius.all(
+                              //                           Radius.circular(10),
+                              //                         ),
+                              //                         border: Border.all(width: 1, color: currentSubscriptionPlan.subscriptionName == data[index].subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor),
+                              //                       ),
+                              //                       child: Column(
+                              //                         mainAxisAlignment: MainAxisAlignment.center,
+                              //                         children: [
+                              //                           const SizedBox(height: 15),
+                              //                           const Text(
+                              //                             'Mobile App \n+\nDesktop',
+                              //                             textAlign: TextAlign.center,
+                              //                             style: TextStyle(
+                              //                               fontSize: 16,
+                              //                             ),
+                              //                           ),
+                              //                           const SizedBox(height: 15),
+                              //                           Text(
+                              //                             data[index].subscriptionName,
+                              //                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
+                              //                           ),
+                              //                           const SizedBox(height: 5),
+                              //                           Text(
+                              //                             '$currency${data[index].offerPrice > 0 ? data[index].offerPrice : data[index].subscriptionPrice}',
+                              //                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
+                              //                           ),
+                              //                           Text(
+                              //                             '$currency${data[index].subscriptionPrice}',
+                              //                             style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
+                              //                           ).visible(data[index].offerPrice > 0),
+                              //                           const SizedBox(height: 5),
+                              //                           Text(
+                              //                             'Duration ${data[index].duration} Day',
+                              //                             style: const TextStyle(color: kGreyTextColor),
+                              //                           ),
+                              //                         ],
+                              //                       ),
+                              //                     ),
+                              //                   ),
+                              //                   Positioned(
+                              //                     top: 0,
+                              //                     left: 0,
+                              //                     child: Container(
+                              //                       height: 25,
+                              //                       width: 70,
+                              //                       decoration: const BoxDecoration(
+                              //                         color: Colors.blue,
+                              //                         borderRadius: BorderRadius.only(
+                              //                           topLeft: Radius.circular(10),
+                              //                           bottomRight: Radius.circular(10),
+                              //                         ),
+                              //                       ),
+                              //                       child: Center(
+                              //                         child: Text(
+                              //                           data[index].offerPrice == data[index].subscriptionPrice
+                              //                               ? ""
+                              //                               : 'Save ${(100 - ((data[index].offerPrice * 100) / data[index].subscriptionPrice)).toInt().toString()}%',
+                              //                           style: const TextStyle(color: Colors.white),
+                              //                         ),
+                              //                       ),
+                              //                     ),
+                              //                   ).visible(data[index].offerPrice > 0),
+                              //                 ],
+                              //               ),
+                              //             ),
+                              //
+                              //           ],
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
                               SizedBox(
-                                height: 210,
+                                height: (context.width() / 2) + 18,
                                 child: ListView.builder(
                                   physics: const ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: data.length,
                                   itemBuilder: (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            width: 150,
-                                            child: Stack(
-                                              alignment: Alignment.bottomCenter,
-                                              children: [
-                                                Container(
-                                                  height: 210,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                    color: currentSubscriptionPlan.subscriptionName == data[index].subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
-                                                    borderRadius: const BorderRadius.all(
-                                                      Radius.circular(10),
-                                                    ),
-                                                    border: Border.all(width: 1, color: currentSubscriptionPlan.subscriptionName == data[index].subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor),
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedPlan = data[index];
+                                        });
+                                      },
+                                      child: data[index].offerPrice >= 1
+                                          ? Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: SizedBox(
+                                          height: (context.width() / 2.5) + 18,
+                                          child: Stack(
+                                            alignment: Alignment.bottomCenter,
+                                            children: [
+                                              Container(
+                                                height: (context.width() / 2.0),
+                                                width: (context.width() / 2.5) - 20,
+                                                decoration: BoxDecoration(
+                                                  color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                                                  borderRadius: const BorderRadius.all(
+                                                    Radius.circular(10),
                                                   ),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      const SizedBox(height: 15),
-                                                      const Text(
-                                                        'Mobile App \n+\nDesktop',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(height: 15),
-                                                      Text(
-                                                        data[index].subscriptionName,
-                                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
-                                                      ),
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        '$currency${data[index].offerPrice > 0 ? data[index].offerPrice : data[index].subscriptionPrice}',
-                                                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
-                                                      ),
-                                                      Text(
-                                                        '$currency${data[index].subscriptionPrice}',
-                                                        style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
-                                                      ).visible(data[index].offerPrice > 0),
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        'Duration ${data[index].duration} Day',
-                                                        style: const TextStyle(color: kGreyTextColor),
-                                                      ),
-                                                    ],
+                                                  border: Border.all(
+                                                    width: 1,
+                                                    color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor,
                                                   ),
                                                 ),
-                                                Positioned(
-                                                  top: 0,
-                                                  left: 0,
-                                                  child: Container(
-                                                    height: 25,
-                                                    width: 70,
-                                                    decoration: const BoxDecoration(
-                                                      color: Colors.blue,
-                                                      borderRadius: BorderRadius.only(
-                                                        topLeft: Radius.circular(10),
-                                                        bottomRight: Radius.circular(10),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    const SizedBox(height: 15),
+                                                    const Text(
+                                                      'Mobile App\n+\nDesktop',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontSize: 16,
                                                       ),
                                                     ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        data[index].offerPrice == data[index].subscriptionPrice
-                                                            ? ""
-                                                            : 'Save ${(100 - ((data[index].offerPrice * 100) / data[index].subscriptionPrice)).toInt().toString()}%',
-                                                        style: const TextStyle(color: Colors.white),
-                                                      ),
+                                                    const SizedBox(height: 15),
+                                                    Text(
+                                                      data[index].subscriptionName,
+                                                      style: const TextStyle(fontSize: 16),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      '$currency${data[index].offerPrice}',
+                                                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor2),
+                                                    ),
+                                                    Text(
+                                                      '$currency${data[index].subscriptionPrice}',
+                                                      style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      'Duration ${data[index].duration} Day',
+                                                      style: const TextStyle(color: kGreyTextColor),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 8,
+                                                left: 0,
+                                                child: Container(
+                                                  height: 25,
+                                                  width: 70,
+                                                  decoration: const BoxDecoration(
+                                                    color: kPremiumPlanColor2,
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(10),
+                                                      bottomRight: Radius.circular(10),
                                                     ),
                                                   ),
-                                                ).visible(data[index].offerPrice > 0),
-                                              ],
-                                            ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Save ${(100 - ((data[index].offerPrice * 100) / data[index].subscriptionPrice)).toInt().toString()}%',
+                                                      style: const TextStyle(color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-
-                                        ],
+                                        ),
+                                      )
+                                          : Padding(
+                                        padding: const EdgeInsets.only(bottom: 20, top: 20, right: 10),
+                                        child: Container(
+                                          height: (context.width() / 2.0),
+                                          width: (context.width() / 2.5) - 20,
+                                          decoration: BoxDecoration(
+                                            color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            border: Border.all(width: 1, color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Text(
+                                                'Mobile App\n+\nDesktop',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                data[index].subscriptionName,
+                                                style: const TextStyle(fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                '$currency${data[index].subscriptionPrice.toString()}',
+                                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                'Duration ${data[index].duration} Day',
+                                                style: const TextStyle(color: kGreyTextColor),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     );
                                   },
                                 ),
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               // SingleChildScrollView(
                               //   scrollDirection: Axis.horizontal,
                               //   child: Container(
@@ -647,92 +793,154 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                               //     ),
                               //   ],
                               // ),
-
                               GestureDetector(
                                 onTap: () {
-                                  UsePaypal(
-                                      sandboxMode: sandbox,
-                                      clientId: paypalClientId,
-                                      secretKey: paypalClientSecret,
-                                      returnURL: "https://samplesite.com/return",
-                                      cancelURL: "https://samplesite.com/cancel",
-                                      transactions: [
-                                        {
-                                          "amount": {
-                                            "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                                            "currency": currency,
-                                            "details": {
-                                              "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                                              "shipping": '0',
-                                              "shipping_discount": 0
-                                            }
-                                          },
-                                          "description": "The payment transaction description.",
-                                          "item_list": {
-                                            "items": [
-                                              {
-                                                "name": "${Subscription.selectedItem} Package",
-                                                "quantity": 1,
-                                                "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
-                                                "currency": currency,
-                                              }
-                                            ],
-                                          }
-                                        }
-                                      ],
-                                      note: "Payment From Smart Biashara app",
-                                      onSuccess: (Map params) async {
-                                        try {
-                                          EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                                          final prefs = await SharedPreferences.getInstance();
-
-                                          await prefs.setBool('isFiveDayRemainderShown', true);
-
-                                          final DatabaseReference subscriptionRef =
-                                          FirebaseDatabase.instance.ref().child(constUserId).child('Subscription');
-
-                                          SubscriptionModel subscriptionModel = SubscriptionModel(
-                                            subscriptionName: Subscription.selectedItem,
-                                            subscriptionDate: DateTime.now().toString(),
-                                            saleNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Sales'].toInt(),
-                                            purchaseNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Purchase'].toInt(),
-                                            partiesNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Parties'].toInt(),
-                                            dueNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Due Collection'].toInt(),
-                                            duration: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Duration'].toInt(),
-                                            products: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Products'].toInt(),
-                                          );
-
-                                          await subscriptionRef.set(subscriptionModel.toJson());
-                                          EasyLoading.showSuccess('Added Successfully', duration: const Duration());
-                                        } catch (e) {
-                                          EasyLoading.dismiss();
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                                        }
-                                        if (mounted) {
-                                          await const Home().launch(context);
-                                        }
-                                      },
-                                      onError: (error) {
-                                        EasyLoading.showError('Error');
-                                      },
-                                      onCancel: (params) {
-                                        EasyLoading.showError('Cancel');
-                                      }).launch(context);
+                                  // UsePaypal(
+                                  //     sandboxMode: sandbox,
+                                  //     clientId: paypalClientId,
+                                  //     secretKey: paypalClientSecret,
+                                  //     returnURL: "https://samplesite.com/return",
+                                  //     cancelURL: "https://samplesite.com/cancel",
+                                  //     transactions: [
+                                  //       {
+                                  //         "amount": {
+                                  //           // "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                  //           "total": selectedPlan.subscriptionPrice.toString(),
+                                  //           "currency": Subscription.currency.toString(),
+                                  //           "details": {
+                                  //             // "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                  //             "subtotal": selectedPlan.subscriptionPrice.toString(),
+                                  //             "shipping": '0',
+                                  //             "shipping_discount": 0
+                                  //           }
+                                  //         },
+                                  //         "description": "The payment transaction description.",
+                                  //         "item_list": {
+                                  //           "items": [
+                                  //             {
+                                  //               "name": "${selectedPlan.subscriptionName} Package",
+                                  //               "quantity": 1,
+                                  //               // "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                                  //               "price": selectedPlan.subscriptionPrice.toString(),
+                                  //               "currency": Subscription.currency.toString(),
+                                  //             }
+                                  //           ],
+                                  //         }
+                                  //       }
+                                  //     ],
+                                  //     note: "Payment From MaanPos app",
+                                  //     onSuccess: (Map params) async {
+                                  //
+                                  //     },
+                                  //     onError: (error) {
+                                  //       EasyLoading.showError('Error');
+                                  //     },
+                                  //     onCancel: (params) {
+                                  //       EasyLoading.showError('Cancel');
+                                  //     }).launch(context);
+                                  PaymentPage(selectedPlan: selectedPlan, onError: (){
+                                    EasyLoading.showError("Payment error");
+                                  }, totalAmount: selectedPlan.subscriptionPrice.toString()).launch(context);
                                 },
                                 child: Container(
                                   height: 50,
                                   decoration: const BoxDecoration(
                                     color: kMainColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  child:  Center(
+                                  child: Center(
                                     child: Text(
                                       lang.S.of(context).payWithPaypal,
                                       style: const TextStyle(fontSize: 18, color: Colors.white),
                                     ),
                                   ),
                                 ),
-                              ).visible(selectedPackageValue > widget.initPackageValue),
+                              ).visible(Subscript.customersActivePlan.subscriptionName != selectedPlan.subscriptionName),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     UsePaypal(
+                              //         sandboxMode: sandbox,
+                              //         clientId: paypalClientId,
+                              //         secretKey: paypalClientSecret,
+                              //         returnURL: "https://samplesite.com/return",
+                              //         cancelURL: "https://samplesite.com/cancel",
+                              //         transactions: [
+                              //           {
+                              //             "amount": {
+                              //               "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //               "currency": currency,
+                              //               "details": {
+                              //                 "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //                 "shipping": '0',
+                              //                 "shipping_discount": 0
+                              //               }
+                              //             },
+                              //             "description": "The payment transaction description.",
+                              //             "item_list": {
+                              //               "items": [
+                              //                 {
+                              //                   "name": "${Subscription.selectedItem} Package",
+                              //                   "quantity": 1,
+                              //                   "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //                   "currency": currency,
+                              //                 }
+                              //               ],
+                              //             }
+                              //           }
+                              //         ],
+                              //         note: "Payment From Smart Biashara app",
+                              //         onSuccess: (Map params) async {
+                              //           try {
+                              //             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                              //             final prefs = await SharedPreferences.getInstance();
+                              //
+                              //             await prefs.setBool('isFiveDayRemainderShown', true);
+                              //
+                              //             final DatabaseReference subscriptionRef =
+                              //             FirebaseDatabase.instance.ref().child(constUserId).child('Subscription');
+                              //
+                              //             SubscriptionModel subscriptionModel = SubscriptionModel(
+                              //               subscriptionName: Subscription.selectedItem,
+                              //               subscriptionDate: DateTime.now().toString(),
+                              //               saleNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Sales'].toInt(),
+                              //               purchaseNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Purchase'].toInt(),
+                              //               partiesNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Parties'].toInt(),
+                              //               dueNumber: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Due Collection'].toInt(),
+                              //               duration: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Duration'].toInt(),
+                              //               products: Subscription.subscriptionPlansService[Subscription.selectedItem]!['Products'].toInt(),
+                              //             );
+                              //
+                              //             await subscriptionRef.set(subscriptionModel.toJson());
+                              //             EasyLoading.showSuccess('Added Successfully', duration: const Duration());
+                              //           } catch (e) {
+                              //             EasyLoading.dismiss();
+                              //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                              //           }
+                              //           if (mounted) {
+                              //             await const Home().launch(context);
+                              //           }
+                              //         },
+                              //         onError: (error) {
+                              //           EasyLoading.showError('Error');
+                              //         },
+                              //         onCancel: (params) {
+                              //           EasyLoading.showError('Cancel');
+                              //         }).launch(context);
+                              //   },
+                              //   child: Container(
+                              //     height: 50,
+                              //     decoration: const BoxDecoration(
+                              //       color: kMainColor,
+                              //       borderRadius: BorderRadius.all(Radius.circular(30)),
+                              //     ),
+                              //     child:  Center(
+                              //       child: Text(
+                              //         lang.S.of(context).payWithPaypal,
+                              //         style: const TextStyle(fontSize: 18, color: Colors.white),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ).visible(selectedPackageValue > widget.initPackageValue),
                             ],
                           ),
                         ),
