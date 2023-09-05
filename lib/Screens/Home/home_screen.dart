@@ -20,6 +20,7 @@ import '../../Provider/transactions_provider.dart';
 import '../../currency.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
+import '../About App/about_app.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
 import '../subscription/package_screen.dart';
 
@@ -85,6 +86,14 @@ class _HomeScreenState extends State<HomeScreen> {
     initialPage: 0,
   );
 
+  List<String> dayList=[
+    'Today',
+    'Weekly',
+    'Monthly',
+    'Yearly'
+  ];
+  String selectedDay='Today';
+
   @override
   void initState() {
     super.initState();
@@ -124,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(width: 15.0),
+                          
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Center(
                               child: GestureDetector(
                                 onTap: () {
-                                  EasyLoading.showInfo('Coming Soon');
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const AboutApp()));
                                 },
                                 child: const Icon(
                                   Icons.notifications_none_rounded,
@@ -197,8 +207,127 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 10,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                RichText(
+                                    text: TextSpan(
+                                      text: 'Today: ',
+                                      style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),
+                                      children: [
+                                        TextSpan(
+                                        text: '23/8/2023',
+                                        style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor)),
+                                      ]
+                                    )),
+                                const Spacer(),
+                                DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                        icon: const Icon(Icons.keyboard_arrow_down_sharp,color: kGreyTextColor,size: 18,),
+                                        value: selectedDay,
+                                        items: dayList.map((e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(e,style: kTextStyle.copyWith(color: kTitleColor,fontSize: 14),))).toList(),
+                                        onChanged: (String?newValue){
+                                          setState(() {
+                                            selectedDay=newValue!;
+                                          });
+                                        }))
+                              ],
+                            ),
+                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: const Color(0xffE9FCB8)
+                                    ),
+                                    child:  Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Image.asset('images/order.png',height: 25,width: 25,color: Colors.pink,),
+                                          const SizedBox(width: 8,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Orders',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),),
+                                              const SizedBox(height: 3,),
+                                              Text('32',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10,),
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: const Color(0xffD8D6EC)
+                                    ),
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Image.asset('images/loss.png',height: 20,width: 20,),
+                                              const SizedBox(width: 8,),
+                                              Text('Revenue',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                            ],
+                                          ),
+                                          const SizedBox(height: 3,),
+                                          Text('$currency 5000',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10,),
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: const Color(0xffB6DEC2)
+                                    ),
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Image.asset('images/profit.png',height: 20,width: 20,),
+                                              const SizedBox(width: 8,),
+                                              Text('Profit',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                            ],
+                                          ),
+                                          const SizedBox(height: 3,),
+                                          Text('$currency 2000',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10.0),

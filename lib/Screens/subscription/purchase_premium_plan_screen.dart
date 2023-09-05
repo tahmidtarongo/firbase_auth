@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:mobile_pos/Screens/subscription/buy_now.dart';
 import 'package:mobile_pos/Screens/subscription/payment_page.dart';
 import 'package:mobile_pos/subscript.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -838,9 +839,10 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                   //     onCancel: (params) {
                                   //       EasyLoading.showError('Cancel');
                                   //     }).launch(context);
-                                  PaymentPage(selectedPlan: selectedPlan, onError: (){
-                                    EasyLoading.showError("Payment error");
-                                  }, totalAmount: selectedPlan.subscriptionPrice.toString()).launch(context);
+                                  // PaymentPage(selectedPlan: selectedPlan, onError: (){
+                                  //   EasyLoading.showError("Payment error");
+                                  // }, totalAmount: selectedPlan.subscriptionPrice.toString()).launch(context);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const BuyNow()));
                                 },
                                 child: Container(
                                   height: 50,
@@ -848,14 +850,77 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                                     color: kMainColor,
                                     borderRadius: BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
-                                      lang.S.of(context).payWithPaypal,
-                                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                                      'Pay Cash',
+                                      style: TextStyle(fontSize: 18, color: Colors.white),
                                     ),
                                   ),
                                 ),
                               ).visible(Subscript.customersActivePlan.subscriptionName != selectedPlan.subscriptionName),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     // UsePaypal(
+                              //     //     sandboxMode: sandbox,
+                              //     //     clientId: paypalClientId,
+                              //     //     secretKey: paypalClientSecret,
+                              //     //     returnURL: "https://samplesite.com/return",
+                              //     //     cancelURL: "https://samplesite.com/cancel",
+                              //     //     transactions: [
+                              //     //       {
+                              //     //         "amount": {
+                              //     //           // "total": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //     //           "total": selectedPlan.subscriptionPrice.toString(),
+                              //     //           "currency": Subscription.currency.toString(),
+                              //     //           "details": {
+                              //     //             // "subtotal": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //     //             "subtotal": selectedPlan.subscriptionPrice.toString(),
+                              //     //             "shipping": '0',
+                              //     //             "shipping_discount": 0
+                              //     //           }
+                              //     //         },
+                              //     //         "description": "The payment transaction description.",
+                              //     //         "item_list": {
+                              //     //           "items": [
+                              //     //             {
+                              //     //               "name": "${selectedPlan.subscriptionName} Package",
+                              //     //               "quantity": 1,
+                              //     //               // "price": Subscription.subscriptionAmounts[Subscription.selectedItem]!['Amount'].toString(),
+                              //     //               "price": selectedPlan.subscriptionPrice.toString(),
+                              //     //               "currency": Subscription.currency.toString(),
+                              //     //             }
+                              //     //           ],
+                              //     //         }
+                              //     //       }
+                              //     //     ],
+                              //     //     note: "Payment From MaanPos app",
+                              //     //     onSuccess: (Map params) async {
+                              //     //
+                              //     //     },
+                              //     //     onError: (error) {
+                              //     //       EasyLoading.showError('Error');
+                              //     //     },
+                              //     //     onCancel: (params) {
+                              //     //       EasyLoading.showError('Cancel');
+                              //     //     }).launch(context);
+                              //     PaymentPage(selectedPlan: selectedPlan, onError: (){
+                              //       EasyLoading.showError("Payment error");
+                              //     }, totalAmount: selectedPlan.subscriptionPrice.toString()).launch(context);
+                              //   },
+                              //   child: Container(
+                              //     height: 50,
+                              //     decoration: const BoxDecoration(
+                              //       color: kMainColor,
+                              //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                              //     ),
+                              //     child: Center(
+                              //       child: Text(
+                              //         lang.S.of(context).payWithPaypal,
+                              //         style: const TextStyle(fontSize: 18, color: Colors.white),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ).visible(Subscript.customersActivePlan.subscriptionName != selectedPlan.subscriptionName),
                               // GestureDetector(
                               //   onTap: () {
                               //     UsePaypal(

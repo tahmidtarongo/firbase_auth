@@ -175,7 +175,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  totalProfit.toString(),
+                                                  myFormat.format(totalProfit),
                                                   style: const TextStyle(
                                                     color: Colors.green,
                                                     fontSize: 20,
@@ -201,7 +201,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  totalLoss.toString(),
+                                                  myFormat.format(totalLoss),
                                                   style: const TextStyle(
                                                     color: Colors.orange,
                                                     fontSize: 20,
@@ -300,16 +300,16 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                             children: [
                                                               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                                                 Text(
-                                                                  'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
+                                                                  'Total : $currency ${myFormat.format(reTransaction[index].totalAmount)}',
                                                                   style: const TextStyle(color: Colors.grey),
                                                                 ),
                                                                 const SizedBox(height: 5),
                                                                 Text(
-                                                                  'Profit : $currency ${myFormat.format(int.tryParse('${reTransaction[index].lossProfit}')??0)}',
+                                                                  'Profit : $currency ${myFormat.format(reTransaction[index].lossProfit)}',
                                                                   style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                                                 ).visible(!reTransaction[index].lossProfit!.isNegative),
                                                                 Text(
-                                                                  'Loss: $currency ${myFormat.format(int.tryParse('${reTransaction[index].lossProfit!.abs()}')??0)}',
+                                                                  'Loss: $currency ${myFormat.format(reTransaction[index].lossProfit!.abs())}',
                                                                   style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                                                                 ).visible(reTransaction[index].lossProfit!.isNegative),
                                                               ]),

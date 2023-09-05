@@ -152,17 +152,17 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Total : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount.toString())??0)}',
+                                                    'Total : $currency ${myFormat.format(reTransaction[index].totalAmount)}',
                                                     style: const TextStyle(color: Colors.grey),
                                                   ),
                                                   const SizedBox(height: 3),
                                                   Text(
-                                                    'Paid : $currency ${myFormat.format(int.tryParse(reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble())??0)}',
+                                                    'Paid : $currency ${myFormat.format(reTransaction[index].totalAmount!.toDouble() - reTransaction[index].dueAmount!.toDouble())}',
                                                     style: const TextStyle(color: Colors.grey),
                                                   ),
                                                   const SizedBox(height: 3),
                                                   Text(
-                                                    'Due: $currency ${myFormat.format(int.tryParse(reTransaction[index].dueAmount.toString())??0)}',
+                                                    'Due: $currency ${myFormat.format(reTransaction[index].dueAmount)}',
                                                     style: const TextStyle(fontSize: 16),
                                                   ).visible(reTransaction[index].dueAmount!.toInt() != 0),
                                                 ],
