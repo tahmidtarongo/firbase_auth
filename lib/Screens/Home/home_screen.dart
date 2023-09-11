@@ -1,11 +1,11 @@
 // ignore_for_file: unused_result
-
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/homepage_image_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
@@ -17,6 +17,7 @@ import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/due_transaction_provider.dart';
 import '../../Provider/profile_provider.dart';
 import '../../Provider/transactions_provider.dart';
+import '../../const_commas.dart';
 import '../../currency.dart';
 import '../../model/subscription_model.dart';
 import '../../subscription.dart';
@@ -74,6 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
     const Color(0xffFFF6ED),
     // const Color(0xffFFF6ED),
   ];
+  TextEditingController fromDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime(2021)));
+  TextEditingController toDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
+  DateTime fromDate = DateTime(2021);
+  DateTime toDate = DateTime.now();
+  double totalProfit = 0;
+  double totalLoss = 0;
+  bool isPicked = false;
   List<Map<String, dynamic>> sliderList = [
     {
       "icon": 'images/banner1.png',
@@ -106,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
         final homePageImageProvider = ref.watch(homepageImageProvider);
+        final providerData = ref.watch(transitionProvider);
         return Scaffold(
           backgroundColor: kMainColor,
           resizeToAvoidBottomInset: true,
@@ -238,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         }))
                               ],
                             ),
-                            SizedBox(height: 5,),
+                            const SizedBox(height: 5,),
                             Row(
                               children: [
                                 Expanded(
@@ -249,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: const Color(0xffE9FCB8)
                                     ),
                                     child:  Padding(
-                                      padding: EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -290,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ],
                                           ),
                                           const SizedBox(height: 3,),
-                                          Text('$currency 5000',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                          Text('$currency ${myFormat.format(5000)}',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
                                         ],
                                       ),
                                     ),
@@ -304,24 +313,50 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.circular(8),
                                         color: const Color(0xffB6DEC2)
                                     ),
-                                    child:  Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Image.asset('images/profit.png',height: 20,width: 20,),
-                                              const SizedBox(width: 8,),
-                                              Text('Profit',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
-                                            ],
-                                          ),
-                                          const SizedBox(height: 3,),
-                                          Text('$currency 2000',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
-                                        ],
-                                      ),
-                                    ),
+                                    child:  providerData.when(data: (transaction) {
+                                      final reTransaction = transaction.reversed.toList();
+                                      for (var element in reTransaction) {
+                                        if(!isPicked){
+                                          if (DateTime.parse(element.purchaseDate).month == DateTime.now().month && DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
+                                            element.lossProfit!.isNegative
+                                                ? totalLoss = totalLoss + element.lossProfit!.abs()
+                                                : totalProfit = totalProfit + element.lossProfit!;
+                                          }
+                                        } else{
+                                          if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
+                                              (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
+                                            element.lossProfit!.isNegative
+                                                ? totalLoss = totalLoss + element.lossProfit!.abs()
+                                                : totalProfit = totalProfit + element.lossProfit!;
+                                          }
+                                        }
+                                      }
+
+                                      return reTransaction.isNotEmpty
+                                          ?  Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Image.asset('images/profit.png',height: 20,width: 20,),
+                                                const SizedBox(width: 8,),
+                                                Text('Profit',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                              ],
+                                            ),
+                                            const SizedBox(height: 3,),
+                                            Text('$currency ${myFormat.format(2000)}',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                          ],
+                                        ),
+                                      )
+                                          : null;
+                                    }, error: (e, stack) {
+                                      return Text(e.toString());
+                                    }, loading: () {
+                                      return const Center(child: CircularProgressIndicator());
+                                    }),
                                   ),
                                 ),
                               ],

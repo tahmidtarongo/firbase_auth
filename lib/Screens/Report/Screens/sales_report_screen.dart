@@ -315,7 +315,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                       labelText: lang.S.of(context).invoiceNumber,
                                       hintText: lang.S.of(context).enterInvoiceNumber,
                                       border: const OutlineInputBorder(),
-                                      prefixIcon: Icon(Icons.search)),
+                                      prefixIcon: const Icon(Icons.search)),
                                 ),
                               ),
                               ListView.builder(

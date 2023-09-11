@@ -112,14 +112,14 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                         flex: 2,
                         child: Text(
                           lang.S.of(context).product,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Text(
                           lang.S.of(context).quantity,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Expanded(
@@ -145,7 +145,6 @@ class _SingleLossProfitScreenState extends State<SingleLossProfitScreen> {
                           double.parse(widget.transactionModel.productList![index].quantity.toString());
                       double salePrice = double.parse(widget.transactionModel.productList![index].subTotal.toString()) *
                           double.parse(widget.transactionModel.productList![index].quantity.toString());
-
                       double profit = salePrice - purchasePrice;
 
                       return Padding(

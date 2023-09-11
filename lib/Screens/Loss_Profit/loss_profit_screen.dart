@@ -62,7 +62,6 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                   final providerData = ref.watch(transitionProvider);
                   final printerData = ref.watch(printerProviderNotifier);
                   final personalData = ref.watch(profileDetailsProvider);
-
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -137,7 +136,6 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                         ),
                         providerData.when(data: (transaction) {
                           final reTransaction = transaction.reversed.toList();
-
                           for (var element in reTransaction) {
                             if(!isPicked){
                               if (DateTime.parse(element.purchaseDate).month == DateTime.now().month && DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
