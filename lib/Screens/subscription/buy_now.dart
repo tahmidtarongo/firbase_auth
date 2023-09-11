@@ -104,13 +104,42 @@ class _BuyNowState extends State<BuyNow> {
                     children: [
                       Expanded(
                           flex: 4,
-                          child: Text('Account Name',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                          child: Text('Bank Name',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
 
                           child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
                         flex: 5,
-                          child: Text('Shaidul Islam',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                          child: Text('Diamond Trust Bank',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                    ],
+                  ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 4,
+                          child: Text('Branch Name',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                      Expanded(
+
+                          child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                      Expanded(
+                          flex: 5,
+                          child: Text('Masaki Branch',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                    ],
+                  ),
+                  const SizedBox(height: 10,),
+                  Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 4,
+                          child: Text('Account Name',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                      Expanded(
+
+                          child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                      Expanded(
+                          flex: 5,
+                          child: Text('Primezone Business Solutions',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                   const SizedBox(height: 10,),
@@ -124,7 +153,7 @@ class _BuyNowState extends State<BuyNow> {
                           child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
                           flex: 5,
-                          child: Text('123642154565444',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                          child: Text('0151635001',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                   const SizedBox(height: 10,),
@@ -132,27 +161,28 @@ class _BuyNowState extends State<BuyNow> {
                     children: [
                       Expanded(
                           flex: 4,
-                          child: Text('Branch',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                          child: Text('SWIFT Code',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
 
                           child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
                           flex: 5,
-                          child: Text('Dhaka',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                          child: Text('DTKETZTZ',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                   const SizedBox(height: 10,),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                           flex: 4,
-                          child: Text('Routing Number',style: kTextStyle.copyWith(color: kGreyTextColor),)),
+                          child: Text('Bank Account Currency',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
 
                           child: Text(':',style: kTextStyle.copyWith(color: kGreyTextColor),)),
                       Expanded(
                           flex: 5,
-                          child: Text('326514214',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
+                          child: Text('TSH',style: kTextStyle.copyWith(color: kTitleColor,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                   const SizedBox(height: 30,),
