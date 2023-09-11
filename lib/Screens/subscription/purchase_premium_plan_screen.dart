@@ -794,6 +794,144 @@ class _PurchasePremiumPlanScreenState extends State<PurchasePremiumPlanScreen> {
                               //     ),
                               //   ],
                               // ),
+                              // SizedBox(
+                              //   height: (context.width() / 2) + 18,
+                              //   child: ListView.builder(
+                              //     physics: const ClampingScrollPhysics(),
+                              //     shrinkWrap: true,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemCount: data.length,
+                              //     itemBuilder: (BuildContext context, int index) {
+                              //       return GestureDetector(
+                              //         onTap: () {
+                              //           setState(() {
+                              //             selectedPlan = data[index];
+                              //           });
+                              //         },
+                              //         child: data[index].offerPrice >= 1
+                              //             ? Padding(
+                              //           padding: const EdgeInsets.only(right: 10),
+                              //           child: SizedBox(
+                              //             height: (context.width() / 2.5) + 18,
+                              //             child: Stack(
+                              //               alignment: Alignment.bottomCenter,
+                              //               children: [
+                              //                 Container(
+                              //                   height: (context.width() / 2.0),
+                              //                   width: (context.width() / 2.5) - 20,
+                              //                   decoration: BoxDecoration(
+                              //                     color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                              //                     borderRadius: const BorderRadius.all(
+                              //                       Radius.circular(10),
+                              //                     ),
+                              //                     border: Border.all(
+                              //                       width: 1,
+                              //                       color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor,
+                              //                     ),
+                              //                   ),
+                              //                   child: Column(
+                              //                     mainAxisAlignment: MainAxisAlignment.center,
+                              //                     children: [
+                              //                       const SizedBox(height: 15),
+                              //                       const Text(
+                              //                         'Mobile App\n+\nDesktop',
+                              //                         textAlign: TextAlign.center,
+                              //                         style: TextStyle(
+                              //                           fontSize: 16,
+                              //                         ),
+                              //                       ),
+                              //                       const SizedBox(height: 15),
+                              //                       Text(
+                              //                         data[index].subscriptionName,
+                              //                         style: const TextStyle(fontSize: 16),
+                              //                       ),
+                              //                       const SizedBox(height: 5),
+                              //                       Text(
+                              //                         '$currency${data[index].offerPrice}',
+                              //                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor2),
+                              //                       ),
+                              //                       Text(
+                              //                         '$currency${data[index].subscriptionPrice}',
+                              //                         style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 14, color: Colors.grey),
+                              //                       ),
+                              //                       const SizedBox(height: 5),
+                              //                       Text(
+                              //                         'Duration ${data[index].duration} Day',
+                              //                         style: const TextStyle(color: kGreyTextColor),
+                              //                       ),
+                              //                     ],
+                              //                   ),
+                              //                 ),
+                              //                 Positioned(
+                              //                   top: 8,
+                              //                   left: 0,
+                              //                   child: Container(
+                              //                     height: 25,
+                              //                     width: 70,
+                              //                     decoration: const BoxDecoration(
+                              //                       color: kPremiumPlanColor2,
+                              //                       borderRadius: BorderRadius.only(
+                              //                         topLeft: Radius.circular(10),
+                              //                         bottomRight: Radius.circular(10),
+                              //                       ),
+                              //                     ),
+                              //                     child: Center(
+                              //                       child: Text(
+                              //                         'Save ${(100 - ((data[index].offerPrice * 100) / data[index].subscriptionPrice)).toInt().toString()}%',
+                              //                         style: const TextStyle(color: Colors.white),
+                              //                       ),
+                              //                     ),
+                              //                   ),
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //           ),
+                              //         )
+                              //             : Padding(
+                              //           padding: const EdgeInsets.only(bottom: 20, top: 20, right: 10),
+                              //           child: Container(
+                              //             height: (context.width() / 2.0),
+                              //             width: (context.width() / 2.5) - 20,
+                              //             decoration: BoxDecoration(
+                              //               color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2.withOpacity(0.1) : Colors.white,
+                              //               borderRadius: const BorderRadius.all(
+                              //                 Radius.circular(10),
+                              //               ),
+                              //               border: Border.all(width: 1, color: data[index].subscriptionName == selectedPlan.subscriptionName ? kPremiumPlanColor2 : kPremiumPlanColor),
+                              //             ),
+                              //             child: Column(
+                              //               mainAxisAlignment: MainAxisAlignment.center,
+                              //               children: [
+                              //                 const Text(
+                              //                   'Mobile App\n+\nDesktop',
+                              //                   textAlign: TextAlign.center,
+                              //                   style: TextStyle(
+                              //                     fontSize: 16,
+                              //                   ),
+                              //                 ),
+                              //                 const SizedBox(height: 15),
+                              //                 Text(
+                              //                   data[index].subscriptionName,
+                              //                   style: const TextStyle(fontSize: 16),
+                              //                 ),
+                              //                 const SizedBox(height: 5),
+                              //                 Text(
+                              //                   '$currency${data[index].subscriptionPrice.toString()}',
+                              //                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kPremiumPlanColor),
+                              //                 ),
+                              //                 const SizedBox(height: 5),
+                              //                 Text(
+                              //                   'Duration ${data[index].duration} Day',
+                              //                   style: const TextStyle(color: kGreyTextColor),
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
                               GestureDetector(
                                 onTap: () {
                                   // UsePaypal(
