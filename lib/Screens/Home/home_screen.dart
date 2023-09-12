@@ -20,6 +20,7 @@ import '../../Provider/transactions_provider.dart';
 import '../../const_commas.dart';
 import '../../currency.dart';
 import '../../model/subscription_model.dart';
+import '../../model/transition_model.dart';
 import '../../subscription.dart';
 import '../About App/about_app.dart';
 import '../Shimmers/home_screen_appbar_shimmer.dart';
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return false;
   }
+
   List<Color> color = [
     const Color(0xffEDFAFF),
     const Color(0xffFFF6ED),
@@ -77,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   TextEditingController fromDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime(2021)));
   TextEditingController toDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
-  DateTime fromDate = DateTime(2021);
+  DateTime fromDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime toDate = DateTime.now();
   double totalProfit = 0;
   double totalLoss = 0;
@@ -94,13 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
     initialPage: 0,
   );
 
-  List<String> dayList=[
-    'Today',
-    'Weekly',
-    'Monthly',
-    'Yearly'
-  ];
-  String selectedDay='Today';
+  List<String> dayList = ['Today', 'Weekly', 'Monthly', 'Yearly'];
+  String selectedDay = 'Today';
 
   @override
   void initState() {
@@ -109,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    freeIcons=getFreeIcons(context: context);
+    freeIcons = getFreeIcons(context: context);
     return SafeArea(
       child: Consumer(builder: (_, ref, __) {
         final userProfileDetails = ref.watch(profileDetailsProvider);
@@ -142,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(width: 15.0),
-                          
+
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Center(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const AboutApp()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutApp()));
                                 },
                                 child: const Icon(
                                   Icons.notifications_none_rounded,
@@ -223,117 +220,105 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 RichText(
-                                    text: TextSpan(
-                                      text: 'Today: ',
-                                      style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),
-                                      children: [
-                                        TextSpan(
-                                        text: '23/8/2023',
-                                        style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor)),
-                                      ]
-                                    )),
+                                    text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor), children: [
+                                  TextSpan(text: '23/8/2023', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor)),
+                                ])),
                                 const Spacer(),
                                 DropdownButtonHideUnderline(
                                     child: DropdownButton(
-                                        icon: const Icon(Icons.keyboard_arrow_down_sharp,color: kGreyTextColor,size: 18,),
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_down_sharp,
+                                          color: kGreyTextColor,
+                                          size: 18,
+                                        ),
                                         value: selectedDay,
-                                        items: dayList.map((e) => DropdownMenuItem(
-                                            value: e,
-                                            child: Text(e,style: kTextStyle.copyWith(color: kTitleColor,fontSize: 14),))).toList(),
-                                        onChanged: (String?newValue){
+                                        items: dayList
+                                            .map(
+                                              (e) => DropdownMenuItem(
+                                                value: e,
+                                                child: Text(
+                                                  e,
+                                                  style: kTextStyle.copyWith(color: kTitleColor, fontSize: 14),
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                        onChanged: (String? newValue) {
                                           setState(() {
-                                            selectedDay=newValue!;
+                                            selectedDay = newValue!;
+                                            if (newValue == 'Today') {
+                                              fromDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+                                            } else if (newValue == 'Weekly') {
+                                              fromDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(const Duration(days: 7));
+                                            } else if (newValue == 'Monthly') {
+                                              fromDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
+                                            } else if (newValue == 'Yearly') {
+                                              fromDate = DateTime(DateTime.now().year, 1, 1);
+                                            }
                                           });
                                         }))
                               ],
                             ),
-                            const SizedBox(height: 5,),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: const Color(0xffE9FCB8)
-                                    ),
-                                    child:  Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Image.asset('images/order.png',height: 25,width: 25,color: Colors.pink,),
-                                          const SizedBox(width: 8,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Orders',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),),
-                                              const SizedBox(height: 3,),
-                                              Text('32',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10,),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: const Color(0xffD8D6EC)
-                                    ),
-                                    child:  Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Image.asset('images/loss.png',height: 20,width: 20,),
-                                              const SizedBox(width: 8,),
-                                              Text('Revenue',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
-                                            ],
-                                          ),
-                                          const SizedBox(height: 3,),
-                                          Text('$currency ${myFormat.format(5000)}',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10,),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: const Color(0xffB6DEC2)
-                                    ),
-                                    child:  providerData.when(data: (transaction) {
-                                      final reTransaction = transaction.reversed.toList();
-                                      for (var element in reTransaction) {
-                                        if(!isPicked){
-                                          if (DateTime.parse(element.purchaseDate).month == DateTime.now().month && DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
-                                            element.lossProfit!.isNegative
-                                                ? totalLoss = totalLoss + element.lossProfit!.abs()
-                                                : totalProfit = totalProfit + element.lossProfit!;
-                                          }
-                                        } else{
-                                          if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
-                                              (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
-                                            element.lossProfit!.isNegative
-                                                ? totalLoss = totalLoss + element.lossProfit!.abs()
-                                                : totalProfit = totalProfit + element.lossProfit!;
-                                          }
-                                        }
-                                      }
+                            const SizedBox(height: 5),
+                            providerData.when(data: (transaction) {
+                              List<TransitionModel> finalList = [];
+                              final reTransaction = transaction.reversed.toList();
+                              totalProfit = 0;
+                              double totalRevenue = 0;
+                              for (var element in reTransaction) {
+                                if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
+                                    (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
+                                  finalList.add(element);
+                                  totalRevenue += (element.totalAmount ?? 0);
+                                  element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
+                                }
+                              }
 
-                                      return reTransaction.isNotEmpty
-                                          ?  Padding(
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Image.asset(
+                                              'images/order.png',
+                                              height: 25,
+                                              width: 25,
+                                              color: Colors.pink,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Orders',
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  '${finalList.length}',
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffD8D6EC)),
+                                      child: Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,26 +326,223 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Image.asset('images/profit.png',height: 20,width: 20,),
-                                                const SizedBox(width: 8,),
-                                                Text('Profit',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                                Image.asset(
+                                                  'images/loss.png',
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  'Revenue',
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                )
                                               ],
                                             ),
-                                            const SizedBox(height: 3,),
-                                            Text('$currency ${myFormat.format(2000)}',style: kTextStyle.copyWith(fontWeight: FontWeight.bold,color: kTitleColor),)
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                            Text(
+                                              '$currency ${myFormat.format(totalRevenue)}',
+                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                            )
                                           ],
                                         ),
-                                      )
-                                          : null;
-                                    }, error: (e, stack) {
-                                      return Text(e.toString());
-                                    }, loading: () {
-                                      return const Center(child: CircularProgressIndicator());
-                                    }),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffB6DEC2)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Image.asset(
+                                                    'images/profit.png',
+                                                    height: 20,
+                                                    width: 20,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    'Profit',
+                                                    style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 3,
+                                              ),
+                                              Text(
+                                                '$currency ${myFormat.format(totalProfit)}',
+                                                style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                              )
+                                            ],
+                                          ),
+                                        )),
+                                  ),
+                                ],
+                              );
+                            }, error: (e, stack) {
+                              return Text(e.toString());
+                            }, loading: () {
+                              return const Center(child: CircularProgressIndicator());
+                            }),
+                            // Row(
+                            //   children: [
+                            //     Expanded(
+                            //       child: Container(
+                            //         alignment: Alignment.center,
+                            //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.all(10.0),
+                            //           child: Row(
+                            //             crossAxisAlignment: CrossAxisAlignment.start,
+                            //             children: [
+                            //               Image.asset(
+                            //                 'images/order.png',
+                            //                 height: 25,
+                            //                 width: 25,
+                            //                 color: Colors.pink,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 8,
+                            //               ),
+                            //               Column(
+                            //                 crossAxisAlignment: CrossAxisAlignment.start,
+                            //                 children: [
+                            //                   Text(
+                            //                     'Orders',
+                            //                     style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //                   ),
+                            //                   const SizedBox(
+                            //                     height: 3,
+                            //                   ),
+                            //                   Text(
+                            //                     '32',
+                            //                     style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //                   )
+                            //                 ],
+                            //               )
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     const SizedBox(width: 10),
+                            //     Expanded(
+                            //       child: Container(
+                            //         alignment: Alignment.center,
+                            //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffD8D6EC)),
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.all(10.0),
+                            //           child: Column(
+                            //             crossAxisAlignment: CrossAxisAlignment.start,
+                            //             children: [
+                            //               Row(
+                            //                 crossAxisAlignment: CrossAxisAlignment.start,
+                            //                 children: [
+                            //                   Image.asset(
+                            //                     'images/loss.png',
+                            //                     height: 20,
+                            //                     width: 20,
+                            //                   ),
+                            //                   const SizedBox(
+                            //                     width: 8,
+                            //                   ),
+                            //                   Text(
+                            //                     'Revenue',
+                            //                     style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //                   )
+                            //                 ],
+                            //               ),
+                            //               const SizedBox(
+                            //                 height: 3,
+                            //               ),
+                            //               Text(
+                            //                 '$currency ${myFormat.format(5000)}',
+                            //                 style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //               )
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     const SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Expanded(
+                            //       child: Container(
+                            //         alignment: Alignment.center,
+                            //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffB6DEC2)),
+                            //         child: providerData.when(data: (transaction) {
+                            //           final reTransaction = transaction.reversed.toList();
+                            //           for (var element in reTransaction) {
+                            //             if (!isPicked) {
+                            //               if (DateTime.parse(element.purchaseDate).month == DateTime.now().month &&
+                            //                   DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
+                            //                 element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
+                            //               }
+                            //             } else {
+                            //               if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
+                            //                   (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
+                            //                 element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
+                            //               }
+                            //             }
+                            //           }
+                            //
+                            //           return reTransaction.isNotEmpty
+                            //               ? Padding(
+                            //                   padding: const EdgeInsets.all(10.0),
+                            //                   child: Column(
+                            //                     crossAxisAlignment: CrossAxisAlignment.start,
+                            //                     children: [
+                            //                       Row(
+                            //                         crossAxisAlignment: CrossAxisAlignment.start,
+                            //                         children: [
+                            //                           Image.asset(
+                            //                             'images/profit.png',
+                            //                             height: 20,
+                            //                             width: 20,
+                            //                           ),
+                            //                           const SizedBox(
+                            //                             width: 8,
+                            //                           ),
+                            //                           Text(
+                            //                             'Profit',
+                            //                             style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //                           )
+                            //                         ],
+                            //                       ),
+                            //                       const SizedBox(
+                            //                         height: 3,
+                            //                       ),
+                            //                       Text(
+                            //                         '$currency ${myFormat.format(2000)}',
+                            //                         style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                            //                       )
+                            //                     ],
+                            //                   ),
+                            //                 )
+                            //               : null;
+                            //         }, error: (e, stack) {
+                            //           return Text(e.toString());
+                            //         }, loading: () {
+                            //           return const Center(child: CircularProgressIndicator());
+                            //         }),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )
                           ],
                         ),
                       ),
@@ -610,6 +792,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
     });
     return boolValue;
   }
+
   bool checkPermission({required String item}) {
     if (item == 'Sales' && finalUserRoleModel.salePermission) {
       return true;
@@ -636,6 +819,7 @@ class _HomeGridCardsState extends State<HomeGridCards> {
     }
     return false;
   }
+
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
@@ -654,13 +838,13 @@ class _HomeGridCardsState extends State<HomeGridCards> {
                 ref.refresh(transitionProvider);
                 isSubUser
                     ? checkPermission(item: widget.gridItems.title)
-                    ? await subscriptionChecker(item: widget.gridItems.title)
-                    ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
-                    : EasyLoading.showError('Update your plan first,\nyour limit is over.')
-                    : EasyLoading.showError('Sorry, you have no permission to access this service')
-                    :await Subscription.subscriptionChecker(item: widget.gridItems.title)
-                    ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
-                    : EasyLoading.showError('Update your plan first,\nyour limit is over.');
+                        ? await subscriptionChecker(item: widget.gridItems.title)
+                            ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
+                            : EasyLoading.showError('Update your plan first,\nyour limit is over.')
+                        : EasyLoading.showError('Sorry, you have no permission to access this service')
+                    : await Subscription.subscriptionChecker(item: widget.gridItems.title)
+                        ? Navigator.of(context).pushNamed('/${widget.gridItems.route}')
+                        : EasyLoading.showError('Update your plan first,\nyour limit is over.');
               },
               child: Column(
                 children: [
