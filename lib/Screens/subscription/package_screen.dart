@@ -174,17 +174,17 @@ class _PackageScreenState extends State<PackageScreen> {
                         children: [
                           Text(
                             lang.S.of(context).premiumPlan,
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                           const SizedBox(height: 8),
                           Row(
                             children: [
                               Text(
                                 lang.S.of(context).youAreUsing,
-                                style: TextStyle(fontSize: 14),
+                                style: const TextStyle(fontSize: 14),
                               ),
                               Text(
-                                '${initialSelectedPackage}ly Package',
+                                '$initialSelectedPackage',
                                 style: const TextStyle(fontSize: 14, color: kMainColor, fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -266,8 +266,10 @@ class _PackageScreenState extends State<PackageScreen> {
                 const SizedBox(height: 20).visible(initialSelectedPackage != 'Lifetime'),
                 GestureDetector(
                   onTap: () {
-                     const PurchasePremiumPlanScreen(
-                      isCameBack: true, initialSelectedPackage: 'Yearly', initPackageValue: 0,
+                    const PurchasePremiumPlanScreen(
+                      isCameBack: true,
+                      initialSelectedPackage: 'Yearly',
+                      initPackageValue: 0,
                     ).launch(context);
                   },
                   child: Container(

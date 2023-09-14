@@ -137,7 +137,7 @@ class Subscription {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                     Text(
+                    Text(
                       lang.S.of(context).yourPackageWillExpireinDay,
                       style: TextStyle(fontSize: 16),
                     ),
@@ -148,7 +148,7 @@ class Subscription {
                         // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
-                      child:  Text(
+                      child: Text(
                         lang.S.of(context).cacel,
                         style: TextStyle(color: Colors.red),
                       ),
@@ -173,7 +173,7 @@ class Subscription {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                       Text(
+                      Text(
                         lang.S.of(context).YourPackageWillExpireTodayPleasePurchaseagain,
                         style: TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
@@ -185,13 +185,13 @@ class Subscription {
                             onPressed: () {
                               const PackageScreen().launch(context);
                             },
-                            child:  Text(lang.S.of(context).purchase),
+                            child: Text(lang.S.of(context).purchase),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child:  Text(
+                            child: Text(
                               lang.S.of(context).cacel,
                               style: TextStyle(color: Colors.red),
                             ),
@@ -254,14 +254,16 @@ class Subscription {
   }
 
   static void decreaseSubscriptionLimits({required String itemType, required BuildContext context}) async {
-
     final ref = FirebaseDatabase.instance.ref(constUserId).child('Subscription');
     ref.keepSynced(true);
-    ref.child(itemType).get().then((value){
+    ref.child(itemType).get().then((value) {
       print(value.value);
       int beforeAction = int.parse(value.value.toString());
-      int afterAction = beforeAction - 1;
-      ref.update({itemType: afterAction});
+      if (beforeAction != -202) {
+        int afterAction = beforeAction - 1;
+        ref.update({itemType: afterAction});
+      }
+
       Subscription.getUserLimitsData(context: context, wannaShowMsg: false);
     });
     // var data = await ref.once();
