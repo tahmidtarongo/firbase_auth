@@ -449,14 +449,23 @@ class AddProductState extends State<AddProduct> {
                               keyboardType: TextInputType.number,
                               controller: mrpController,
                               onChanged: (value) {
-                                mrpController.text=value;
-                                value = value.replaceAll(',', '');
-                                final formatValue = myFormat.format(int.parse(value));
-                                // Update the controller's value with the formatted value
-                                mrpController.value = mrpController.value.copyWith(
-                                  text: formatValue,
-                                  selection: const TextSelection.collapsed(offset: 50),
-                                );
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  mrpController.value = mrpController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  mrpController.value = mrpController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
                               },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_pos/model/product_model.dart';
-
 import '../model/add_to_cart_model.dart';
 
 final cartNotifier = ChangeNotifierProvider((ref) => CartNotifier());
