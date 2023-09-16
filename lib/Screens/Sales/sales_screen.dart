@@ -383,7 +383,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const Spacer(),
             Text(
-              '$currency${myFormat.format(int.tryParse(widget.productPrice)??0)}',
+              '$currency${widget.productPrice}',
               style: GoogleFonts.jost(
                 fontSize: 20.0,
                 color: Colors.black,

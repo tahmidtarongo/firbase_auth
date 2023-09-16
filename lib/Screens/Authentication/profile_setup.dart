@@ -392,27 +392,27 @@ class _ProfileSetupState extends State<ProfileSetup> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      height: 60.0,
-                      child: FormField(
-                        builder: (FormFieldState<dynamic> field) {
-                          return InputDecorator(
-                            decoration: InputDecoration(
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                labelText: lang.S.of(context).language,
-                                labelStyle: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                ),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-                            child: DropdownButtonHideUnderline(child: getLanguage()),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10.0),
+                  //   child: SizedBox(
+                  //     height: 60.0,
+                  //     child: FormField(
+                  //       builder: (FormFieldState<dynamic> field) {
+                  //         return InputDecorator(
+                  //           decoration: InputDecoration(
+                  //               floatingLabelBehavior: FloatingLabelBehavior.always,
+                  //               labelText: lang.S.of(context).language,
+                  //               labelStyle: GoogleFonts.poppins(
+                  //                 color: Colors.black,
+                  //                 fontSize: 20.0,
+                  //               ),
+                  //               border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                  //           child: DropdownButtonHideUnderline(child: getLanguage()),
+                  //         );
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: AppTextField(

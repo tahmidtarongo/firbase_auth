@@ -75,7 +75,7 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
 );
 
-List<String> businessCategory = [
+final List<String> businessCategory = [
   'Bag & Luggage',
   'Books & Stationery',
   'Clothing',
@@ -114,6 +114,8 @@ List<String> businessCategory = [
   'Vehicles & Parts',
   'Others',
 ];
+
+
 List<String> language = ['English'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];

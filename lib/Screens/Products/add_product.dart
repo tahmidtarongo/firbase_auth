@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -18,6 +17,7 @@ import 'package:mobile_pos/Screens/Products/brands_list.dart';
 import 'package:mobile_pos/Screens/Products/category_list.dart';
 import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Products/unit_list.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -99,6 +99,12 @@ class AddProductState extends State<AddProduct> {
       }
     }
   }
+  final TextEditingController purchaseController = TextEditingController();
+  final TextEditingController mrpController = TextEditingController();
+  final TextEditingController wholesaleController = TextEditingController();
+  final TextEditingController delaerController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -397,7 +403,27 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: purchaseController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  purchaseController.value = purchaseController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  purchaseController.value = purchaseController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
+                              },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'Purchase Price is required';
@@ -405,7 +431,7 @@ class AddProductState extends State<AddProduct> {
                                 return null;
                               },
                               onSaved: (value) {
-                                productPurchasePrice = value!;
+                                purchaseController.text = value!;
                               },
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -421,6 +447,17 @@ class AddProductState extends State<AddProduct> {
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
                               keyboardType: TextInputType.number,
+                              controller: mrpController,
+                              onChanged: (value) {
+                                mrpController.text=value;
+                                value = value.replaceAll(',', '');
+                                final formatValue = myFormat.format(int.parse(value));
+                                // Update the controller's value with the formatted value
+                                mrpController.value = mrpController.value.copyWith(
+                                  text: formatValue,
+                                  selection: const TextSelection.collapsed(offset: 50),
+                                );
+                              },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'MRP is required';
@@ -428,7 +465,7 @@ class AddProductState extends State<AddProduct> {
                                 return null;
                               },
                               onSaved: (value) {
-                                productSalePrice = value!;
+                                mrpController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -449,9 +486,29 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: wholesaleController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  wholesaleController.value = wholesaleController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  wholesaleController.value = wholesaleController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
+                              },
                               onSaved: (value) {
-                                productWholeSalePrice = value!;
+                                wholesaleController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -466,9 +523,30 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: delaerController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                delaerController.text = value;
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  delaerController.value = delaerController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  delaerController.value = delaerController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
+                              },
                               onSaved: (value) {
-                                productDealerPrice = value!;
+                                delaerController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -698,11 +776,11 @@ class AddProductState extends State<AddProduct> {
                               productCode,
                               productStock,
                               productUnit,
-                              productSalePrice,
-                              productPurchasePrice,
+                              mrpController.text,
+                              purchaseController.text,
                               productDiscount,
-                              productWholeSalePrice,
-                              productDealerPrice,
+                              wholesaleController.text,
+                              delaerController.text,
                               productManufacturer,
                               productPicture,
                               [],

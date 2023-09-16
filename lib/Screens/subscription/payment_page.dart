@@ -18,7 +18,6 @@ import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:mobile_pos/Screens/subscription/payment_config.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../const_commas.dart';
 import '../../currency.dart';
 import '../../model/subscription_model.dart';
@@ -338,9 +337,9 @@ class _PaymentPageState extends State<PaymentPage> {
   //Handle Multiple Payment system
   _handlePayment(String totalAmount, String currency) {
     switch (whichPaymentIsChecked) {
-      case 'Razorpay':
-        _handleRazorpayPayment(totalAmount, currency);
-        break;
+      // case 'Razorpay':
+      //   _handleRazorpayPayment(totalAmount, currency);
+      //   break;
       case 'Paypal':
         _handlePaypalPayment(totalAmount, currency);
         break;
@@ -467,25 +466,25 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   //Razorpay payment
-  _handleRazorpayPayment(String totalAmount, String currency) {
-    Razorpay razorpay = Razorpay();
-    var options = {
-      'key': razorpayid,
-      'amount': totalAmount,
-      "currency": razorpayCurrency,
-      'name': 'Test',
-      'retry': {'enabled': true, 'max_count': 1},
-      'send_sms_hash': true,
-    };
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, () {
-      widget.onError();
-    });
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse response) {
-      onSuccess();
-    });
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, () {});
-    razorpay.open(options);
-  }
+  // _handleRazorpayPayment(String totalAmount, String currency) {
+  //   Razorpay razorpay = Razorpay();
+  //   var options = {
+  //     'key': razorpayid,
+  //     'amount': totalAmount,
+  //     "currency": razorpayCurrency,
+  //     'name': 'Test',
+  //     'retry': {'enabled': true, 'max_count': 1},
+  //     'send_sms_hash': true,
+  //   };
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, () {
+  //     widget.onError();
+  //   });
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse response) {
+  //     onSuccess();
+  //   });
+  //   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, () {});
+  //   razorpay.open(options);
+  // }
 
   //Paypal payment
   _handlePaypalPayment(String totalAmount, String currency) {

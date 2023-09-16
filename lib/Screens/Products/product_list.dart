@@ -155,7 +155,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                "$currency ${myFormat.format(int.tryParse(products[i].productSalePrice)??0)}",
+                                                "$currency ${products[i].productSalePrice}",
                                                 // "$currency ${products[i].productSalePrice}",
                                                 style: const TextStyle(fontSize: 18),
                                               ),
