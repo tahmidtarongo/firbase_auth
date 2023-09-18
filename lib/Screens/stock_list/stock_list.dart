@@ -32,7 +32,6 @@ class _StockListState extends State<StockList> {
   }
 
   NumberFormat decimalFormat = NumberFormat.decimalPattern('en_US');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +117,7 @@ class _StockListState extends State<StockList> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                        currency + myFormat.format(totalParPrice),
+                                          totalParPrice.toString(),
                                           style: const TextStyle(
                                             color: Colors.orange,
                                             fontSize: 20,
