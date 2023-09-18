@@ -232,7 +232,7 @@ class AddProductState extends State<AddProduct> {
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).weight,
                                 hintText: lang.S.of(context).enterWeight,
-                                border: OutlineInputBorder(),
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),

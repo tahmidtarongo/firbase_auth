@@ -15,14 +15,28 @@ class CartNotifier extends ChangeNotifier {
     productList.add(products);
     notifyListeners();
   }
-
   double getTotalAmount() {
     double totalAmountOfCart = 0;
     for (var element in cartItemPurchaseList) {
-      totalAmountOfCart = totalAmountOfCart + (double.parse(element.productPurchasePrice.toString()) * double.parse(element.productStock.toString()));
+      try {
+        double purchasePrice = double.parse(element.productPurchasePrice.toString());
+        double stock = double.parse(element.productStock.toString());
+        totalAmountOfCart += purchasePrice * stock;
+      } catch (e) {
+        // Handle the parsing error here, e.g., log an error message or skip the item.
+        print('Error parsing double: $e');
+      }
     }
     return totalAmountOfCart;
   }
+
+  // double getTotalAmount() {
+  //   double totalAmountOfCart = 0;
+  //   for (var element in cartItemPurchaseList) {
+  //     totalAmountOfCart = totalAmountOfCart + (double.parse(element.productPurchasePrice.toString()) * double.parse(element.productStock.toString()));
+  //   }
+  //   return totalAmountOfCart;
+  // }
 
   addToCartRiverPod(ProductModel cartItem) {
     bool isNotInList = true;
