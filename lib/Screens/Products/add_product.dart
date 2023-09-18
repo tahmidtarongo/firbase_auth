@@ -105,7 +105,10 @@ class AddProductState extends State<AddProduct> {
   final TextEditingController mrpController = TextEditingController();
   final TextEditingController wholesaleController = TextEditingController();
   final TextEditingController delaerController = TextEditingController();
-
+  String mrpText = '';
+  String purchaseText='';
+  String wholesaleText='';
+  String dealerText='';
   String formattedValue = "";
 
   TextEditingValue formatEditUpdate(
@@ -440,17 +443,12 @@ class AddProductState extends State<AddProduct> {
                               keyboardType: TextInputType.number,
                               // initialValue: myFormat.format(purchaseController),
                               onChanged: (value) {
-                                final text = purchaseController.text;
-                                // Remove commas and any non-numeric characters
-                                final parsedValue = text.replaceAll(',', '');
-                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
-                                if (text != formattedText) {
-                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
-                                  purchaseController.value = purchaseController.value.copyWith(
-                                    text: formattedText,
-                                    selection: TextSelection.collapsed(offset: formattedText.length),
-                                  );
-                                }
+                                purchaseText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(purchaseText));
+                                purchaseController.value = purchaseController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
                               },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
@@ -465,7 +463,7 @@ class AddProductState extends State<AddProduct> {
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).purchasePrice,
                                 hintText: lang.S.of(context).enterPurchasePrice,
-                                border: OutlineInputBorder(),
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -475,31 +473,15 @@ class AddProductState extends State<AddProduct> {
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
                               controller: mrpController,
-                              onChanged: (string) {
-                                string = _formatNumber(string.replaceAll(',', ''));
-                                mrpController.value = TextEditingValue(
-                                  text: string,
-                                  selection: TextSelection.collapsed(offset: string.length),
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                 mrpText = value.replaceAll(',', '');
+                              var formattedText = myFormat.format(int.parse(mrpText));
+                                mrpController.value = mrpController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
                                 );
                               },
-                              // inputFormatters: [CustomTextInputFormatter()],
-                              // onChanged: (value) {
-                              //   final text = mrpController.text;
-                              //   // Remove commas and any non-numeric characters
-                              //   final parsedValue = text.replaceAll(',', '');
-                              //   final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
-                              //   if (text != formattedText) {
-                              //     // Only update the TextField if the formatted value is different to prevent an infinite loop
-                              //     mrpController.value = mrpController.value.copyWith(
-                              //       text: formattedText,
-                              //       selection: TextSelection.collapsed(offset: formattedText.length),
-                              //     );
-                              //     setState(() {
-                              //       formattedValue=formattedText;
-                              //     });
-                              //   }
-                              // },
-                              // initialValue: myFormat.format(mrpController),
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'MRP is required';
@@ -528,41 +510,16 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
-                              // controller: wholesaleController,
+                              controller: wholesaleController,
                               keyboardType: TextInputType.number,
-
                               onChanged: (value) {
-                                final text = wholesaleController.text;
-                                // Remove commas and any non-numeric characters
-                                final parsedValue = text.replaceAll(',', '');
-                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
-                                if (text != formattedText) {
-                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
-                                  wholesaleController.value = wholesaleController.value.copyWith(
-                                    text: formattedText,
-                                    selection: TextSelection.collapsed(offset: formattedText.length),
-                                  );
-                                }
+                                wholesaleText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(wholesaleText));
+                                wholesaleController.value = wholesaleController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
                               },
-                              // onChanged: (value) {
-                              //   // Remove commas and any non-numeric characters
-                              //   final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
-                              //
-                              //   // Limit the length to 20 characters
-                              //   if (sanitizedValue.length > 50) {
-                              //     wholesaleController.value = wholesaleController.value.copyWith(
-                              //       text: sanitizedValue.substring(0, 50),
-                              //       selection: const TextSelection.collapsed(offset: 50),
-                              //     );
-                              //   } else {
-                              //     // Format the text as a number with commas
-                              //     final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
-                              //     wholesaleController.value = wholesaleController.value.copyWith(
-                              //       text: formattedValue,
-                              //       selection: TextSelection.collapsed(offset: formattedValue.length),
-                              //     );
-                              //   }
-                              // },
                               onSaved: (value) {
                                 wholesaleController.text = value!;
                               },
@@ -582,17 +539,12 @@ class AddProductState extends State<AddProduct> {
                               controller: delaerController,
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
-                                final text = delaerController.text;
-                                // Remove commas and any non-numeric characters
-                                final parsedValue = text.replaceAll(',', '');
-                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
-                                if (text != formattedText) {
-                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
-                                  delaerController.value = delaerController.value.copyWith(
-                                    text: formattedText,
-                                    selection: TextSelection.collapsed(offset: formattedText.length),
-                                  );
-                                }
+                                dealerText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(dealerText));
+                                delaerController.value = delaerController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
                               },
                               onSaved: (value) {
                                 delaerController.text = value!;
@@ -823,11 +775,11 @@ class AddProductState extends State<AddProduct> {
                               productCode,
                               productStock,
                               productUnit,
-                              mrpController.text,
-                              purchaseController.text,
+                              mrpText,
+                              purchaseText,
                               productDiscount,
-                              wholesaleController.text,
-                              delaerController.text,
+                              wholesaleText,
+                              dealerText,
                               productManufacturer,
                               productPicture,
                               [],
