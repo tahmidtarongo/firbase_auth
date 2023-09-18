@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
@@ -26,6 +27,7 @@ import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../subscription.dart';
+import 'navigation_page.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key, required this.productNameList, required this.productCodeList}) : super(key: key);
@@ -103,6 +105,37 @@ class AddProductState extends State<AddProduct> {
   final TextEditingController mrpController = TextEditingController();
   final TextEditingController wholesaleController = TextEditingController();
   final TextEditingController delaerController = TextEditingController();
+
+  String formattedValue = "";
+
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue,
+      TextEditingValue newValue,
+      ) {
+    if (newValue.text.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    final cleanText = newValue.text.replaceAll(',', ''); // Remove commas
+    final formattedText = _formatWithCommas(cleanText);
+
+    return newValue.copyWith(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+
+  String _formatWithCommas(String text) {
+    final intValue = int.tryParse(text);
+    if (intValue == null) {
+      return text; // Invalid input, don't format
+    }
+
+    return myFormat.format(intValue);
+  }
+
+  String _formatNumber(String s) => myFormat.format(int.parse(s));
+
 
 
 
@@ -405,22 +438,17 @@ class AddProductState extends State<AddProduct> {
                             child: TextFormField(
                               controller: purchaseController,
                               keyboardType: TextInputType.number,
+                              // initialValue: myFormat.format(purchaseController),
                               onChanged: (value) {
+                                final text = purchaseController.text;
                                 // Remove commas and any non-numeric characters
-                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
-
-                                // Limit the length to 20 characters
-                                if (sanitizedValue.length > 50) {
+                                final parsedValue = text.replaceAll(',', '');
+                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
+                                if (text != formattedText) {
+                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
                                   purchaseController.value = purchaseController.value.copyWith(
-                                    text: sanitizedValue.substring(0, 50),
-                                    selection: const TextSelection.collapsed(offset: 50),
-                                  );
-                                } else {
-                                  // Format the text as a number with commas
-                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
-                                  purchaseController.value = purchaseController.value.copyWith(
-                                    text: formattedValue,
-                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                    text: formattedText,
+                                    selection: TextSelection.collapsed(offset: formattedText.length),
                                   );
                                 }
                               },
@@ -446,27 +474,32 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
                               controller: mrpController,
-                              onChanged: (value) {
-                                // Remove commas and any non-numeric characters
-                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
-
-                                // Limit the length to 20 characters
-                                if (sanitizedValue.length > 50) {
-                                  mrpController.value = mrpController.value.copyWith(
-                                    text: sanitizedValue.substring(0, 50),
-                                    selection: const TextSelection.collapsed(offset: 50),
-                                  );
-                                } else {
-                                  // Format the text as a number with commas
-                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
-                                  mrpController.value = mrpController.value.copyWith(
-                                    text: formattedValue,
-                                    selection: TextSelection.collapsed(offset: formattedValue.length),
-                                  );
-                                }
+                              onChanged: (string) {
+                                string = _formatNumber(string.replaceAll(',', ''));
+                                mrpController.value = TextEditingValue(
+                                  text: string,
+                                  selection: TextSelection.collapsed(offset: string.length),
+                                );
                               },
+                              // inputFormatters: [CustomTextInputFormatter()],
+                              // onChanged: (value) {
+                              //   final text = mrpController.text;
+                              //   // Remove commas and any non-numeric characters
+                              //   final parsedValue = text.replaceAll(',', '');
+                              //   final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
+                              //   if (text != formattedText) {
+                              //     // Only update the TextField if the formatted value is different to prevent an infinite loop
+                              //     mrpController.value = mrpController.value.copyWith(
+                              //       text: formattedText,
+                              //       selection: TextSelection.collapsed(offset: formattedText.length),
+                              //     );
+                              //     setState(() {
+                              //       formattedValue=formattedText;
+                              //     });
+                              //   }
+                              // },
+                              // initialValue: myFormat.format(mrpController),
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'MRP is required';
@@ -495,27 +528,41 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
-                              controller: wholesaleController,
+                              // controller: wholesaleController,
                               keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                // Remove commas and any non-numeric characters
-                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
 
-                                // Limit the length to 20 characters
-                                if (sanitizedValue.length > 50) {
+                              onChanged: (value) {
+                                final text = wholesaleController.text;
+                                // Remove commas and any non-numeric characters
+                                final parsedValue = text.replaceAll(',', '');
+                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
+                                if (text != formattedText) {
+                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
                                   wholesaleController.value = wholesaleController.value.copyWith(
-                                    text: sanitizedValue.substring(0, 50),
-                                    selection: const TextSelection.collapsed(offset: 50),
-                                  );
-                                } else {
-                                  // Format the text as a number with commas
-                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
-                                  wholesaleController.value = wholesaleController.value.copyWith(
-                                    text: formattedValue,
-                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                    text: formattedText,
+                                    selection: TextSelection.collapsed(offset: formattedText.length),
                                   );
                                 }
                               },
+                              // onChanged: (value) {
+                              //   // Remove commas and any non-numeric characters
+                              //   final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+                              //
+                              //   // Limit the length to 20 characters
+                              //   if (sanitizedValue.length > 50) {
+                              //     wholesaleController.value = wholesaleController.value.copyWith(
+                              //       text: sanitizedValue.substring(0, 50),
+                              //       selection: const TextSelection.collapsed(offset: 50),
+                              //     );
+                              //   } else {
+                              //     // Format the text as a number with commas
+                              //     final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                              //     wholesaleController.value = wholesaleController.value.copyWith(
+                              //       text: formattedValue,
+                              //       selection: TextSelection.collapsed(offset: formattedValue.length),
+                              //     );
+                              //   }
+                              // },
                               onSaved: (value) {
                                 wholesaleController.text = value!;
                               },
@@ -535,22 +582,15 @@ class AddProductState extends State<AddProduct> {
                               controller: delaerController,
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
-                                delaerController.text = value;
+                                final text = delaerController.text;
                                 // Remove commas and any non-numeric characters
-                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
-
-                                // Limit the length to 20 characters
-                                if (sanitizedValue.length > 50) {
+                                final parsedValue = text.replaceAll(',', '');
+                                final formattedText = myFormat.format(int.parse(parsedValue)); // Format with commas
+                                if (text != formattedText) {
+                                  // Only update the TextField if the formatted value is different to prevent an infinite loop
                                   delaerController.value = delaerController.value.copyWith(
-                                    text: sanitizedValue.substring(0, 50),
-                                    selection: const TextSelection.collapsed(offset: 50),
-                                  );
-                                } else {
-                                  // Format the text as a number with commas
-                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
-                                  delaerController.value = delaerController.value.copyWith(
-                                    text: formattedValue,
-                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                    text: formattedText,
+                                    selection: TextSelection.collapsed(offset: formattedText.length),
                                   );
                                 }
                               },
@@ -757,7 +797,6 @@ class AddProductState extends State<AddProduct> {
                         if (validateAndSave()) {
                           try {
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-
                             bool result = await InternetConnectionChecker().hasConnection;
 
                             result
@@ -765,7 +804,6 @@ class AddProductState extends State<AddProduct> {
                                     ? null
                                     : await uploadFile(imagePath)
                                 : null;
-
                             // ignore: no_leading_underscores_for_local_identifiers
                             final DatabaseReference _productInformationRef = FirebaseDatabase.instance
                                 // ignore: deprecated_member_use
