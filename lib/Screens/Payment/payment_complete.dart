@@ -188,6 +188,28 @@ class _PaymentCompletedState extends State<PaymentCompleted> {
                 },
                 buttonTextColor: Colors.white,
               ),
+              // ListTile(
+              //   leading: const Icon(
+              //     Icons.payment,
+              //     color: kGreyTextColor,
+              //   ),
+              //   title: Text(lang.S.of(context).recivedThePin),
+              //   trailing: const Icon(
+              //     Icons.local_print_shop,
+              //     color: kGreyTextColor,
+              //   ),
+              // ),
+              // ButtonGlobalWithoutIcon(
+              //   buttontext: lang.S.of(context).startNewSale,
+              //   buttonDecoration: kButtonDecoration.copyWith(color: kMainColor),
+              //   onPressed: () {
+              //     providerData.clearCart();
+              //     providerData.clearDiscount();
+              //
+              //     const Home().launch(context);
+              //   },
+              //   buttonTextColor: Colors.white,
+              // ),
             ],
           ),
         ),
