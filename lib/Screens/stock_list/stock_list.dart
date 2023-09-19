@@ -91,7 +91,7 @@ class _StockListState extends State<StockList> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          totalStock.toString(),
+                                          myFormat.format(totalStock),
                                           style: const TextStyle(
                                             color: Colors.green,
                                             fontSize: 20,
@@ -117,7 +117,7 @@ class _StockListState extends State<StockList> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          totalParPrice.toString(),
+                                          '$currency ${myFormat.format(totalParPrice)}',
                                           style: const TextStyle(
                                             color: Colors.orange,
                                             fontSize: 20,
@@ -256,19 +256,19 @@ class _StockListState extends State<StockList> {
                                       ),
                                     )),
                                     DataCell(Text(
-                                     product[index].productStock,
+                                     myFormat.format(int.tryParse(product[index].productStock)??0),
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                       ),
                                     ),),
                                     DataCell(Text(
-                                      '$currency${product[index].productPurchasePrice}',
+                                      '$currency${myFormat.format(int.tryParse(product[index].productPurchasePrice)??0)}',
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 10 ? Colors.red : Colors.black,
                                       ),
                                     ),),
                                     DataCell(Text(
-                                      '$currency ${product[index].productSalePrice}' ,
+                                      '$currency ${myFormat.format(int.tryParse(product[index].productSalePrice))}' ,
                                       style: GoogleFonts.poppins(
                                         color: product[index].productStock.toInt() < 20 ? Colors.red : Colors.black,
                                       ),

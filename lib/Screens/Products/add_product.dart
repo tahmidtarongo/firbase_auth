@@ -105,11 +105,13 @@ class AddProductState extends State<AddProduct> {
   final TextEditingController mrpController = TextEditingController();
   final TextEditingController wholesaleController = TextEditingController();
   final TextEditingController delaerController = TextEditingController();
+  final TextEditingController stockController=TextEditingController();
+
   String mrpText = '';
   String purchaseText='';
   String wholesaleText='';
   String dealerText='';
-  String formattedValue = "";
+  String stockText='';
 
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue,
@@ -388,7 +390,16 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: stockController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                stockText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(stockText));
+                                stockController.value = stockController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
+                              },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'Stock is required';
@@ -773,7 +784,7 @@ class AddProductState extends State<AddProduct> {
                               type,
                               brandName,
                               productCode,
-                              productStock,
+                              stockText,
                               productUnit,
                               mrpText,
                               purchaseText,

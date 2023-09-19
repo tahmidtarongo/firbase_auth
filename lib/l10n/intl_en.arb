@@ -1,4 +1,6 @@
 {
+  "order" : "Orders",
+  "revenue" : "Revenue",
   "powerdedByMobiPos" : "Powered By Smart Biashara",
   "parties" : "Parties",
   "stockList" : "Stock List",

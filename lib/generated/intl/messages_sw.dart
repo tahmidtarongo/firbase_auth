@@ -293,6 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notification": MessageLookupByLibrary.simpleMessage("Taarifa"),
         "openingBalance":
             MessageLookupByLibrary.simpleMessage("Salio la Awali"),
+        "order": MessageLookupByLibrary.simpleMessage("maagizo"),
         "otp": MessageLookupByLibrary.simpleMessage("Funga"),
         "pacakge": MessageLookupByLibrary.simpleMessage("Kifurushi"),
         "packageFeatures":
@@ -386,6 +387,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "retur": MessageLookupByLibrary.simpleMessage("Kurudi"),
         "returnAmount":
             MessageLookupByLibrary.simpleMessage("Kiasi cha Kurudisha"),
+        "revenue": MessageLookupByLibrary.simpleMessage("Mapato"),
         "saleDetails": MessageLookupByLibrary.simpleMessage("Maelezo ya Kuuza"),
         "salePrice": MessageLookupByLibrary.simpleMessage("Bei ya Kuuza"),
         "saleReports": MessageLookupByLibrary.simpleMessage("Ripoti ya Kuuza"),

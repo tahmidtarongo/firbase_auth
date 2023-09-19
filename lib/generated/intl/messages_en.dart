@@ -288,6 +288,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "openingBalance":
             MessageLookupByLibrary.simpleMessage("Opening Balance "),
+        "order": MessageLookupByLibrary.simpleMessage("Orders"),
         "otp": MessageLookupByLibrary.simpleMessage("Close"),
         "pacakge": MessageLookupByLibrary.simpleMessage("Package"),
         "packageFeatures":
@@ -375,6 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "retur": MessageLookupByLibrary.simpleMessage("Return"),
         "returnAMount": MessageLookupByLibrary.simpleMessage("Return Amount"),
         "returnAmount": MessageLookupByLibrary.simpleMessage("Return Amount"),
+        "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "saleDetails": MessageLookupByLibrary.simpleMessage("Sale Details"),
         "salePrice": MessageLookupByLibrary.simpleMessage("Sale Price"),
         "saleReports": MessageLookupByLibrary.simpleMessage("Sale Report"),

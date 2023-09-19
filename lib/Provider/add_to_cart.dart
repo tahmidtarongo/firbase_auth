@@ -20,35 +20,19 @@ class CartNotifier extends ChangeNotifier {
 
 
 
-  double getTotalAmount() {
-    double totalAmountOfCart = 0;
-    for (var element in cartItemList) {
-      try {
-        double subTotal = double.parse(element.subTotal.toString());
-        double quantity = double.parse(element.quantity.toString());
-        totalAmountOfCart = totalAmountOfCart + (subTotal * quantity);
-      } catch (e) {
-        // Handle the case where the strings cannot be parsed as doubles
-        print('Error: $e');
-      }
-      print('Total Amount of Cart: $totalAmountOfCart');
-    }
-    if (discount >= 0) {
-      if (discountType == 'USD') {
-        return totalAmountOfCart - discount;
-      } else {
-        return totalAmountOfCart - ((totalAmountOfCart * discount) / 100);
-      }
-    }
-    return totalAmountOfCart;
-  }
   // double getTotalAmount() {
   //   double totalAmountOfCart = 0;
   //   for (var element in cartItemList) {
-  //     totalAmountOfCart = totalAmountOfCart + (double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString()));
+  //     try {
+  //       double subTotal = double.parse(element.subTotal.toString());
+  //       double quantity = double.parse(element.quantity.toString());
+  //       totalAmountOfCart = totalAmountOfCart + (subTotal * quantity);
+  //     } catch (e) {
+  //       // Handle the case where the strings cannot be parsed as doubles
+  //       print('Error: $e');
+  //     }
+  //     print('Total Amount of Cart: $totalAmountOfCart');
   //   }
-  //   print('Total Amount of Cart: $totalAmountOfCart');
-  //
   //   if (discount >= 0) {
   //     if (discountType == 'USD') {
   //       return totalAmountOfCart - discount;
@@ -58,6 +42,22 @@ class CartNotifier extends ChangeNotifier {
   //   }
   //   return totalAmountOfCart;
   // }
+  double getTotalAmount() {
+    double totalAmountOfCart = 0;
+    for (var element in cartItemList) {
+      totalAmountOfCart = totalAmountOfCart + (double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString()));
+    }
+    print('Total Amount of Cart: $totalAmountOfCart');
+
+    if (discount >= 0) {
+      if (discountType == 'USD') {
+        return totalAmountOfCart - discount;
+      } else {
+        return totalAmountOfCart - ((totalAmountOfCart * discount) / 100);
+      }
+    }
+    return totalAmountOfCart;
+  }
 
   quantityIncrease(int index) {
     if (cartItemList[index].stock! > cartItemList[index].quantity) {

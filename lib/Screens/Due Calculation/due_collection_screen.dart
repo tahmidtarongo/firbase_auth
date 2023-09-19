@@ -247,7 +247,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  dueAmount.toString(),
+                                  myFormat.format(dueAmount),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -305,7 +305,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateDueAmount(total: paidAmount).toString(),
+                                  myFormat.format(calculateDueAmount(total: paidAmount)),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

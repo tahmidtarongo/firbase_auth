@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController toDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
   DateTime fromDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime toDate = DateTime.now();
+  DateTime selectedDate=DateTime.now();
   double totalProfit = 0;
   double totalLoss = 0;
   bool isPicked = false;
@@ -219,10 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Row(
                               children: [
-                                RichText(
+                                selectedDay=='Today'?RichText(
                                     text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor), children: [
-                                  TextSpan(text: '23/8/2023', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor)),
-                                ])),
+                                  TextSpan(text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor)),
+                                ])):const Text(''),
                                 const Spacer(),
                                 DropdownButtonHideUnderline(
                                     child: DropdownButton(
@@ -281,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -296,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Orders',
+                                                  lang.S.of(context).order,
                                                   style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
                                                 ),
                                                 const SizedBox(
@@ -335,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: 8,
                                                 ),
                                                 Text(
-                                                  'Revenue',
+                                                  lang.S.of(context).revenue,
                                                   style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
                                                 )
                                               ],
@@ -374,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     width: 8,
                                                   ),
                                                   Text(
-                                                    'Profit',
+                                                    lang.S.of(context).profit,
                                                     style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
                                                   )
                                                 ],

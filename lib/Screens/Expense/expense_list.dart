@@ -114,7 +114,6 @@ class _ExpenseListState extends State<ExpenseList> {
                                     lastDate: DateTime(2101),
                                     context: context,
                                   );
-
                                   setState(() {
                                     toDateTextEditingController.text = DateFormat.yMMMd().format(picked ?? DateTime.now());
                                     picked!.isToday ? toDate = DateTime.now() : toDate = picked;
@@ -136,12 +135,13 @@ class _ExpenseListState extends State<ExpenseList> {
                   expenseData.when(data: (mainData) {
                     if (mainData.isNotEmpty) {
                       final List<ExpenseModel> data = mainData.reversed.toList();
-                      totalExpense = 0;
+                      // print('-------------$totalExpense--------------------');
                       for (var element in data) {
                         if ((fromDate.isBefore(DateTime.parse(element.expenseDate)) || DateTime.parse(element.expenseDate).isAtSameMomentAs(fromDate)) &&
                             (toDate.isAfter(DateTime.parse(element.expenseDate)) || DateTime.parse(element.expenseDate).isAtSameMomentAs(toDate))) {
                           totalExpense += element.amount.toDouble();
                         }
+                        print('-----------------------$totalExpense------------revence${totalExpense += element.amount.toDouble()}-------');
                       }
                       return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

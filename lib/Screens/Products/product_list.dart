@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +35,24 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
   int count = 0;
   List<String> category = ['All'];
   TabController? tabController;
+
+  void deleteProduct({required String productCode, required WidgetRef updateProduct, required BuildContext context}) async {
+    EasyLoading.show(status: 'Deleting..');
+    String customerKey = '';
+    await FirebaseDatabase.instance.ref(await getUserID()).child('Products').orderByKey().get().then((value) {
+      for (var element in value.children) {
+        var data = jsonDecode(jsonEncode(element.value));
+        if (data['productCode'].toString() == productCode) {
+          customerKey = element.key.toString();
+        }
+      }
+    });
+    DatabaseReference ref = FirebaseDatabase.instance.ref("${await getUserID()}/Products/$customerKey");
+    await ref.remove();
+    updateProduct.refresh(productProvider);
+    Navigator.pop(context);
+    EasyLoading.showSuccess('Done');
+  }
 
 
   @override
@@ -150,7 +172,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                             ),
                                           ),
                                           title: Text(products[i].productName),
-                                          subtitle: Text("Stock : ${products[i].productStock}"),
+                                          subtitle: Text("Stock : ${myFormat.format(int.tryParse(products[i].productStock)??0)}"),
                                           trailing: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -188,9 +210,10 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                                     PopupMenuItem(
                                                       child: GestureDetector(
                                                         onTap: (){
-                                                          setState(() {
-                                                            products.removeAt(index);
-                                                          });
+                                                          deleteProduct(
+                                                              productCode: products[i].productCode,
+                                                              updateProduct: ref,
+                                                              context: bc) ;
                                                           finish(context);
                                                         },
                                                         child: const Row(

@@ -231,7 +231,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemPurchaseList[index].productName.toString()),
                                     subtitle: Text(
-                                      '${providerData.cartItemPurchaseList[index].productStock} X ${providerData.cartItemPurchaseList[index].productPurchasePrice} = ${double.parse(providerData.cartItemPurchaseList[index].productStock) * providerData.cartItemPurchaseList[index].productPurchasePrice.toDouble()}'
+                                      '${providerData.cartItemPurchaseList[index].productStock} X ${myFormat.format(int.tryParse(providerData.cartItemPurchaseList[index].productPurchasePrice)??0)} = ${myFormat.format(double.parse(providerData.cartItemPurchaseList[index].productStock) * providerData.cartItemPurchaseList[index].productPurchasePrice.toDouble())}'
                                 ),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -352,7 +352,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  providerData.getTotalAmount().toString(),
+                                  myFormat.format(providerData.getTotalAmount()),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -407,10 +407,10 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                               children: [
                                  Text(
                                   lang.S.of(context).total,
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateSubtotal(total: providerData.getTotalAmount()).toString(),
+                                  myFormat.format(calculateSubtotal(total: providerData.getTotalAmount())),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -457,7 +457,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateReturnAmount(total: subTotal).abs().toString(),
+                                  myFormat.format(calculateReturnAmount(total: subTotal).abs()),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -473,7 +473,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateDueAmount(total: subTotal).toString(),
+                                  myFormat.format(calculateDueAmount(total: subTotal)),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

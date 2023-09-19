@@ -92,18 +92,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     super.initState();
   }
 
-  String _calculateTotal(int quantity, String subTotal) {
-    try {
-      // Replace commas with dots in the subTotal string
-      subTotal = subTotal.replaceAll(',', '');
-      double subtotalValue = double.parse(subTotal);
-      double total = quantity * subtotalValue;
-      return total.toStringAsFixed(2); // Format total as a string with 2 decimal places.
-    } catch (e) {
-      print("Error calculating total: $e");
-      return "Invalid Subtotal: $subTotal"; // Include the problematic value in the error message.
-    }
-  }
 
 
   @override
@@ -256,8 +244,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemList[index].productName.toString()),
                                     subtitle: Text(
-                                        // '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'
-                                        '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${_calculateTotal(providerData.cartItemList[index].quantity, providerData.cartItemList[index].subTotal)}'
+                                        '${providerData.cartItemList[index].quantity} X ${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal)??0)} = ${myFormat.format(double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity)}'
                                     ),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -375,10 +362,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               children: [
                                 Text(
                                   lang.S.of(context).subTotal,
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                    '${providerData.getTotalAmount()}',
+                                    myFormat.format(providerData.getTotalAmount()),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -515,7 +502,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateSubtotal(total: providerData.getTotalAmount()).toString(),
+                                  myFormat.format(calculateSubtotal(total: providerData.getTotalAmount())),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -562,7 +549,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateReturnAmount(total: subTotal).abs().toString(),
+                                  myFormat.format(calculateReturnAmount(total: subTotal).abs()),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -578,7 +565,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                  calculateDueAmount(total: subTotal).toString(),
+                                  myFormat.format(calculateDueAmount(total: subTotal)),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

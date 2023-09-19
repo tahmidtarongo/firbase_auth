@@ -50,6 +50,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Orders`
+  String get order {
+    return Intl.message(
+      'Orders',
+      name: 'order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revenue`
+  String get revenue {
+    return Intl.message(
+      'Revenue',
+      name: 'revenue',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Powered By Smart Biashara`
   String get powerdedByMobiPos {
     return Intl.message(
