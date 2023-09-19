@@ -418,7 +418,7 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => GeneratePdf().generateDueDocument(reTransaction[index], data, context),
+                                                            onPressed: () => GeneratePdf().generateDueDocument(transaction[index], data, context),
                                                             icon: const Icon(
                                                               Icons.picture_as_pdf,
                                                               color: Colors.grey,

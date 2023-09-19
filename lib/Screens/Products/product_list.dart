@@ -214,7 +214,6 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                                               productCode: products[i].productCode,
                                                               updateProduct: ref,
                                                               context: bc) ;
-                                                          finish(context);
                                                         },
                                                         child: const Row(
                                                           children: [
