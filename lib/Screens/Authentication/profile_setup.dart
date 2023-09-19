@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -392,27 +391,27 @@ class _ProfileSetupState extends State<ProfileSetup> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10.0),
-                  //   child: SizedBox(
-                  //     height: 60.0,
-                  //     child: FormField(
-                  //       builder: (FormFieldState<dynamic> field) {
-                  //         return InputDecorator(
-                  //           decoration: InputDecoration(
-                  //               floatingLabelBehavior: FloatingLabelBehavior.always,
-                  //               labelText: lang.S.of(context).language,
-                  //               labelStyle: GoogleFonts.poppins(
-                  //                 color: Colors.black,
-                  //                 fontSize: 20.0,
-                  //               ),
-                  //               border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-                  //           child: DropdownButtonHideUnderline(child: getLanguage()),
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 60.0,
+                      child: FormField(
+                        builder: (FormFieldState<dynamic> field) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                labelText: lang.S.of(context).language,
+                                labelStyle: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                            child: DropdownButtonHideUnderline(child: getLanguage()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: AppTextField(

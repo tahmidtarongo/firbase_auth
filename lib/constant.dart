@@ -116,7 +116,7 @@ final List<String> businessCategory = [
 ];
 
 
-List<String> language = ['English'];
+List<String> language = ['English','Swahili'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];
 
