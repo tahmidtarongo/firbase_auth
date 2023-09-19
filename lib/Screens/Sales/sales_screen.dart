@@ -352,24 +352,12 @@ class _ProductCardState extends State<ProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.productTitle,
-                        style: GoogleFonts.jost(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                      // const SizedBox(width: 5),
-                      // Text(
-                      //   ' X $quantity',
-                      //   style: GoogleFonts.jost(
-                      //     fontSize: 14.0,
-                      //     color: Colors.grey.shade500,
-                      //   ),
-                      // ).visible(quantity != 0),
-                    ],
+                  Text(
+                    widget.productTitle,
+                    style: GoogleFonts.jost(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                    ),
                   ),
                   Text(
                     'Stock: ${widget.stock.toInt() - quantity}',
@@ -383,7 +371,7 @@ class _ProductCardState extends State<ProductCard> {
             ),
             const Spacer(),
             Text(
-              '$currency${myFormat.format(int.tryParse(widget.productPrice)??0)}',
+              '$currency${widget.productPrice}',
               style: GoogleFonts.jost(
                 fontSize: 20.0,
                 color: Colors.black,

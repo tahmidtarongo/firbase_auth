@@ -77,6 +77,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     purchaseDate: DateTime.now().toString(),
   );
 
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {
@@ -230,7 +231,8 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemPurchaseList[index].productName.toString()),
                                     subtitle: Text(
-                                        '${providerData.cartItemPurchaseList[index].productStock} X ${providerData.cartItemPurchaseList[index].productPurchasePrice} = ${double.parse(providerData.cartItemPurchaseList[index].productStock) * providerData.cartItemPurchaseList[index].productPurchasePrice.toInt()}'),
+                                      '${providerData.cartItemPurchaseList[index].productStock} X ${providerData.cartItemPurchaseList[index].productPurchasePrice} = ${double.parse(providerData.cartItemPurchaseList[index].productStock) * providerData.cartItemPurchaseList[index].productPurchasePrice.toDouble()}'
+                                ),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [

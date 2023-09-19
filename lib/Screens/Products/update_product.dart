@@ -17,6 +17,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../Provider/category,brans,units_provide.dart';
 import '../../Provider/product_provider.dart';
+import '../../const_commas.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../Home/home_screen.dart';
@@ -412,6 +413,25 @@ class UpdateProductState extends State<UpdateProduct> {
                             child: TextFormField(
                               controller: wholeSaleController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  wholeSaleController.value = wholeSaleController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  wholeSaleController.value = wholeSaleController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
+                              },
                               onSaved: (value) {
                                 updatedProductModel.productWholeSalePrice = value!;
                               },
@@ -429,6 +449,26 @@ class UpdateProductState extends State<UpdateProduct> {
                             child: TextFormField(
                               controller: dealerPriceController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                updatedProductModel.productDealerPrice = value;
+                                // Remove commas and any non-numeric characters
+                                final sanitizedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+                                // Limit the length to 20 characters
+                                if (sanitizedValue.length > 50) {
+                                  dealerPriceController.value = dealerPriceController.value.copyWith(
+                                    text: sanitizedValue.substring(0, 50),
+                                    selection: const TextSelection.collapsed(offset: 50),
+                                  );
+                                } else {
+                                  // Format the text as a number with commas
+                                  final formattedValue = myFormat.format(double.tryParse(sanitizedValue) ?? 0);
+                                  dealerPriceController.value = dealerPriceController.value.copyWith(
+                                    text: formattedValue,
+                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                  );
+                                }
+                              },
                               onSaved: (value) {
                                 updatedProductModel.productDealerPrice = value!;
                               },

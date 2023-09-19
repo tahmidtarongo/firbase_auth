@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_pos/model/product_model.dart';
-
 import '../model/add_to_cart_model.dart';
 
 final cartNotifier = ChangeNotifierProvider((ref) => CartNotifier());
@@ -19,12 +18,21 @@ class CartNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
   double getTotalAmount() {
     double totalAmountOfCart = 0;
     for (var element in cartItemList) {
-      totalAmountOfCart = totalAmountOfCart + (double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString()));
+      try {
+        double subTotal = double.parse(element.subTotal.toString());
+        double quantity = double.parse(element.quantity.toString());
+        totalAmountOfCart = totalAmountOfCart + (subTotal * quantity);
+      } catch (e) {
+        // Handle the case where the strings cannot be parsed as doubles
+        print('Error: $e');
+      }
+      print('Total Amount of Cart: $totalAmountOfCart');
     }
-
     if (discount >= 0) {
       if (discountType == 'USD') {
         return totalAmountOfCart - discount;
@@ -34,6 +42,22 @@ class CartNotifier extends ChangeNotifier {
     }
     return totalAmountOfCart;
   }
+  // double getTotalAmount() {
+  //   double totalAmountOfCart = 0;
+  //   for (var element in cartItemList) {
+  //     totalAmountOfCart = totalAmountOfCart + (double.parse(element.subTotal.toString()) * double.parse(element.quantity.toString()));
+  //   }
+  //   print('Total Amount of Cart: $totalAmountOfCart');
+  //
+  //   if (discount >= 0) {
+  //     if (discountType == 'USD') {
+  //       return totalAmountOfCart - discount;
+  //     } else {
+  //       return totalAmountOfCart - ((totalAmountOfCart * discount) / 100);
+  //     }
+  //   }
+  //   return totalAmountOfCart;
+  // }
 
   quantityIncrease(int index) {
     if (cartItemList[index].stock! > cartItemList[index].quantity) {

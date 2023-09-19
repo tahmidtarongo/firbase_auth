@@ -19,6 +19,7 @@ class ProductModel {
       productPicture;
   List<String> serialNumber = [];
 
+
   ProductModel(
     this.productName,
     this.productCategory,
@@ -40,6 +41,30 @@ class ProductModel {
     this.productPicture,
     this.serialNumber,
   );
+
+  // ProductModel(
+  //     {
+  //       required this.productName,
+  //       required this.productCategory,
+  //       required this.size,
+  //       required this.color,
+  //       required this.weight,
+  //       required this.capacity,
+  //       required this.type,
+  //       required this.brandName,
+  //       required this.productCode,
+  //       required this.productStock,
+  //       required this.productUnit,
+  //       required this.productSalePrice,
+  //       required this.productPurchasePrice,
+  //       required this.productDiscount,
+  //       required this.productWholeSalePrice,
+  //       required this.productDealerPrice,
+  //       required this.productManufacturer,
+  //       required this.productPicture,
+  //       required this.serialNumber,
+  //     }
+  //     );
 
   ProductModel.fromJson(Map<dynamic, dynamic> json) {
     productName = json['productName'] as String;

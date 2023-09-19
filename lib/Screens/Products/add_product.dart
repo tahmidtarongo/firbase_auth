@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
@@ -12,12 +11,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Provider/category,brans,units_provide.dart';
 import 'package:mobile_pos/Screens/Products/brands_list.dart';
 import 'package:mobile_pos/Screens/Products/category_list.dart';
 import 'package:mobile_pos/Screens/Products/product_list.dart';
 import 'package:mobile_pos/Screens/Products/unit_list.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/product_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
@@ -26,6 +27,7 @@ import '../../Provider/product_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../subscription.dart';
+import 'navigation_page.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key, required this.productNameList, required this.productCodeList}) : super(key: key);
@@ -99,6 +101,46 @@ class AddProductState extends State<AddProduct> {
       }
     }
   }
+  final TextEditingController purchaseController = TextEditingController();
+  final TextEditingController mrpController = TextEditingController();
+  final TextEditingController wholesaleController = TextEditingController();
+  final TextEditingController delaerController = TextEditingController();
+  String mrpText = '';
+  String purchaseText='';
+  String wholesaleText='';
+  String dealerText='';
+  String formattedValue = "";
+
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue,
+      TextEditingValue newValue,
+      ) {
+    if (newValue.text.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    final cleanText = newValue.text.replaceAll(',', ''); // Remove commas
+    final formattedText = _formatWithCommas(cleanText);
+
+    return newValue.copyWith(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+
+  String _formatWithCommas(String text) {
+    final intValue = int.tryParse(text);
+    if (intValue == null) {
+      return text; // Invalid input, don't format
+    }
+
+    return myFormat.format(intValue);
+  }
+
+  String _formatNumber(String s) => myFormat.format(int.parse(s));
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +268,7 @@ class AddProductState extends State<AddProduct> {
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).weight,
                                 hintText: lang.S.of(context).enterWeight,
-                                border: OutlineInputBorder(),
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -397,7 +439,17 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: purchaseController,
                               keyboardType: TextInputType.number,
+                              // initialValue: myFormat.format(purchaseController),
+                              onChanged: (value) {
+                                purchaseText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(purchaseText));
+                                purchaseController.value = purchaseController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
+                              },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'Purchase Price is required';
@@ -405,13 +457,13 @@ class AddProductState extends State<AddProduct> {
                                 return null;
                               },
                               onSaved: (value) {
-                                productPurchasePrice = value!;
+                                purchaseController.text = value!;
                               },
                               decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).purchasePrice,
                                 hintText: lang.S.of(context).enterPurchasePrice,
-                                border: OutlineInputBorder(),
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
@@ -420,7 +472,16 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: mrpController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                 mrpText = value.replaceAll(',', '');
+                              var formattedText = myFormat.format(int.parse(mrpText));
+                                mrpController.value = mrpController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
+                              },
                               validator: (value) {
                                 if (value.isEmptyOrNull) {
                                   return 'MRP is required';
@@ -428,7 +489,7 @@ class AddProductState extends State<AddProduct> {
                                 return null;
                               },
                               onSaved: (value) {
-                                productSalePrice = value!;
+                                mrpController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -449,9 +510,18 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: wholesaleController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                wholesaleText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(wholesaleText));
+                                wholesaleController.value = wholesaleController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
+                              },
                               onSaved: (value) {
-                                productWholeSalePrice = value!;
+                                wholesaleController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -466,9 +536,18 @@ class AddProductState extends State<AddProduct> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: TextFormField(
+                              controller: delaerController,
                               keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                dealerText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(dealerText));
+                                delaerController.value = delaerController.value.copyWith(
+                                  text: formattedText,
+                                  selection: TextSelection.collapsed(offset: formattedText.length),
+                                );
+                              },
                               onSaved: (value) {
-                                productDealerPrice = value!;
+                                delaerController.text = value!;
                               },
                               decoration:  InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -670,7 +749,6 @@ class AddProductState extends State<AddProduct> {
                         if (validateAndSave()) {
                           try {
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-
                             bool result = await InternetConnectionChecker().hasConnection;
 
                             result
@@ -678,7 +756,6 @@ class AddProductState extends State<AddProduct> {
                                     ? null
                                     : await uploadFile(imagePath)
                                 : null;
-
                             // ignore: no_leading_underscores_for_local_identifiers
                             final DatabaseReference _productInformationRef = FirebaseDatabase.instance
                                 // ignore: deprecated_member_use
@@ -698,11 +775,11 @@ class AddProductState extends State<AddProduct> {
                               productCode,
                               productStock,
                               productUnit,
-                              productSalePrice,
-                              productPurchasePrice,
+                              mrpText,
+                              purchaseText,
                               productDiscount,
-                              productWholeSalePrice,
-                              productDealerPrice,
+                              wholesaleText,
+                              dealerText,
                               productManufacturer,
                               productPicture,
                               [],

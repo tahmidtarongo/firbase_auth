@@ -92,6 +92,20 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     super.initState();
   }
 
+  String _calculateTotal(int quantity, String subTotal) {
+    try {
+      // Replace commas with dots in the subTotal string
+      subTotal = subTotal.replaceAll(',', '');
+      double subtotalValue = double.parse(subTotal);
+      double total = quantity * subtotalValue;
+      return total.toStringAsFixed(2); // Format total as a string with 2 decimal places.
+    } catch (e) {
+      print("Error calculating total: $e");
+      return "Invalid Subtotal: $subTotal"; // Include the problematic value in the error message.
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, consumerRef, __) {
@@ -242,7 +256,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemList[index].productName.toString()),
                                     subtitle: Text(
-                                        '${providerData.cartItemList[index].quantity} X ${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal)??0)} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'),
+                                        // '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity}'
+                                        '${providerData.cartItemList[index].quantity} X ${providerData.cartItemList[index].subTotal} = ${_calculateTotal(providerData.cartItemList[index].quantity, providerData.cartItemList[index].subTotal)}'
+                                    ),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -362,7 +378,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                    providerData.getTotalAmount().toString(),
+                                    '${providerData.getTotalAmount()}',
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
