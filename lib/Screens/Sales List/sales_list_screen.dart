@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
+import '../../Functions/generate_pdf.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
 import '../Home/home.dart';
@@ -255,11 +256,13 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                           color: Colors.grey,
                                                         )),
                                                     IconButton(
-                                                        onPressed: () => toast('Coming Soon'),
+                                                        onPressed: () {
+                                                          GeneratePdf().generateSaleDocument(reTransaction[index], data, context);
+                                                        },
                                                         icon: const Icon(
-                                                          FeatherIcons.share,
+                                                          Icons.picture_as_pdf,
                                                           color: Colors.grey,
-                                                        )).visible(false),
+                                                        )),
                                                     IconButton(
                                                         onPressed: () {
                                                           cart.clearCart();
