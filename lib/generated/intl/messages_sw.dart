@@ -125,6 +125,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dueAmount": MessageLookupByLibrary.simpleMessage("Kiasi cha Deni: "),
         "dueCollection":
             MessageLookupByLibrary.simpleMessage("Ukusanyaji wa Deni"),
+        "dueCollectionReports": MessageLookupByLibrary.simpleMessage(
+            "Ripoti za Mkusanyiko Unaostahili"),
         "dueList": MessageLookupByLibrary.simpleMessage("Orodha ya Deni"),
         "dueReports": MessageLookupByLibrary.simpleMessage("Ripoti ya Deni"),
         "easyToUseMobilePos": MessageLookupByLibrary.simpleMessage(
@@ -370,6 +372,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "purchasePrice": MessageLookupByLibrary.simpleMessage("Bei ya Ununuzi"),
         "purchaseReports":
             MessageLookupByLibrary.simpleMessage("Ripoti ya Ununuzi"),
+        "purchaseReportss":
+            MessageLookupByLibrary.simpleMessage("Ripoti za Ununuzi"),
         "qty": MessageLookupByLibrary.simpleMessage("Kiasi"),
         "quantity": MessageLookupByLibrary.simpleMessage("Kiasi"),
         "recentTransactions":
@@ -391,6 +395,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "saleDetails": MessageLookupByLibrary.simpleMessage("Maelezo ya Kuuza"),
         "salePrice": MessageLookupByLibrary.simpleMessage("Bei ya Kuuza"),
         "saleReports": MessageLookupByLibrary.simpleMessage("Ripoti ya Kuuza"),
+        "saleReportss":
+            MessageLookupByLibrary.simpleMessage("Ripoti za Uuzaji"),
         "sales": MessageLookupByLibrary.simpleMessage("Mauzo"),
         "salesList": MessageLookupByLibrary.simpleMessage("Orodha ya Uuzaji"),
         "save": MessageLookupByLibrary.simpleMessage("Hifadhi"),

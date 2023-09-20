@@ -43,19 +43,19 @@ class _ReportsState extends State<Reports> {
                   const PurchaseReportScreen().launch(context);
                 },
                 iconPath: 'images/purchase.png',
-                title: lang.S.of(context).purchaseRepoet),
+                title: lang.S.of(context).purchaseReportss),
             ReportCard(
                 pressed: () {
                   const SalesReportScreen().launch(context);
                 },
                 iconPath: 'images/sales.png',
-                title: lang.S.of(context).saleReports),
+                title: lang.S.of(context).saleReportss),
             ReportCard(
                 pressed: () {
                   const DueReportScreen().launch(context);
                 },
                 iconPath: 'images/duelist.png',
-                title: lang.S.of(context).dueReports),
+                title: lang.S.of(context).dueCollectionReports),
           ],
         ),
       ),

@@ -126,6 +126,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "due": MessageLookupByLibrary.simpleMessage("Due"),
         "dueAmount": MessageLookupByLibrary.simpleMessage("Due Amount: "),
         "dueCollection": MessageLookupByLibrary.simpleMessage("Due Collection"),
+        "dueCollectionReports":
+            MessageLookupByLibrary.simpleMessage("Due Collection Reports"),
         "dueList": MessageLookupByLibrary.simpleMessage("Due List"),
         "dueReports": MessageLookupByLibrary.simpleMessage("Due Report"),
         "easyToUseMobilePos":
@@ -359,6 +361,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Purchase Report"),
         "purchaseReports":
             MessageLookupByLibrary.simpleMessage("Purchase Price"),
+        "purchaseReportss":
+            MessageLookupByLibrary.simpleMessage("Purchase Reports"),
         "qty": MessageLookupByLibrary.simpleMessage("Qty"),
         "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
         "recentTransactions":
@@ -380,6 +384,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "saleDetails": MessageLookupByLibrary.simpleMessage("Sale Details"),
         "salePrice": MessageLookupByLibrary.simpleMessage("Sale Price"),
         "saleReports": MessageLookupByLibrary.simpleMessage("Sale Report"),
+        "saleReportss": MessageLookupByLibrary.simpleMessage("Sale Reports"),
         "sales": MessageLookupByLibrary.simpleMessage("Sales"),
         "salesList": MessageLookupByLibrary.simpleMessage("Sales List"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
