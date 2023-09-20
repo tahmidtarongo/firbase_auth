@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -64,6 +65,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
   TextEditingController controller = TextEditingController();
   TextEditingController paidText = TextEditingController();
+  String paid='';
   TextEditingController dateController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
   late DueTransactionModel dueTransactionModel = DueTransactionModel(
     customerName: widget.customerModel.customerName,
@@ -118,7 +120,6 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-
                     Row(
                       children: [
                         customerProviderRef.when(data: (customer) {
@@ -267,6 +268,13 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                                   child: TextField(
                                     controller: paidText,
                                     onChanged: (value) {
+                                      // paid = value.replaceAll(',', '');
+                                      // var formattedText = myFormat.format(int.parse(paid));
+                                      // paidText.value = paidText.value.copyWith(
+                                      //   text: formattedText,
+                                      //   selection: TextSelection.collapsed(offset: formattedText.length),
+                                      // );
+                                      // print('-----------------$paid----------------------');
                                       if (value == '') {
                                         setState(() {
                                           paidAmount = 0;
@@ -429,163 +437,171 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              if (paidAmount >= 0) {
-                                try {
-                                  EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Due Transaction");
-                                  ref.keepSynced(true);
-                                  dueTransactionModel.totalDue = dueAmount;
-                                  remainDueAmount <= 0 ? dueTransactionModel.isPaid = true : dueTransactionModel.isPaid = false;
-                                  remainDueAmount <= 0 ? dueTransactionModel.dueAmountAfterPay = 0 : dueTransactionModel.dueAmountAfterPay = remainDueAmount;
-                                  dueTransactionModel.payDueAmount = paidAmount;
-                                  dueTransactionModel.paymentType = dropdownPaymentValue;
-                                  dueTransactionModel.invoiceNumber = invoice.toString();
-                                  ref.push().set(dueTransactionModel.toJson());
+                              try{
+                                final result= await InternetAddress.lookup('google.com');
+                                if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+                                  if (paidAmount >= 0) {
+                                    try {
+                                      EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                                      DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Due Transaction");
+                                      ref.keepSynced(true);
+                                      dueTransactionModel.totalDue = dueAmount;
+                                      remainDueAmount <= 0 ? dueTransactionModel.isPaid = true : dueTransactionModel.isPaid = false;
+                                      remainDueAmount <= 0 ? dueTransactionModel.dueAmountAfterPay = 0 : dueTransactionModel.dueAmountAfterPay = remainDueAmount;
+                                      dueTransactionModel.payDueAmount = paidAmount;
+                                      dueTransactionModel.paymentType = dropdownPaymentValue;
+                                      dueTransactionModel.invoiceNumber = invoice.toString();
+                                      ref.push().set(dueTransactionModel.toJson());
 
-                                  ///_____UpdateInvoice__________________________________________________
-                                  invoice != 0
-                                      ? updateInvoice(
-                                          type: widget.customerModel.type,
-                                          invoice: selectedInvoice.toString(),
-                                          remainDueAmount: remainDueAmount.toInt(),
-                                        )
-                                      : null;
+                                      ///_____UpdateInvoice__________________________________________________
+                                      invoice != 0
+                                          ? updateInvoice(
+                                        type: widget.customerModel.type,
+                                        invoice: selectedInvoice.toString(),
+                                        remainDueAmount: remainDueAmount.toInt(),
+                                      )
+                                          : null;
 
-                                  final DatabaseReference personalInformationRef =
+                                      final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
-                                  personalInformationRef.keepSynced(true);
-                                  personalInformationRef.update({'dueInvoiceCounter': invoice + 1});
+                                      personalInformationRef.keepSynced(true);
+                                      personalInformationRef.update({'dueInvoiceCounter': invoice + 1});
 
-                                  ///_________DueUpdate______________________________________________________
-                                  getSpecificCustomers(
-                                    phoneNumber: widget.customerModel.phoneNumber,
-                                    due: paidAmount.toInt(),
-                                  );
+                                      ///_________DueUpdate______________________________________________________
+                                      getSpecificCustomers(
+                                        phoneNumber: widget.customerModel.phoneNumber,
+                                        due: paidAmount.toInt(),
+                                      );
 
-                                  ///________Subscription_____________________________________________________
-                                  Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
-                                  if(sendSms && data.smsBalance! > 0){
-                                    SmsModel smsModel = SmsModel(
-                                      customerName: widget.customerModel.customerName,
-                                      customerPhone: widget.customerModel.phoneNumber,
-                                      sellerMobile: data.phoneNumber,
-                                      sellerName: data.companyName,
-                                      sellerId: constUserId,
-                                      invoiceNumber: data.saleInvoiceCounter.toString(),
-                                      totalAmount: 'We received your due payment of $paidAmount. Remaining due $dueAmount',
-                                      paidAmount: '0',
-                                      dueAmount: '0',
-                                      type: 'Bulk',
-                                      status: false,
-                                    );
-                                    final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
-                                    await refr.push().set(smsModel.toJson());
-                                  }
-                                  ///________Print_______________________________________________________
-                                  if (isPrintEnable) {
-                                    await printerData.getBluetooth();
-                                    PrintDueTransactionModel model = PrintDueTransactionModel(dueTransactionModel: dueTransactionModel, personalInformationModel: data);
-                                    if (connected) {
-                                      await printerData.printTicket(printDueTransactionModel: model);
-                                      consumerRef.refresh(customerProvider);
-                                      consumerRef.refresh(dueTransactionProvider);
-                                      consumerRef.refresh(purchaseTransitionProvider);
-                                      consumerRef.refresh(transitionProvider);
-                                      consumerRef.refresh(profileDetailsProvider);
+                                      ///________Subscription_____________________________________________________
+                                      Subscription.decreaseSubscriptionLimits(itemType: 'dueNumber', context: context);
+                                      if(sendSms && data.smsBalance! > 0){
+                                        SmsModel smsModel = SmsModel(
+                                          customerName: widget.customerModel.customerName,
+                                          customerPhone: widget.customerModel.phoneNumber,
+                                          sellerMobile: data.phoneNumber,
+                                          sellerName: data.companyName,
+                                          sellerId: constUserId,
+                                          invoiceNumber: data.saleInvoiceCounter.toString(),
+                                          totalAmount: 'We received your due payment of $paidAmount. Remaining due $dueAmount',
+                                          paidAmount: '0',
+                                          dueAmount: '0',
+                                          type: 'Bulk',
+                                          status: false,
+                                        );
+                                        final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                                        await refr.push().set(smsModel.toJson());
+                                      }
+                                      ///________Print_______________________________________________________
+                                      if (isPrintEnable) {
+                                        await printerData.getBluetooth();
+                                        PrintDueTransactionModel model = PrintDueTransactionModel(dueTransactionModel: dueTransactionModel, personalInformationModel: data);
+                                        if (connected) {
+                                          await printerData.printTicket(printDueTransactionModel: model);
+                                          consumerRef.refresh(customerProvider);
+                                          consumerRef.refresh(dueTransactionProvider);
+                                          consumerRef.refresh(purchaseTransitionProvider);
+                                          consumerRef.refresh(transitionProvider);
+                                          consumerRef.refresh(profileDetailsProvider);
 
-                                      EasyLoading.dismiss();
-                                      await Future.delayed(const Duration(milliseconds: 500))
-                                          .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
-                                    } else {
-                                      // ignore: use_build_context_synchronously
-                                      EasyLoading.showError("Please Connect The Printer First");
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return WillPopScope(
-                                              onWillPop: () async => false,
-                                              child: Dialog(
-                                                child: SizedBox(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      ListView.builder(
-                                                        shrinkWrap: true,
-                                                        itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
-                                                        itemBuilder: (context, index) {
-                                                          return ListTile(
-                                                            onTap: () async {
-                                                              String select = printerData.availableBluetoothDevices[index];
-                                                              List list = select.split("#");
-                                                              // String name = list[0];
-                                                              String mac = list[1];
-                                                              bool isConnect = await printerData.setConnect(mac);
-                                                              if (isConnect) {
-                                                                await printerData.printTicket(printDueTransactionModel: model);
-                                                                consumerRef.refresh(customerProvider);
-                                                                consumerRef.refresh(dueTransactionProvider);
-                                                                consumerRef.refresh(purchaseTransitionProvider);
-                                                                consumerRef.refresh(transitionProvider);
-                                                                consumerRef.refresh(profileDetailsProvider);
-                                                                EasyLoading.dismiss();
-                                                                await Future.delayed(const Duration(milliseconds: 500))
-                                                                    .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
-                                                              }
+                                          EasyLoading.dismiss();
+                                          await Future.delayed(const Duration(milliseconds: 500))
+                                              .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
+                                        } else {
+                                          // ignore: use_build_context_synchronously
+                                          EasyLoading.showError("Please Connect The Printer First");
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return WillPopScope(
+                                                  onWillPop: () async => false,
+                                                  child: Dialog(
+                                                    child: SizedBox(
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          ListView.builder(
+                                                            shrinkWrap: true,
+                                                            itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                            itemBuilder: (context, index) {
+                                                              return ListTile(
+                                                                onTap: () async {
+                                                                  String select = printerData.availableBluetoothDevices[index];
+                                                                  List list = select.split("#");
+                                                                  // String name = list[0];
+                                                                  String mac = list[1];
+                                                                  bool isConnect = await printerData.setConnect(mac);
+                                                                  if (isConnect) {
+                                                                    await printerData.printTicket(printDueTransactionModel: model);
+                                                                    consumerRef.refresh(customerProvider);
+                                                                    consumerRef.refresh(dueTransactionProvider);
+                                                                    consumerRef.refresh(purchaseTransitionProvider);
+                                                                    consumerRef.refresh(transitionProvider);
+                                                                    consumerRef.refresh(profileDetailsProvider);
+                                                                    EasyLoading.dismiss();
+                                                                    await Future.delayed(const Duration(milliseconds: 500))
+                                                                        .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
+                                                                  }
+                                                                },
+                                                                title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                              );
                                                             },
-                                                            title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                            subtitle:  Text(lang.S.of(context).clickToConnect),
-                                                          );
-                                                        },
-                                                      ),
-                                                      const SizedBox(height: 10),
-                                                      Container(
-                                                        height: 1,
-                                                        width: double.infinity,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      const SizedBox(height: 15),
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          consumerRef.refresh(customerProvider);
-                                                          consumerRef.refresh(dueTransactionProvider);
-                                                          consumerRef.refresh(purchaseTransitionProvider);
-                                                          consumerRef.refresh(transitionProvider);
-                                                          consumerRef.refresh(profileDetailsProvider);
-                                                          await Future.delayed(const Duration(milliseconds: 500))
-                                                              .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
-                                                        },
-                                                        child:  Center(
-                                                          child: Text(
-                                                            lang.S.of(context).cacel,
-                                                            style: TextStyle(color: kMainColor),
                                                           ),
-                                                        ),
+                                                          const SizedBox(height: 10),
+                                                          Container(
+                                                            height: 1,
+                                                            width: double.infinity,
+                                                            color: Colors.grey,
+                                                          ),
+                                                          const SizedBox(height: 15),
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              consumerRef.refresh(customerProvider);
+                                                              consumerRef.refresh(dueTransactionProvider);
+                                                              consumerRef.refresh(purchaseTransitionProvider);
+                                                              consumerRef.refresh(transitionProvider);
+                                                              consumerRef.refresh(profileDetailsProvider);
+                                                              await Future.delayed(const Duration(milliseconds: 500))
+                                                                  .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
+                                                            },
+                                                            child:  Center(
+                                                              child: Text(
+                                                                lang.S.of(context).cacel,
+                                                                style: TextStyle(color: kMainColor),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 15),
+                                                        ],
                                                       ),
-                                                      const SizedBox(height: 15),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                      EasyLoading.dismiss();
+                                                );
+                                              });
+                                          EasyLoading.dismiss();
+                                        }
+                                      } else {
+                                        consumerRef.refresh(customerProvider);
+                                        consumerRef.refresh(dueTransactionProvider);
+                                        consumerRef.refresh(purchaseTransitionProvider);
+                                        consumerRef.refresh(transitionProvider);
+                                        consumerRef.refresh(profileDetailsProvider);
+                                        EasyLoading.dismiss();
+                                        await Future.delayed(const Duration(milliseconds: 500))
+                                            .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
+                                      }
+                                    } catch (e) {
+                                      EasyLoading.showError(e.toString());
                                     }
                                   } else {
-                                    consumerRef.refresh(customerProvider);
-                                    consumerRef.refresh(dueTransactionProvider);
-                                    consumerRef.refresh(purchaseTransitionProvider);
-                                    consumerRef.refresh(transitionProvider);
-                                    consumerRef.refresh(profileDetailsProvider);
-                                    EasyLoading.dismiss();
-                                    await Future.delayed(const Duration(milliseconds: 500))
-                                        .then((value) => DueInvoiceDetails(transitionModel: dueTransactionModel, personalInformationModel: data).launch(context));
+                                    EasyLoading.showError('Add product first');
                                   }
-                                } catch (e) {
-                                  EasyLoading.showError(e.toString());
+                                  print('--------is connected---------');
                                 }
-                              } else {
-                                EasyLoading.showError('Add product first');
+                              }on SocketException catch(_){
+                                print('----------is not connected');
                               }
                             },
                             child: Container(

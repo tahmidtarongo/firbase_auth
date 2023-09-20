@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -750,155 +751,163 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              if (providerData.cartItemPurchaseList.isNotEmpty) {
-                                try {
-                                  EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                              try {
+                                final result = await InternetAddress.lookup('google.com');
+                                if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                                  if (providerData.cartItemPurchaseList.isNotEmpty) {
+                                    try {
+                                      EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
 
-                                  DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Purchase Transition");
-                                  ref.keepSynced(true);
-                                  dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
-                                  dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
-                                  returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
-                                  transitionModel.discountAmount = discountAmount;
-                                  transitionModel.totalAmount = subTotal;
-                                  transitionModel.productList = providerData.cartItemPurchaseList;
-                                  transitionModel.paymentType = dropdownValue;
-                                  transitionModel.invoiceNumber = invoice.toString();
-                                  ref.push().set(transitionModel.toJson());
+                                      DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Purchase Transition");
+                                      ref.keepSynced(true);
+                                      dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
+                                      dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
+                                      returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
+                                      transitionModel.discountAmount = discountAmount;
+                                      transitionModel.totalAmount = subTotal;
+                                      transitionModel.productList = providerData.cartItemPurchaseList;
+                                      transitionModel.paymentType = dropdownValue;
+                                      transitionModel.invoiceNumber = invoice.toString();
+                                      ref.push().set(transitionModel.toJson());
 
-                                  ///__________StockMange_________________________________________________-
+                                      ///__________StockMange_________________________________________________-
 
-                                  for (var element in providerData.cartItemPurchaseList) {
-                                    increaseStock(productCode: element.productCode, productModel: element);
-                                  }
+                                      for (var element in providerData.cartItemPurchaseList) {
+                                        increaseStock(productCode: element.productCode, productModel: element);
+                                      }
 
-                                  ///_______invoice_Update_____________________________________________
-                                  final DatabaseReference personalInformationRef =
+                                      ///_______invoice_Update_____________________________________________
+                                      final DatabaseReference personalInformationRef =
                                       // ignore: deprecated_member_use
                                       FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
-                                  personalInformationRef.keepSynced(true);
-                                  personalInformationRef.update({'purchaseInvoiceCounter': invoice + 1});
+                                      personalInformationRef.keepSynced(true);
+                                      personalInformationRef.update({'purchaseInvoiceCounter': invoice + 1});
 
-                                  ///________Subscription_____________________________________________________
-                                  Subscription.decreaseSubscriptionLimits(itemType: 'purchaseNumber', context: context);
+                                      ///________Subscription_____________________________________________________
+                                      Subscription.decreaseSubscriptionLimits(itemType: 'purchaseNumber', context: context);
 
-                                  ///_________DueUpdate______________________________________________________
-                                  getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
+                                      ///_________DueUpdate______________________________________________________
+                                      getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
 
-                                  ///________Print_______________________________________________________
-                                  if (isPrintEnable) {
-                                    await printerData.getBluetooth();
-                                    PrintPurchaseTransactionModel model = PrintPurchaseTransactionModel(purchaseTransitionModel: transitionModel, personalInformationModel: data);
-                                    if (connected) {
-                                      await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemPurchaseList);
-                                      consumerRef.refresh(customerProvider);
-                                      consumerRef.refresh(productProvider);
-                                      consumerRef.refresh(purchaseReportProvider);
-                                      consumerRef.refresh(purchaseTransitionProvider);
-                                      consumerRef.refresh(profileDetailsProvider);
+                                      ///________Print_______________________________________________________
+                                      if (isPrintEnable) {
+                                        await printerData.getBluetooth();
+                                        PrintPurchaseTransactionModel model = PrintPurchaseTransactionModel(purchaseTransitionModel: transitionModel, personalInformationModel: data);
+                                        if (connected) {
+                                          await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemPurchaseList);
+                                          consumerRef.refresh(customerProvider);
+                                          consumerRef.refresh(productProvider);
+                                          consumerRef.refresh(purchaseReportProvider);
+                                          consumerRef.refresh(purchaseTransitionProvider);
+                                          consumerRef.refresh(profileDetailsProvider);
 
-                                      EasyLoading.dismiss();
-                                      await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
+                                          EasyLoading.dismiss();
+                                          await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
                                             transitionModel: transitionModel,
                                             personalInformationModel: data,
                                           ).launch(context));
-                                    } else {
-                                      // ignore: use_build_context_synchronously
-                                      EasyLoading.showError("Please Connect The Printer First");
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return WillPopScope(
-                                              onWillPop: () async => false,
-                                              child: Dialog(
-                                                child: SizedBox(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      ListView.builder(
-                                                        shrinkWrap: true,
-                                                        itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
-                                                        itemBuilder: (context, index) {
-                                                          return ListTile(
-                                                            onTap: () async {
-                                                              String select = printerData.availableBluetoothDevices[index];
-                                                              List list = select.split("#");
-                                                              // String name = list[0];
-                                                              String mac = list[1];
-                                                              bool isConnect = await printerData.setConnect(mac);
-                                                              if (isConnect) {
-                                                                await printerData.printTicket(printTransactionModel: model, productList: transitionModel.productList);
+                                        } else {
+                                          // ignore: use_build_context_synchronously
+                                          EasyLoading.showError("Please Connect The Printer First");
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return WillPopScope(
+                                                  onWillPop: () async => false,
+                                                  child: Dialog(
+                                                    child: SizedBox(
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          ListView.builder(
+                                                            shrinkWrap: true,
+                                                            itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                            itemBuilder: (context, index) {
+                                                              return ListTile(
+                                                                onTap: () async {
+                                                                  String select = printerData.availableBluetoothDevices[index];
+                                                                  List list = select.split("#");
+                                                                  // String name = list[0];
+                                                                  String mac = list[1];
+                                                                  bool isConnect = await printerData.setConnect(mac);
+                                                                  if (isConnect) {
+                                                                    await printerData.printTicket(printTransactionModel: model, productList: transitionModel.productList);
 
-                                                                consumerRef.refresh(customerProvider);
-                                                                consumerRef.refresh(productProvider);
-                                                                consumerRef.refresh(purchaseReportProvider);
-                                                                consumerRef.refresh(purchaseTransitionProvider);
-                                                                consumerRef.refresh(profileDetailsProvider);
-                                                                EasyLoading.dismiss();
-                                                                await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
-                                                                  transitionModel: transitionModel,
-                                                                  personalInformationModel: data,
-                                                                ).launch(context));
-                                                              }
+                                                                    consumerRef.refresh(customerProvider);
+                                                                    consumerRef.refresh(productProvider);
+                                                                    consumerRef.refresh(purchaseReportProvider);
+                                                                    consumerRef.refresh(purchaseTransitionProvider);
+                                                                    consumerRef.refresh(profileDetailsProvider);
+                                                                    EasyLoading.dismiss();
+                                                                    await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
+                                                                      transitionModel: transitionModel,
+                                                                      personalInformationModel: data,
+                                                                    ).launch(context));
+                                                                  }
+                                                                },
+                                                                title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                              );
                                                             },
-                                                            title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                            subtitle:  Text(lang.S.of(context).clickToConnect),
-                                                          );
-                                                        },
-                                                      ),
-                                                      const SizedBox(height: 10),
-                                                      Container(
-                                                        height: 1,
-                                                        width: double.infinity,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      const SizedBox(height: 15),
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          consumerRef.refresh(customerProvider);
-                                                          consumerRef.refresh(productProvider);
-                                                          consumerRef.refresh(purchaseReportProvider);
-                                                          consumerRef.refresh(purchaseTransitionProvider);
-                                                          consumerRef.refresh(profileDetailsProvider);
-                                                          await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
-                                                            transitionModel: transitionModel,
-                                                            personalInformationModel: data,
-                                                          ).launch(context));
-                                                        },
-                                                        child: const Center(
-                                                          child: Text(
-                                                            'Cancel',
-                                                            style: TextStyle(color: kMainColor),
                                                           ),
-                                                        ),
+                                                          const SizedBox(height: 10),
+                                                          Container(
+                                                            height: 1,
+                                                            width: double.infinity,
+                                                            color: Colors.grey,
+                                                          ),
+                                                          const SizedBox(height: 15),
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              consumerRef.refresh(customerProvider);
+                                                              consumerRef.refresh(productProvider);
+                                                              consumerRef.refresh(purchaseReportProvider);
+                                                              consumerRef.refresh(purchaseTransitionProvider);
+                                                              consumerRef.refresh(profileDetailsProvider);
+                                                              await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
+                                                                transitionModel: transitionModel,
+                                                                personalInformationModel: data,
+                                                              ).launch(context));
+                                                            },
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Cancel',
+                                                                style: TextStyle(color: kMainColor),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 15),
+                                                        ],
                                                       ),
-                                                      const SizedBox(height: 15),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                      EasyLoading.dismiss();
+                                                );
+                                              });
+                                          EasyLoading.dismiss();
+                                        }
+                                      } else {
+                                        consumerRef.refresh(customerProvider);
+                                        consumerRef.refresh(productProvider);
+                                        consumerRef.refresh(purchaseReportProvider);
+                                        consumerRef.refresh(purchaseTransitionProvider);
+                                        consumerRef.refresh(profileDetailsProvider);
+                                        EasyLoading.dismiss();
+                                        await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
+                                          transitionModel: transitionModel,
+                                          personalInformationModel: data,
+                                        ).launch(context));
+                                      }
+                                    } catch (e) {
+                                      EasyLoading.showError(e.toString());
                                     }
                                   } else {
-                                    consumerRef.refresh(customerProvider);
-                                    consumerRef.refresh(productProvider);
-                                    consumerRef.refresh(purchaseReportProvider);
-                                    consumerRef.refresh(purchaseTransitionProvider);
-                                    consumerRef.refresh(profileDetailsProvider);
-                                    EasyLoading.dismiss();
-                                    await Future.delayed(const Duration(milliseconds: 500)).then((value) => PurchaseInvoiceDetails(
-                                      transitionModel: transitionModel,
-                                      personalInformationModel: data,
-                                    ).launch(context));
+                                    EasyLoading.showError('Add product first');
                                   }
-                                } catch (e) {
-                                  EasyLoading.showError(e.toString());
+                                  print('-------------connected----------------');
                                 }
-                              } else {
-                                EasyLoading.showError('Add product first');
+                              } on SocketException catch (_) {
+                                print('---------------not connected----------------');
                               }
                             },
                             child: Container(

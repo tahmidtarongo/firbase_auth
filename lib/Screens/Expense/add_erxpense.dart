@@ -12,6 +12,7 @@ import 'package:mobile_pos/Screens/Expense/expense_list.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/all_expanse_provider.dart';
+import '../../const_commas.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/expense_model.dart';
@@ -31,7 +32,7 @@ class _AddExpenseState extends State<AddExpense> {
   String dropdownValue = 'Select Category';
   final dateController = TextEditingController();
   TextEditingController expanseForNameController = TextEditingController();
-  TextEditingController expanseAmountController = TextEditingController();
+  final TextEditingController expanseAmountController = TextEditingController();
   TextEditingController expanseNoteController = TextEditingController();
   TextEditingController expanseRefController = TextEditingController();
   List<String> paymentMethods = [
@@ -43,6 +44,7 @@ class _AddExpenseState extends State<AddExpense> {
   ];
 
   DateTime selectedDate = DateTime.now();
+  String amountText= '';
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
@@ -206,17 +208,25 @@ class _AddExpenseState extends State<AddExpense> {
                         TextFormField(
                           showCursor: true,
                           controller: expanseAmountController,
+                          onChanged: (value) {
+                            amountText = value.replaceAll(',', '');
+                            var formattedText = myFormat.format(int.parse(amountText));
+                            expanseAmountController.value = expanseAmountController.value.copyWith(
+                              text: formattedText,
+                              selection: TextSelection.collapsed(offset: formattedText.length),
+                            );
+                          },
                           validator: (value) {
-                            if (value.isEmptyOrNull) {
+                            if (amountText.isEmptyOrNull) {
                               return 'please Inter Amount';
-                            } else if (double.tryParse(value!) == null) {
+                            } else if (double.tryParse(amountText) == null) {
                               return 'Enter a valid Amount';
                             }
                             return null;
                           },
-                          onSaved: (value) {
-                            expanseAmountController.text = value!;
-                          },
+                          // onSaved: (value) {
+                          //   amountText = value!;
+                          // },
                           decoration:  InputDecoration(
                             border: const OutlineInputBorder(),
                             errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
@@ -277,12 +287,13 @@ class _AddExpenseState extends State<AddExpense> {
                                 expenseDate: selectedDate.toString(),
                                 category: dropdownValue == 'Select Category' ? '' : dropdownValue,
                                 account: '',
-                                amount: expanseAmountController.text,
+                                amount: amountText,
                                 expanseFor: expanseForNameController.text,
                                 paymentType: selectedPaymentType,
                                 referenceNo: expanseRefController.text,
                                 note: expanseNoteController.text,
                               );
+                              print('---------button value-------$amountText------------');
                               try {
                                 EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                                 final DatabaseReference productInformationRef =

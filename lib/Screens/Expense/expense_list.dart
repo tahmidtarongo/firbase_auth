@@ -135,13 +135,16 @@ class _ExpenseListState extends State<ExpenseList> {
                   expenseData.when(data: (mainData) {
                     if (mainData.isNotEmpty) {
                       final List<ExpenseModel> data = mainData.reversed.toList();
-                      // print('-------------$totalExpense--------------------');
                       for (var element in data) {
+                        print('----------total expense---$totalExpense----------');
                         if ((fromDate.isBefore(DateTime.parse(element.expenseDate)) || DateTime.parse(element.expenseDate).isAtSameMomentAs(fromDate)) &&
                             (toDate.isAfter(DateTime.parse(element.expenseDate)) || DateTime.parse(element.expenseDate).isAtSameMomentAs(toDate))) {
                           totalExpense += element.amount.toDouble();
                         }
-                        print('-----------------------$totalExpense------------revence${totalExpense += element.amount.toDouble()}-------');
+                        else{
+                          totalExpense += element.amount.toDouble();
+                        }
+                        // print('-----------------------$totalExpense------------revence${totalExpense += element.amount.toDouble()}-------');
                       }
                       return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
