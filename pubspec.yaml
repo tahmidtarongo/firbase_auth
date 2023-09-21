@@ -93,6 +93,8 @@ dependencies:
   flutter_stripe: ^9.2.0
   file_picker: ^5.5.0
   connectivity_plus: ^4.0.2
+  whatsapp_share2: ^2.0.2
+
 
 
 

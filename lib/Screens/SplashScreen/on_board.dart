@@ -141,7 +141,7 @@ class _OnBoardState extends State<OnBoard> {
                 setState(
                   () {
                     // currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const LoginForm().launch(context);
-                    currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const PhoneAuth().launch(context);
+                    currentIndexPage < 2 ? pageController.nextPage(duration: const Duration(microseconds: 1000), curve: Curves.bounceInOut) : const LoginForm().launch(context);
                   },
                 );
               },

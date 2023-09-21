@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobile_pos/GlobalComponents/button_global.dart';
 import 'package:mobile_pos/Screens/Authentication/register_form.dart';
 import 'package:mobile_pos/repository/login_repo.dart';
@@ -28,6 +32,34 @@ class _LoginFormState extends State<LoginForm> {
       return true;
     }
     return false;
+  }
+
+  @override
+  void initState() {
+    getConnectivity();
+    checkInternet();
+    super.initState();
+  }
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+      if (!isDeviceConnected && isAlertSet == false) {
+        showDialogBox();
+        setState(() => isAlertSet = true);
+      }
+    },
+  );
+
+  checkInternet() async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if (!isDeviceConnected) {
+      showDialogBox();
+      setState(() => isAlertSet = true);
+    }
   }
 
   @override
@@ -160,4 +192,26 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+
+  showDialogBox() => showCupertinoDialog<String>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(lang.S.of(context).noConnection),
+      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            if (!isDeviceConnected && isAlertSet == false) {
+              showDialogBox();
+              setState(() => isAlertSet = true);
+            }
+          },
+          child: Text(lang.S.of(context).tryAgain),
+        ),
+      ],
+    ),
+  );
 }

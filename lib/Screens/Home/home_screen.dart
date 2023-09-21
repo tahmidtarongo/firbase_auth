@@ -221,8 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 selectedDay=='Today'?RichText(
-                                    text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor), children: [
-                                  TextSpan(text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor)),
+                                    text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 14), children: [
+                                  TextSpan(text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13)),
                                 ])):const Text(''),
                                 const Spacer(),
                                 DropdownButtonHideUnderline(
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 value: e,
                                                 child: Text(
                                                   e,
-                                                  style: kTextStyle.copyWith(color: kTitleColor, fontSize: 14),
+                                                  style: kTextStyle.copyWith(color: kTitleColor, fontSize: 13),
                                                 ),
                                               ),
                                             )
@@ -274,11 +274,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
                                 }
                               }
-
                               return Row(
                                 children: [
                                   Expanded(
                                     child: Container(
+                                      height: 100,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
                                       child: Padding(
@@ -298,14 +298,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Text(
                                                   lang.S.of(context).order,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
                                                 ),
                                                 const SizedBox(
                                                   height: 3,
                                                 ),
                                                 Text(
                                                   '${finalList.length}',
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
                                                 )
                                               ],
                                             )
@@ -317,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Container(
+                                      height: 100,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffD8D6EC)),
                                       child: Padding(
@@ -337,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 Text(
                                                   lang.S.of(context).revenue,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
                                                 )
                                               ],
                                             ),
@@ -345,8 +346,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 3,
                                             ),
                                             Text(
-                                              '$currency ${myFormat.format(totalRevenue)}',
-                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
+                                              '$currency${myFormat.format(totalRevenue)}',
+                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
                                             )
                                           ],
                                         ),
@@ -356,40 +357,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffB6DEC2)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Image.asset(
-                                                    'images/profit.png',
-                                                    height: 20,
-                                                    width: 20,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 8,
-                                                  ),
-                                                  Text(
-                                                    lang.S.of(context).profit,
-                                                    style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
-                                                  )
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 3,
-                                              ),
-                                              Text(
-                                                '$currency ${myFormat.format(totalProfit)}',
-                                                style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor),
-                                              )
-                                            ],
-                                          ),
-                                        )),
+                                      height: 100,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffB6DEC2)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  'images/profit.png',
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  lang.S.of(context).profit,
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                            Text(
+                                              '$currency${myFormat.format(totalProfit)}',
+                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               );

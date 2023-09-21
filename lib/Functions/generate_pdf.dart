@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/due_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pdf/pdf.dart';
@@ -309,7 +310,7 @@ class GeneratePdf {
                 pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.end, mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                   pw.SizedBox(height: 10.0),
                   pw.Text(
-                    "Subtotal: ${transactions.totalAmount! + transactions.discountAmount!}",
+                    "Subtotal: ${myFormat.format(transactions.totalAmount! + transactions.discountAmount!)}",
                     style: pw.TextStyle(
                       color: PdfColors.black,
                       fontWeight: pw.FontWeight.bold,
@@ -333,7 +334,7 @@ class GeneratePdf {
                   ),
                   pw.SizedBox(height: 5.0),
                   pw.Text(
-                    "Discount: ${transactions.discountAmount}",
+                    "Discount: ${myFormat.format(transactions.discountAmount)}",
                     style: pw.TextStyle(
                       color: PdfColors.black,
                       fontWeight: pw.FontWeight.bold,
@@ -343,7 +344,7 @@ class GeneratePdf {
                   pw.Container(
                     color: PdfColors.blueAccent,
                     padding: const pw.EdgeInsets.all(5.0),
-                    child: pw.Text("Total Amount: ${transactions.totalAmount}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                    child: pw.Text("Total Amount: ${myFormat.format(transactions.totalAmount)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                   ),
                   pw.SizedBox(height: 5.0),
                   pw.Container(
@@ -356,7 +357,7 @@ class GeneratePdf {
                         ),
                       ),
                       pw.Text(
-                        "Paid Amount: ${transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble()}",
+                        "Paid Amount: ${myFormat.format(transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble())}",
                         style: pw.TextStyle(
                           color: PdfColors.black,
                           fontWeight: pw.FontWeight.bold,
@@ -366,7 +367,7 @@ class GeneratePdf {
                   ),
                   pw.SizedBox(height: 5.0),
                   pw.Text(
-                    "Due: ${transactions.dueAmount}",
+                    "Due: ${myFormat.format(transactions.dueAmount)}",
                     style: pw.TextStyle(
                       color: PdfColors.black,
                       fontWeight: pw.FontWeight.bold,
@@ -473,7 +474,6 @@ class GeneratePdf {
 
   Future<void> generateSaleDocument(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
     final pw.Document doc = pw.Document();
-
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -770,7 +770,7 @@ class GeneratePdf {
                       children: [
                         pw.SizedBox(height: 10.0),
                         pw.Text(
-                          "Subtotal: ${transactions.totalAmount! + transactions.discountAmount!}",
+                          "Subtotal: ${myFormat.format(transactions.totalAmount! + transactions.discountAmount!)}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -794,7 +794,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Discount: ${transactions.discountAmount}",
+                          "Discount: ${myFormat.format(transactions.discountAmount)}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -804,7 +804,7 @@ class GeneratePdf {
                         pw.Container(
                           color: PdfColors.blueAccent,
                           padding: const pw.EdgeInsets.all(5.0),
-                          child: pw.Text("Total Amount: ${transactions.totalAmount}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text("Total Amount: ${myFormat.format(transactions.totalAmount)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Container(
@@ -817,7 +817,7 @@ class GeneratePdf {
                               ),
                             ),
                             pw.Text(
-                              "Paid Amount: ${transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble()}",
+                              "Paid Amount: ${myFormat.format(transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble())}",
                               style: pw.TextStyle(
                                 color: PdfColors.black,
                                 fontWeight: pw.FontWeight.bold,
@@ -827,7 +827,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Due: ${transactions.dueAmount}",
+                          "Due: ${myFormat.format(transactions.dueAmount)}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -849,7 +849,6 @@ class GeneratePdf {
       EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -877,7 +876,6 @@ class GeneratePdf {
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
         final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-
         final byteData = await doc.save();
         try {
           await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -1201,7 +1199,7 @@ class GeneratePdf {
                       children: [
                         pw.SizedBox(height: 10.0),
                         pw.Text(
-                          "Subtotal: ${transactions.totalDue}",
+                          "Subtotal: ${myFormat.format(transactions.totalDue)}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -1219,7 +1217,7 @@ class GeneratePdf {
                         pw.Container(
                           color: PdfColors.blueAccent,
                           padding: const pw.EdgeInsets.all(5.0),
-                          child: pw.Text("Total Due: ${transactions.totalDue}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text("Total Due: ${myFormat.format(transactions.totalDue)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Container(
@@ -1232,7 +1230,7 @@ class GeneratePdf {
                               ),
                             ),
                             pw.Text(
-                              "Paid Amount: ${transactions.totalDue!.toDouble() - transactions.dueAmountAfterPay!.toDouble()}",
+                              "Paid Amount: ${myFormat.format(transactions.totalDue!.toDouble() - transactions.dueAmountAfterPay!.toDouble())}",
                               style: pw.TextStyle(
                                 color: PdfColors.black,
                                 fontWeight: pw.FontWeight.bold,
@@ -1242,7 +1240,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Still Due: ${transactions.dueAmountAfterPay}",
+                          "Still Due: ${myFormat.format(transactions.dueAmountAfterPay)}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,

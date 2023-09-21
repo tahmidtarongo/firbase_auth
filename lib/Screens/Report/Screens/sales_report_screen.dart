@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
 import 'package:mobile_pos/Provider/transactions_provider.dart';
@@ -12,6 +16,10 @@ import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
+import 'package:whatsapp_share2/whatsapp_share2.dart';
+import '../../../Functions/generate_pdf.dart';
+import '../../../Functions/generate_pdf.dart';
+import '../../../Functions/generate_pdf.dart';
 import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
@@ -43,21 +51,42 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   bool isPicked = false;
   int count = 0;
 
-  //  Future<void> sharePDF() async {
-  //   final pw.Document doc = pw.Document();
-  //   const downloadsFolderPath = '/storage/emulated/0/Download/';
-  //   Directory dir = Directory(downloadsFolderPath);
-  //   final pdfPath = GeneratePdf();
-  //   final byteData = await doc.save();
-  //
-  //     Share.shareFiles(
-  //     [pdfPath.toString()],
-  //     text: 'Check out this PDF file!',
-  //     subject: 'Sharing PDF File',
-  //     mimeTypes: ['application/pdf'],
-  //     sharePositionOrigin: const Rect.fromLTWH(0, 0, 10, 10), // You can adjust this position
-  //   );
-  // }
+  final pw.Document doc = pw.Document();
+
+   Future<void> sharePDF(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
+     const downloadsFolderPath = '/storage/emulated/0/Download/';
+     Directory dir = Directory(downloadsFolderPath);
+     final file = File('${dir.path}/${'smart biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+     final byteData = await doc.save();
+     await file.writeAsBytes(byteData);
+     try{
+        Share.shareFiles(
+          [file.path],
+          text: 'Check out this PDF file!',
+          subject: 'Sales Report',
+          mimeTypes: ['application/pdf'],
+        );
+        print('----------------${file.path}----------');
+        print('----------file open successful-------');
+      }
+      catch(e){
+        print('---------Something wrong-----------');
+      }
+  }
+
+  Future<void> shareGeneratedPDF() async {
+    final pdf = await generatePDF();
+    final pdfBytes = await pdf.save();
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File('${tempDir.path}/generated.pdf');
+    await tempFile.writeAsBytes(pdfBytes);
+
+    await Share.shareFiles(
+      [tempFile.path],
+      text: 'Sharing PDF',
+      subject: 'Generated PDF',
+    );
+  }
 
   // Future<void> shareInvoicePDF() async {
   //   final pdf = GeneratePdf();
@@ -98,19 +127,52 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
 
     return pdf;
   }
-  Future<void> shareGeneratedPDF(BuildContext context) async {
-    final pdf = await generatePDF();
-    final pdfBytes = await pdf.save();
-    final tempDir = await getTemporaryDirectory();
-    final tempFile = File('${tempDir.path}/generated.pdf');
-    await tempFile.writeAsBytes(pdfBytes);
 
-    await Share.shareFiles(
-      [tempFile.path],
-      text: 'Sharing PDF',
-      subject: 'Generated PDF',
-    );
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+      if (!isDeviceConnected && isAlertSet == false) {
+        showDialogBox();
+        setState(() => isAlertSet = true);
+      }
+    },
+  );
+
+  checkInternet() async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if (!isDeviceConnected) {
+      showDialogBox();
+      setState(() => isAlertSet = true);
+    }
   }
+
+  @override
+  void initState() {
+    getConnectivity();
+    checkInternet();
+    super.initState();
+  }
+
+  // sahreOnWhatsapp(String phoneNumber,Uint8List doc) async {
+  //   final directory = (await getApplicationDocumentsDirectory()).path;
+  //   final docPath = await File('$directory/share.pdf').create();
+  //   await docPath.writeAsBytes(doc);
+  //
+  //   if (generatePDF().toString().isNotEmpty) {
+  //   await WhatsappShare.shareFile(
+  //   text: 'Whatsapp share text',
+  //   phone: phoneNumber,
+  //   filePath: [docPath.path],
+  //   );
+  //   }
+  // }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -493,10 +555,8 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                     color: Colors.grey,
                                                                   )),
                                                               // IconButton(
-                                                              //     onPressed: () {
-                                                              //       shareGeneratedPDF(context);
-                                                              //       print(shareGeneratedPDF(context));
-                                                              //
+                                                              //     onPressed: (){
+                                                              //       sharePDF(transaction[index], data, context);
                                                               //     },
                                                               //     icon: const Icon(
                                                               //       Icons.share,
@@ -548,4 +608,25 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
       ),
     );
   }
+  showDialogBox() => showCupertinoDialog<String>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(lang.S.of(context).noConnection),
+      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            if (!isDeviceConnected && isAlertSet == false) {
+              showDialogBox();
+              setState(() => isAlertSet = true);
+            }
+          },
+          child: Text(lang.S.of(context).tryAgain),
+        ),
+      ],
+    ),
+  );
 }

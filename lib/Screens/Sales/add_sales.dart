@@ -1,15 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/add_to_cart.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
@@ -79,6 +82,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   TextEditingController discountAmountEditingController = TextEditingController();
   TextEditingController discountPercentageEditingController = TextEditingController();
 
+  String phoneNumber = '';
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
   late TransitionModel transitionModel = TransitionModel(
     customerName: widget.customerModel.customerName,
     customerPhone: widget.customerModel.phoneNumber,
@@ -91,6 +99,26 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   @override
   void initState() {
     super.initState();
+    getConnectivity();
+    checkInternet();
+  }
+
+  getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+      if (!isDeviceConnected && isAlertSet == false) {
+        showDialogBox();
+        setState(() => isAlertSet = true);
+      }
+    },
+  );
+
+  checkInternet() async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if (!isDeviceConnected) {
+      showDialogBox();
+      setState(() => isAlertSet = true);
+    }
   }
 
 
@@ -937,6 +965,28 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       });
     });
   }
+
+  showDialogBox() => showCupertinoDialog<String>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(lang.S.of(context).noConnection),
+      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            if (!isDeviceConnected && isAlertSet == false) {
+              showDialogBox();
+              setState(() => isAlertSet = true);
+            }
+          },
+          child: Text(lang.S.of(context).tryAgain),
+        ),
+      ],
+    ),
+  );
 
   void decreaseStock(String productCode, int quantity) async {
     final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
