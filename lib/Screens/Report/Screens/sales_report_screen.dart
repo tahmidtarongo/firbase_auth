@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_pos/Provider/printer_provider.dart';
@@ -15,10 +17,8 @@ import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:whatsapp_share2/whatsapp_share2.dart';
-import '../../../Functions/generate_pdf.dart';
-import '../../../Functions/generate_pdf.dart';
 import '../../../Functions/generate_pdf.dart';
 import '../../../Functions/generate_pdf.dart';
 import '../../../Provider/profile_provider.dart';
@@ -53,25 +53,16 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
 
   final pw.Document doc = pw.Document();
 
+
    Future<void> sharePDF(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
-     const downloadsFolderPath = '/storage/emulated/0/Download/';
-     Directory dir = Directory(downloadsFolderPath);
-     final file = File('${dir.path}/${'smart biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+     final Directory sysTemp = Directory.systemTemp;
+     final Directory dir = sysTemp.createTempSync();
+     const String filename = 'my.bkp';
+     final File temp = File('${dir.path}/${'smart biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+     final XFile xfile = XFile(temp.path);
      final byteData = await doc.save();
-     await file.writeAsBytes(byteData);
-     try{
-        Share.shareFiles(
-          [file.path],
-          text: 'Check out this PDF file!',
-          subject: 'Sales Report',
-          mimeTypes: ['application/pdf'],
-        );
-        print('----------------${file.path}----------');
-        print('----------file open successful-------');
-      }
-      catch(e){
-        print('---------Something wrong-----------');
-      }
+     await Share.shareXFiles(<XFile>[xfile], text: filename);
+     dir.deleteSync(recursive: true);
   }
 
   Future<void> shareGeneratedPDF() async {
@@ -81,6 +72,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
     final tempFile = File('${tempDir.path}/generated.pdf');
     await tempFile.writeAsBytes(pdfBytes);
 
+
     await Share.shareFiles(
       [tempFile.path],
       text: 'Sharing PDF',
@@ -88,29 +80,26 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
     );
   }
 
-  // Future<void> shareInvoicePDF() async {
-  //   final pdf = GeneratePdf();
-  //   final pdfBytes = pdf.save();
-  //   await Share.shareFiles(
-  //     [pdfBytes.buffer.asUint8List()],
-  //     text: 'Sharing Invoice PDF',
-  //     subject: 'Invoice PDF',
-  //     mimeTypes: ['application/pdf'],
-  //   );
-  // }
+  void shareFile()async{
+     var file=await FilePicker.platform.pickFiles();
+     Share.shareFiles([file!.paths[0]!]);
+  }
 
-// Future<void> sharePdf()async{
-//   var dir = await getApplicationDocumentsDirectory();
-//   File file = File('${dir.path}/${GeneratePdf()}.pdf');
-//
-//   if (!await file.exists()) {
-//   await file.create(recursive: true);
-//   file.writeAsStringSync("test for share documents file");
-//   }
-//
-//   ShareExtend.share(file.path, "file");
-//
-// }
+  sahreOnWhatsapp(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async{
+    const downloadsFolderPath = '/storage/emulated/0/Download/';
+    Directory dir = Directory(downloadsFolderPath);
+    final file = File('${dir.path}/${'smart biashara-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+    final byteData = await doc.save();
+    await file.writeAsBytes(byteData);
+
+    if (downloadsFolderPath.isNotEmpty) {
+    await WhatsappShare.shareFile(
+    text: file.path,
+     filePath: [file.path],
+      phone: '01764972576',
+    );
+    }
+  }
 
 
   Future<pw.Document> generatePDF() async {
@@ -170,8 +159,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   //   );
   //   }
   // }
-
-
 
 
   @override
