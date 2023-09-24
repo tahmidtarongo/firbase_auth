@@ -6,6 +6,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/homepage_image_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
@@ -81,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController toDateTextEditingController = TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
   DateTime fromDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime toDate = DateTime.now();
-  DateTime selectedDate=DateTime.now();
+  DateTime selectedDate = DateTime.now();
   double totalProfit = 0;
   double totalLoss = 0;
   bool isPicked = false;
@@ -220,10 +223,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Row(
                               children: [
-                                selectedDay=='Today'?RichText(
-                                    text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 14), children: [
-                                  TextSpan(text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13)),
-                                ])):const Text(''),
+                                selectedDay == 'Today'
+                                    ? RichText(
+                                        text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 14), children: [
+                                        TextSpan(
+                                            text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}',
+                                            style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13)),
+                                      ]))
+                                    : const Text(''),
                                 const Spacer(),
                                 DropdownButtonHideUnderline(
                                     child: DropdownButton(
@@ -298,14 +305,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Text(
                                                   lang.S.of(context).order,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                                 ),
                                                 const SizedBox(
                                                   height: 3,
                                                 ),
                                                 Text(
                                                   '${finalList.length}',
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                                 )
                                               ],
                                             )
@@ -338,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 Text(
                                                   lang.S.of(context).revenue,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                                 )
                                               ],
                                             ),
@@ -347,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Text(
                                               '$currency${myFormat.format(totalRevenue)}',
-                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                             )
                                           ],
                                         ),
@@ -378,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 Text(
                                                   lang.S.of(context).profit,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                                 )
                                               ],
                                             ),
@@ -387,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Text(
                                               '$currency${myFormat.format(totalProfit)}',
-                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor,fontSize: 13),
+                                              style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                             )
                                           ],
                                         ),

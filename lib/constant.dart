@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // const kMainColor = Color(0xFF3F8CFF);
@@ -14,6 +16,27 @@ const kPremiumPlanColor = Color(0xFF8752EE);
 const kPremiumPlanColor2 = Color(0xFFFF5F00);
 List<String> selectedNumbers = [];
 
+Future<void> welcomeEmail({required String email}) async {
+  final smtpServer = SmtpServer(
+    'smtp.stackmail.com',
+    port: 587,
+    username: 'hello@smartbiashara.com',
+    password: 'qwerty7890@',
+  );
+  final message = Message()
+    ..from = const Address('mhello@smartbiashara.com')
+    ..recipients.add(email)
+    ..subject = 'Welcome to SmartBiashara(POS)!'
+    ..html =
+        '<h3>Welcome to SmartBiashara(POS)!</h3><p>Were thrilled to have you join us on your journey to streamline and optimize your business operations.</p><p>Our powerful Point of Sale system is here to simplify transactions and boost your business efficiency.</p><p>Let\'s embark on this smart business adventure together!</p><p>Karibu Sana</p>';
+
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ${sendReport.mail}');
+  } catch (e) {
+    print('Error sending email: $e');
+  }
+}
 
 final kTextStyle = GoogleFonts.manrope(
   color: Colors.white,
@@ -115,8 +138,7 @@ final List<String> businessCategory = [
   'Others',
 ];
 
-
-List<String> language = ['English','Swahili'];
+List<String> language = ['English', 'Swahili'];
 
 List<String> productCategory = ['Fashion', 'Electronics', 'Computer', 'Gadgets', 'Watches', 'Cloths'];
 

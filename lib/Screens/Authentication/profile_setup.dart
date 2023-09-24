@@ -477,13 +477,14 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
                           userID: FirebaseAuth.instance.currentUser!.uid,
-                          email: '',
+                          email: FirebaseAuth.instance.currentUser!.email ?? '',
                           subscriptionDate: DateTime.now().toString(),
                           subscriptionName: 'Free',
                           subscriptionMethod: 'Not Provided',
                         );
                         final adminRef = FirebaseDatabase.instance.ref().child('Admin Panel');
                         await adminRef.child('Seller List').push().set(sellerInfoModel.toJson());
+                        await welcomeEmail(email: FirebaseAuth.instance.currentUser!.email ?? '');
 
                         // await adminRef.child('Sms Package Plan').orderByKey().get().then((value) async{
                         //   for (var element in value.children) {
