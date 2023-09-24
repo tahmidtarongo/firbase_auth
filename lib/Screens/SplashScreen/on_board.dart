@@ -57,7 +57,7 @@ class _OnBoardState extends State<OnBoard> {
             child: TextButton(
               onPressed: () {
                 // const LoginForm().launch(context);
-                const PhoneAuth().launch(context);
+                const LoginForm().launch(context);
               },
               child: Text(
                 lang.S.of(context).skip,
