@@ -451,17 +451,19 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context),
+                                                            onPressed: () => GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context, share: false),
                                                             icon: const Icon(
                                                               Icons.picture_as_pdf,
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => toast('Coming Soon'),
+                                                            onPressed: ()  async {
+                                                              GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context,share: true);
+                                                            },
                                                             icon: const Icon(
-                                                              FeatherIcons.share,
-                                                              color: Colors.black,
-                                                            )).visible(false),
+                                                              Icons.share,
+                                                              color: Colors.grey,
+                                                            )),
                                                       ],
                                                     );
                                                   }, error: (e, stack) {

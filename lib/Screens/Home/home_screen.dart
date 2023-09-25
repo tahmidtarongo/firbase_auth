@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 selectedDay == 'Today'
                                     ? RichText(
-                                        text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 14), children: [
+                                        text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13), children: [
                                         TextSpan(
                                             text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}',
                                             style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13)),
@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 value: e,
                                                 child: Text(
                                                   e,
-                                                  style: kTextStyle.copyWith(color: kTitleColor, fontSize: 13),
+                                                  style: const TextStyle(color: kTitleColor,fontSize: 14.1),
                                                 ),
                                               ),
                                             )
@@ -295,8 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Image.asset(
                                               'images/order.png',
-                                              height: 25,
-                                              width: 25,
+                                              height: 20,
+                                              width: 20,
                                               color: Colors.pink,
                                             ),
                                             const SizedBox(width: 8),
@@ -321,6 +321,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
+                                  // Expanded(
+                                  //   child: Container(
+                                  //     height: 100,
+                                  //     alignment: Alignment.center,
+                                  //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.all(10.0),
+                                  //       child: Column(
+                                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                                  //         children: [
+                                  //           Row(
+                                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               Image.asset(
+                                  //                 'images/order.png',
+                                  //                 height: 20,
+                                  //                 width: 20,
+                                  //               ),
+                                  //               const SizedBox(
+                                  //                 width: 8,
+                                  //               ),
+                                  //               Text(
+                                  //                 lang.S.of(context).order,
+                                  //                 style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
+                                  //               )
+                                  //             ],
+                                  //           ),
+                                  //           const SizedBox(
+                                  //             height: 3,
+                                  //           ),
+                                  //           Text(
+                                  //             '${finalList.length}',
+                                  //             style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
+                                  //           )
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Container(

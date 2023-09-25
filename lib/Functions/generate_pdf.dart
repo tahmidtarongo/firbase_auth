@@ -9,18 +9,18 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:share_plus/share_plus.dart';
 import '../Screens/Pdf/pdf_view.dart';
 import '../model/personal_information_model.dart';
 import '../model/transition_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GeneratePdf {
-  Future<void> generatePurchaseDocument(PurchaseTransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
+  Future<void> generatePurchaseDocument(PurchaseTransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context,{required bool share}) async {
     final pw.Document doc = pw.Document();
     // final netImage = await networkImage(
     //   personalInformation.pictureUrl.toString(),
     // );
-    EasyLoading.show(status: 'Generating PDF');
     doc.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         margin: pw.EdgeInsets.zero,
@@ -301,8 +301,8 @@ class GeneratePdf {
                         ('${i + 1}'),
                         (transactions.productList!.elementAt(i).productName),
                         (transactions.productList!.elementAt(i).productStock),
-                        (transactions.productList!.elementAt(i).productSalePrice),
-                        ((transactions.productList!.elementAt(i).productSalePrice.toInt() * transactions.productList!.elementAt(i).productStock.toInt()).toString())
+                        (myFormat.format(int.tryParse(transactions.productList!.elementAt(i).productSalePrice)??0)),
+                        (myFormat.format(int.tryParse((transactions.productList!.elementAt(i).productSalePrice.toInt() * transactions.productList!.elementAt(i).productStock.toInt()).toString())??0))
                       ],
                   ]),
               pw.Paragraph(text: ""),
@@ -387,13 +387,18 @@ class GeneratePdf {
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        EasyLoading.showSuccess('Done');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-          ),
-        );
+        if(share){
+          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+        }
+        else{
+          EasyLoading.showSuccess('Done');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+            ),
+          );
+        }
 
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
@@ -407,21 +412,24 @@ class GeneratePdf {
         status = await Permission.storage.request();
       }
       if (status.isGranted) {
-        EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
         final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-
         final byteData = await doc.save();
         try {
           await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          EasyLoading.showSuccess('Done');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
+          if(share){
+            await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+          }
+          else{
+            EasyLoading.showSuccess('Done');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+              ),
+            );
+          }
           // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
         } on FileSystemException catch (err) {
           EasyLoading.showError(err.message);
@@ -472,7 +480,7 @@ class GeneratePdf {
     // }
   }
 
-  Future<void> generateSaleDocument(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
+  Future<void> generateSaleDocument(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context,{required bool share}) async {
     final pw.Document doc = pw.Document();
     doc.addPage(
       pw.MultiPage(
@@ -756,8 +764,8 @@ class GeneratePdf {
                           ('${i + 1}'),
                           (transactions.productList!.elementAt(i).productName.toString()),
                           (transactions.productList!.elementAt(i).quantity.toString()),
-                          (transactions.productList!.elementAt(i).subTotal),
-                          ((int.parse(transactions.productList!.elementAt(i).subTotal) * transactions.productList!.elementAt(i).quantity.toInt()).toString())
+                          (myFormat.format(int.tryParse(transactions.productList!.elementAt(i).subTotal)??0)),
+                          (myFormat.format(int.tryParse((int.parse(transactions.productList!.elementAt(i).subTotal) * transactions.productList!.elementAt(i).quantity.toInt()).toString())??0))
                         ],
                     ]),
                 pw.Paragraph(text: ""),
@@ -852,13 +860,17 @@ class GeneratePdf {
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        EasyLoading.showSuccess('Done');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-          ),
-        );
+        if(share){
+          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+        } else{
+          EasyLoading.showSuccess('Created and Saved');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+            ),
+          );
+        }
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
         EasyLoading.showError(err.message);
@@ -872,20 +884,25 @@ class GeneratePdf {
         status = await Permission.storage.request();
       }
       if (status.isGranted) {
-        EasyLoading.show(status: 'Generating PDF');
+        // EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
         final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
         final byteData = await doc.save();
         try {
           await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          EasyLoading.showSuccess('Created and Saved');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
+         if(share){
+           await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+         } else{
+           EasyLoading.showSuccess('Created and Saved');
+           Navigator.push(
+             context,
+             MaterialPageRoute(
+               builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+             ),
+           );
+         }
+
           // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
         } on FileSystemException catch (err) {
           EasyLoading.showError(err.message);
@@ -895,12 +912,12 @@ class GeneratePdf {
     }
   }
 
-  Future<void> generateDueDocument(DueTransactionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
+  Future<void> generateDueDocument(DueTransactionModel transactions, PersonalInformationModel personalInformation, BuildContext context,{required bool share}) async {
     final pw.Document doc = pw.Document();
     // final netImage = await networkImage(
     //   personalInformation.pictureUrl.toString(),
     // );
-    EasyLoading.show(status: 'Generating PDF');
+    // EasyLoading.show(status: 'Generating PDF');
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -1179,7 +1196,7 @@ class GeneratePdf {
                     data: <List<String>>[
                       <String>['SL', 'Item', '', '', 'Total Due'],
 
-                      <String>[('${1}'), ('Due'), (''), (''), (transactions.totalDue.toString())],
+                      <String>[('${1}'), ('Due'), (''), (''), (myFormat.format(transactions.totalDue))],
                       // for (int i = 0; i < transactions.productList!.length; i++)
                       //   <String>[
                       //     ('${i + 1}'),
@@ -1259,20 +1276,23 @@ class GeneratePdf {
       ),
     );
     if (Platform.isIOS) {
-      EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        EasyLoading.showSuccess('Done');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-          ),
-        );
+        if(share){
+          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+        }else{
+          EasyLoading.showSuccess('Done');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+            ),
+          );
+        }
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
         EasyLoading.showError(err.message);
@@ -1285,7 +1305,6 @@ class GeneratePdf {
         status = await Permission.storage.request();
       }
       if (status.isGranted) {
-        EasyLoading.show(status: 'Generating PDF');
         const downloadsFolderPath = '/storage/emulated/0/Download/';
         Directory dir = Directory(downloadsFolderPath);
         final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
@@ -1293,13 +1312,18 @@ class GeneratePdf {
         final byteData = await doc.save();
         try {
           await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          EasyLoading.showSuccess('Done');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
+
+          if(share){
+            await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'],text: 'Share PDF via...');
+          }else{
+            EasyLoading.showSuccess('Done');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+              ),
+            );
+          }
           // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
         } on FileSystemException catch (err) {
           EasyLoading.showError(err.message);

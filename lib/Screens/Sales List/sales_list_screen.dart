@@ -257,7 +257,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                         )),
                                                     IconButton(
                                                         onPressed: () {
-                                                          GeneratePdf().generateSaleDocument(reTransaction[index], data, context);
+                                                          GeneratePdf().generateSaleDocument(reTransaction[index], data, context,share: false);
                                                         },
                                                         icon: const Icon(
                                                           Icons.picture_as_pdf,

@@ -451,17 +451,19 @@ class _DueReportScreenState extends State<DueReportScreen> {
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => GeneratePdf().generateDueDocument(transaction[index], data, context),
+                                                            onPressed: () => GeneratePdf().generateDueDocument(transaction[index], data, context,share: false),
                                                             icon: const Icon(
                                                               Icons.picture_as_pdf,
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => toast('Coming Soon'),
+                                                            onPressed: ()  async {
+                                                              GeneratePdf().generateDueDocument(reTransaction[index], data, context,share: true);
+                                                            },
                                                             icon: const Icon(
-                                                              FeatherIcons.share,
+                                                              Icons.share,
                                                               color: Colors.grey,
-                                                            )).visible(false),
+                                                            )),
                                                       ],
                                                     );
                                                   }, error: (e, stack) {
