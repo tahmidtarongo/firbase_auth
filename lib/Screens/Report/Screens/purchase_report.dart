@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -77,7 +78,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
         backgroundColor: kMainColor,
         appBar: AppBar(
           title: Text(
-            lang.S.of(context).purchaseReports,
+            lang.S.of(context).purchaseRepoet,
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20.0,
@@ -461,7 +462,7 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                               GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context,share: true);
                                                             },
                                                             icon: const Icon(
-                                                              Icons.share,
+                                                              CommunityMaterialIcons.share,
                                                               color: Colors.grey,
                                                             )),
                                                       ],

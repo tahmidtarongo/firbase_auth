@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,7 @@ class SalesListScreen extends StatefulWidget {
 class _SalesListScreenState extends State<SalesListScreen> {
 
   String? invoiceNumber;
+  String _selectedItem = '';
 
   @override
   Widget build(BuildContext context) {
@@ -257,14 +259,6 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                         )),
                                                     IconButton(
                                                         onPressed: () {
-                                                          GeneratePdf().generateSaleDocument(reTransaction[index], data, context,share: false);
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.picture_as_pdf,
-                                                          color: Colors.grey,
-                                                        )),
-                                                    IconButton(
-                                                        onPressed: () {
                                                           cart.clearCart();
                                                           SalesReportEditScreen(
                                                             transitionModel: reTransaction[index],
@@ -274,6 +268,68 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                           FeatherIcons.edit,
                                                           color: Colors.grey,
                                                         )),
+                                                    PopupMenuButton(
+                                                      offset: const Offset(0, 30),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(4.0),
+                                                      ),
+                                                      padding: EdgeInsets.zero,
+                                                      itemBuilder: (BuildContext bc) => [
+                                                        PopupMenuItem(
+                                                          child: GestureDetector(
+                                                            onTap: (){
+                                                              GeneratePdf().generateSaleDocument(transaction[index], data, context, share: false);
+                                                              finish(context);
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                const Icon(
+                                                                  Icons.picture_as_pdf,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                                 const SizedBox(
+                                                                  width: 10.0,
+                                                                ),
+                                                                Text(
+                                                                  'Pdf View',
+                                                                  style: kTextStyle.copyWith(color: kGreyTextColor),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        PopupMenuItem(
+                                                          child: GestureDetector(
+                                                            onTap: (){
+                                                              GeneratePdf().generateSaleDocument(transaction[index], data, context, share: true);
+                                                              finish(context);
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                const Icon(
+                                                                  CommunityMaterialIcons.share,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 10.0,
+                                                                ),
+                                                                Text(
+                                                                  lang.S.of(context).share,
+                                                                  style: kTextStyle.copyWith(color: kGreyTextColor),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                      onSelected: (value) {
+                                                        Navigator.pushNamed(context, '$value');
+                                                      },
+                                                      child:  const Icon(
+                                                        FeatherIcons.moreVertical,
+                                                        color: kGreyTextColor,
+                                                      ),
+                                                    ),
                                                   ],
                                                 );
                                               }, error: (e, stack) {

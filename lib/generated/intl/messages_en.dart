@@ -411,6 +411,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "setUpYourProfile":
             MessageLookupByLibrary.simpleMessage("Setup Your Profile"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
         "size": MessageLookupByLibrary.simpleMessage("Size"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "sms": MessageLookupByLibrary.simpleMessage("Sms"),

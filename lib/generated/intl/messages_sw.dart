@@ -424,6 +424,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "setUpYourProfile":
             MessageLookupByLibrary.simpleMessage("Sanidi Profaili Yako"),
         "setting": MessageLookupByLibrary.simpleMessage("Mipangilio"),
+        "share": MessageLookupByLibrary.simpleMessage("shiriki"),
         "size": MessageLookupByLibrary.simpleMessage("Ukubwa"),
         "skip": MessageLookupByLibrary.simpleMessage("Ruka"),
         "sms": MessageLookupByLibrary.simpleMessage("Ujumbe mfupi"),

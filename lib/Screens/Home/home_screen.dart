@@ -6,9 +6,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
-import 'package:mailer/smtp_server/gmail.dart';
 import 'package:mobile_pos/Provider/customer_provider.dart';
 import 'package:mobile_pos/Provider/homepage_image_provider.dart';
 import 'package:mobile_pos/Screens/Home/components/grid_items.dart';
@@ -225,10 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 selectedDay == 'Today'
                                     ? RichText(
-                                        text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13), children: [
+                                        text: TextSpan(text: 'Today: ', style: kTextStyle.copyWith(color: kTitleColor, fontSize: 14), children: [
                                         TextSpan(
                                             text: '${DateFormat.d().format(selectedDate)} ${DateFormat.MMM().format(selectedDate)} ${DateFormat.y().format(selectedDate)}',
-                                            style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13)),
+                                            style: kTextStyle.copyWith(color: kTitleColor, fontSize: 14)),
                                       ]))
                                     : const Text(''),
                                 const Spacer(),
@@ -246,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 value: e,
                                                 child: Text(
                                                   e,
-                                                  style: const TextStyle(color: kTitleColor,fontSize: 14.1),
+                                                  style:  kTextStyle.copyWith(color: kTitleColor,fontSize: 14),
                                                 ),
                                               ),
                                             )

@@ -1,13 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
-
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_pos/Functions/generate_pdf.dart';
 import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../Provider/printer_provider.dart';
-// ignore: library_prefixes
+import '../../Provider/profile_provider.dart';
+import '../../Provider/transactions_provider.dart';
 import '../../constant.dart' as mainConstant;
 import '../../currency.dart';
 import '../../invoice_constant.dart';
@@ -31,6 +33,8 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
       final printerData = ref.watch(printerProviderNotifier);
+      final providerData = ref.watch(transitionProvider);
+      final personalData = ref.watch(profileDetailsProvider);
       return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -384,46 +388,49 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  height: 60,
-                  width: context.width() / 3,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
-                    ),
-                  ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.close,
-                          color: Colors.white,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
                         ),
-                        Text(
-                          lang.S.of(context).cacel,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            Text(
+                              lang.S.of(context).cacel,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ).onTap(() => const Home().launch(context)),
                   ),
-                ).onTap(() => const Home().launch(context)),
-                GestureDetector(
-                  onTap: () async {
-                    await printerData.getBluetooth();
-                    PrintTransactionModel model = PrintTransactionModel(transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
-                    mainConstant.connected
-                        ? printerData.printTicket(
-                            printTransactionModel: model,
-                            productList: model.transitionModel!.productList,
-                          )
-                        : showDialog(
+                  const SizedBox(width: 10,),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        await printerData.getBluetooth();
+                        PrintTransactionModel model = PrintTransactionModel(transitionModel: widget.transitionModel, personalInformationModel: widget.personalInformationModel);
+                        mainConstant.connected
+                            ? printerData.printTicket(
+                          printTransactionModel: model,
+                          productList: model.transitionModel!.productList,
+                        )
+                            : showDialog(
                             context: context,
                             builder: (_) {
                               return WillPopScope(
@@ -462,7 +469,7 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                           child: Center(
                                             child: Text(
                                               lang.S.of(context).cacel,
-                                              style: TextStyle(color: mainConstant.kMainColor),
+                                              style: const TextStyle(color: mainConstant.kMainColor),
                                             ),
                                           ),
                                         ),
@@ -473,37 +480,72 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                                 ),
                               );
                             });
-                  },
-                  child: Container(
-                    height: 60,
-                    width: context.width() / 3,
-                    decoration: const BoxDecoration(
-                      color: mainConstant.kMainColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.print,
-                            color: Colors.white,
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: const BoxDecoration(
+                          color: mainConstant.kMainColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
                           ),
-                          Text(
-                            lang.S.of(context).print,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.print,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                lang.S.of(context).print,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10,),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: (){
+                        GeneratePdf().generateSaleDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                CommunityMaterialIcons.share,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                lang.S.of(context).share,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
             ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -13,7 +13,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import '../../GlobalComponents/button_global.dart';
-import '../Home/home.dart';
 
 class OTPVerify extends StatefulWidget {
   const OTPVerify({Key? key}) : super(key: key);
