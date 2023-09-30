@@ -3,24 +3,20 @@ import 'dart:io';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/due_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
-import '../Screens/Pdf/pdf_view.dart';
 import '../model/personal_information_model.dart';
 import '../model/transition_model.dart';
 import 'package:path_provider/path_provider.dart';
 
-class GeneratePdf {
-  Future<void> generatePurchaseDocument(PurchaseTransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context, {required bool share}) async {
+import 'Screens/Pdf/pdf_view.dart';
+
+class GeneratePdf1 {
+  Future<void> generatePurchaseDocument(PurchaseTransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
     final pw.Document doc = pw.Document();
-    // final netImage = await networkImage(
-    //   personalInformation.pictureUrl.toString(),
-    // );
     doc.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         margin: pw.EdgeInsets.zero,
@@ -247,7 +243,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Smart Biashara', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -301,10 +297,8 @@ class GeneratePdf {
                             ('${i + 1}'),
                             (transactions.productList!.elementAt(i).productName),
                             (transactions.productList!.elementAt(i).productStock),
-                            (myFormat.format(int.tryParse(transactions.productList!.elementAt(i).productSalePrice) ?? 0)),
-                            (myFormat.format(int.tryParse(
-                                    (transactions.productList!.elementAt(i).productSalePrice.toInt() * transactions.productList!.elementAt(i).productStock.toInt()).toString()) ??
-                                0))
+                            (transactions.productList!.elementAt(i).productSalePrice),
+                            ((transactions.productList!.elementAt(i).productSalePrice.toInt() * transactions.productList!.elementAt(i).productStock.toInt()).toString())
                           ],
                       ]),
                   pw.Paragraph(text: ""),
@@ -312,7 +306,7 @@ class GeneratePdf {
                     pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.end, mainAxisAlignment: pw.MainAxisAlignment.end, children: [
                       pw.SizedBox(height: 10.0),
                       pw.Text(
-                        "Subtotal: ${myFormat.format(transactions.totalAmount! + transactions.discountAmount!)}",
+                        "Subtotal: ${transactions.totalAmount! + transactions.discountAmount!}",
                         style: pw.TextStyle(
                           color: PdfColors.black,
                           fontWeight: pw.FontWeight.bold,
@@ -336,7 +330,7 @@ class GeneratePdf {
                       ),
                       pw.SizedBox(height: 5.0),
                       pw.Text(
-                        "Discount: ${myFormat.format(transactions.discountAmount)}",
+                        "Discount: ${transactions.discountAmount}",
                         style: pw.TextStyle(
                           color: PdfColors.black,
                           fontWeight: pw.FontWeight.bold,
@@ -346,7 +340,7 @@ class GeneratePdf {
                       pw.Container(
                         color: PdfColors.blueAccent,
                         padding: const pw.EdgeInsets.all(5.0),
-                        child: pw.Text("Total Amount: ${myFormat.format(transactions.totalAmount)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                        child: pw.Text("Total Amount: ${transactions.totalAmount}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                       ),
                       pw.SizedBox(height: 5.0),
                       pw.Container(
@@ -359,7 +353,7 @@ class GeneratePdf {
                             ),
                           ),
                           pw.Text(
-                            "Paid Amount: ${myFormat.format(transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble())}",
+                            "Paid Amount: ${transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble()}",
                             style: pw.TextStyle(
                               color: PdfColors.black,
                               fontWeight: pw.FontWeight.bold,
@@ -369,7 +363,7 @@ class GeneratePdf {
                       ),
                       pw.SizedBox(height: 5.0),
                       pw.Text(
-                        "Due: ${myFormat.format(transactions.dueAmount)}",
+                        "Due: ${transactions.dueAmount}",
                         style: pw.TextStyle(
                           color: PdfColors.black,
                           fontWeight: pw.FontWeight.bold,
@@ -384,104 +378,102 @@ class GeneratePdf {
     if (Platform.isIOS) {
       EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+      final file = File('${dir.path}/${'Smart_Biashara_purchase_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        if (share) {
-          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-        } else {
-          EasyLoading.showSuccess('Done');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
-        }
-
+        EasyLoading.showSuccess('Done');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_purchase_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
         EasyLoading.showError(err.message);
         // handle error
       }
     }
+
     if (Platform.isAndroid) {
-      var status = await Permission.storage.status;
-      if (status != PermissionStatus.granted) {
-        status = await Permission.storage.request();
-      }
-      if (status.isGranted) {
-        const downloadsFolderPath = '/storage/emulated/0/Download/';
-        Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-        final byteData = await doc.save();
-        try {
-          await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          if (share) {
-            await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-          } else {
-            EasyLoading.showSuccess('Done');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-              ),
-            );
-          }
-          // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-        } on FileSystemException catch (err) {
-          EasyLoading.showError(err.message);
-          // handle error
-        }
+      EasyLoading.show(status: 'Generating PDF');
+      const downloadsFolderPath = '/storage/emulated/0/Download/';
+      Directory dir = Directory(downloadsFolderPath);
+      final file = File('${dir.path}/${'Smart_Biashara_purchase_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+
+      final byteData = await doc.save();
+      try {
+        await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+        EasyLoading.showSuccess('Created and Saved');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_purchase_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
+        // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+      } on FileSystemException catch (err) {
+        EasyLoading.showError(err.message);
+        // handle error
       }
     }
-
+    // if (Platform.isIOS) {
+    //   EasyLoading.show(status: 'Generating PDF');
+    //   final dir = await getApplicationDocumentsDirectory();
+    //   final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+    //
+    //   final byteData = await doc.save();
+    //   try {
+    //     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    //     EasyLoading.showSuccess('Done');
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+    //       ),
+    //     );
+    //
+    //     // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+    //   } on FileSystemException catch (err) {
+    //     EasyLoading.showError(err.message);
+    //     // handle error
+    //   }
+    // }
     // if (Platform.isAndroid) {
     //   var status = await Permission.storage.status;
     //   if (status != PermissionStatus.granted) {
     //     status = await Permission.storage.request();
     //   }
     //   if (status.isGranted) {
-    //     // const downloadsFolderPath = '/storage/emulated/0/Download/';
-    //     // Directory dir = Directory(downloadsFolderPath);
-    //     // final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-    //     // await file.writeAsBytes(await doc.save());
-    //     // EasyLoading.showSuccess('Successful');
-    //     // OpenFile.open("/storage/emulated/0/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+    //     EasyLoading.show(status: 'Generating PDF');
+    //     const downloadsFolderPath = '/storage/emulated/0/Download/';
+    //     Directory dir = Directory(downloadsFolderPath);
+    //     final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
     //
-    //     final file = File("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-    //     await file.writeAsBytes(await doc.save());
-    //     EasyLoading.showSuccess('Successful');
-    //     OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-    //   } else {
-    //     EasyLoading.showError('Sorry, Permission not granted');
+    //     final byteData = await doc.save();
+    //     try {
+    //       await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    //       EasyLoading.showSuccess('Done');
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+    //         ),
+    //       );
+    //       // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+    //     } on FileSystemException catch (err) {
+    //       EasyLoading.showError(err.message);
+    //       // handle error
+    //     }
     //   }
-    // }
-
-    // final byteData = await rootBundle.load('assets/$fileName');
-    // try {
-    //   await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-    // } on FileSystemException catch (err) {
-    //   // handle error
-    // }
-    // var status = await Permission.storage.request();
-    // if (status.isGranted) {
-    //   final file = File("/storage/emulated/0/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-    //   await file.writeAsBytes(await doc.save());
-    //   EasyLoading.showSuccess('Successful');
-    //   OpenFile.open("/storage/emulated/0/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-    // } else if (status.isDenied) {
-    //   EasyLoading.dismiss();
-    //   await Permission.storage.request();
-    // } else if (status.isPermanentlyDenied) {
-    //   EasyLoading.showError('Grant Access');
     // }
   }
 
-  Future<void> generateSaleDocument(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context, {required bool share}) async {
+  Future<void> generateSaleDocument(TransitionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
     final pw.Document doc = pw.Document();
+
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -709,7 +701,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Smart Biashara', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -764,9 +756,8 @@ class GeneratePdf {
                           ('${i + 1}'),
                           (transactions.productList!.elementAt(i).productName.toString()),
                           (transactions.productList!.elementAt(i).quantity.toString()),
-                          (myFormat.format(int.tryParse(transactions.productList!.elementAt(i).subTotal) ?? 0)),
-                          (myFormat.format(
-                              int.tryParse((int.parse(transactions.productList!.elementAt(i).subTotal) * transactions.productList!.elementAt(i).quantity.toInt()).toString()) ?? 0))
+                          (transactions.productList!.elementAt(i).subTotal),
+                          ((int.parse(transactions.productList!.elementAt(i).subTotal) * transactions.productList!.elementAt(i).quantity.toInt()).toString())
                         ],
                     ]),
                 pw.Paragraph(text: ""),
@@ -779,7 +770,7 @@ class GeneratePdf {
                       children: [
                         pw.SizedBox(height: 10.0),
                         pw.Text(
-                          "Subtotal: ${myFormat.format(transactions.totalAmount! + transactions.discountAmount!)}",
+                          "Subtotal: ${transactions.totalAmount! + transactions.discountAmount!}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -803,7 +794,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Discount: ${myFormat.format(transactions.discountAmount)}",
+                          "Discount: ${transactions.discountAmount}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -813,7 +804,7 @@ class GeneratePdf {
                         pw.Container(
                           color: PdfColors.blueAccent,
                           padding: const pw.EdgeInsets.all(5.0),
-                          child: pw.Text("Total Amount: ${myFormat.format(transactions.totalAmount)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text("Total Amount: ${transactions.totalAmount}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Container(
@@ -826,7 +817,7 @@ class GeneratePdf {
                               ),
                             ),
                             pw.Text(
-                              "Paid Amount: ${myFormat.format(transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble())}",
+                              "Paid Amount: ${transactions.totalAmount!.toDouble() - transactions.dueAmount!.toDouble()}",
                               style: pw.TextStyle(
                                 color: PdfColors.black,
                                 fontWeight: pw.FontWeight.bold,
@@ -836,7 +827,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Due: ${myFormat.format(transactions.dueAmount)}",
+                          "Due: ${transactions.dueAmount}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -857,21 +848,18 @@ class GeneratePdf {
     if (Platform.isIOS) {
       EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+      final file = File('${dir.path}/${'Smart_Biashara_sale${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        if (share) {
-          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-        } else {
-          EasyLoading.showSuccess('Created and Saved');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
-        }
+        EasyLoading.showSuccess('Done');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_sale${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
         EasyLoading.showError(err.message);
@@ -880,45 +868,38 @@ class GeneratePdf {
     }
 
     if (Platform.isAndroid) {
-      var status = await Permission.storage.status;
-      if (status != PermissionStatus.granted) {
-        status = await Permission.storage.request();
-      }
-      if (status.isGranted) {
-        // EasyLoading.show(status: 'Generating PDF');
-        const downloadsFolderPath = '/storage/emulated/0/Download/';
-        Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
-        final byteData = await doc.save();
-        try {
-          await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          if (share) {
-            await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-          } else {
-            EasyLoading.showSuccess('Created and Saved');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-              ),
-            );
-          }
+      EasyLoading.show(status: 'Generating PDF');
+      const downloadsFolderPath = '/storage/emulated/0/Download/';
+      Directory dir = Directory(downloadsFolderPath);
+      final file = File('${dir.path}/${'Smart_Biashara_sale_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
-          // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-        } on FileSystemException catch (err) {
-          EasyLoading.showError(err.message);
-          // handle error
-        }
+      final byteData = await doc.save();
+      try {
+        await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+        EasyLoading.showSuccess('Created and Saved');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_Sale_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
+        // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+      } on FileSystemException catch (err) {
+        EasyLoading.showError(err.message);
+        // handle error
       }
+      // var status = await Permission.storage.status;
+      // if (status != PermissionStatus.granted) {
+      //   status = await Permission.storage.request();
+      // }
+      // if (status.isGranted) {
+      //
+      // }
     }
   }
 
-  Future<void> generateDueDocument(DueTransactionModel transactions, PersonalInformationModel personalInformation, BuildContext context, {required bool share}) async {
+  Future<void> generateDueDocument(DueTransactionModel transactions, PersonalInformationModel personalInformation, BuildContext context) async {
     final pw.Document doc = pw.Document();
-    // final netImage = await networkImage(
-    //   personalInformation.pictureUrl.toString(),
-    // );
-    // EasyLoading.show(status: 'Generating PDF');
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -1146,7 +1127,7 @@ class GeneratePdf {
               width: double.infinity,
               color: PdfColors.blueAccent,
               padding: const pw.EdgeInsets.all(10.0),
-              child: pw.Center(child: pw.Text('Powered By Smart Biashara', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
+              child: pw.Center(child: pw.Text('Powered By Maan Technology', style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold))),
             ),
           ]);
         },
@@ -1197,7 +1178,7 @@ class GeneratePdf {
                     data: <List<String>>[
                       <String>['SL', 'Item', '', '', 'Total Due'],
 
-                      <String>[('${1}'), ('Due'), (''), (''), (myFormat.format(transactions.totalDue))],
+                      <String>[('${1}'), ('Due'), (''), (''), (transactions.totalDue.toString())],
                       // for (int i = 0; i < transactions.productList!.length; i++)
                       //   <String>[
                       //     ('${i + 1}'),
@@ -1217,7 +1198,7 @@ class GeneratePdf {
                       children: [
                         pw.SizedBox(height: 10.0),
                         pw.Text(
-                          "Subtotal: ${myFormat.format(transactions.totalDue)}",
+                          "Subtotal: ${transactions.totalDue}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -1235,7 +1216,7 @@ class GeneratePdf {
                         pw.Container(
                           color: PdfColors.blueAccent,
                           padding: const pw.EdgeInsets.all(5.0),
-                          child: pw.Text("Total Due: ${myFormat.format(transactions.totalDue)}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text("Total Due: ${transactions.totalDue}", style: pw.TextStyle(color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Container(
@@ -1248,7 +1229,7 @@ class GeneratePdf {
                               ),
                             ),
                             pw.Text(
-                              "Paid Amount: ${myFormat.format(transactions.totalDue!.toDouble() - transactions.dueAmountAfterPay!.toDouble())}",
+                              "Paid Amount: ${transactions.totalDue!.toDouble() - transactions.dueAmountAfterPay!.toDouble()}",
                               style: pw.TextStyle(
                                 color: PdfColors.black,
                                 fontWeight: pw.FontWeight.bold,
@@ -1258,7 +1239,7 @@ class GeneratePdf {
                         ),
                         pw.SizedBox(height: 5.0),
                         pw.Text(
-                          "Still Due: ${myFormat.format(transactions.dueAmountAfterPay)}",
+                          "Still Due: ${transactions.dueAmountAfterPay}",
                           style: pw.TextStyle(
                             color: PdfColors.black,
                             fontWeight: pw.FontWeight.bold,
@@ -1277,61 +1258,105 @@ class GeneratePdf {
       ),
     );
     if (Platform.isIOS) {
+      EasyLoading.show(status: 'Generating PDF');
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+      final file = File('${dir.path}/${'Smart_Biashara_due${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
       final byteData = await doc.save();
       try {
         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        if (share) {
-          await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-        } else {
-          EasyLoading.showSuccess('Done');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-            ),
-          );
-        }
+        EasyLoading.showSuccess('Done');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_due${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
         // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
       } on FileSystemException catch (err) {
         EasyLoading.showError(err.message);
         // handle error
       }
     }
+
     if (Platform.isAndroid) {
-      var status = await Permission.storage.status;
-      if (status != PermissionStatus.granted) {
-        status = await Permission.storage.request();
-      }
-      if (status.isGranted) {
-        const downloadsFolderPath = '/storage/emulated/0/Download/';
-        Directory dir = Directory(downloadsFolderPath);
-        final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+      EasyLoading.show(status: 'Generating PDF');
+      const downloadsFolderPath = '/storage/emulated/0/Download/';
+      Directory dir = Directory(downloadsFolderPath);
+      final file = File('${dir.path}/${'Smart_Biashara_due_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
 
-        final byteData = await doc.save();
-        try {
-          await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-          if (share) {
-            await Share.shareFiles(['${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'], text: 'Share PDF via...');
-          } else {
-            EasyLoading.showSuccess('Done');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
-              ),
-            );
-          }
-          // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
-        } on FileSystemException catch (err) {
-          EasyLoading.showError(err.message);
-          // handle error
-        }
+      final byteData = await doc.save();
+      try {
+        await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+        EasyLoading.showSuccess('Created and Saved');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(path: '${dir.path}/${'Smart_Biashara_due_${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+          ),
+        );
+        // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+      } on FileSystemException catch (err) {
+        EasyLoading.showError(err.message);
+        // handle error
       }
+      // var status = await Permission.storage.status;
+      // if (status != PermissionStatus.granted) {
+      //   status = await Permission.storage.request();
+      // }
+      // if (status.isGranted) {
+      //
+      // }
     }
+    // if (Platform.isIOS) {
+    //   EasyLoading.show(status: 'Generating PDF');
+    //   final dir = await getApplicationDocumentsDirectory();
+    //   final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+    //
+    //   final byteData = await doc.save();
+    //   try {
+    //     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    //     EasyLoading.showSuccess('Done');
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+    //       ),
+    //     );
+    //     // OpenFile.open("${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+    //   } on FileSystemException catch (err) {
+    //     EasyLoading.showError(err.message);
+    //     // handle error
+    //   }
+    // }
+    // if (Platform.isAndroid) {
+    //   var status = await Permission.storage.status;
+    //   if (status != PermissionStatus.granted) {
+    //     status = await Permission.storage.request();
+    //   }
+    //   if (status.isGranted) {
+    //     EasyLoading.show(status: 'Generating PDF');
+    //     const downloadsFolderPath = '/storage/emulated/0/Download/';
+    //     Directory dir = Directory(downloadsFolderPath);
+    //     final file = File('${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf');
+    //
+    //     final byteData = await doc.save();
+    //     try {
+    //       await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    //       EasyLoading.showSuccess('Done');
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => PDFViewerPage(path: '${dir.path}/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf'),
+    //         ),
+    //       );
+    //       // OpenFile.open("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");
+    //     } on FileSystemException catch (err) {
+    //       EasyLoading.showError(err.message);
+    //       // handle error
+    //     }
+    //   }
+    // }
     // var status = await Permission.storage.request();
     // if (status.isGranted) {
     //   final file = File("/storage/emulated/0/download/${'SalesPRO-${personalInformation.companyName}-${transactions.invoiceNumber}'}.pdf");

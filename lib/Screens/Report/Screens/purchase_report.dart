@@ -17,7 +17,9 @@ import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import '../../../currency.dart';
 import '../../../empty_screen_widget.dart';
+import '../../../generate_pdf.dart';
 import '../../../model/print_transaction_model.dart';
+import '../../../pdf/purchase_pdf.dart';
 import '../../Home/home.dart';
 import '../../invoice_details/purchase_invoice_details.dart';
 
@@ -452,14 +454,15 @@ class _PurchaseReportState extends State<PurchaseReportScreen> {
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
-                                                            onPressed: () => GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context, share: false),
+                                                            onPressed: () async => await GeneratePdf1().generatePurchaseDocument(reTransaction[index], data, context),
                                                             icon: const Icon(
                                                               Icons.picture_as_pdf,
                                                               color: Colors.grey,
                                                             )),
                                                         IconButton(
                                                             onPressed: ()  async {
-                                                              GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context,share: true);
+                                                              sharePurchasePDF(transactions: reTransaction[index],personalInformation: data,context: context);
+                                                              // GeneratePdf().generatePurchaseDocument(reTransaction[index], data, context,share: true);
                                                             },
                                                             icon: const Icon(
                                                               CommunityMaterialIcons.share,

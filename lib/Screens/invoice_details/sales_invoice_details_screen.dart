@@ -16,6 +16,7 @@ import '../../invoice_constant.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/print_transaction_model.dart';
 import '../../model/transition_model.dart';
+import '../../pdf/sales_pdf.dart';
 import '../Home/home.dart';
 
 class SalesInvoiceDetails extends StatefulWidget {
@@ -514,7 +515,12 @@ class _SalesInvoiceDetailsState extends State<SalesInvoiceDetails> {
                   Expanded(
                     child: GestureDetector(
                       onTap: (){
-                        GeneratePdf().generateSaleDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
+                        shareSalePDF(
+                          transactions: widget.transitionModel,
+                          personalInformation: widget.personalInformationModel,
+                          context: context,
+                        );
+                        // GeneratePdf().generateSaleDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
                       },
                       child: Container(
                         height: 60,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:mobile_pos/const_commas.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
-import '../../Functions/generate_pdf.dart';
 import '../../Provider/printer_due_provider.dart';
 // ignore: library_prefixes
 import '../../constant.dart' as mainConstant;
@@ -14,6 +15,7 @@ import '../../invoice_constant.dart';
 import '../../model/due_transaction_model.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/print_transaction_model.dart';
+import '../../pdf/due_pdf.dart';
 import '../Home/home.dart';
 
 class DueInvoiceDetails extends StatefulWidget {
@@ -225,8 +227,11 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
-                          const Icon(Icons.close,color: Colors.white,),
+                        children: [
+                          const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
                           Text(
                             lang.S.of(context).cacel,
                             style: const TextStyle(
@@ -239,7 +244,9 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     ),
                   ).onTap(() => const Home().launch(context)),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   child: GestureDetector(
                     onTap: () async {
@@ -271,11 +278,10 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                                                   // String name = list[0];
                                                   String mac = list[1];
                                                   bool isConnect = await printerData.setConnect(mac);
-                                                  // ignore: use_build_context_synchronously
                                                   isConnect ? finish(context) : toast('Try Again');
                                                 },
                                                 title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                subtitle: Text(lang.S.of(context).clickToConnect),
                                               );
                                             },
                                           ),
@@ -286,10 +292,10 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                                             onTap: () {
                                               Navigator.pop(context);
                                             },
-                                            child:  Center(
+                                            child: Center(
                                               child: Text(
                                                 lang.S.of(context).cacel,
-                                                style: TextStyle(color: mainConstant.kMainColor),
+                                                style: const TextStyle(color: mainConstant.kMainColor),
                                               ),
                                             ),
                                           ),
@@ -313,8 +319,11 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  [
-                            const Icon(Icons.print,color: Colors.white,),
+                          children: [
+                            const Icon(
+                              Icons.print,
+                              color: Colors.white,
+                            ),
                             Text(
                               lang.S.of(context).print,
                               style: const TextStyle(
@@ -328,12 +337,15 @@ class _DueInvoiceDetailsState extends State<DueInvoiceDetails> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      GeneratePdf().generateDueDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
+                    onTap: () {
+                      shareDuePDF(context: context, personalInformation: widget.personalInformationModel, transactions: widget.transitionModel);
                     },
+                    // onTap: () async => await GeneratePdf1().generateDueDocument(widget.transitionModel, widget.personalInformationModel, context),
                     child: Container(
                       height: 60,
                       decoration: const BoxDecoration(

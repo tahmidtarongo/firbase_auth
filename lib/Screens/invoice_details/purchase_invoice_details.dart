@@ -15,6 +15,7 @@ import '../../invoice_constant.dart';
 import '../../model/personal_information_model.dart';
 import '../../model/print_transaction_model.dart';
 import '../../model/transition_model.dart';
+import '../../pdf/purchase_pdf.dart';
 
 class PurchaseInvoiceDetails extends StatefulWidget {
   const PurchaseInvoiceDetails({Key? key, required this.transitionModel, required this.personalInformationModel}) : super(key: key);
@@ -491,7 +492,8 @@ class _PurchaseInvoiceDetailsState extends State<PurchaseInvoiceDetails> {
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
-                      GeneratePdf().generatePurchaseDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
+                      sharePurchasePDF(transactions: widget.transitionModel,personalInformation: widget.personalInformationModel,context: context);
+                      // GeneratePdf().generatePurchaseDocument(widget.transitionModel, widget.personalInformationModel, context, share: true);
                     },
                     child: Container(
                       height: 60,

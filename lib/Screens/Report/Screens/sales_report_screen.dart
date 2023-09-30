@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+import 'dart:io';
 import 'dart:async';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -12,13 +15,19 @@ import 'package:mobile_pos/Provider/transactions_provider.dart';
 import 'package:mobile_pos/const_commas.dart';
 import 'package:mobile_pos/model/print_transaction_model.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../../../Functions/generate_pdf.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../Provider/profile_provider.dart';
 import '../../../constant.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
 import 'package:pdf/widgets.dart' as pw;
 import '../../../currency.dart';
 import '../../../empty_screen_widget.dart';
+import '../../../generate_pdf.dart';
+import '../../../model/personal_information_model.dart';
+import '../../../model/transition_model.dart';
+import '../../../pdf/sales_pdf.dart';
 import '../../Home/home.dart';
 import '../../invoice_details/sales_invoice_details_screen.dart';
 
@@ -42,21 +51,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
 
   final pw.Document doc = pw.Document();
 
-
-  Future<pw.Document> generatePDF() async {
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (context) {
-          return pw.Center(
-            child: pw.Text('${GeneratePdf()}'),
-            // child: pw.Text('Hello Shakil'),
-          );
-        },
-      ),
-    );
-    return pdf;
-  }
   final pdf = pw.Document();
 
   late StreamSubscription subscription;
@@ -65,13 +59,13 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
 
   getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
-      isDeviceConnected = await InternetConnectionChecker().hasConnection;
-      if (!isDeviceConnected && isAlertSet == false) {
-        showDialogBox();
-        setState(() => isAlertSet = true);
-      }
-    },
-  );
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
 
   checkInternet() async {
     isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -81,14 +75,12 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
     }
   }
 
-
   @override
   void initState() {
     getConnectivity();
     checkInternet();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +266,8 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                           ),
                                         ),
                                       ]).visible(false),
-                                      subtitle: Text('Total Sale ${isPicked ? '(From ${fromDate.toString().substring(0, 10)} to ${toDate.toString().substring(0, 10)})' : '(This Month)'}'),
+                                      subtitle: Text(
+                                          'Total Sale ${isPicked ? '(From ${fromDate.toString().substring(0, 10)} to ${toDate.toString().substring(0, 10)})' : '(This Month)'}'),
                                     ),
                                   ),
                                 ),
@@ -288,7 +281,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                       invoiceNumber = value;
                                     });
                                   },
-                                  decoration:  InputDecoration(
+                                  decoration: InputDecoration(
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       labelText: lang.S.of(context).invoiceNumber,
                                       hintText: lang.S.of(context).enterInvoiceNumber,
@@ -301,8 +294,10 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: reTransaction.length,
                                 itemBuilder: (context, index) {
-                                  return (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) || DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
-                                          (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) || DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
+                                  return (fromDate.isBefore(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                              DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(fromDate)) &&
+                                          (toDate.isAfter(DateTime.parse(reTransaction[index].purchaseDate)) ||
+                                              DateTime.parse(reTransaction[index].purchaseDate).isAtSameMomentAs(toDate))
                                       ? GestureDetector(
                                           onTap: () {
                                             SalesInvoiceDetails(
@@ -338,7 +333,9 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                         Container(
                                                           padding: const EdgeInsets.all(8),
                                                           decoration: BoxDecoration(
-                                                              color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d).withOpacity(0.1) : const Color(0xFFED1A3B).withOpacity(0.1),
+                                                              color: reTransaction[index].dueAmount! <= 0
+                                                                  ? const Color(0xff0dbf7d).withOpacity(0.1)
+                                                                  : const Color(0xFFED1A3B).withOpacity(0.1),
                                                               borderRadius: const BorderRadius.all(Radius.circular(10))),
                                                           child: Text(
                                                             reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
@@ -390,7 +387,8 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                               IconButton(
                                                                   onPressed: () async {
                                                                     await printerData.getBluetooth();
-                                                                    PrintTransactionModel model = PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
+                                                                    PrintTransactionModel model =
+                                                                        PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
                                                                     connected
                                                                         ? printerData.printTicket(
                                                                             printTransactionModel: model,
@@ -408,8 +406,9 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                                       children: [
                                                                                         ListView.builder(
                                                                                           shrinkWrap: true,
-                                                                                          itemCount:
-                                                                                              printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                                                          itemCount: printerData.availableBluetoothDevices.isNotEmpty
+                                                                                              ? printerData.availableBluetoothDevices.length
+                                                                                              : 0,
                                                                                           itemBuilder: (context, index) {
                                                                                             return ListTile(
                                                                                               onTap: () async {
@@ -418,22 +417,18 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                                                 // String name = list[0];
                                                                                                 String mac = list[1];
                                                                                                 bool isConnect = await printerData.setConnect(mac);
-                                                                                                // ignore: use_build_context_synchronously
-                                                                                                isConnect
-                                                                                                    // ignore: use_build_context_synchronously
-                                                                                                    ? finish(context)
-                                                                                                    : toast('Try Again');
+                                                                                                isConnect ? finish(context) : toast('Try Again');
                                                                                               },
                                                                                               title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                              subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                                                              subtitle: Text(lang.S.of(context).clickToConnect),
                                                                                             );
                                                                                           },
                                                                                         ),
                                                                                         Padding(
-                                                                                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                                          padding: const EdgeInsets.only(top: 20, bottom: 10),
                                                                                           child: Text(
                                                                                             lang.S.of(context).pleaseConnectYourBluttothPrinter,
-                                                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                           ),
                                                                                         ),
                                                                                         const SizedBox(height: 10),
@@ -443,10 +438,10 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                                           onTap: () {
                                                                                             Navigator.pop(context);
                                                                                           },
-                                                                                          child:  Center(
+                                                                                          child: Center(
                                                                                             child: Text(
                                                                                               lang.S.of(context).cacel,
-                                                                                              style: TextStyle(color: kMainColor),
+                                                                                              style: const TextStyle(color: kMainColor),
                                                                                             ),
                                                                                           ),
                                                                                         ),
@@ -463,16 +458,29 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                                                                     color: Colors.grey,
                                                                   )),
                                                               IconButton(
-                                                                  onPressed: () {
-                                                                    GeneratePdf().generateSaleDocument(reTransaction[index], data, context,share: false);
-                                                                  },
+                                                                  onPressed: () async => await GeneratePdf1().generateSaleDocument(
+                                                                        reTransaction[index],
+                                                                        data,
+                                                                        context,
+                                                                        // share: false,
+                                                                      ),
                                                                   icon: const Icon(
                                                                     Icons.picture_as_pdf,
                                                                     color: Colors.grey,
                                                                   )),
                                                               IconButton(
-                                                                  onPressed: ()  async {
-                                                                    GeneratePdf().generateSaleDocument(reTransaction[index], data, context,share: true);
+                                                                  onPressed: () async {
+                                                                    shareSalePDF(
+                                                                      transactions: reTransaction[index],
+                                                                      personalInformation: data,
+                                                                      context: context,
+                                                                    );
+                                                                    // GeneratePdf1().generateSaleDocument(
+                                                                    //   reTransaction[index],
+                                                                    //   data,
+                                                                    //   context,
+                                                                    //   // share: true,
+                                                                    // );
                                                                   },
                                                                   icon: const Icon(
                                                                     CommunityMaterialIcons.share,
@@ -524,25 +532,26 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
       ),
     );
   }
+
   showDialogBox() => showCupertinoDialog<String>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(lang.S.of(context).noConnection),
-      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () async {
-            Navigator.pop(context, 'Cancel');
-            setState(() => isAlertSet = false);
-            isDeviceConnected = await InternetConnectionChecker().hasConnection;
-            if (!isDeviceConnected && isAlertSet == false) {
-              showDialogBox();
-              setState(() => isAlertSet = true);
-            }
-          },
-          child: Text(lang.S.of(context).tryAgain),
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(lang.S.of(context).noConnection),
+          content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected = await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected && isAlertSet == false) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: Text(lang.S.of(context).tryAgain),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 }

@@ -17,6 +17,8 @@ import '../../../constant.dart';
 import '../../Functions/generate_pdf.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
+import '../../generate_pdf.dart';
+import '../../pdf/sales_pdf.dart';
 import '../Home/home.dart';
 import '../invoice_details/sales_invoice_details_screen.dart';
 
@@ -29,7 +31,6 @@ class SalesListScreen extends StatefulWidget {
 }
 
 class _SalesListScreenState extends State<SalesListScreen> {
-
   String? invoiceNumber;
   String _selectedItem = '';
 
@@ -75,13 +76,12 @@ class _SalesListScreenState extends State<SalesListScreen> {
                           invoiceNumber = value;
                         });
                       },
-                      decoration:  InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelText: lang.S.of(context).invoiceNumber,
-                        hintText: lang.S.of(context).enterInvoiceNumber,
-                        border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.search)
-                      ),
+                      decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelText: lang.S.of(context).invoiceNumber,
+                          hintText: lang.S.of(context).enterInvoiceNumber,
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.search)),
                     ),
                   ),
                   providerData.when(data: (transaction) {
@@ -111,9 +111,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                reTransaction[index].customerName.isNotEmpty
-                                                    ? reTransaction[index].customerName
-                                                    : reTransaction[index].customerPhone,
+                                                reTransaction[index].customerName.isNotEmpty ? reTransaction[index].customerName : reTransaction[index].customerPhone,
                                                 style: const TextStyle(fontSize: 16),
                                               ),
                                               Text(
@@ -129,9 +127,8 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                               Container(
                                                 padding: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                    color: reTransaction[index].dueAmount! <= 0
-                                                        ? const Color(0xff0dbf7d).withOpacity(0.1)
-                                                        : const Color(0xFFED1A3B).withOpacity(0.1),
+                                                    color:
+                                                        reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d).withOpacity(0.1) : const Color(0xFFED1A3B).withOpacity(0.1),
                                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                                 child: Text(
                                                   reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
@@ -220,11 +217,11 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                                                           : toast('Try Again');
                                                                                     },
                                                                                     title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                    subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                                                    subtitle: Text(lang.S.of(context).clickToConnect),
                                                                                   );
                                                                                 },
                                                                               ),
-                                                                               Padding(
+                                                                              Padding(
                                                                                 padding: EdgeInsets.only(top: 20, bottom: 10),
                                                                                 child: Text(
                                                                                   lang.S.of(context).pleaseConnectYourBluttothPrinter,
@@ -238,7 +235,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                                                 onTap: () {
                                                                                   Navigator.pop(context);
                                                                                 },
-                                                                                child:  Center(
+                                                                                child: Center(
                                                                                   child: Text(
                                                                                     lang.S.of(context).cacel,
                                                                                     style: TextStyle(color: kMainColor),
@@ -277,17 +274,19 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                       itemBuilder: (BuildContext bc) => [
                                                         PopupMenuItem(
                                                           child: GestureDetector(
-                                                            onTap: (){
-                                                              GeneratePdf().generateSaleDocument(transaction[index], data, context, share: false);
-                                                              finish(context);
-                                                            },
+                                                            onTap: () async => await GeneratePdf1().generateSaleDocument(
+                                                              reTransaction[index],
+                                                              data,
+                                                              context,
+                                                              // share: false,
+                                                            ),
                                                             child: Row(
                                                               children: [
                                                                 const Icon(
                                                                   Icons.picture_as_pdf,
                                                                   color: Colors.grey,
                                                                 ),
-                                                                 const SizedBox(
+                                                                const SizedBox(
                                                                   width: 10.0,
                                                                 ),
                                                                 Text(
@@ -300,8 +299,13 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                         ),
                                                         PopupMenuItem(
                                                           child: GestureDetector(
-                                                            onTap: (){
-                                                              GeneratePdf().generateSaleDocument(transaction[index], data, context, share: true);
+                                                            onTap: () {
+                                                              shareSalePDF(
+                                                                transactions: reTransaction[index],
+                                                                personalInformation: data,
+                                                                context: context,
+                                                              );
+                                                              // GeneratePdf().generateSaleDocument(transaction[index], data, context, share: true);
                                                               finish(context);
                                                             },
                                                             child: Row(
@@ -325,7 +329,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
                                                       onSelected: (value) {
                                                         Navigator.pushNamed(context, '$value');
                                                       },
-                                                      child:  const Icon(
+                                                      child: const Icon(
                                                         FeatherIcons.moreVertical,
                                                         color: kGreyTextColor,
                                                       ),

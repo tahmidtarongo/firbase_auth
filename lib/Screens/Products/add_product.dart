@@ -1,3 +1,5 @@
+// ignore_for_file: unused_result
+
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -101,22 +103,23 @@ class AddProductState extends State<AddProduct> {
       }
     }
   }
+
   final TextEditingController purchaseController = TextEditingController();
   final TextEditingController mrpController = TextEditingController();
   final TextEditingController wholesaleController = TextEditingController();
   final TextEditingController delaerController = TextEditingController();
-  final TextEditingController stockController=TextEditingController();
+  final TextEditingController stockController = TextEditingController();
 
   String mrpText = '';
-  String purchaseText='';
-  String wholesaleText='';
-  String dealerText='';
-  String stockText='';
+  String purchaseText = '';
+  String wholesaleText = '';
+  String dealerText = '';
+  String stockText = '';
 
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue,
-      ) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     }
@@ -140,9 +143,6 @@ class AddProductState extends State<AddProduct> {
   }
 
   String _formatNumber(String s) => myFormat.format(int.parse(s));
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +176,7 @@ class AddProductState extends State<AddProduct> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: const OutlineInputBorder(),
                           labelText: lang.S.of(context).productName,
@@ -228,7 +228,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 size = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).size,
                                 hintText: lang.S.of(context).enterSize,
@@ -244,7 +244,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 color = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).color,
                                 hintText: lang.S.of(context).enterColor,
@@ -266,7 +266,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 weight = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).weight,
                                 hintText: lang.S.of(context).enterWeight,
@@ -282,7 +282,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 capacity = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).capacity,
                                 hintText: lang.S.of(context).enterCapacity,
@@ -299,7 +299,7 @@ class AddProductState extends State<AddProduct> {
                         onSaved: (value) {
                           type = value!;
                         },
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: lang.S.of(context).type,
                           hintText: lang.S.of(context).enterType,
@@ -350,7 +350,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productCode = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).productCode,
                                 hintText: lang.S.of(context).enterProductCodeOrScan,
@@ -409,7 +409,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productStock = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).stocks,
                                 hintText: lang.S.of(context).enterStocks,
@@ -486,8 +486,8 @@ class AddProductState extends State<AddProduct> {
                               controller: mrpController,
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
-                                 mrpText = value.replaceAll(',', '');
-                              var formattedText = myFormat.format(int.parse(mrpText));
+                                mrpText = value.replaceAll(',', '');
+                                var formattedText = myFormat.format(int.parse(mrpText));
                                 mrpController.value = mrpController.value.copyWith(
                                   text: formattedText,
                                   selection: TextSelection.collapsed(offset: formattedText.length),
@@ -502,7 +502,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 mrpController.text = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).MRP,
                                 hintText: lang.S.of(context).enterMrpOrRetailerPirce,
@@ -534,7 +534,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 wholesaleController.text = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).wholeSalePrice,
                                 hintText: lang.S.of(context).enterWholeSalePrice,
@@ -560,7 +560,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 delaerController.text = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).dealerPrice,
                                 hintText: lang.S.of(context).enterDealerPrice,
@@ -581,7 +581,7 @@ class AddProductState extends State<AddProduct> {
                             onSaved: (value) {
                               productDiscount = value!;
                             },
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: lang.S.of(context).discount,
                               hintText: lang.S.of(context).enterDiscount,
@@ -596,7 +596,7 @@ class AddProductState extends State<AddProduct> {
                               onSaved: (value) {
                                 productManufacturer = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).menufeturer,
                                 hintText: lang.S.of(context).enterManufacturer,

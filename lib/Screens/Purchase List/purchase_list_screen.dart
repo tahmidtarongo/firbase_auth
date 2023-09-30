@@ -17,6 +17,8 @@ import '../../../model/print_transaction_model.dart';
 import '../../Provider/add_to_cart_purchase.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
+import '../../generate_pdf.dart';
+import '../../pdf/purchase_pdf.dart';
 import '../Home/home.dart';
 import '../invoice_details/purchase_invoice_details.dart';
 
@@ -270,10 +272,11 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                       itemBuilder: (BuildContext bc) => [
                                                         PopupMenuItem(
                                                           child: GestureDetector(
-                                                            onTap: (){
-                                                              GeneratePdf().generatePurchaseDocument(transaction[index], data, context, share: false);
-                                                              finish(context);
-                                                            },
+                                                            onTap: () async =>await GeneratePdf1().generatePurchaseDocument(transaction[index], data, context,),
+                                                            // onTap: () async {
+                                                            //  await GeneratePdf1().generatePurchaseDocument(transaction[index], data, context,);
+                                                            //   finish(context);
+                                                            // },
                                                             child: Row(
                                                               children: [
                                                                 const Icon(
@@ -294,7 +297,8 @@ class _PurchaseReportState extends State<PurchaseListScreen> {
                                                         PopupMenuItem(
                                                           child: GestureDetector(
                                                             onTap: (){
-                                                              GeneratePdf().generatePurchaseDocument(transaction[index], data, context, share: true);
+                                                              sharePurchasePDF(transactions: transaction[index],personalInformation: data,context: context);
+                                                              // GeneratePdf().generatePurchaseDocument(transaction[index], data, context, share: true);
                                                               finish(context);
                                                             },
                                                             child: Row(
