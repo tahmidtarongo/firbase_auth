@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -145,7 +147,6 @@ class Subscription {
                     TextButton(
                       onPressed: () async {
                         await prefs.setBool('isFiveDayRemainderShown', true);
-                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -175,7 +176,7 @@ class Subscription {
                     children: [
                       Text(
                         lang.S.of(context).YourPackageWillExpireTodayPleasePurchaseagain,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 20),
@@ -193,7 +194,7 @@ class Subscription {
                             },
                             child: Text(
                               lang.S.of(context).cacel,
-                              style: TextStyle(color: Colors.red),
+                              style: const TextStyle(color: Colors.red),
                             ),
                           ),
                         ],

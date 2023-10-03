@@ -1,3 +1,5 @@
+// ignore_for_file: unused_result, use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +19,7 @@ import '../../Provider/profile_provider.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../model/personal_information_model.dart';
+import '../../model/seller_info_model.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -378,8 +381,6 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   userProfileDetails.when(data: (details) {
-
-
                     return Column(
                       children: [
                         Padding(
@@ -408,7 +409,7 @@ class _EditProfileState extends State<EditProfile> {
                                   phoneNumber = value;
                                 });
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: lang.S.of(context).phoneNumber,
                                 border: OutlineInputBorder(),
                                 // prefix: CountryCodePicker(
@@ -491,7 +492,11 @@ class _EditProfileState extends State<EditProfile> {
                       try {
                         EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                         bool result = await InternetConnectionChecker().hasConnection;
-                        result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+                        result
+                            ? imagePath == 'No Data'
+                                ? null
+                                : await uploadFile(imagePath)
+                            : null;
                         // ignore: no_leading_underscores_for_local_identifiers
                         final DatabaseReference _personalInformationRef = FirebaseDatabase.instance
                             // ignore: deprecated_member_use
@@ -508,9 +513,28 @@ class _EditProfileState extends State<EditProfile> {
                           pictureUrl: profilePicture,
                         );
                         _personalInformationRef.set(personalInformation.toJson());
+
+                        SellerInfoModel sellerInfo = SellerInfoModel(
+                          businessCategory: dropdownValue,
+                          companyName: companyName,
+                          phoneNumber: phoneNumber,
+                          countryName: initialCountry,
+                          language: dropdownLangValue,
+                          pictureUrl: profilePicture,
+                        );
+
+                        final DatabaseReference superAdminSalerListRepo =
+                            FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').child(await getSaleID(id: constUserId));
+                        superAdminSalerListRepo.update({
+                          'phoneNumber': phoneNumber,
+                          'companyName': companyName,
+                          "businessCategory": dropdownValue,
+                          "pictureUrl": profilePicture,
+                          'language': dropdownLangValue,
+                          'countryName': initialCountry,
+                        });
                         ref.refresh(profileDetailsProvider);
                         EasyLoading.dismiss();
-                        // ignore: use_build_context_synchronously
                         Navigator.pushNamed(context, '/home');
                       } catch (e) {
                         EasyLoading.showError(e.toString());

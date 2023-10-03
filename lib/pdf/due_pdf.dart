@@ -9,7 +9,6 @@ import 'dart:io';
 
 import '../const_commas.dart';
 import '../model/personal_information_model.dart';
-import '../model/transition_model.dart';
 import '';
 
 Future<File> createAndSaveDuePDF({required DueTransactionModel transactions, required PersonalInformationModel personalInformation, required BuildContext context}) async {

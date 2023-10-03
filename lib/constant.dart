@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mailer/mailer.dart';
@@ -15,6 +18,19 @@ const kAlertColor = Color(0xFFFF8C34);
 const kPremiumPlanColor = Color(0xFF8752EE);
 const kPremiumPlanColor2 = Color(0xFFFF5F00);
 List<String> selectedNumbers = [];
+
+Future<String> getSaleID({required String id}) async {
+  String key = '';
+  await FirebaseDatabase.instance.ref().child('Admin Panel').child('Seller List').orderByKey().get().then((value) async {
+    for (var element in value.children) {
+      var data = jsonDecode(jsonEncode(element.value));
+      if (data['userId'].toString() == id) {
+        key = element.key.toString();
+      }
+    }
+  });
+  return key;
+}
 
 Future<void> welcomeEmail({required String email}) async {
   final smtpServer = SmtpServer(

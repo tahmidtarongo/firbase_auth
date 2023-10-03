@@ -10,6 +10,7 @@ class SellerInfoModel {
     this.subscriptionName,
     this.subscriptionDate,
     this.subscriptionMethod,
+    this.userRegistrationDate,
     this.email,
   });
 
@@ -23,6 +24,7 @@ class SellerInfoModel {
     userID = json['userId'];
     subscriptionName = json['subscriptionName'];
     subscriptionDate = json['subscriptionDate'];
+    userRegistrationDate = json['userRegistrationDate'];
     subscriptionMethod = json['subscriptionMethod'];
     email = json['email'];
   }
@@ -35,6 +37,7 @@ class SellerInfoModel {
   String? userID;
   String? subscriptionName;
   String? subscriptionDate;
+  String? userRegistrationDate;
   String? subscriptionMethod;
   String? email;
 
@@ -49,6 +52,7 @@ class SellerInfoModel {
     map['userId'] = userID;
     map['subscriptionName'] = subscriptionName;
     map['subscriptionDate'] = subscriptionDate;
+    map['userRegistrationDate'] = userRegistrationDate;
     map['subscriptionMethod'] = subscriptionMethod;
     map['email'] = email;
     return map;

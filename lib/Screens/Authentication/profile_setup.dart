@@ -472,7 +472,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                         SellerInfoModel sellerInfoModel = SellerInfoModel(
                           businessCategory: dropdownValue,
                           companyName: companyName,
-                          phoneNumber: PhoneAuth.phoneNumber,
+                          phoneNumber: phoneNumber,
                           countryName: controller.text,
                           language: dropdownLangValue,
                           pictureUrl: profilePicture,
@@ -481,6 +481,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
                           subscriptionDate: DateTime.now().toString(),
                           subscriptionName: 'Free',
                           subscriptionMethod: 'Not Provided',
+                          userRegistrationDate: DateTime.now().toString(),
                         );
                         final adminRef = FirebaseDatabase.instance.ref().child('Admin Panel');
                         await adminRef.child('Seller List').push().set(sellerInfoModel.toJson());

@@ -22,7 +22,6 @@ class BuyNow extends StatefulWidget {
 }
 
 class _BuyNowState extends State<BuyNow> {
-
   Future<File?> pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -432,6 +431,7 @@ class SubscriptionRequestModel {
         'transactionNumber': transactionNumber,
         'note': note,
         'status': 'pending',
+        'approvedDate': '',
         'attachment': attachment,
         'phoneNumber': phoneNumber,
         'companyName': companyName,

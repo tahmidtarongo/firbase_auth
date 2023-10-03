@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +33,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
   DateTime toDate = DateTime.now();
   double totalProfit = 0;
   double totalLoss = 0;
+
   bool isPicked = false;
   @override
   Widget build(BuildContext context) {
@@ -135,20 +138,18 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                           ),
                         ),
                         providerData.when(data: (transaction) {
+                          totalProfit = 0;
+                          totalLoss = 0;
                           final reTransaction = transaction.reversed.toList();
                           for (var element in reTransaction) {
-                            if(!isPicked){
+                            if (!isPicked) {
                               if (DateTime.parse(element.purchaseDate).month == DateTime.now().month && DateTime.parse(element.purchaseDate).year == DateTime.now().year) {
-                                element.lossProfit!.isNegative
-                                    ? totalLoss = totalLoss + element.lossProfit!.abs()
-                                    : totalProfit = totalProfit + element.lossProfit!;
+                                element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
                               }
-                            } else{
+                            } else {
                               if ((fromDate.isBefore(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(fromDate)) &&
                                   (toDate.isAfter(DateTime.parse(element.purchaseDate)) || DateTime.parse(element.purchaseDate).isAtSameMomentAs(toDate))) {
-                                element.lossProfit!.isNegative
-                                    ? totalLoss = totalLoss + element.lossProfit!.abs()
-                                    : totalProfit = totalProfit + element.lossProfit!;
+                                element.lossProfit!.isNegative ? totalLoss = totalLoss + element.lossProfit!.abs() : totalProfit = totalProfit + element.lossProfit!;
                               }
                             }
                           }
@@ -180,7 +181,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                 Text(
+                                                Text(
                                                   lang.S.of(context).profit,
                                                   style: const TextStyle(
                                                     color: Colors.black,
@@ -206,8 +207,8 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                 Text(
-                                                   lang.S.of(context).loss,
+                                                Text(
+                                                  lang.S.of(context).loss,
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
@@ -270,10 +271,7 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                                                 child: Text(
                                                                   reTransaction[index].dueAmount! <= 0 ? 'Paid' : 'Unpaid',
-                                                                  style: TextStyle(
-                                                                      color: reTransaction[index].dueAmount! <= 0
-                                                                          ? const Color(0xff0dbf7d)
-                                                                          : const Color(0xFFED1A3B)),
+                                                                  style: TextStyle(color: reTransaction[index].dueAmount! <= 0 ? const Color(0xff0dbf7d) : const Color(0xFFED1A3B)),
                                                                 ),
                                                               ),
                                                               Column(
@@ -319,8 +317,8 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                           totalProfit = 0;
                                                                           totalLoss = 0;
                                                                           await printerData.getBluetooth();
-                                                                          PrintTransactionModel model = PrintTransactionModel(
-                                                                              transitionModel: reTransaction[index], personalInformationModel: data);
+                                                                          PrintTransactionModel model =
+                                                                              PrintTransactionModel(transitionModel: reTransaction[index], personalInformationModel: data);
                                                                           connected
                                                                               ? printerData.printTicket(
                                                                                   printTransactionModel: model,
@@ -344,30 +342,23 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                                                 itemBuilder: (context, index) {
                                                                                                   return ListTile(
                                                                                                     onTap: () async {
-                                                                                                      String select =
-                                                                                                          printerData.availableBluetoothDevices[index];
+                                                                                                      String select = printerData.availableBluetoothDevices[index];
                                                                                                       List list = select.split("#");
                                                                                                       // String name = list[0];
                                                                                                       String mac = list[1];
                                                                                                       bool isConnect = await printerData.setConnect(mac);
-                                                                                                      // ignore: use_build_context_synchronously
-                                                                                                      isConnect
-                                                                                                          // ignore: use_build_context_synchronously
-                                                                                                          ? finish(context)
-                                                                                                          : toast('Try Again');
+                                                                                                      isConnect ? finish(context) : toast('Try Again');
                                                                                                     },
-                                                                                                    title:
-                                                                                                        Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                                                    subtitle:  Text(lang.S.of(context).clickToConnect),
+                                                                                                    title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                                                    subtitle: Text(lang.S.of(context).clickToConnect),
                                                                                                   );
                                                                                                 },
                                                                                               ),
-                                                                                               Padding(
-                                                                                                padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                                                              Padding(
+                                                                                                padding: const EdgeInsets.only(top: 20, bottom: 10),
                                                                                                 child: Text(
                                                                                                   lang.S.of(context).pleaseConnectYourBluttothPrinter,
-                                                                                                  style: TextStyle(
-                                                                                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                                                                                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                                                 ),
                                                                                               ),
                                                                                               const SizedBox(height: 10),
@@ -377,10 +368,10 @@ class _LossProfitScreenState extends State<LossProfitScreen> {
                                                                                                 onTap: () {
                                                                                                   Navigator.pop(context);
                                                                                                 },
-                                                                                                child:  Center(
+                                                                                                child: Center(
                                                                                                   child: Text(
                                                                                                     lang.S.of(context).cacel,
-                                                                                                    style: TextStyle(color: kMainColor),
+                                                                                                    style: const TextStyle(color: kMainColor),
                                                                                                   ),
                                                                                                 ),
                                                                                               ),
