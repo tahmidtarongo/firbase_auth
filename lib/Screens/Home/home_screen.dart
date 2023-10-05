@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 value: e,
                                                 child: Text(
                                                   e,
-                                                  style:  kTextStyle.copyWith(color: kTitleColor,fontSize: 14),
+                                                  style: kTextStyle.copyWith(color: kTitleColor, fontSize: 14),
                                                 ),
                                               ),
                                             )
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      height: 100,
+                                      height: 62,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffE9FCB8)),
                                       child: Padding(
@@ -296,13 +296,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 20,
                                               color: Colors.pink,
                                             ),
-                                            const SizedBox(width: 8),
+                                            const SizedBox(width: 13),
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   lang.S.of(context).order,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13, fontStyle: FontStyle.italic),
                                                 ),
                                                 const SizedBox(
                                                   height: 3,
@@ -360,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Container(
-                                      height: 100,
+                                      height: 62,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffD8D6EC)),
                                       child: Padding(
@@ -377,11 +377,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: 20,
                                                 ),
                                                 const SizedBox(
-                                                  width: 8,
+                                                  width: 13,
                                                 ),
                                                 Text(
                                                   lang.S.of(context).revenue,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13, fontStyle: FontStyle.italic),
                                                 )
                                               ],
                                             ),
@@ -389,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 3,
                                             ),
                                             Text(
-                                              '$currency${myFormat.format(totalRevenue)}',
+                                              '$currency: ${myFormat.format(totalRevenue)}',
                                               style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                             )
                                           ],
@@ -400,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Container(
-                                      height: 100,
+                                      height: 62,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffB6DEC2)),
                                       child: Padding(
@@ -417,11 +417,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: 20,
                                                 ),
                                                 const SizedBox(
-                                                  width: 8,
+                                                  width: 13,
                                                 ),
                                                 Text(
                                                   lang.S.of(context).profit,
-                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
+                                                  style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13, fontStyle: FontStyle.italic),
                                                 )
                                               ],
                                             ),
@@ -429,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 3,
                                             ),
                                             Text(
-                                              '$currency${myFormat.format(totalProfit)}',
+                                              '$currency: ${myFormat.format(totalProfit)}',
                                               style: kTextStyle.copyWith(fontWeight: FontWeight.bold, color: kTitleColor, fontSize: 13),
                                             )
                                           ],
