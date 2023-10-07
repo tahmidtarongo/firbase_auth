@@ -60,8 +60,6 @@ class UpdateProductState extends State<UpdateProduct> {
   }
 
   void getProductKey(String code) async {
-
-
     // ignore: unused_local_variable
     List<ProductModel> productList = [];
 
@@ -145,7 +143,7 @@ class UpdateProductState extends State<UpdateProduct> {
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
                         controller: productNameController,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: const OutlineInputBorder(),
                           labelText: lang.S.of(context).productName,
@@ -191,7 +189,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.size = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).size,
                                 hintText: lang.S.of(context).enterSize,
@@ -208,7 +206,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.color = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).color,
                                 hintText: lang.S.of(context).enterColor,
@@ -231,7 +229,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.weight = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).weight,
                                 hintText: lang.S.of(context).weight,
@@ -248,7 +246,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.capacity = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).capacity,
                                 hintText: lang.S.of(context).enterCapacity,
@@ -266,7 +264,7 @@ class UpdateProductState extends State<UpdateProduct> {
                         onSaved: (value) {
                           updatedProductModel.type = value!;
                         },
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: lang.S.of(context).type,
                           hintText: 'Usb C',
@@ -376,7 +374,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               readOnly: true,
                               keyboardType: TextInputType.number,
                               controller: purchasePriceController,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).purchasePrice,
                                 hintText: lang.S.of(context).enterPurchasePrice,
@@ -392,7 +390,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               readOnly: true,
                               controller: mrpController,
                               keyboardType: TextInputType.number,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).MRP,
                                 hintText: lang.S.of(context).enterMrpOrRetailerPirce,
@@ -435,7 +433,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productWholeSalePrice = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).wholeSalePrice,
                                 border: const OutlineInputBorder(),
@@ -472,7 +470,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productDealerPrice = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).dealerPrice,
                                 border: OutlineInputBorder(),
@@ -489,7 +487,7 @@ class UpdateProductState extends State<UpdateProduct> {
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: lang.S.of(context).discount,
                               hintText: lang.S.of(context).enterDiscount,
@@ -505,7 +503,7 @@ class UpdateProductState extends State<UpdateProduct> {
                               onSaved: (value) {
                                 updatedProductModel.productManufacturer = value!;
                               },
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 labelText: lang.S.of(context).menufeturer,
                                 border: const OutlineInputBorder(),
@@ -649,7 +647,11 @@ class UpdateProductState extends State<UpdateProduct> {
                           try {
                             bool result = await InternetConnectionChecker().hasConnection;
 
-                             result ? imagePath == 'No Data' ? null : await uploadFile(imagePath) : null;
+                            result
+                                ? imagePath == 'No Data'
+                                    ? null
+                                    : await uploadFile(imagePath)
+                                : null;
                             EasyLoading.show(status: 'Loading...', dismissOnTap: false);
                             DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Products/$productKey");
                             ref.keepSynced(true);

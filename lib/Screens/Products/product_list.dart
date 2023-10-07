@@ -1,3 +1,5 @@
+// ignore_for_file: unused_result
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
@@ -19,6 +21,7 @@ import '../../GlobalComponents/button_global.dart';
 import '../../constant.dart';
 import '../../currency.dart';
 import '../../empty_screen_widget.dart';
+import '../../model/product_model.dart';
 import 'add_product.dart';
 import '../../const_commas.dart';
 
@@ -45,13 +48,13 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
 
   getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
-      isDeviceConnected = await InternetConnectionChecker().hasConnection;
-      if (!isDeviceConnected && isAlertSet == false) {
-        showDialogBox();
-        setState(() => isAlertSet = true);
-      }
-    },
-  );
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
 
   checkInternet() async {
     isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -86,7 +89,6 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, __) {
@@ -109,7 +111,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
               leading: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-              ).onTap(() async{
+              ).onTap(() async {
                 await Future.delayed(const Duration(microseconds: 100)).then((value) => const Home().launch(context));
               }),
               title: Text(
@@ -122,15 +124,15 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
             ),
             body: WillPopScope(
               onWillPop: () async {
-               await Future.delayed(const Duration(microseconds: 100)).then((value) {
-                 if(mounted){
-                   const Home().launch(context);
-                   return true;
-                 } else{
-                   return false;
-                 }
-               });
-               return false;
+                await Future.delayed(const Duration(microseconds: 100)).then((value) {
+                  if (mounted) {
+                    const Home().launch(context);
+                    return true;
+                  } else {
+                    return false;
+                  }
+                });
+                return false;
               },
               child: Container(
                 alignment: Alignment.topCenter,
@@ -169,7 +171,7 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                               productName = value;
                             });
                           },
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.never,
                               labelText: lang.S.of(context).productName,
                               hintText: lang.S.of(context).enterProductName,
@@ -196,20 +198,16 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                           leading: Container(
                                             height: 50,
                                             width: 50,
-                                            decoration:  BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(products[i].productPicture))
-                                            ),
+                                            decoration:
+                                                BoxDecoration(shape: BoxShape.circle, image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(products[i].productPicture))),
                                           ),
                                           title: Text(products[i].productName),
-                                          subtitle: Text("Stock : ${myFormat.format(int.tryParse(products[i].productStock)??0)}"),
+                                          subtitle: Text("Stock : ${myFormat.format(int.tryParse(products[i].productStock) ?? 0)}"),
                                           trailing: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                "$currency ${myFormat.format(int.tryParse(products[i].productSalePrice)??0)}",
+                                                "$currency ${myFormat.format(int.tryParse(products[i].productSalePrice) ?? 0)}",
                                                 // "$currency ${products[i].productSalePrice}",
                                                 style: const TextStyle(fontSize: 18),
                                               ),
@@ -219,33 +217,46 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                                   padding: EdgeInsets.zero,
                                                   itemBuilder: (BuildContext bc) => [
                                                     PopupMenuItem(
-                                                      child: InkWell(
+                                                        child: InkWell(
+                                                      onTap: () {
+                                                        UpdateProduct(
+                                                          productModel: products[i],
+                                                          productCodeList: productCodeList,
+                                                          productNameList: productNameList,
+                                                        ).launch(context);
+                                                      },
+                                                      child: const Row(
+                                                        children: [
+                                                          Icon(FeatherIcons.edit3, size: 18.0, color: Colors.black),
+                                                          SizedBox(width: 4.0),
+                                                          Text(
+                                                            'Edit',
+                                                            style: TextStyle(color: Colors.black),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )),
+                                                    PopupMenuItem(
+                                                      child: GestureDetector(
                                                         onTap: () {
-                                                          UpdateProduct(
-                                                            productModel: products[i],
-                                                            productCodeList: productCodeList,
-                                                            productNameList: productNameList,
-                                                          ).launch(context);
+                                                          increseStockPopUp(context, products, i, ref);
                                                         },
-                                                        child: Row(
+                                                        child: const Row(
                                                           children: [
-                                                            const Icon(FeatherIcons.edit3, size: 18.0, color: Colors.black),
-                                                            const SizedBox(width: 4.0),
+                                                            Icon(Icons.add, size: 18.0, color: Colors.black),
+                                                            SizedBox(width: 4.0),
                                                             Text(
-                                                              'Edit',
+                                                              'Increase Stock',
                                                               style: TextStyle(color: Colors.black),
                                                             ),
                                                           ],
                                                         ),
-                                                      )
+                                                      ),
                                                     ),
                                                     PopupMenuItem(
                                                       child: GestureDetector(
-                                                        onTap: (){
-                                                          deleteProduct(
-                                                              productCode: products[i].productCode,
-                                                              updateProduct: ref,
-                                                              context: bc) ;
+                                                        onTap: () {
+                                                          deleteProduct(productCode: products[i].productCode, updateProduct: ref, context: bc);
                                                         },
                                                         child: const Row(
                                                           children: [
@@ -259,7 +270,6 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                                         ),
                                                       ),
                                                     ),
-                                                    
                                                   ],
                                                   onSelected: (value) {
                                                     Navigator.pushNamed(context, '$value');
@@ -279,7 +289,9 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
                                               ),
                                             ],
                                           ),
-                                        ).visible(productName.isEmptyOrNull ? true : products[i].productName.toUpperCase().contains(productName!.toUpperCase())).visible(category[index] == 'All' ? true : products[i].productCategory == category[index]);
+                                        )
+                                            .visible(productName.isEmptyOrNull ? true : products[i].productName.toUpperCase().contains(productName!.toUpperCase()))
+                                            .visible(category[index] == 'All' ? true : products[i].productCategory == category[index]);
                                       },
                                     ),
                                   ),
@@ -332,26 +344,239 @@ class _ProductListState extends State<ProductList> with TickerProviderStateMixin
       });
     });
   }
-  showDialogBox() => showCupertinoDialog<String>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(lang.S.of(context).noConnection),
-      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () async {
-            Navigator.pop(context, 'Cancel');
-            setState(() => isAlertSet = false);
-            isDeviceConnected = await InternetConnectionChecker().hasConnection;
-            if (!isDeviceConnected && isAlertSet == false) {
-              showDialogBox();
-              setState(() => isAlertSet = true);
-            }
-          },
-          child: Text(lang.S.of(context).tryAgain),
-        ),
-      ],
-    ),
-  );
 
+  Future<dynamic> increseStockPopUp(BuildContext context1, List<ProductModel> products, int i, WidgetRef pref) {
+    final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
+    String productKey = '';
+    ref.keepSynced(true);
+
+    ref.orderByKey().get().then((value) {
+      for (var element in value.children) {
+        var data = jsonDecode(jsonEncode(element.value));
+        if (data['productCode'].toString() == products[i].productCode) {
+          productKey = element.key.toString();
+        }
+      }
+    });
+    return showDialog(
+        context: context,
+        builder: (_) {
+          ProductModel tempProductModel = products[i];
+          TextEditingController stockController = TextEditingController(text: tempProductModel.productStock);
+          TextEditingController salePriceController = TextEditingController(text: tempProductModel.productSalePrice);
+          TextEditingController purchaseController = TextEditingController(text: tempProductModel.productPurchasePrice);
+          TextEditingController wholeSellerController = TextEditingController(text: tempProductModel.productWholeSalePrice);
+          TextEditingController dealerController = TextEditingController(text: tempProductModel.productDealerPrice);
+          return AlertDialog(
+              content: SizedBox(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Increase Stock',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.cancel,
+                              color: kMainColor,
+                            )),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            products[i].productName,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            products[i].brandName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            lang.S.of(context).stocks,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            tempProductModel.productStock,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: AppTextField(
+                          controller: stockController,
+                          textFieldType: TextFieldType.NUMBER,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelText: lang.S.of(context).quantity,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: AppTextField(
+                          controller: purchaseController,
+                          keyboardType: TextInputType.number,
+                          textFieldType: TextFieldType.NAME,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelText: lang.S.of(context).purchasePrice,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: AppTextField(
+                          controller: salePriceController,
+                          keyboardType: TextInputType.number,
+                          textFieldType: TextFieldType.NAME,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelText: lang.S.of(context).salePrice,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: AppTextField(
+                          controller: wholeSellerController,
+                          keyboardType: TextInputType.number,
+                          textFieldType: TextFieldType.NAME,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelText: lang.S.of(context).wholeSalePrice,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: AppTextField(
+                          controller: dealerController,
+                          keyboardType: TextInputType.number,
+                          textFieldType: TextFieldType.NAME,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelText: lang.S.of(context).dealerPrice,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      if (tempProductModel.productStock != '0') {
+                        DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Products/$productKey");
+                        ref.keepSynced(true);
+                        ref.update({
+                          'productStock': stockController.text,
+                          'productSalePrice': salePriceController.text,
+                          'productPurchasePrice': purchaseController.text,
+                          'productWholeSalePrice': wholeSellerController.text,
+                          'productDealerPrice': dealerController.text,
+                        });
+                        EasyLoading.showSuccess('Done');
+                        pref.refresh(productProvider);
+                        pref.refresh(categoryProvider);
+                        Navigator.pop(context);
+                        Navigator.pop(context1);
+                      } else {
+                        EasyLoading.showError('Please add quantity');
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: context.width(),
+                      decoration: const BoxDecoration(color: kMainColor, borderRadius: BorderRadius.all(Radius.circular(30))),
+                      child: Center(
+                        child: Text(
+                          lang.S.of(context).save,
+                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ));
+        });
+  }
+
+  showDialogBox() => showCupertinoDialog<String>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(lang.S.of(context).noConnection),
+          content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected = await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected && isAlertSet == false) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: Text(lang.S.of(context).tryAgain),
+            ),
+          ],
+        ),
+      );
 }

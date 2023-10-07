@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, unused_result
+
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
@@ -180,7 +182,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                           decoration:  InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             labelText: lang.S.of(context).supplierName,
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ],
