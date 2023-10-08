@@ -60,7 +60,7 @@ final kTextStyle = GoogleFonts.manrope(
 
 bool connected = false;
 bool isPrintEnable = true;
-List<String> paymentsTypeList = ['Cash'];
+List<String> paymentsTypeList = ['Cash','Mobile Pay'];
 
 const String onesignalAppId = '1549acc6-6958-4c79-bea0-b8fdae3cbdce';
 
