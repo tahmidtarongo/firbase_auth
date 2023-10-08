@@ -43,6 +43,7 @@ class AddPurchaseScreen extends StatefulWidget {
 }
 
 class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
+  bool saleButtonClicked = false;
   TextEditingController paidText = TextEditingController();
   int invoice = 0;
   double paidAmount = 0;
@@ -752,12 +753,15 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () async {
+                            onTap:saleButtonClicked?(){}: () async {
                               try {
                                 final result = await InternetAddress.lookup('google.com');
                                 if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
                                   if (providerData.cartItemPurchaseList.isNotEmpty) {
                                     try {
+                                      setState(() {
+                                        saleButtonClicked = true;
+                                      });
                                       EasyLoading.show(status: 'Loading...', dismissOnTap: false);
 
 
@@ -901,6 +905,9 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                         ).launch(context));
                                       }
                                     } catch (e) {
+                                      setState(() {
+                                        saleButtonClicked = false;
+                                      });
                                       EasyLoading.showError(e.toString());
                                     }
                                   } else {

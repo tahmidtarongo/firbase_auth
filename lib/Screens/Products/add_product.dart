@@ -42,6 +42,7 @@ class AddProduct extends StatefulWidget {
 }
 
 class AddProductState extends State<AddProduct> {
+  bool saleButtonClicked = false;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   GetCategoryAndVariationModel data = GetCategoryAndVariationModel(variations: [], categoryName: '');
   String productCategory = '';
@@ -756,63 +757,71 @@ class AddProductState extends State<AddProduct> {
                     ButtonGlobalWithoutIcon(
                       buttontext: lang.S.of(context).saveAndPublish,
                       buttonDecoration: kButtonDecoration.copyWith(color: kMainColor, borderRadius: const BorderRadius.all(Radius.circular(30))),
-                      onPressed: () async {
-                        if (validateAndSave()) {
-                          try {
-                            EasyLoading.show(status: 'Loading...', dismissOnTap: false);
-                            bool result = await InternetConnectionChecker().hasConnection;
+                      onPressed: saleButtonClicked
+                          ? () {}
+                          : () async {
+                              if (validateAndSave()) {
+                                try {
+                                  setState(() {
+                                    saleButtonClicked = true;
+                                  });
+                                  EasyLoading.show(status: 'Loading...', dismissOnTap: false);
+                                  bool result = await InternetConnectionChecker().hasConnection;
 
-                            result
-                                ? imagePath == 'No Data'
-                                    ? null
-                                    : await uploadFile(imagePath)
-                                : null;
-                            // ignore: no_leading_underscores_for_local_identifiers
-                            final DatabaseReference _productInformationRef = FirebaseDatabase.instance
-                                // ignore: deprecated_member_use
-                                .reference()
-                                .child(constUserId)
-                                .child('Products');
-                            _productInformationRef.keepSynced(true);
-                            ProductModel productModel = ProductModel(
-                              productName,
-                              productCategory,
-                              size,
-                              color,
-                              weight,
-                              capacity,
-                              type,
-                              brandName,
-                              productCode,
-                              stockText,
-                              productUnit,
-                              mrpText,
-                              purchaseText,
-                              productDiscount,
-                              wholesaleText,
-                              dealerText,
-                              productManufacturer,
-                              productPicture,
-                              [],
-                            );
-                            _productInformationRef.push().set(productModel.toJson());
-                            Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
-                            EasyLoading.dismiss();
-                            _productInformationRef.onChildAdded.listen((event) {
-                              ref.refresh(productProvider);
-                              ref.refresh(categoryProvider);
-                              ref.refresh(brandsProvider);
-                            });
+                                  result
+                                      ? imagePath == 'No Data'
+                                          ? null
+                                          : await uploadFile(imagePath)
+                                      : null;
+                                  // ignore: no_leading_underscores_for_local_identifiers
+                                  final DatabaseReference _productInformationRef = FirebaseDatabase.instance
+                                      // ignore: deprecated_member_use
+                                      .reference()
+                                      .child(constUserId)
+                                      .child('Products');
+                                  _productInformationRef.keepSynced(true);
+                                  ProductModel productModel = ProductModel(
+                                    productName,
+                                    productCategory,
+                                    size,
+                                    color,
+                                    weight,
+                                    capacity,
+                                    type,
+                                    brandName,
+                                    productCode,
+                                    stockText,
+                                    productUnit,
+                                    mrpText,
+                                    purchaseText,
+                                    productDiscount,
+                                    wholesaleText,
+                                    dealerText,
+                                    productManufacturer,
+                                    productPicture,
+                                    [],
+                                  );
+                                  _productInformationRef.push().set(productModel.toJson());
+                                  Subscription.decreaseSubscriptionLimits(itemType: 'products', context: context);
+                                  EasyLoading.dismiss();
+                                  _productInformationRef.onChildAdded.listen((event) {
+                                    ref.refresh(productProvider);
+                                    ref.refresh(categoryProvider);
+                                    ref.refresh(brandsProvider);
+                                  });
 
-                            Future.delayed(const Duration(milliseconds: 100), () {
-                              const ProductList().launch(context, isNewTask: true);
-                            });
-                          } catch (e) {
-                            EasyLoading.dismiss();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                          }
-                        }
-                      },
+                                  Future.delayed(const Duration(milliseconds: 100), () {
+                                    const ProductList().launch(context, isNewTask: true);
+                                  });
+                                } catch (e) {
+                                  setState(() {
+                                    saleButtonClicked = false;
+                                  });
+                                  EasyLoading.dismiss();
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                }
+                              }
+                            },
                       buttonTextColor: Colors.white,
                     ),
                     const SizedBox(height: 20),

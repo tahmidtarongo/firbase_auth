@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_result
 
 import 'dart:async';
 import 'dart:convert';
@@ -46,6 +46,7 @@ class AddSalesScreen extends StatefulWidget {
 }
 
 class _AddSalesScreenState extends State<AddSalesScreen> {
+  bool saleButtonClicked = false;
   TextEditingController paidText = TextEditingController();
   int invoice = 0;
   double paidAmount = 0;
@@ -105,13 +106,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
   getConnectivity() => subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
-      isDeviceConnected = await InternetConnectionChecker().hasConnection;
-      if (!isDeviceConnected && isAlertSet == false) {
-        showDialogBox();
-        setState(() => isAlertSet = true);
-      }
-    },
-  );
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
 
   checkInternet() async {
     isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -120,8 +121,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       setState(() => isAlertSet = true);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +205,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           children: [
                             Text(lang.S.of(context).dueAmount),
                             Text(
-                              myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0) == '' ? '$currency 0' : '$currency${myFormat.format(int.tryParse(widget.customerModel.dueAmount)??0)}',
+                              myFormat.format(int.tryParse(widget.customerModel.dueAmount) ?? 0) == ''
+                                  ? '$currency 0'
+                                  : '$currency${myFormat.format(int.tryParse(widget.customerModel.dueAmount) ?? 0)}',
                               style: const TextStyle(color: Color(0xFFFF8C34)),
                             ),
                           ],
@@ -273,8 +274,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(providerData.cartItemList[index].productName.toString()),
                                     subtitle: Text(
-                                        '${providerData.cartItemList[index].quantity} X ${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal)??0)} = ${myFormat.format(double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity)}'
-                                    ),
+                                        '${providerData.cartItemList[index].quantity} X ${myFormat.format(int.tryParse(providerData.cartItemList[index].subTotal) ?? 0)} = ${myFormat.format(double.parse(providerData.cartItemList[index].subTotal) * providerData.cartItemList[index].quantity)}'),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -394,7 +394,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   style: const TextStyle(fontSize: 16),
                                 ),
                                 Text(
-                                    myFormat.format(providerData.getTotalAmount()),
+                                  myFormat.format(providerData.getTotalAmount()),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -701,7 +701,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                   FeatherIcons.camera,
                                   color: Colors.grey,
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
                                   lang.S.of(context).image,
                                   style: const TextStyle(color: Colors.grey, fontSize: 16),
@@ -736,203 +736,213 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () async {
-                              try {
-                                final result = await InternetAddress.lookup('google.com');
-                                if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-                                  if (providerData.cartItemList.isNotEmpty) {
-                                    if (widget.customerModel.type == 'Guest' && dueAmount > 0) {
-                                      EasyLoading.showError('Due is not available for guest');
-                                    } else {
-                                      try {
-                                        DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Sales Transition");
-                                        ref.keepSynced(true);
-                                        dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
-                                        dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
-                                        returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
-                                        transitionModel.discountAmount = discountAmount;
-                                        transitionModel.totalAmount = subTotal;
-                                        transitionModel.productList = providerData.cartItemList;
-                                        transitionModel.paymentType = dropdownValue;
-                                        isSubUser ? transitionModel.sellerName = subUserTitle : null;
-                                        transitionModel.invoiceNumber = invoice.toString();
-
-                                        int totalQuantity = 0;
-                                        double lossProfit = 0;
-                                        double totalPurchasePrice = 0;
-                                        double totalSalePrice = 0;
-                                        for (var element in transitionModel.productList!) {
-                                          totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice) * element.quantity);
-                                          totalSalePrice = totalSalePrice + (double.parse(element.subTotal) * element.quantity);
-
-                                          totalQuantity = totalQuantity + element.quantity;
-                                        }
-                                        lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(transitionModel.discountAmount.toString()));
-
-                                        transitionModel.totalQuantity = totalQuantity;
-                                        transitionModel.lossProfit = lossProfit;
-                                        ref.push().set(transitionModel.toJson());
-
-                                        ///__________StockMange_________________________________________________-
-
-                                        for (var element in providerData.cartItemList) {
-                                          decreaseStock(element.productId, element.quantity);
-                                        }
-
-                                        ///_______invoice_Update_____________________________________________
-                                        final DatabaseReference personalInformationRef =
-                                        // ignore: deprecated_member_use
-                                        FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
-                                        // personalInformationRef.keepSynced(true);
-                                        await personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
-
-                                        ///________Subscription_____________________________________________________
-
-                                        Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
-
-                                        ///_________DueUpdate______________________________________________________
-                                        getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
-
-                                        if (sendSms && data.smsBalance! > 0) {
-                                          SmsModel smsModel = SmsModel(
-                                            customerName: widget.customerModel.customerName,
-                                            customerPhone: widget.customerModel.phoneNumber,
-                                            sellerMobile: data.phoneNumber,
-                                            sellerName: data.companyName,
-                                            sellerId: constUserId,
-                                            invoiceNumber: data.saleInvoiceCounter.toString(),
-                                            totalAmount: totalSalePrice.toString(),
-                                            paidAmount: (totalSalePrice - dueAmount).toString(),
-                                            dueAmount: dueAmount.toString(),
-                                            type: 'Sale',
-                                            status: false,
-                                          );
-                                          final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
-                                          await refr.push().set(smsModel.toJson());
-                                        }
-
-                                        ///________Print_______________________________________________________
-
-                                        PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
-                                        if (isPrintEnable) {
-                                          await printerData.getBluetooth();
-                                          if (connected) {
-                                            await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemList);
-
-                                            consumerRef.refresh(customerProvider);
-                                            consumerRef.refresh(productProvider);
-                                            consumerRef.refresh(salesReportProvider);
-                                            consumerRef.refresh(transitionProvider);
-                                            consumerRef.refresh(profileDetailsProvider);
-
-                                            EasyLoading.dismiss();
-                                            await Future.delayed(const Duration(milliseconds: 500))
-                                                .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                            onTap: saleButtonClicked
+                                ? () {}
+                                : () async {
+                                    try {
+                                      final result = await InternetAddress.lookup('google.com');
+                                      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                                        if (providerData.cartItemList.isNotEmpty) {
+                                          if (widget.customerModel.type == 'Guest' && dueAmount > 0) {
+                                            EasyLoading.showError('Due is not available for guest');
                                           } else {
-                                            EasyLoading.dismiss();
-                                            EasyLoading.showError('Please Connect The Printer First');
+                                            try {
+                                              setState(() {
+                                                saleButtonClicked = true;
+                                              });
 
-                                            showDialog(
-                                                context: context,
-                                                builder: (_) {
-                                                  return WillPopScope(
-                                                    onWillPop: () async => false,
-                                                    child: Dialog(
-                                                      child: SizedBox(
-                                                        child: Column(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            ListView.builder(
-                                                              shrinkWrap: true,
-                                                              itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
-                                                              itemBuilder: (context, index) {
-                                                                return ListTile(
-                                                                  onTap: () async {
-                                                                    String select = printerData.availableBluetoothDevices[index];
-                                                                    List list = select.split("#");
-                                                                    // String name = list[0];
-                                                                    String mac = list[1];
-                                                                    bool isConnect = await printerData.setConnect(mac);
-                                                                    if (isConnect) {
-                                                                      await printerData.printTicket(printTransactionModel: model, productList: transitionModel.productList);
+                                              DatabaseReference ref = FirebaseDatabase.instance.ref("$constUserId/Sales Transition");
+                                              ref.keepSynced(true);
+                                              dueAmount <= 0 ? transitionModel.isPaid = true : transitionModel.isPaid = false;
+                                              dueAmount <= 0 ? transitionModel.dueAmount = 0 : transitionModel.dueAmount = dueAmount;
+                                              returnAmount < 0 ? transitionModel.returnAmount = returnAmount.abs() : transitionModel.returnAmount = 0;
+                                              transitionModel.discountAmount = discountAmount;
+                                              transitionModel.totalAmount = subTotal;
+                                              transitionModel.productList = providerData.cartItemList;
+                                              transitionModel.paymentType = dropdownValue;
+                                              isSubUser ? transitionModel.sellerName = subUserTitle : null;
+                                              transitionModel.invoiceNumber = invoice.toString();
 
+                                              int totalQuantity = 0;
+                                              double lossProfit = 0;
+                                              double totalPurchasePrice = 0;
+                                              double totalSalePrice = 0;
+                                              for (var element in transitionModel.productList!) {
+                                                totalPurchasePrice = totalPurchasePrice + (double.parse(element.productPurchasePrice) * element.quantity);
+                                                totalSalePrice = totalSalePrice + (double.parse(element.subTotal) * element.quantity);
+
+                                                totalQuantity = totalQuantity + element.quantity;
+                                              }
+                                              lossProfit = ((totalSalePrice - totalPurchasePrice.toDouble()) - double.parse(transitionModel.discountAmount.toString()));
+
+                                              transitionModel.totalQuantity = totalQuantity;
+                                              transitionModel.lossProfit = lossProfit;
+                                              ref.push().set(transitionModel.toJson());
+
+                                              ///__________StockMange_________________________________________________-
+
+                                              for (var element in providerData.cartItemList) {
+                                                decreaseStock(element.productId, element.quantity);
+                                              }
+
+                                              ///_______invoice_Update_____________________________________________
+                                              final DatabaseReference personalInformationRef =
+                                                  // ignore: deprecated_member_use
+                                                  FirebaseDatabase.instance.ref().child(constUserId).child('Personal Information');
+                                              // personalInformationRef.keepSynced(true);
+                                              await personalInformationRef.update({'saleInvoiceCounter': invoice + 1});
+
+                                              ///________Subscription_____________________________________________________
+
+                                              Subscription.decreaseSubscriptionLimits(itemType: 'saleNumber', context: context);
+
+                                              ///_________DueUpdate______________________________________________________
+                                              getSpecificCustomers(phoneNumber: widget.customerModel.phoneNumber, due: transitionModel.dueAmount!.toInt());
+
+                                              if (sendSms && data.smsBalance! > 0) {
+                                                SmsModel smsModel = SmsModel(
+                                                  customerName: widget.customerModel.customerName,
+                                                  customerPhone: widget.customerModel.phoneNumber,
+                                                  sellerMobile: data.phoneNumber,
+                                                  sellerName: data.companyName,
+                                                  sellerId: constUserId,
+                                                  invoiceNumber: data.saleInvoiceCounter.toString(),
+                                                  totalAmount: totalSalePrice.toString(),
+                                                  paidAmount: (totalSalePrice - dueAmount).toString(),
+                                                  dueAmount: dueAmount.toString(),
+                                                  type: 'Sale',
+                                                  status: false,
+                                                );
+                                                final refr = FirebaseDatabase.instance.ref('Admin Panel').child('Sms List');
+                                                await refr.push().set(smsModel.toJson());
+                                              }
+
+                                              ///________Print_______________________________________________________
+
+                                              PrintTransactionModel model = PrintTransactionModel(transitionModel: transitionModel, personalInformationModel: data);
+                                              if (isPrintEnable) {
+                                                await printerData.getBluetooth();
+                                                if (connected) {
+                                                  await printerData.printTicket(printTransactionModel: model, productList: providerData.cartItemList);
+
+                                                  consumerRef.refresh(customerProvider);
+                                                  consumerRef.refresh(productProvider);
+                                                  consumerRef.refresh(salesReportProvider);
+                                                  consumerRef.refresh(transitionProvider);
+                                                  consumerRef.refresh(profileDetailsProvider);
+
+                                                  EasyLoading.dismiss();
+                                                  await Future.delayed(const Duration(milliseconds: 500))
+                                                      .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                                } else {
+                                                  EasyLoading.dismiss();
+                                                  EasyLoading.showError('Please Connect The Printer First');
+
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (_) {
+                                                        return WillPopScope(
+                                                          onWillPop: () async => false,
+                                                          child: Dialog(
+                                                            child: SizedBox(
+                                                              child: Column(
+                                                                mainAxisSize: MainAxisSize.min,
+                                                                children: [
+                                                                  ListView.builder(
+                                                                    shrinkWrap: true,
+                                                                    itemCount: printerData.availableBluetoothDevices.isNotEmpty ? printerData.availableBluetoothDevices.length : 0,
+                                                                    itemBuilder: (context, index) {
+                                                                      return ListTile(
+                                                                        onTap: () async {
+                                                                          String select = printerData.availableBluetoothDevices[index];
+                                                                          List list = select.split("#");
+                                                                          // String name = list[0];
+                                                                          String mac = list[1];
+                                                                          bool isConnect = await printerData.setConnect(mac);
+                                                                          if (isConnect) {
+                                                                            await printerData.printTicket(printTransactionModel: model, productList: transitionModel.productList);
+
+                                                                            consumerRef.refresh(customerProvider);
+                                                                            consumerRef.refresh(productProvider);
+                                                                            consumerRef.refresh(salesReportProvider);
+                                                                            consumerRef.refresh(transitionProvider);
+                                                                            consumerRef.refresh(profileDetailsProvider);
+                                                                            EasyLoading.dismiss();
+                                                                            await Future.delayed(const Duration(milliseconds: 500)).then((value) =>
+                                                                                SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data)
+                                                                                    .launch(context));
+                                                                          }
+                                                                        },
+                                                                        title: Text('${printerData.availableBluetoothDevices[index]}'),
+                                                                        subtitle: Text(lang.S.of(context).clickToConnect),
+                                                                      );
+                                                                    },
+                                                                  ).visible(printerData.availableBluetoothDevices.isNotEmpty),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(top: 20, bottom: 10),
+                                                                    child: Text(
+                                                                      lang.S.of(context).pleaseConnectYourBluttothPrinter,
+                                                                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(height: 10),
+                                                                  Container(
+                                                                    height: 1,
+                                                                    width: double.infinity,
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                  const SizedBox(height: 15),
+                                                                  GestureDetector(
+                                                                    onTap: () async {
                                                                       consumerRef.refresh(customerProvider);
                                                                       consumerRef.refresh(productProvider);
                                                                       consumerRef.refresh(salesReportProvider);
                                                                       consumerRef.refresh(transitionProvider);
                                                                       consumerRef.refresh(profileDetailsProvider);
-                                                                      EasyLoading.dismiss();
                                                                       await Future.delayed(const Duration(milliseconds: 500)).then((value) =>
                                                                           SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
-                                                                    }
-                                                                  },
-                                                                  title: Text('${printerData.availableBluetoothDevices[index]}'),
-                                                                  subtitle: Text(lang.S.of(context).clickToConnect),
-                                                                );
-                                                              },
-                                                            ).visible(printerData.availableBluetoothDevices.isNotEmpty),
-                                                            Padding(
-                                                              padding: const EdgeInsets.only(top: 20, bottom: 10),
-                                                              child: Text(
-                                                                lang.S.of(context).pleaseConnectYourBluttothPrinter,
-                                                                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                    },
+                                                                    child: Center(
+                                                                      child: Text(
+                                                                        lang.S.of(context).cacel,
+                                                                        style: const TextStyle(color: kMainColor),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(height: 15),
+                                                                ],
                                                               ),
                                                             ),
-                                                            const SizedBox(height: 10),
-                                                            Container(
-                                                              height: 1,
-                                                              width: double.infinity,
-                                                              color: Colors.grey,
-                                                            ),
-                                                            const SizedBox(height: 15),
-                                                            GestureDetector(
-                                                              onTap: () async {
-                                                                consumerRef.refresh(customerProvider);
-                                                                consumerRef.refresh(productProvider);
-                                                                consumerRef.refresh(salesReportProvider);
-                                                                consumerRef.refresh(transitionProvider);
-                                                                consumerRef.refresh(profileDetailsProvider);
-                                                                await Future.delayed(const Duration(milliseconds: 500)).then(
-                                                                        (value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
-                                                              },
-                                                              child: Center(
-                                                                child: Text(
-                                                                  lang.S.of(context).cacel,
-                                                                  style: const TextStyle(color: kMainColor),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(height: 15),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
+                                                          ),
+                                                        );
+                                                      });
+                                                }
+                                              } else {
+                                                consumerRef.refresh(customerProvider);
+                                                consumerRef.refresh(productProvider);
+                                                consumerRef.refresh(salesReportProvider);
+                                                consumerRef.refresh(transitionProvider);
+                                                consumerRef.refresh(profileDetailsProvider);
+                                                EasyLoading.dismiss();
+                                                await Future.delayed(const Duration(milliseconds: 500))
+                                                    .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                              }
+                                            } catch (e) {
+                                              setState(() {
+                                                saleButtonClicked = false;
+                                              });
+                                              EasyLoading.showError(e.toString());
+                                            }
                                           }
                                         } else {
-                                          consumerRef.refresh(customerProvider);
-                                          consumerRef.refresh(productProvider);
-                                          consumerRef.refresh(salesReportProvider);
-                                          consumerRef.refresh(transitionProvider);
-                                          consumerRef.refresh(profileDetailsProvider);
-                                          EasyLoading.dismiss();
-                                          await Future.delayed(const Duration(milliseconds: 500))
-                                              .then((value) => SalesInvoiceDetails(transitionModel: transitionModel, personalInformationModel: data).launch(context));
+                                          EasyLoading.showError('Add product first');
                                         }
-                                      } catch (e) {
-                                        EasyLoading.showError(e.toString());
+                                        print('-----------------------connected-----------------');
                                       }
+                                    } on SocketException catch (_) {
+                                      print('-----------------not connected---------------');
                                     }
-                                  } else {
-                                    EasyLoading.showError('Add product first');
-                                  }
-                                  print('-----------------------connected-----------------');
-                                }
-                              } on SocketException catch (_) {
-                                print('-----------------not connected---------------');
-                              }
-                            },
+                                  },
                             child: Container(
                               height: 60,
                               decoration: const BoxDecoration(
@@ -967,26 +977,26 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   }
 
   showDialogBox() => showCupertinoDialog<String>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(lang.S.of(context).noConnection),
-      content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () async {
-            Navigator.pop(context, 'Cancel');
-            setState(() => isAlertSet = false);
-            isDeviceConnected = await InternetConnectionChecker().hasConnection;
-            if (!isDeviceConnected && isAlertSet == false) {
-              showDialogBox();
-              setState(() => isAlertSet = true);
-            }
-          },
-          child: Text(lang.S.of(context).tryAgain),
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(lang.S.of(context).noConnection),
+          content: Text(lang.S.of(context).pleaseCheckYourInternetConnectivity),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected = await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected && isAlertSet == false) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: Text(lang.S.of(context).tryAgain),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   void decreaseStock(String productCode, int quantity) async {
     final ref = FirebaseDatabase.instance.ref(constUserId).child('Products');
