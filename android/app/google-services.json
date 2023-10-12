@@ -1,37 +1,26 @@
 {
   "project_info": {
-    "project_number": "225271280538",
-    "firebase_url": "https://smart-biashara-default-rtdb.firebaseio.com",
-    "project_id": "smart-biashara",
-    "storage_bucket": "smart-biashara.appspot.com"
+    "project_number": "402382104261",
+    "project_id": "fir-test-d5b41",
+    "storage_bucket": "fir-test-d5b41.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:225271280538:android:c4df70d8c0b071acb08023",
+        "mobilesdk_app_id": "1:402382104261:android:4fa385a8c0eb7ce27872ac",
         "android_client_info": {
-          "package_name": "com.smartbiashara.app"
+          "package_name": "com.example.googlefirebaseAuth"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "225271280538-61sn83hcgnugmckr0pvnl2adi0btvequ.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAH9AZUgcnh2krvrZjHkhL1Jse7jN4VdZA"
+          "current_key": "AIzaSyCYnQulMmhTmyh-b19uORzmHzoX_yTympk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "225271280538-61sn83hcgnugmckr0pvnl2adi0btvequ.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

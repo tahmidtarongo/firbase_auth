@@ -1,4 +1,4 @@
-package com.smartbiashara.app;
+package com.example.googlefirebaseAuth;
 
 import io.flutter.embedding.android.FlutterActivity;
 
