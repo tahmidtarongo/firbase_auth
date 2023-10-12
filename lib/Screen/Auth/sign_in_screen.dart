@@ -1,15 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Screen/Auth/phone_auth.dart';
 import 'package:mobile_pos/Screen/Auth/sign_up_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Home/home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
-
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -18,84 +19,23 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  // Future<User?> _handleSignIn() async {
-  //   try {
-  //     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  //     if (googleSignInAccount != null) {
-  //       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-  //       final AuthCredential credential = GoogleAuthProvider.credential(
-  //         accessToken: googleSignInAuthentication.accessToken,
-  //         idToken: googleSignInAuthentication.idToken,
-  //       );
-  //
-  //       final UserCredential authResult = await _auth.signInWithCredential(credential);
-  //       final User? user = authResult.user;
-  //
-  //       if (user != null) {
-  //         // Successful sign-in with Gmail, you can navigate to the next screen or perform other actions.
-  //         return user;
-  //       } else {
-  //         // Handle sign-in failure
-  //         return null;
-  //       }
-  //     } else {
-  //       // Handle Google sign-in cancellation
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     // Handle exceptions
-  //     return null;
-  //   }
-  // }
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  // Future<void> verifyPhoneNumber() async {
-  //   try {
-  //     await FirebaseAuth.instance.verifyPhoneNumber(
-  //       phoneNumber: phoneNumberController.text,
-  //       verificationCompleted: (PhoneAuthCredential credential) async {
-  //         // Automatically sign in the user when OTP is received.
-  //         await FirebaseAuth.instance.signInWithCredential(credential);
-  //       },
-  //       verificationFailed: (FirebaseAuthException e) {
-  //         // Handle verification failed
-  //       },
-  //       codeSent: (String verificationId, int? resendToken) {
-  //         // Store the verification ID to be used later
-  //         this.verificationId = verificationId;
-  //       },
-  //       codeAutoRetrievalTimeout: (String verificationId) {
-  //         // Auto-retrieval timeout, if needed
-  //       },
-  //       timeout: const Duration(seconds: 60),
-  //     );
-  //   } catch (e) {
-  //     // Handle exceptions
-  //   }
-  // }
-  //
-  // void verifyPhoneNumber() {
-  //   FirebaseAuth.instance.verifyPhoneNumber(
-  //     phoneNumber: "01631865339",
-  //     verificationCompleted: (phoneAuthCredential) {},
-  //     verificationFailed: (error) {},
-  //     codeSent: (verificationId, forceResendingToken) {},
-  //     codeAutoRetrievalTimeout: (verificationId) {},
-  //   );
-  // }
-  // Future<void> signInWithOTP({required String verificationId,required String otpController}) async {
-  //   try {
-  //     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //       verificationId: verificationId,
-  //       smsCode: otpController,
-  //     );
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-  //   } catch (e) {
-  //     // Handle exceptions
-  //   }
-  // }
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   @override
   void dispose() {
@@ -109,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -191,6 +131,21 @@ class _SignInScreenState extends State<SignInScreen> {
                       ));
                 },
                 child: const Text('Sign Up with Phone')),
+            TextButton(
+                onPressed: () async {
+                  UserCredential user = await signInWithGoogle();
+                  if (user.user != null) {
+                    EasyLoading.showSuccess('Done');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ));
+                  } else {
+                    EasyLoading.showError('Something is Wrong');
+                  }
+                },
+                child: const Text('SignIn with Google')),
           ],
         ),
       ),

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:mobile_pos/Screen/Auth/otp_screen.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({Key? key}) : super(key: key);
-
 
   @override
   State<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
@@ -29,7 +29,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
         print(error.message);
       },
       codeSent: (verificationId, forceResendingToken) {
-        EasyLoading.showSuccess('Done');
+        EasyLoading.dismiss();
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  OtpScreen(id: verificationId,)));
       },
       codeAutoRetrievalTimeout: (verificationId) {},
     );

@@ -1,11 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_pos/Screen/Home/home_screen.dart';
 
 import 'Auth/sign_in_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -19,10 +20,24 @@ class _SplashScreenState extends State<SplashScreen> {
     nextPage();
   }
 
-  void nextPage()async{
-   await Future.delayed(const Duration(seconds: 3));
-   Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInScreen(),));
+  void nextPage() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SignInScreen(),
+          ));
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
