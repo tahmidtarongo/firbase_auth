@@ -4,10 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Models/student.dart';
+import 'package:mobile_pos/Screen/add_student_screen.dart';
 
 import '../../Repo/student_get_repo.dart';
 import '../Auth/sign_in_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../edit_student_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +20,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> deleteStudent({required StudentModel studentModel}) async {
+    DocumentReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '').doc(studentModel.id);
+
+    students.delete();
+
+    EasyLoading.show(status: 'Loading...');
+
+    EasyLoading.showSuccess('Delete Done');
+    setState(() {});
+  }
+
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
 
@@ -51,83 +65,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddStudentScreen(),
+                ));
+          },
+          child: const Icon(Icons.add)),
       bottomNavigationBar: ElevatedButton(onPressed: logOut, child: const Text("Log Out")),
       body: SafeArea(
         child: Center(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Welcome to Home Screen ${FirebaseAuth.instance.currentUser?.email}'),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
-              child: TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  hintText: 'Enter Your Name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
-              child: TextFormField(
-                controller: classController,
-                decoration: const InputDecoration(
-                  labelText: 'Class',
-                  hintText: 'Enter Your Class',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
-              child: TextFormField(
-                controller: rollController,
-                decoration: const InputDecoration(
-                  labelText: 'Roll',
-                  hintText: 'Enter Your Roll Number',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10, bottom: 10),
-              child: TextFormField(
-                controller: sectionController,
-                decoration: const InputDecoration(
-                  labelText: 'Section',
-                  hintText: 'Enter Your Section',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                StudentModel data =
-                    StudentModel(name: nameController.text, studentClass: int.parse(classController.text), roll: int.parse(rollController.text), section: sectionController.text);
-
-                postData(studentModel: data);
-                nameController.clear();
-                classController.clear();
-                rollController.clear();
-                sectionController.clear();
-              },
-              child: const Text('Save This Student'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {});
-              },
-              child: const Text('Reload'),
+              padding: const EdgeInsets.all(10.0),
+              child: Text('Welcome to Home Screen ${FirebaseAuth.instance.currentUser?.email}'),
             ),
             FutureBuilder<List<StudentModel>>(
               future: getStudent(),
               builder: (BuildContext context, studentData) {
                 if (studentData.hasData) {
                   return Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding: const EdgeInsets.only(left: 30.0, right: 30, bottom: 10),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: studentData.data?.length,
@@ -138,7 +99,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             title: Text('Name: ${singleStudent?.name}'),
                             subtitle: Text('Class: ${singleStudent?.studentClass}'),
                             leading: Text(singleStudent?.roll.toString() ?? '0'),
-                            trailing: Text(singleStudent?.section ?? ''),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await deleteStudent(studentModel: singleStudent!);
+                                    },
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    )),
+                                const SizedBox(width: 5),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => EditStudentScreen(studentModel: singleStudent!),
+                                        ),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                    )),
+                              ],
+                            ),
                           ),
                         );
                         return Text("Student Name : ${studentData.data?[index].name}");

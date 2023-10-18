@@ -3,8 +3,9 @@ class StudentModel {
   num? studentClass;
   num? roll;
   String? section;
+  String? id;
 
-  StudentModel({this.name, this.studentClass, this.roll, this.section});
+  StudentModel({this.name, this.studentClass, this.roll, this.section, this.id});
 
   StudentModel.fromJson({required Map<String, dynamic> json}) {
     name = json['name'];
