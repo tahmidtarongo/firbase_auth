@@ -42,26 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
-  Future<void> postData({required StudentModel studentModel}) async {
-    CollectionReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '');
-    EasyLoading.show(status: 'Loading...');
-    await students.add(studentModel.toJson());
-
-    EasyLoading.showSuccess('Data Post Done');
-  }
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController classController = TextEditingController();
-  TextEditingController rollController = TextEditingController();
-  TextEditingController sectionController = TextEditingController();
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    nameController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
