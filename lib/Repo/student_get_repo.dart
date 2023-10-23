@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Models/student.dart';
 
-Future<List<StudentModel>> getStudent() async {
+Future<List<StudentModel>> getStudentRepo() async {
   List<StudentModel> allStudent = [];
   CollectionReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '');
 
@@ -14,8 +14,6 @@ Future<List<StudentModel>> getStudent() async {
     s.id = data.docs[i].id;
     allStudent.add(s);
   }
-
-  for (var element in data.docs) {}
 
   return allStudent;
 }

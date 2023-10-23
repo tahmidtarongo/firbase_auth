@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Models/student.dart';
+import 'package:mobile_pos/Providers/student_provider.dart';
 import 'package:mobile_pos/Screen/add_student_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../Repo/student_get_repo.dart';
 import '../Auth/sign_in_screen.dart';
@@ -23,12 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> deleteStudent({required StudentModel studentModel}) async {
     DocumentReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '').doc(studentModel.id);
 
-    students.delete();
-
-    EasyLoading.show(status: 'Loading...');
-
-    EasyLoading.showSuccess('Delete Done');
-    setState(() {});
+    await students.delete();
+    Provider.of<StudentProvider>(context, listen: false).updateData();
   }
 
   Future<void> logOut() async {
@@ -40,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(
           builder: (context) => const SignInScreen(),
         ));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<StudentProvider>(context, listen: false).getStudents();
   }
 
   @override
@@ -57,66 +62,65 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: ElevatedButton(onPressed: logOut, child: const Text("Log Out")),
       body: SafeArea(
         child: Center(
-            child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text('Welcome to Home Screen ${FirebaseAuth.instance.currentUser?.email}'),
-            ),
-            FutureBuilder<List<StudentModel>>(
-              future: getStudent(),
-              builder: (BuildContext context, studentData) {
-                if (studentData.hasData) {
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text('Welcome to Home Screen ${FirebaseAuth.instance.currentUser?.email}'),
+              ),
+              Consumer<StudentProvider>(
+                builder: (context, value, child) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 30.0, right: 30, bottom: 10),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: studentData.data?.length,
-                      itemBuilder: (context, index) {
-                        StudentModel? singleStudent = studentData.data?[index];
-                        return Card(
-                          child: ListTile(
-                            title: Text('Name: ${singleStudent?.name}'),
-                            subtitle: Text('Class: ${singleStudent?.studentClass}'),
-                            leading: Text(singleStudent?.roll.toString() ?? '0'),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                GestureDetector(
-                                    onTap: () async {
-                                      await deleteStudent(studentModel: singleStudent!);
-                                    },
-                                    child: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    )),
-                                const SizedBox(width: 5),
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => EditStudentScreen(studentModel: singleStudent!),
-                                        ),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.edit,
-                                    )),
-                              ],
-                            ),
+                    padding: const EdgeInsets.all(20),
+                    child: value.isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: value.students.length,
+                            itemBuilder: (context, index) {
+                              StudentModel? singleStudent = value.students[index];
+                              return Card(
+                                child: ListTile(
+                                  title: Text('Name: ${singleStudent.name}'),
+                                  subtitle: Text('Class: ${singleStudent.studentClass}'),
+                                  leading: Text(singleStudent.roll.toString() ?? '0'),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () async {
+                                            await deleteStudent(studentModel: singleStudent);
+                                          },
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          )),
+                                      const SizedBox(width: 5),
+                                      GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => EditStudentScreen(studentModel: singleStudent!),
+                                              ),
+                                            );
+                                          },
+                                          child: const Icon(
+                                            Icons.edit,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                        return Text("Student Name : ${studentData.data?[index].name}");
-                      },
-                    ),
                   );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
-          ],
+                },
+              ),
+            ],
+          ),
         )),
       ),
     );

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Models/student.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mobile_pos/Providers/student_provider.dart';
 import 'package:mobile_pos/Screen/Home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class AddStudentScreen extends StatefulWidget {
   const AddStudentScreen({Key? key}) : super(key: key);
@@ -17,10 +19,10 @@ class AddStudentScreen extends StatefulWidget {
 class _AddStudentScreenState extends State<AddStudentScreen> {
   Future<void> postData({required StudentModel studentModel}) async {
     CollectionReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '');
-    EasyLoading.show(status: 'Loading...');
+
     await students.add(studentModel.toJson());
 
-    EasyLoading.showSuccess('Data Post Done');
+    Provider.of<StudentProvider>(context, listen: false).updateData();
   }
 
   TextEditingController nameController = TextEditingController();
@@ -90,22 +92,16 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 StudentModel data =
                     StudentModel(name: nameController.text, studentClass: int.parse(classController.text), roll: int.parse(rollController.text), section: sectionController.text);
 
-                postData(studentModel: data);
+                await postData(studentModel: data);
                 nameController.clear();
                 classController.clear();
                 rollController.clear();
                 sectionController.clear();
                 Navigator.pop(context);
-
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ));
               },
               child: const Text('Save This Student'),
             ),
