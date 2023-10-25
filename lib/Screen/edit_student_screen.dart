@@ -27,8 +27,6 @@ class _EditStudentScreenState extends State<EditStudentScreen> {
     EasyLoading.showSuccess('Edit Done');
   }
 
-
-
   TextEditingController nameController = TextEditingController();
   TextEditingController classController = TextEditingController();
   TextEditingController rollController = TextEditingController();

@@ -30,7 +30,12 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
       },
       codeSent: (verificationId, forceResendingToken) {
         EasyLoading.dismiss();
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>  OtpScreen(id: verificationId,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OtpScreen(
+                      id: verificationId,
+                    )));
       },
       codeAutoRetrievalTimeout: (verificationId) {},
     );

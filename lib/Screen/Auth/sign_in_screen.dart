@@ -145,11 +145,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                     controller: forgotEmailController,
                                   ),
                                   TextButton(
-                                      onPressed: () async {
-                                        await FirebaseAuth.instance.sendPasswordResetEmail(email: forgotEmailController.text);
-                                        EasyLoading.showSuccess('Please Check Your Email');
-                                      },
-                                      child: const Text('Sent Mail')),
+                                    onPressed: () async {
+                                      await FirebaseAuth.instance.sendPasswordResetEmail(email: forgotEmailController.text);
+                                      EasyLoading.showSuccess('Please Check Your Email');
+                                    },
+                                    child: const Text(
+                                      'Sent Mail',
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
