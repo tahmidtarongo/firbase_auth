@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Screen/Auth/phone_auth.dart';
 import 'package:mobile_pos/Screen/Auth/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Home/home_screen.dart';
 
@@ -37,6 +38,32 @@ class _SignInScreenState extends State<SignInScreen> {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  Future<void> setRememberMe({required String email, required String password}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_email', email);
+    await prefs.setString('user_pass', password);
+  }
+
+  getRememberData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      rememberMe = prefs.getBool('isRememberMe') ?? false;
+
+      if (rememberMe) {
+        emailController.text = prefs.getString('user_email') ?? '';
+        passwordController.text = prefs.getString('user_pass') ?? '';
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRememberData();
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -44,6 +71,8 @@ class _SignInScreenState extends State<SignInScreen> {
     emailController.dispose();
     passwordController.dispose();
   }
+
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
               'Log In',
               style: TextStyle(fontSize: 20),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
@@ -78,8 +105,60 @@ class _SignInScreenState extends State<SignInScreen> {
                 hintText: 'Please enter your password.',
               ),
             ),
-            const SizedBox(
-              height: 20,
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Switch(
+                      value: rememberMe,
+                      onChanged: (value) async {
+                        setState(() {
+                          rememberMe = value;
+                        });
+
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isRememberMe', value);
+                      },
+                    ),
+                    const Text('Remember Me'),
+                  ],
+                ),
+                TextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          TextEditingController forgotEmailController = TextEditingController();
+                          return Dialog(
+                              child: Container(
+                            width: 300,
+                            decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                    decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                                    controller: forgotEmailController,
+                                  ),
+                                  TextButton(
+                                      onPressed: () async {
+                                        await FirebaseAuth.instance.sendPasswordResetEmail(email: forgotEmailController.text);
+                                        EasyLoading.showSuccess('Please Check Your Email');
+                                      },
+                                      child: const Text('Sent Mail')),
+                                ],
+                              ),
+                            ),
+                          ));
+                        },
+                      );
+                    },
+                    child: const Text('Forgot Password')),
+              ],
             ),
             ElevatedButton(
                 onPressed: () async {
@@ -91,6 +170,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         UserCredential user = await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
 
                         if (user.user != null) {
+                          if (rememberMe) {
+                            await setRememberMe(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                          }
+
                           EasyLoading.showSuccess('Successfully Login');
                           Navigator.push(
                               context,
