@@ -3,19 +3,19 @@ import 'package:flutter/cupertino.dart';
 import '../Models/student.dart';
 import '../Repo/student_get_repo.dart';
 
-class StudentProvider extends ChangeNotifier {
-  List<StudentModel> students = [];
+class ProfileProvider extends ChangeNotifier {
+  ProfileModel profile = ProfileModel();
   bool isLoading = false;
 
-  Future<void> getStudents() async {
+  Future<void> getProfile() async {
     isLoading = true;
-    students = await getStudentRepo();
+    profile = await getProfileRepo();
     isLoading = false;
     notifyListeners();
   }
-
-  Future<void> updateData() async {
-    students = await getStudentRepo();
-    notifyListeners();
-  }
+  //
+  // Future<void> updateData() async {
+  //   profile = await getStudentRepo();
+  //   notifyListeners();
+  // }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_pos/Screen/Home/home_screen.dart';
 
 import 'Auth/sign_in_screen.dart';
+import 'Home/home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const Home(),
           ));
     } else {
       Navigator.push(

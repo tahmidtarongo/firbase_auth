@@ -1,23 +1,26 @@
-class StudentModel {
+class ProfileModel {
   String? name;
-  num? studentClass;
-  num? roll;
-  String? section;
+  String? address;
+  String? phoneNumber;
+  String? landMark;
   String? id;
+  bool? isAdmin;
 
-  StudentModel({this.name, this.studentClass, this.roll, this.section, this.id});
+  ProfileModel({this.name, this.address, this.phoneNumber, this.landMark, this.id, this.isAdmin});
 
-  StudentModel.fromJson({required Map<String, dynamic> json}) {
+  ProfileModel.fromJson({required Map<String, dynamic> json}) {
     name = json['name'];
-    studentClass = json['class'];
-    roll = json['roll'];
-    section = json['section'];
+    address = json['address'];
+    phoneNumber = json['phone'];
+    landMark = json['land_mark'];
+    isAdmin = json['isAdmin'];
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
-        'class': studentClass,
-        'roll': roll,
-        'section': section,
+        'address': address,
+        'phone': phoneNumber,
+        'land_mark': landMark,
+        'isAdmin': isAdmin,
       };
 }

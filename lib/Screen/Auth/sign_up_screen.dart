@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../Profile/new_profile_setup.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -71,7 +73,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         if (user.user != null) {
                           EasyLoading.showSuccess('Successfully Done');
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const ProfileSetup();
+                            },
+                          ));
                         } else {
                           EasyLoading.showError('Something is Wrong');
                         }

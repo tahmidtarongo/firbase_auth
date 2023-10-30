@@ -3,17 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Models/student.dart';
 
-Future<List<StudentModel>> getStudentRepo() async {
-  List<StudentModel> allStudent = [];
-  CollectionReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '');
+Future<ProfileModel> getProfileRepo() async {
+  DocumentReference profile = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '').doc('profile');
 
-  final QuerySnapshot data = await students.orderBy('class', descending: false).get();
-  for (int i = 0; i < data.docs.length; i++) {
-    Map<String, dynamic> student = data.docs[i].data() as Map<String, dynamic>;
-    StudentModel s = StudentModel.fromJson(json: student);
-    s.id = data.docs[i].id;
-    allStudent.add(s);
-  }
+  final DocumentSnapshot data = await profile.get();
+  ProfileModel p = ProfileModel.fromJson(json: data.data() as Map<String, dynamic>);
 
-  return allStudent;
+  return p;
 }

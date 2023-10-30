@@ -8,7 +8,9 @@ import 'package:mobile_pos/Screen/Auth/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Home/home.dart';
 import '../Home/home_screen.dart';
+import '../Profile/new_profile_setup.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -184,7 +186,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
+                                builder: (context) => const Home(),
                               ));
                         } else {
                           EasyLoading.showError('Something is wrong');
@@ -228,7 +230,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                          builder: (context) => const Home(),
                         ));
                   } else {
                     EasyLoading.showError('Something is Wrong');

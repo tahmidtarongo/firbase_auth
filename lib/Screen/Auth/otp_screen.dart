@@ -6,6 +6,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/Screen/Home/home_screen.dart';
 import 'package:pinput/pinput.dart';
 
+import '../Home/home.dart';
+
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key, required this.id}) : super(key: key);
 
@@ -25,7 +27,7 @@ class _OtpScreenState extends State<OtpScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const Home(),
           ));
     } catch (e) {
       EasyLoading.showError(e.toString());

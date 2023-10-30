@@ -22,11 +22,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<void> deleteStudent({required StudentModel studentModel}) async {
+  Future<void> deleteStudent({required ProfileModel studentModel}) async {
     DocumentReference students = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '').doc(studentModel.id);
 
     await students.delete();
-    Provider.of<StudentProvider>(context, listen: false).updateData();
+    // Provider.of<profileProvider>(context, listen: false).updateData();
   }
 
   Future<void> logOut() async {
@@ -44,22 +44,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<StudentProvider>(context, listen: false).getStudents();
+    // Provider.of<profileProvider>(context, listen: false).getProfile();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddStudentScreen(),
-                ));
-          },
-          child: const Icon(Icons.add)),
-      bottomNavigationBar: ElevatedButton(onPressed: logOut, child: const Text("Log Out")),
+      appBar: AppBar(
+        title: const Text('Home'),
+        backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+            onPressed: logOut,
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const AddStudentScreen(),
+      //           ));
+      //     },
+      //     child: const Icon(Icons.add)),
       body: SafeArea(
         child: Center(
             child: SingleChildScrollView(
@@ -69,56 +78,56 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Text('Welcome to Home Screen ${FirebaseAuth.instance.currentUser?.email}'),
               ),
-              Consumer<StudentProvider>(
-                builder: (context, value, child) {
-                  return Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: value.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: value.students.length,
-                            itemBuilder: (context, index) {
-                              StudentModel? singleStudent = value.students[index];
-                              return Card(
-                                child: ListTile(
-                                  title: Text('Name: ${singleStudent.name}'),
-                                  subtitle: Text('Class: ${singleStudent.studentClass}'),
-                                  leading: Text(singleStudent.roll.toString() ?? '0'),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () async {
-                                            await deleteStudent(studentModel: singleStudent);
-                                          },
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                          )),
-                                      const SizedBox(width: 5),
-                                      GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => EditStudentScreen(studentModel: singleStudent!),
-                                              ),
-                                            );
-                                          },
-                                          child: const Icon(
-                                            Icons.edit,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                  );
-                },
-              ),
+              // Consumer<profileProvider>(
+              //   builder: (context, value, child) {
+              //     return Padding(
+              //       padding: const EdgeInsets.all(20),
+              //       child: value.isLoading
+              //           ? const Center(child: CircularProgressIndicator())
+              //           : ListView.builder(
+              //               shrinkWrap: true,
+              //               physics: const NeverScrollableScrollPhysics(),
+              //               itemCount: value.profile.length,
+              //               itemBuilder: (context, index) {
+              //                 ProfileModel? singleStudent = value.profile[index];
+              //                 return Card(
+              //                   child: ListTile(
+              //                     title: Text('Name: ${singleStudent.name}'),
+              //                     subtitle: Text('Class: ${singleStudent.address}'),
+              //                     leading: Text(singleStudent.phoneNumber.toString() ?? '0'),
+              //                     trailing: Row(
+              //                       mainAxisSize: MainAxisSize.min,
+              //                       children: [
+              //                         GestureDetector(
+              //                             onTap: () async {
+              //                               await deleteStudent(studentModel: singleStudent);
+              //                             },
+              //                             child: const Icon(
+              //                               Icons.delete,
+              //                               color: Colors.red,
+              //                             )),
+              //                         const SizedBox(width: 5),
+              //                         // GestureDetector(
+              //                         //     onTap: () {
+              //                         //       Navigator.push(
+              //                         //         context,
+              //                         //         MaterialPageRoute(
+              //                         //           builder: (context) => EditStudentScreen(studentModel: singleStudent!),
+              //                         //         ),
+              //                         //       );
+              //                         //     },
+              //                         //     child: const Icon(
+              //                         //       Icons.edit,
+              //                         //     )),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         )),
