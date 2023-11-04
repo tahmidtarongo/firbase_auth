@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_pos/generated/l10n.dart' as lang;
+import 'package:provider/provider.dart';
 
+import '../../Providers/student_provider.dart';
+import '../Product/add_product_screen.dart';
 import '../Profile/profile.dart';
 import 'home_screen.dart';
 
@@ -18,12 +21,19 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   bool isNoInternet = false;
 
-  static const List<Widget> _widgetOptions = <Widget>[HomeScreen(), HomeScreen(), HomeScreen(), Profile()];
+  static const List<Widget> _widgetOptions = <Widget>[HomeScreen(), AddProductScreen(), HomeScreen(), Profile()];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<ProfileProvider>(context, listen: false).getProfile();
   }
 
   @override
@@ -42,9 +52,9 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.add_shopping_cart),
-            label: 'Cart',
+          BottomNavigationBarItem(
+            icon: (Provider.of<ProfileProvider>(context).profile.isAdmin ?? false) ? const Icon(Icons.add) : Icon(Icons.ac_unit),
+            label: (Provider.of<ProfileProvider>(context).profile.isAdmin ?? false) ? 'Add Product' : 'Cart',
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.add_shopping_cart),

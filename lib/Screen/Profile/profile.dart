@@ -15,7 +15,6 @@ class _ProfileState extends State<Profile> {
     // TODO: implement initState
     super.initState();
 
-    Provider.of<ProfileProvider>(context, listen: false).getProfile();
   }
 
   @override
@@ -23,18 +22,49 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        backgroundColor: Colors.blue,
       ),
       body: Consumer<ProfileProvider>(
         builder: (context, value, child) {
           return value.isLoading
-              ? const CircularProgressIndicator()
-              : Column(
-                  children: [
-                    Text(value.profile.name ?? ''),
-                    Text(value.profile.address ?? ''),
-                    Text(value.profile.phoneNumber ?? ''),
-                    Text(value.profile.landMark ?? ''),
-                  ],
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Visibility(
+                          visible: value.profile.isAdmin ?? false,
+                          child: const Icon(
+                            Icons.shield,
+                            size: 30,
+                          )),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        initialValue: value.profile.name,
+                        decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Name'),
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        initialValue: value.profile.address,
+                        decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Address'),
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        initialValue: value.profile.phoneNumber,
+                        decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Phone Number'),
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        initialValue: value.profile.landMark,
+                        decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'landMark'),
+                        readOnly: true,
+                      ),
+                    ],
+                  ),
                 );
         },
       ),

@@ -46,6 +46,8 @@ dependencies:
   cloud_firestore: ^4.9.3
   provider: ^6.0.5
   shared_preferences: ^2.2.2
+  image_picker: ^1.0.4
+  firebase_storage: ^11.4.1
 
 
 
@@ -68,8 +70,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-#  assets:
-#    - images/
+  assets:
+    - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -8,6 +8,7 @@ class ProfileProvider extends ChangeNotifier {
   bool isLoading = false;
 
   Future<void> getProfile() async {
+    print('Get profile');
     isLoading = true;
     profile = await getProfileRepo();
     isLoading = false;
