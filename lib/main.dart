@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:mobile_pos/Providers/cart_provider.dart';
 import 'package:mobile_pos/Providers/student_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'Providers/product_provider.dart';
 import 'Screen/splash_screen.dart';
 
 Future<void> main() async {
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

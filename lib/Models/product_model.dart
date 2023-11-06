@@ -3,16 +3,17 @@ class ProductModel {
   late String productName, productImage;
   late double salePrice, purchasePrice;
   String? databaseKey;
+  late bool isFev;
 
-  ProductModel({
-    required this.productId,
-    required this.productName,
-    required this.salePrice,
-    required this.purchasePrice,
-    required this.productStock,
-    required this.productImage,
-    this.databaseKey,
-  });
+  ProductModel(
+      {required this.productId,
+      required this.productName,
+      required this.salePrice,
+      required this.purchasePrice,
+      required this.productStock,
+      required this.productImage,
+      this.databaseKey,
+      required this.isFev});
   ProductModel.fromJson({required Map<String, dynamic> json}) {
     productId = json['productId'];
     productStock = json['productStock'];
@@ -20,6 +21,7 @@ class ProductModel {
     productImage = json['productImage'];
     salePrice = json['salePrice'];
     purchasePrice = json['purchasePrice'];
+    isFev = json['isFev'];
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -29,5 +31,6 @@ class ProductModel {
         'productImage': productImage,
         'salePrice': salePrice,
         'purchasePrice': purchasePrice,
+        'isFev': isFev,
       };
 }

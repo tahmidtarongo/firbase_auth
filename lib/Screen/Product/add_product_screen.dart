@@ -133,7 +133,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  imagePath = await imageUpload(path: imagePath ?? '');
+                  imagePath != null ? imagePath = await imageUpload(path: imagePath ?? '') : null;
                   ProductModel product = ProductModel(
                     productId: Timestamp.now().millisecondsSinceEpoch,
                     productName: nameController.text,
@@ -141,6 +141,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     purchasePrice: double.tryParse(purchasePriceController.text) ?? 0,
                     productStock: int.tryParse(stockController.text) ?? 0,
                     productImage: imagePath ?? '',
+                    isFev: false,
                   );
 
                   // ProfileModel data = ProfileModel(

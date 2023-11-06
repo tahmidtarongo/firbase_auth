@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:mobile_pos/generated/l10n.dart' as lang;
+import 'package:mobile_pos/Providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../Providers/student_provider.dart';
+import '../Auth/sign_in_screen.dart';
+import '../Cart/cart_screen.dart';
 import '../Product/add_product_screen.dart';
 import '../Profile/profile.dart';
+import '../fev Screem/fav_screen.dart';
 import 'home_screen.dart';
 
 class Home extends StatefulWidget {
@@ -19,14 +22,31 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
+  int _selectedIndex2 = 0;
   bool isNoInternet = false;
+  String page = 'cart';
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
 
-  static const List<Widget> _widgetOptions = <Widget>[HomeScreen(), AddProductScreen(), HomeScreen(), Profile()];
+    EasyLoading.showSuccess('LogOut Done');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignInScreen(),
+        ));
+  }
+
+  static const List<Widget> _widgetOptions = <Widget>[HomeScreen(), CartScreen(), FavScreen(), Profile(), AddProductScreen()];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 3) {
+      openDrawer();
+    } else {
+      setState(() {
+        _selectedIndex = index;
+        _selectedIndex2 = index;
+      });
+    }
   }
 
   @override
@@ -34,13 +54,67 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     Provider.of<ProfileProvider>(context, listen: false).getProfile();
+    Provider.of<ProductProvider>(context, listen: false).getProductsFromFirebase();
+  }
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  void openDrawer() {
+    _key.currentState?.openEndDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      endDrawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const CircleAvatar(
+                radius: 60,
+              ),
+              Card(
+                child: ListTile(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex2 = 3;
+                    });
+                    _key.currentState?.closeEndDrawer();
+                  },
+                  title: const Text('Profile'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+              Visibility(
+                visible: Provider.of<ProfileProvider>(context).profile.isAdmin ?? false,
+                child: Card(
+                  child: ListTile(
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex2 = 4;
+                      });
+                      _key.currentState?.closeEndDrawer();
+                    },
+                    title: const Text('Add Product'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                  ),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  onTap: logOut,
+                  title: const Text('Logout'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(_selectedIndex2),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -52,13 +126,13 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: (Provider.of<ProfileProvider>(context).profile.isAdmin ?? false) ? const Icon(Icons.add) : Icon(Icons.ac_unit),
-            label: (Provider.of<ProfileProvider>(context).profile.isAdmin ?? false) ? 'Add Product' : 'Cart',
-          ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.add_shopping_cart),
             label: 'Cart',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.heart_broken),
+            label: 'Fev',
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -70,29 +144,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-// showDialogBox() {
-//   showCupertinoDialog<String>(
-//     context: context,
-//     barrierDismissible: false,
-//     builder: (BuildContext context) => CupertinoAlertDialog(
-//       title: const Text('No Connection'),
-//       content: const Text('Please check your internet connectivity'),
-//       actions: <Widget>[
-//         TextButton(
-//           onPressed: () async {
-//             Navigator.pop(context, 'Cancel');
-//             setState(() => isAlertSet = false);
-//             isDeviceConnected = await InternetConnectionChecker().hasConnection;
-//             if (!isDeviceConnected && isAlertSet == false) {
-//               showDialogBox();
-//               setState(() => isAlertSet = true);
-//             }
-//           },
-//           child: const Text('Try Again'),
-//         ),
-//       ],
-//     ),
-//   );
-// }
 }
