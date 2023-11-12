@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_pos/Models/product_model.dart';
 
-import '../Models/student.dart';
-
 Future<List<ProductModel>> getProduct() async {
   List<ProductModel> products = [];
   CollectionReference product = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser?.uid ?? '').doc('products').collection('products');
